@@ -1,0 +1,14 @@
+{
+    "name": "ez/artportal",
+    "description": "Project for testing XAMPP with .env",
+    "type": "project",
+    "require": {
+        "vlucas/phpdotenv": "^5.6"
+    },
+    "authors": [
+        {
+            "name": "Elena Zudina",
+            "email": "elen.zudina@gmail.com"
+        }
+    ]
+}

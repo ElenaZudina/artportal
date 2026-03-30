@@ -1,5 +1,11 @@
 <?php
 
+require_once '../vendor/autoload.php';
+use Dotenv\Dotenv;
+
+$dotenv = Dotenv::createImmutable('../');
+$dotenv->load();
+
 class Database {
     private $conn;
     private $host;
@@ -8,10 +14,10 @@ class Database {
     private $baseName;
 
     function __construct() {
-        $this->host = 'localhost';
-        $this->user = 'root';
-        $this->password = '';
-        $this->baseName= 'artportal';
+        $this->host = $_ENV['DB_HOST'] ?? 'localhost';
+        $this->user = $_ENV['DB_USER'] ?? 'root';
+        $this->password = $_ENV['DB_PASSWORD'] ?? '';
+        $this->baseName = $_ENV['DB_NAME'] ?? 'artportal';
         //$this->connect(); убрала автоматическое подключение 
         //при создании объекта, чтобы не было лишних подключений при каждом новом объекте
     }
@@ -34,7 +40,6 @@ class Database {
             }
         }
         return $this->conn;
-        return $this->baseName;
     }
 
     function disconnect() {
