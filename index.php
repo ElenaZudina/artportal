@@ -13,7 +13,7 @@ require 'models/Paintings.php';
 //include_once 'views/comments.php';
 
 include_once 'controllers/Controller.php';
-include_once 'route/routing.php';
+include_once 'routes/routing.php';
 
 //На данной стадии реализации $response = null, так как в контроллере нет return, а только include. В дальнейшем нужно будет изменить контроллер, чтобы он возвращал строку, а не выводил ее на экран. И уже в index.php эту строку выводить на экран. Это позволит более гибко управлять выводом данных и отделить логику от представления.
 //echo $response;
