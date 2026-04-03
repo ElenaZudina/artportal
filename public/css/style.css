@@ -1,0 +1,292 @@
+/* =============================================================================== */
+/* 1. Основа: Фон, палитра и главный шрифт */
+body {
+  margin: 0;
+  font-family: 'Noto Serif', serif; /* Элегантный шрифт с засечками */
+  background-color: #f8f8f5; /* Теплый, почти белый фон (как холст) */
+  color: #333; /* Мягкий темно-серый цвет для текста */
+}
+
+h1, h2, h3 {
+  font-family: 'Noto Serif', serif;
+  color: #2c2c2c; /* Заголовки чуть темнее основного текста */
+  letter-spacing: 0.5px; /* Немного пространства между буквами для изящества */
+  border-bottom: 1px solid #e0e0e0; /* Тонкая линия под заголовком */
+  padding-bottom: 10px;
+}
+
+/* 2. Главный контейнер .divBox */
+.divBox {
+  width: 85%;
+  max-width: 1200px; /* Ограничим максимальную ширину на больших экранах */
+  margin: 40px auto; /* Центрируем блок и добавляем отступ сверху/снизу */
+  padding: 40px; /* Больше "воздуха" внутри блока */
+  background-color: #ffffff; /* Чистый белый фон для контента */
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08); /* Мягкая тень для эффекта глубины */
+  border: 1px solid #eee; /* Едва заметная рамка */
+}
+
+/* 3. Навигация: чистота и минимализм */
+nav.one {
+  position: relative; /* Нужно для корректной работы z-index */
+  z-index: 100; /* Устанавливаем высокий z-index, чтобы быть поверх всего */
+}
+
+nav {
+  width: 100%;
+  margin: auto;
+  padding: auto;
+}
+ul {
+  list-style: none; 
+  margin: 0;
+  padding: 0;
+}
+.one ul {
+  background: #ffffff; /* Возвращаем белый фон, чтобы меню не было прозрачным */
+  text-align: center;
+  border-bottom: 1px solid #e0e0e0;
+  padding: 5px 0;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.05); /* Добавляем легкую тень для отделения */
+}
+.topmenu > li {
+  display: inline-block;
+  position: relative;
+  margin-right: 20px;
+  /* Убираем жесткую ширину width: 10% */
+}
+.topmenu > li:last-child {
+  margin-right: 0;
+}
+.one ul a {
+  color: #555; /* Спокойный цвет ссылок */
+  font-weight: 400; /* Стандартная жирность */
+  font-size: 1.1em;
+  transition: color 0.3s ease; /* Плавный переход цвета */
+  display: block;
+  padding: 10px 15px;
+  text-decoration: none;
+  outline: none;
+}
+.one ul a:hover {
+  color: #a0522d; /* Приглушенный "художественный" цвет (сиена) при наведении */
+  text-decoration: none; /* Убираем подчеркивание */
+  background: none; /* Убираем любой фон при наведении */
+}
+.submenu {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  width: auto;
+  z-index: 10;
+  text-align: center;
+  display: none;
+  background: #ffffff; /* Белый фон для выпадающего меню */
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1); /* Тень, чтобы отделить от контента */
+  border: 1px solid #eee;
+}
+.one ul li:hover .submenu {
+  display: block;
+}
+.submenu a {
+  font-size: 1em !important;
+}
+
+/* 4. Типографика и ссылки */
+p {
+  display: block; /* Исправляем display: flex на стандартный блочный */
+  font-size: 1.1rem;
+  line-height: 1.7; /* Увеличиваем межстрочное расстояние для комфортного чтения */
+  color: #444;
+  word-wrap: break-word;
+}
+a {
+  color: #a0522d; /* Основной цвет для ссылок (сиена) */
+  text-decoration: none;
+  transition: color 0.3s ease;
+}
+a:hover {
+  color: #333; /* При наведении ссылка становится цвета основного текста */
+  text-decoration: underline;
+}
+
+/* 5. Таблицы и кнопки */
+table {
+    border: none; /* Убираем внешнюю рамку */
+    border-collapse: collapse; /* Убираем двойные линии между ячейками */
+    width: 100%; /* Таблица на всю ширину контейнера */
+    font-size: 1rem;
+}
+td, th {
+    border: none;
+    border-bottom: 1px solid #e0e0e0; /* Оставляем только нижние линии */
+    margin: 0;
+    padding: 15px;
+    text-align: left; /* Текст в ячейках выравниваем по левому краю */
+}
+th {
+    background-color: #fdfdfd; /* Очень светлый фон для заголовков таблицы */
+    font-weight: 600;
+    color: #555;
+    text-align: left;
+}
+.btn {
+   background-color: #a0522d; /* Используем акцентный цвет (сиена) */
+   border-radius: 3px;
+   margin-left: 10px;
+   height: auto; /* Автоматическая высота */
+   padding: 8px 15px; /* Добавляем внутренние отступы */
+   border: none;
+   color: white;
+   font-weight: 400;
+   transition: background-color 0.3s ease;
+}
+.btn:hover {
+  background-color: #8B4513; /* Более темный оттенок сиены при наведении */
+}
+
+/* Остальные стили */
+.pull-right{
+  padding:20px;
+  float: right;
+}
+.fa {
+  font-family: "FontAwesome";
+  color: inherit;
+  padding-left: 10px;
+}
+.logo{
+  width: auto;
+  color: white;
+  font-size: 1.2em;
+  margin-left: 15%;
+}
+section{
+    padding: 2%;
+    display: flex;
+    align-content: center;
+    justify-content: center;
+}
+.search{
+    margin-left: 250px;
+    padding: 0;
+    display: flex;
+    flex-flow: row;
+    width: auto;
+}
+.searchbar{
+    height: 25px;
+    margin-bottom: 3px;
+    width: 300px;
+    border-radius: 4px;
+    padding: 2px;
+    border: 0;
+}
+.courselink{
+    color: black;
+    font-weight: 550;
+}
+.courselink:hover{
+    color: blue;
+    text-decoration: underline;
+}
+.control{
+    color: black;
+    margin: 0;
+    padding: 0;
+}
+
+/* Стили для списка картин-карточек */
+.painting-list-container {
+  display: flex;
+  flex-direction: column;
+  gap: 25px; /* Расстояние между карточками */
+  width: 100%;
+}
+
+.painting-card {
+  border: 1px solid #e9e9e9;
+  padding: 20px 25px;
+  border-radius: 5px;
+  background-color: #ffffff;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.05);
+  transition: box-shadow 0.3s ease;
+}
+
+.painting-card:hover {
+  box-shadow: 0 5px 15px rgba(0,0,0,0.09); /* Эффект "приподнимания" при наведении */
+}
+
+.painting-card h3 {
+  margin-top: 0;
+  margin-bottom: 10px;
+  border-bottom: none; /* Убираем линию под заголовком внутри карточки */
+}
+
+.painting-card a.btn-view-details {
+  display: inline-block;
+  margin-top: 15px;
+  padding: 8px 16px;
+  background-color: #a0522d; /* Основной акцентный цвет */
+  color: #fff;
+  border-radius: 3px;
+  text-decoration: none;
+  font-size: 0.9em;
+}
+
+.painting-card a.btn-view-details:hover {
+  background-color: #8B4513; /* Затемняем при наведении */
+  color: #fff;
+  text-decoration: none;
+}
+
+/* Стили для изображений внутри карточек */
+.painting-card .painting-image {
+  width: 100%; /* Гарантируем, что изображение займет доступную ширину */
+  max-width: 250px; /* Устанавливаем максимальную ширину 250px */
+  height: auto; /* Сохраняем пропорции */
+  display: block;
+  margin-bottom: 15px;
+  border-radius: 3px;
+  box-shadow: 0 1px 5px rgba(0,0,0,0.1);
+}
+
+/* Добавляем новый блок */
+.painting-image-wrapper {
+  width: 250px; /* Фиксированная ширина контейнера */
+  height: 180px; /* Фиксированная высота контейнера (например, соотношение 4:3) */
+  margin-bottom: 15px; /* Отступ под контейнером */
+  overflow: hidden; /* Обрезаем все, что выходит за рамки контейнера */
+  border-radius: 3px;
+  box-shadow: 0 1px 5px rgba(0,0,0,0.1);
+  display: flex; /* Для центрирования изображения */
+  justify-content: center;
+  align-items: center;
+  background-color: #f0f0f0; /* Фоновый цвет, если изображение не загрузилось */
+}
+
+/* Дополнительный класс для отображения одной картины (больше размер) */
+.single-painting-image-wrapper {
+    width: 400px; /* Увеличим ширину для одиночного просмотра */
+    height: 300px; /* Увеличим высоту для одиночного просмотра */
+    box-shadow: 0 5px 20px rgba(0,0,0,0.15); /* Более выразительная тень */
+}
+
+
+/* Модифицируем существующий блок */
+.painting-card .painting-image {
+  width: 100%; /* Изображение будет заполнять всю ширину обертки */
+  height: 100%; /* Изображение будет заполнять всю высоту обертки */
+  object-fit: cover; /* Обрезает изображение, чтобы оно полностью заполнило контейнер, сохраняя пропорции */
+  object-position: center; /* Центрирует изображение внутри контейнера */
+  display: block; /* Убираем лишние отступы */
+  border-radius: 0; /* Скругление углов будет у обертки */
+  box-shadow: none; /* Тень будет у обертки */
+  margin-bottom: 0; /* Отступ будет у обертки */
+}
+
+.footer-text {
+    text-align: center;
+    margin: 0;
+    padding: 10px 0;
+}
