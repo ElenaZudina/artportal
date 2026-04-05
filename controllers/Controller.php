@@ -3,7 +3,7 @@ class Controller {
 
     public static function StartSite() {
         $arr = Paintings::getLast10Paintings();// Обращаемся к модели к методу получения последних 10 картин
-        include_once 'views/paintings.php';// Подключаем представление для отображения списка картин на главной странице
+        include_once 'views/partials/paintings.php';// Подключаем представление для отображения списка картин на главной странице
         include_once 'views/home.php';// Подключаем представление для отображения главной страницы, если нужно добавить дополнительный контент
     }
 
