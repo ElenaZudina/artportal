@@ -6,8 +6,8 @@ class Controller {
         include_once 'views/start.php';
     }
 
-    public static function  AllStyle() {
-        $arr = Style::getAllStyle();
+    public static function AllStyle() {
+        $arr = Styles::getAllStyles();
         include_once 'views/style.php';
     }
 
@@ -22,7 +22,7 @@ class Controller {
     }
 
     public static function PaintingByID($id) {
-        $n = Paintings::getPaintingByID($id);
+        $item = Paintings::getPaintingByID($id);
         include_once 'views/viewpainting.php';
     }
 
