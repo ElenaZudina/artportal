@@ -2,7 +2,7 @@
 // Файл для запуска проекта
 session_start();
 include_once 'config/Database.php';
-require 'models/Style.php';
+require 'models/Styles.php';
 require 'models/Paintings.php';
 // Добавляю этот код на следующем этапе
 //require 'models/Comments.php';
