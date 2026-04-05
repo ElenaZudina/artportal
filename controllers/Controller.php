@@ -6,8 +6,8 @@ class Controller {
         include_once 'views/start.php';
     }
 
-    public static function AllStyle() {
-        $arr = Styles::getAllStyles();
+    public static function AllStyles() {
+        $arr = Style::getAllStyles();
         include_once 'views/style.php';
     }
 
