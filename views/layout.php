@@ -20,7 +20,7 @@
                 <li><a href="#">Styles<i class="fa fa-angle-down"></i></a>
                     <ul class="submenu">
                         <?php
-                        Controller::AllStyle();
+                        Controller::AllStyles();
                         ?>
                     </ul>
                 </li>
