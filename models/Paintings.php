@@ -26,7 +26,7 @@ class Paintings{
         FROM paintings
         JOIN styles ON paintings.style_id = styles.id
         JOIN artists ON paintings.artist_id = artists.id
-        JOIN users ON paintings.user_id = users.id
+        JOIN users ON artists.user_id = users.id
         WHERE paintings.id = ? ";
         $db = new Database();
         $arr = $db->getOne($query, [$id]);
