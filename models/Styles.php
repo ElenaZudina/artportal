@@ -1,5 +1,5 @@
 <?php
-class Style {
+class Styles {
 
     public static function getAllStyles() {
         $query = "SELECT * FROM styles" ;
