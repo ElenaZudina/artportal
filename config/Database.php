@@ -17,7 +17,7 @@ class Database {
         $this->host = $_ENV['DB_HOST'] ?? 'localhost';
         $this->user = $_ENV['DB_USER'] ?? 'root';
         $this->password = $_ENV['DB_PASSWORD'] ?? '';
-        $this->baseName = $_ENV['DB_NAME'] ?? 'artportal';
+        $this->baseName = $_ENV['DB_NAME'] ?? 'art_portal';
         //$this->connect(); убрала автоматическое подключение 
         //при создании объекта, чтобы не было лишних подключений при каждом новом объекте
     }
