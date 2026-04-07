@@ -19,6 +19,7 @@ class Controller {
 
      public static function PaintingsByStyleID($id) {
         $arr = Paintings::getPaintingsByStyleID($id);
+        include_once 'views/partials/paintings.php';
         include_once 'views/paintings_by_style.php';
     }
 
