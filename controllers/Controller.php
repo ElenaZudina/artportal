@@ -9,7 +9,7 @@ class Controller {
 
     public static function AllStyles() {
         $arr = Styles::getAllStyles();
-        include_once 'views/partials/styles.php';
+        include_once 'views/partials/menu_styles.php';
     }
 
     public static function AllPaintings() {
