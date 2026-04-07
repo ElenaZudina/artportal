@@ -27,7 +27,7 @@ elseif($path == 'paintings') {
     }
 }
 elseif($path == 'artists') {
-    $response = Controller::Artists();
+    $response = Controller::AllArtists();
 }
 elseif($path == 'artist') {
     if ($id > 0) {

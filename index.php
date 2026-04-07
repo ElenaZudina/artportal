@@ -4,6 +4,7 @@ session_start();
 include_once 'config/Database.php';
 require 'models/Styles.php';
 require 'models/Paintings.php';
+require 'models/Artists.php';
 // Добавляю этот код на следующем этапе
 //require 'models/Comments.php';
 //require 'models/Register.php';
