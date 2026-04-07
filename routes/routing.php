@@ -26,6 +26,16 @@ elseif($path == 'paintings') {
         $response = Controller::error404();
     }
 }
+elseif($path == 'artists') {
+    $response = Controller::Artists();
+}
+elseif($path == 'artist') {
+    if ($id > 0) {
+        $response = Controller::ArtistByID($id); 
+    } else {
+        $response = Controller::error404();
+    }
+}
 /*
 elseif($path == 'insertcomment' and isset($_GET['comment'],$_GET['id'])) {
     $response = Controller::InsertComment($_GET['comment'],$_GET['id']);

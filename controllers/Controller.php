@@ -30,6 +30,18 @@ class Controller {
         include_once 'views/viewpainting.php';
     }
 
+     public static function AllArtists() {
+        $arr = Artists::getAllArtists();
+        include_once 'views/partials/artists.php';
+        include_once 'views/allartists.php';
+    }
+
+    public static function ArtistByID($id) {
+        $item = Artists::getArtistByID($id);
+        include_once 'views/partials/artists.php';
+        include_once 'views/viewartist.php';
+    }
+
     public static function error404() {
         include_once 'views/error404.php';
     }
