@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Хост: 127.0.0.1
--- Время создания: Мар 25 2026 г., 11:43
+-- Время создания: Апр 07 2026 г., 15:22
 -- Версия сервера: 10.4.32-MariaDB
 -- Версия PHP: 8.2.12
 
@@ -18,7 +18,7 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- База данных: `painters`
+-- База данных: `art_portal`
 --
 
 -- --------------------------------------------------------
@@ -114,12 +114,12 @@ CREATE TABLE `paintings` (
 --
 
 INSERT INTO `paintings` (`id`, `title`, `description`, `image`, `year_created`, `style_id`, `artist_id`) VALUES
-(3, 'Cute Ginger Cat', 'Cute Ginger Cat is a charming original painting depicting a sweet ginger cat with a warm, playful character. Painted in acrylic on cardboard, this one-of-a-kind artwork brings coziness and gentle emotion to any space. Perfect for cat lovers and collectors of unique art.', 'images/test.jpg', '2021', 2, 1),
-(4, 'Evening Istanbul', 'A quiet evening unfolds over Istanbul as warm city lights meet the deep blue of the Bosphorus. A solitary cat watches the scene, adding a poetic touch to this impressionistic oil painting. Rich textures and atmospheric colors capture the charm of the city at dusk. Painted on high-quality 290 gsm artist paper, the artwork is signed by the artist on both the front and back and comes with a certificate of authenticity.', 'images/test.jpg', '2001', 3, 2),
-(9, 'Sailing Boats on the Sea', 'Sailing Boats on the Sea is an original impressionist oil painting depicting graceful sailboats drifting across calm waters. Soft blue and beige tones create a peaceful, airy mood, while expressive palette knife textures add depth and gentle movement. A serene coastal artwork that brings a sense of freedom and tranquility to any interior.', 'mages/test.jpg', '2025', 3, 2),
-(10, 'The Horizon’s Fiery Dance', 'The Horizon’s Fiery Dance is a vibrant acrylic seascape filled with movement, energy, and bold color. Racing sailboats cut through the waves as they head toward a glowing, swirling sun on the horizon. Dynamic brushstrokes of red, orange, and deep blue create a dramatic sky, evoking wind, speed, and freedom.\r\n\r\nExpressive and powerful, this one-of-a-kind artwork captures the raw emotion of the sea and the thrill of motion. Painted in acrylic on stretched canvas, it makes a striking focal point for a modern interior and comes with a certificate of authenticity.', 'mages/test.jpg', '1987', 3, 1),
-(11, 'Lemons on the Table', '“Lemons on the Table” is an original 3D oil painting featuring vibrant citrus fruits. Rich texture created with oil paint and marble-chip putty adds depth and tactile appeal. A small yet expressive still life that brings freshness and light into any interior.', 'mages/test.jpg', '2024', 4, 3),
-(12, 'After the Rain on a Quiet Irish Street', 'After the Rain on a Quiet Irish Street is an original acrylic painting that captures a fleeting moment of calm after rainfall. Wet pavement reflects soft light and passing figures, while a small café and flowering windows add warmth and life to the scene. Painted in an impressionist style, expressive brushstrokes and layered color create depth and mood without over-detail.\r\n\r\nThis one-of-a-kind artwork celebrates everyday street life, gentle movement, and the romantic atmosphere of a rainy day in a European town. The painted, staple-free canvas edges make it ready to hang without framing—perfect for a living room, hallway, or as a thoughtful gift for lovers of travel and atmospheric cityscapes.', 'mages/test.jpg', '2026', 3, 4);
+(3, 'Cute Ginger Cat', 'Cute Ginger Cat is a charming original painting depicting a sweet ginger cat with a warm, playful character. Painted in acrylic on cardboard, this one-of-a-kind artwork brings coziness and gentle emotion to any space. Perfect for cat lovers and collectors of unique art.', 'test.jpg', '2021', 2, 1),
+(4, 'Evening Istanbul', 'A quiet evening unfolds over Istanbul as warm city lights meet the deep blue of the Bosphorus. A solitary cat watches the scene, adding a poetic touch to this impressionistic oil painting. Rich textures and atmospheric colors capture the charm of the city at dusk. Painted on high-quality 290 gsm artist paper, the artwork is signed by the artist on both the front and back and comes with a certificate of authenticity.', 'test.jpg', '2001', 3, 2),
+(9, 'Sailing Boats on the Sea', 'Sailing Boats on the Sea is an original impressionist oil painting depicting graceful sailboats drifting across calm waters. Soft blue and beige tones create a peaceful, airy mood, while expressive palette knife textures add depth and gentle movement. A serene coastal artwork that brings a sense of freedom and tranquility to any interior.', 'test.jpg', '2025', 3, 2),
+(10, 'The Horizon’s Fiery Dance', 'The Horizon’s Fiery Dance is a vibrant acrylic seascape filled with movement, energy, and bold color. Racing sailboats cut through the waves as they head toward a glowing, swirling sun on the horizon. Dynamic brushstrokes of red, orange, and deep blue create a dramatic sky, evoking wind, speed, and freedom.\r\n\r\nExpressive and powerful, this one-of-a-kind artwork captures the raw emotion of the sea and the thrill of motion. Painted in acrylic on stretched canvas, it makes a striking focal point for a modern interior and comes with a certificate of authenticity.', 'test.jpg', '1987', 3, 1),
+(11, 'Lemons on the Table', '“Lemons on the Table” is an original 3D oil painting featuring vibrant citrus fruits. Rich texture created with oil paint and marble-chip putty adds depth and tactile appeal. A small yet expressive still life that brings freshness and light into any interior.', 'test.jpg', '2024', 4, 3),
+(12, 'After the Rain on a Quiet Irish Street', 'After the Rain on a Quiet Irish Street is an original acrylic painting that captures a fleeting moment of calm after rainfall. Wet pavement reflects soft light and passing figures, while a small café and flowering windows add warmth and life to the scene. Painted in an impressionist style, expressive brushstrokes and layered color create depth and mood without over-detail.\r\n\r\nThis one-of-a-kind artwork celebrates everyday street life, gentle movement, and the romantic atmosphere of a rainy day in a European town. The painted, staple-free canvas edges make it ready to hang without framing—perfect for a living room, hallway, or as a thoughtful gift for lovers of travel and atmospheric cityscapes.', 'test.jpg', '2026', 3, 4);
 
 -- --------------------------------------------------------
 
