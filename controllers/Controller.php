@@ -14,6 +14,7 @@ class Controller {
 
     public static function AllPaintings() {
         $arr = Paintings::getAllPaintings();
+        include_once 'views/partials/paintings.php';
         include_once 'views/allpaintings.php';
     }
 
