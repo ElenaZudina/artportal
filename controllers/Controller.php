@@ -8,8 +8,8 @@ class Controller {
     }
 
     public static function AllStyles() {
-        $arr = Style::getAllStyles();
-        include_once 'views/style.php';
+        $arr = Styles::getAllStyles();
+        include_once 'views/partials/styles.php';
     }
 
     public static function AllPaintings() {
@@ -24,6 +24,7 @@ class Controller {
 
     public static function PaintingByID($id) {
         $item = Paintings::getPaintingByID($id);
+        include_once 'views/partials/paintings.php';
         include_once 'views/viewpainting.php';
     }
 
