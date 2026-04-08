@@ -15,9 +15,7 @@ class Artists {
     }
 
      public static function getArtistByID($id) {
-        $query = "SELECT artists.*, paintings.title
-        FROM artists
-        LEFT JOIN paintings ON paintings.artist_id = artists.id
+        $query = "SELECT * FROM artists
         WHERE artists.id = ? ";
         $db = new Database();
         $arr = $db->getOne($query, [$id]);

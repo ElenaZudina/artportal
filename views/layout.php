@@ -1,22 +1,24 @@
 <!DOCTYPE html>
 <html lang="en">
     <head>
-        <title>Art Portal</title>
-            <!-- Bootstrap не использую -->
-            <!-- <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
-             integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2M2w1T"
-             crossorigin="anonymous" -->
-             <link rel= "stylesheet" type ="text/css" href="public/css/style.css">
-        <link href="https://fonts.googleapis.com/css?family=Noto+Serif" rel="stylesheet">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <meta charset="utf-8">
-
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Art Portal</title>
+            <!-- Bootstrap 5.3 CSS -->
+             <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-..." crossorigin="anonymous">
+             <!-- Custom CSS -->
+             <link rel= "stylesheet" type ="text/css" href="public/css/style.css">
+             <!-- Google Fonys -->
+            <link href="https://fonts.googleapis.com/css?family=Noto+Serif" rel="stylesheet">
     </head>
     <body>
         <header>
             <h1>Art Portal</h1>
             <nav class="one">
             <ul class="topmenu">
+                <li><a href="./">Home</a></li>
+                <li><a href="testError">Info</a></li>
+                <li><a href="artists">Artists</a></li>
                 <li><a href="#">Styles<i class="fa fa-angle-down"></i></a>
                     <ul class="submenu">
                         <?php
@@ -24,9 +26,6 @@
                         ?>
                     </ul>
                 </li>
-                <li><a href="./">Homepage</a></li>
-                <li><a href="testError">Info</a></li>
-                <li><a href="artists">Artists</a></li>
                 <li><a href="registerForm">Register</a></li>
             </ul>
         </nav>

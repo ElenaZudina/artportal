@@ -21,7 +21,14 @@ class Paintings{
         return $arr;
     }
 
-     public static function getPaintingByID($id) {
+    public static function getPaintingsByArtistID($id) {
+        $query = "SELECT title, image FROM paintings where artist_id = ? ORDER BY id DESC";
+        $db = new Database();
+        $arr = $db->getAll($query, [$id]);
+        return $arr;
+    }
+
+    public static function getPaintingByID($id) {
         $query = "SELECT paintings.*, styles.name AS style_name, artists.name as artist_name, users.username
         FROM paintings
         JOIN styles ON paintings.style_id = styles.id

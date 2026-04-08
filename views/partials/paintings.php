@@ -15,6 +15,24 @@ class ViewPaintings{
         echo '</div>'; // Закрываем общий контейнер
     }
 
+    public static function PaintingsGrid($arr) {
+        echo '<div class="row g-3">';
+        foreach($arr as $value) {
+            echo '<div class="col-sm-6">'; // Адаптивные колонки
+            echo '<div class="painting-card">';
+                echo '<div class="painting-image-wrapper">'; // Новая обертка
+                    echo '<img src="images/' .htmlspecialchars( $value['image'], ENT_QUOTES, 'UTF-8' ).'" class="painting-image" alt="' . htmlspecialchars($value['title'], ENT_QUOTES, 'UTF-8') . '">'; // Изображение внутри обертки
+                echo '</div>'; // Закрываем обертку
+                echo '<h3>' . htmlspecialchars($value['title'], ENT_QUOTES, 'UTF-8') . '</h3>';
+                //Controller::CommentsCount($value['id']); будет добавлено позже, когда будет реализована модель комментариев
+                echo '<a href="paintings?id=' . $value['id'] . '" class="btn-view-details">View details</a>';
+            echo '</div>'; // Закрываем карточку
+            echo '</div>'; // Закрываем колонки
+        }
+        echo '</div>'; // Закрываем общий контейнер
+    }
+  
+
     public static function OnePainting($item) {
         echo "<h2>".$item['title']."</h2>";
         //Controller::CommentsCountWithAncor($item['id']); ПОЗЖЕ
