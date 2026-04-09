@@ -12,9 +12,9 @@ if($path == '' || $path == 'index' || $path == 'index.php') {
 elseif($path == 'all') {
     $response = Controller::AllPaintings();
 }
-elseif($path == 'style') {
+elseif($path == 'category') {
     if ($id > 0) {
-        $response = Controller::PaintingsByStyleID($id);
+        $response = Controller::PaintingsByCategoryID($id);
     } else {
     $response = Controller::error404();
     }

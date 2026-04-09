@@ -9,9 +9,9 @@ class Controller {
         include_once 'views/home.php';// Подключаем представление для отображения главной страницы, если нужно добавить дополнительный контент
     }
 
-    public static function AllStyles() {
-        $arr = Styles::getAllStyles();
-        include_once 'views/partials/menu_styles.php';
+    public static function AllCategories() {
+        $arr = Categories::getAllCategories();
+        include_once 'views/partials/menu_categories.php';
     }
 
     public static function AllPaintings() {
@@ -20,10 +20,10 @@ class Controller {
         include_once 'views/allpaintings.php';
     }
 
-     public static function PaintingsByStyleID($id) {
-        $arr = Paintings::getPaintingsByStyleID($id);
+     public static function PaintingsByCategoryID($id) {
+        $arr = Paintings::getPaintingsByCategoryID($id);
         include_once 'views/partials/paintings.php';
-        include_once 'views/paintings_by_style.php';
+        include_once 'views/paintings_by_category.php';
     }
 
     public static function PaintingByID($id) {

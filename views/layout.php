@@ -19,10 +19,10 @@
                 <li><a href="./">Home</a></li>
                 <li><a href="testError">Info</a></li>
                 <li><a href="artists">Artists</a></li>
-                <li><a href="#">Styles<i class="fa fa-angle-down"></i></a>
+                <li><a href="#">Categories<i class="fa fa-angle-down"></i></a>
                     <ul class="submenu">
                         <?php
-                        Controller::AllStyles();
+                        Controller::AllCategories();
                         ?>
                     </ul>
                 </li>

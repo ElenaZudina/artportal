@@ -42,7 +42,7 @@ class ViewPaintings{
         echo "<br><br>";
         echo "<p>".$item['artist_name']."</p>";
         echo "<p>".$item['year_created']."</p>";
-        echo "<p>".$item['style_name']."</p>";
+        echo "<p>".$item['category_name']."</p>";
         echo "<p>".$item['description']."</p>";
     }
     // добавить методы вывода для других представленных новостей
