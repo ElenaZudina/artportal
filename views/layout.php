@@ -7,30 +7,39 @@
             <!-- Bootstrap 5.3 CSS -->
              <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-..." crossorigin="anonymous">
              <!-- Custom CSS -->
-             <link rel= "stylesheet" type ="text/css" href="public/css/style.css">
+             <!-- <link rel= "stylesheet" type ="text/css" href="public/css/style.css"> -->
              <!-- Google Fonys -->
             <link href="https://fonts.googleapis.com/css?family=Noto+Serif" rel="stylesheet">
     </head>
     <body>
         <header>
-            <h1>Art Portal</h1>
-            <nav class="one">
-            <ul class="topmenu">
-                <li><a href="./">Home</a></li>
-                <li><a href="testError">Info</a></li>
-                <li><a href="artists">Artists</a></li>
-                <li><a href="#">Categories<i class="fa fa-angle-down"></i></a>
-                    <ul class="submenu">
-                        <?php
-                        Controller::AllCategories();
-                        ?>
-                    </ul>
-                </li>
-                <li><a href="registerForm">Register</a></li>
-            </ul>
-        </nav>
+            <h1 class="visually-hidden">Art Portal</h1>
+            <nav class="navbar navbar-expand-lg bg-white">
+                <div class="container">
+                    <a class="navbar-brand" href="./">Art Portal</a>
+                    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarContent" aria-controls="navbarContent" aria-expanded="false" aria-label="Toggle navigation">
+                        <span class="navbar-toggler-icon"></span>
+                        </button>
+                    <div class="collapse navbar-collapse" id="navbarContent">
+                        <ul class="navbar-nav ms-auto">
+                            <li class="nav-item"><a class="nav-link" href="./">Home</a></li>
+                            <li class="nav-item"><a class="nav-link" href="testError">Info</a></li>
+                            <li class="nav-item"><a class="nav-link" href="artists">Artists</a></li>
+                            <li class="nav-item dropdown">
+                                <a class="nav-link dropdown-toggle" href="#" id="categoriesDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">Categories</a>
+                                <ul class="dropdown-menu" aria-labelledby="categoriesDropdown">
+                                    <?php
+                                        Controller::AllCategories();
+                                    ?>
+                                </ul>
+                            </li>
+                            <li class="nav-item"><a class="nav-link" href="registerForm">Register</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </nav>
         </header>
-        <main class = "container">
+        <main class = "container my-5">
             <?php
                 if (isset($content)) {
                     echo $content;
@@ -40,9 +49,10 @@
                 }
             ?>
         </main>
-        <hr>
-        <footer>
-             <p class = "footer-text">JKTV24 2026a. &copy</p>
+        <footer class="container text-center py-4">
+             <p class="mb-0">JKTV24 2026a. &copy</p>
         </footer>
+        <!-- Bootstrap 5.3 JS Bundle with Popper -->
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-..." crossorigin="anonymous"></script>
     </body>
 </html>
