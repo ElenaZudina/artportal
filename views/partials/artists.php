@@ -1,26 +1,31 @@
 <?php
 class ViewArtists{
     public static function ArtistsList($arr) {
-        echo '<div class="container my-4 painting-list-container">';
-        foreach($arr as $value) {
-            echo '<div class="painting-card">';
-                echo '<div class="painting-image-wrapper">'; // Новая обертка
-                    echo '<img src="images/' .htmlspecialchars( $value['picture'], ENT_QUOTES, 'UTF-8' ).'" class="painting-image" alt="' . htmlspecialchars($value['name'], ENT_QUOTES, 'UTF-8') . '">'; // Изображение внутри обертки
-                echo '</div>'; // Закрываем обертку
-                echo '<h3>' . htmlspecialchars($value['name'], ENT_QUOTES, 'UTF-8') . '</h3>';
-                //Controller::CommentsCount($value['id']); будет добавлено позже, когда будет реализована модель комментариев
-                echo '<a href="artist?id=' . $value['id'] . '" class="btn-view-details">View details</a>';
-            echo '</div>'; // Закрываем карточку
+        echo '<div class="container my-4">'; //общий контейнер
+        echo '<div class="row g-4">'; // ряд для карточек
+            foreach($arr as $value) {
+                echo '<div class="col-sm-6 col-md-4 col-lg-4">'; // Адаптивные колонки
+                echo '<div class="card h-100 p-3">'; // карточка
+                    echo '<img src="images/' .htmlspecialchars( $value['picture'], ENT_QUOTES, 'UTF-8' ).'" class="rounded-circle mx-auto mb-3" alt="' . htmlspecialchars($value['name'], ENT_QUOTES, 'UTF-8') . '">'; // Изображение внутри обертки
+                    echo '<div class="card-body">';
+                        echo '<h5 class="card-title">' . htmlspecialchars($value['name'], ENT_QUOTES, 'UTF-8') . '</h5>';
+                        //Controller::CommentsCount($value['id']); будет добавлено позже, когда будет реализована модель комментариев
+                        echo '<a href="artist?id=' . $value['id'] . '" class="btn btn-primary mt-2">View details</a>';
+                    echo '</div>'; // Закрываем card-body
+                echo '</div>'; // Закрываем карточку
+                echo '</div>'; // Закрываем колонки
         }
-        echo '</div>'; // Закрываем общий контейнер
+        echo '</div>'; // Закрываем ряд
+        echo '</div>'; // закрываем общий контейнер
     }
 
     public static function SingleArtist($item) {
+        echo '<div class="container my-4">'; //общий контейнер
         echo "<h2 class='mb-4'>".$item['name']."</h2>";
         //Controller::CommentsCountWithAncor($item['id']); ПОЗЖЕ
-        echo '<div class="container my-4">'; 
-            echo '<img src="images/' . htmlspecialchars( $item['picture'], ENT_QUOTES, 'UTF-8' ) . '" class="painting-image" alt="' . htmlspecialchars($item['name'], ENT_QUOTES, 'UTF-8') . '" />'; // Изображение внутри обертки
-        echo '</div>'; // Закрываем обертку
+        
+        echo '<img src="images/' . htmlspecialchars( $item['picture'], ENT_QUOTES, 'UTF-8' ) . '" class="painting-image" alt="' . htmlspecialchars($item['name'], ENT_QUOTES, 'UTF-8') . '" />'; // Изображение внутри обертки
+      
         //echo "<br><br>";
         echo "<h3 class='mb-3'>Birth Date</h3>";
         //echo "<p>".$item['name']."</p>";
@@ -52,6 +57,8 @@ class ViewArtists{
         //echo "<p>".$item['title']."</p>";    
         //echo '<img src="images/' . htmlspecialchars( $item['picture'], ENT_QUOTES, 'UTF-8' ) . '" class="painting-image" alt="' . htmlspecialchars($item['name'], ENT_QUOTES, 'UTF-8') . '" />'; // Изображение внутри обертки
         //echo '</div>'; // Закрываем обертку
+
+        echo '</div>'; // закрываем общий контейнер
     }
     // добавить методы вывода для других представленных новостей
 
