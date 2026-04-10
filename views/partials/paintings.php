@@ -1,49 +1,77 @@
 <?php
 class ViewPaintings{
     public static function PaintingsList($arr) {
-        echo '<div class="painting-list-container">';
+        echo '<div class="container my-4">';
+        echo '<div class="row">';
         foreach($arr as $value) {
-            echo '<div class="painting-card">';
-                echo '<div class="painting-image-wrapper">'; // Новая обертка
-                    echo '<img src="images/' .htmlspecialchars( $value['image'], ENT_QUOTES, 'UTF-8' ).'" class="painting-image" alt="' . htmlspecialchars($value['title'], ENT_QUOTES, 'UTF-8') . '">'; // Изображение внутри обертки
-                echo '</div>'; // Закрываем обертку
-                echo '<h3>' . htmlspecialchars($value['title'], ENT_QUOTES, 'UTF-8') . '</h3>';
-                //Controller::CommentsCount($value['id']); будет добавлено позже, когда будет реализована модель комментариев
-                echo '<a href="paintings?id=' . $value['id'] . '" class="btn-view-details">View details</a>';
-            echo '</div>'; // Закрываем карточку
+            echo '<div class="col-12 mb-4">'; // Полная ширина для вертикального списка
+                echo '<div class="card h-100">';
+                    echo '<div class="row g-0">';
+                        echo '<div class="col-md-4">';
+                            echo '<img src="images/' .htmlspecialchars( $value['image'] ?? 'test.jpg', ENT_QUOTES, 'UTF-8' ).'" class="img-fluid rounded-start" alt="' . htmlspecialchars($value['title'], ENT_QUOTES, 'UTF-8') . '">';
+                        echo '</div>';
+                        echo '<div class="col-md-8">';
+                            echo '<div class="card-body">';
+                                echo '<h5 class="card-title">' . htmlspecialchars($value['title'], ENT_QUOTES, 'UTF-8') . '</h5>';
+                                //Controller::CommentsCount($value['id']); будет добавлено позже, когда будет реализована модель комментариев
+                                echo '<a href="paintings?id=' . $value['id'] . '" class="btn btn-primary">View details</a>';
+                            echo '</div>';
+                        echo '</div>';
+                    echo '</div>';
+                echo '</div>';
+            echo '</div>';
         }
-        echo '</div>'; // Закрываем общий контейнер
+        echo '</div>';
+        echo '</div>';
     }
 
     public static function PaintingsGrid($arr) {
-        echo '<div class="row g-3">';
+        echo '<div class="container my-4">';
+        echo '<div class="row g-4">';
         foreach($arr as $value) {
-            echo '<div class="col-sm-6">'; // Адаптивные колонки
-            echo '<div class="painting-card">';
-                echo '<div class="painting-image-wrapper">'; // Новая обертка
-                    echo '<img src="images/' .htmlspecialchars( $value['image'], ENT_QUOTES, 'UTF-8' ).'" class="painting-image" alt="' . htmlspecialchars($value['title'], ENT_QUOTES, 'UTF-8') . '">'; // Изображение внутри обертки
-                echo '</div>'; // Закрываем обертку
-                echo '<h3>' . htmlspecialchars($value['title'], ENT_QUOTES, 'UTF-8') . '</h3>';
-                //Controller::CommentsCount($value['id']); будет добавлено позже, когда будет реализована модель комментариев
-                echo '<a href="paintings?id=' . $value['id'] . '" class="btn-view-details">View details</a>';
-            echo '</div>'; // Закрываем карточку
-            echo '</div>'; // Закрываем колонки
+            echo '<div class="col-sm-6 col-md-4 col-lg-4">'; // Адаптивные колонки
+                echo '<div class="card h-100">';
+                    echo '<img src="images/' .htmlspecialchars( $value['image'] ?? 'test.jpg', ENT_QUOTES, 'UTF-8' ).'" class="card-img-top" alt="' . htmlspecialchars($value['title'], ENT_QUOTES, 'UTF-8') . '">';
+                    echo '<div class="card-body">';
+                        echo '<h5 class="card-title">' . htmlspecialchars($value['title'], ENT_QUOTES, 'UTF-8') . '</h5>';
+                        //Controller::CommentsCount($value['id']); будет добавлено позже, когда будет реализована модель комментариев
+                        echo '<a href="paintings?id=' . $value['id'] . '" class="btn btn-primary">View details</a>';
+                    echo '</div>';
+                echo '</div>';
+            echo '</div>';
         }
-        echo '</div>'; // Закрываем общий контейнер
+        echo '</div>';
+        echo '</div>';
     }
   
 
     public static function OnePainting($item) {
-        echo "<h2>".$item['title']."</h2>";
-        //Controller::CommentsCountWithAncor($item['id']); ПОЗЖЕ
-        echo '<div class="painting-image-wrapper single-painting-image-wrapper">'; // Новая обертка для одиночной картины
-            echo '<img src="images/' . htmlspecialchars( $item['image'], ENT_QUOTES, 'UTF-8' ) . '" class="painting-image" alt="' . htmlspecialchars($item['title'], ENT_QUOTES, 'UTF-8') . '" />'; // Изображение внутри обертки
-        echo '</div>'; // Закрываем обертку
-        echo "<br><br>";
-        echo "<p>".$item['artist_name']."</p>";
-        echo "<p>".$item['year_created']."</p>";
-        echo "<p>".$item['category_name']."</p>";
-        echo "<p>".$item['description']."</p>";
+        echo '<div class="container my-4">';
+            echo '<div class="row align-items-start">';
+                // Левая колонка: Изображение
+                echo '<div class="col-12 col-md-6 mb-4 mb-md-0">';
+                    echo '<img src="images/' . htmlspecialchars( $item['image'] ?? 'test.jpg', ENT_QUOTES, 'UTF-8' ) . '" class="img-fluid rounded" alt="' . htmlspecialchars($item['title'], ENT_QUOTES, 'UTF-8') . '" />';
+                echo '</div>';
+                
+                // Правая колонка: Описание
+                echo '<div class="col-12 col-md-6">';
+                    echo "<h2 class='mb-4'>".$item['title']."</h2>";
+                    //Controller::CommentsCountWithAncor($item['id']); ПОЗЖЕ
+                    
+                    echo "<h4 class='mb-3'>Artist</h4>";
+                    echo "<p>".$item['artist_name']."</p>";
+                    
+                    echo "<h4 class='mb-3'>Year Created</h4>";
+                    echo "<p>".$item['year_created']."</p>";
+                    
+                    echo "<h4 class='mb-3'>Category</h4>";
+                    echo "<p>".$item['category_name']."</p>";
+                    
+                    echo "<h4 class='mb-3'>Description</h4>";
+                    echo "<p>".$item['description']."</p>";
+                echo '</div>';
+            echo '</div>';
+        echo '</div>';
     }
     // добавить методы вывода для других представленных новостей
 
