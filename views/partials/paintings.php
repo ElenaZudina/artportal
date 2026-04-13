@@ -34,6 +34,15 @@ class ViewPaintings{
                     echo '<img src="images/' .htmlspecialchars( $value['image'] ?? 'test.jpg', ENT_QUOTES, 'UTF-8' ).'" class="card-img-top" alt="' . htmlspecialchars($value['title'], ENT_QUOTES, 'UTF-8') . '">';
                     echo '<div class="card-body">';
                         echo '<h5 class="card-title">' . htmlspecialchars($value['title'], ENT_QUOTES, 'UTF-8') . '</h5>';
+                        echo '<p class="card-text mb-1">';
+                        echo 'Artist: ' . htmlspecialchars($value['artist_name'] ?? 'Unknown', ENT_QUOTES, 'UTF-8') . '<br>';
+                        echo '</p>';
+                        echo '<p class="card-text mb-1">';
+                        echo 'Category: ' . htmlspecialchars($value['category'] ?? 'Unknown', ENT_QUOTES, 'UTF-8') . '<br>';
+                        echo '</p>';
+                         echo '<p class="card-text mb-1">';
+                        echo 'Price: ' . htmlspecialchars($value['price'] ?? 'Unknown', ENT_QUOTES, 'UTF-8') . '<br>';
+                        echo '</p>';
                         //Controller::CommentsCount($value['id']); будет добавлено позже, когда будет реализована модель комментариев
                         echo '<a href="paintings?id=' . $value['id'] . '" class="btn btn-primary">View details</a>';
                     echo '</div>';

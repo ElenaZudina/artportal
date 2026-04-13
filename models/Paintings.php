@@ -1,21 +1,48 @@
 <?php
 class Paintings{
     public static function getLast10Paintings() {
-        $query = "SELECT * FROM paintings ORDER BY id DESC LIMIT 10";
+        $query = "
+            SELECT
+                paintings.*,
+                artists.name AS artist_name,
+                categories.name AS category
+            FROM paintings
+            JOIN artists ON paintings.artist_id = artists.id
+            JOIN categories ON paintings.category_id = categories.id
+            ORDER BY paintings.id DESC
+            LIMIT 10
+        ";
         $db = new Database();
         $arr = $db->getAll($query);
         return $arr;
     }
 
     public static function getAllPaintings() {
-        $query = "SELECT * FROM paintings ORDER BY id DESC";
+       $query = "
+            SELECT
+                paintings.*,
+                artists.name AS artist_name,
+                categories.name AS category
+            FROM paintings
+            JOIN artists ON paintings.artist_id = artists.id
+            JOIN categories ON paintings.category_id = categories.id
+            ORDER BY paintings.id DESC
+        ";
         $db = new Database();
         $arr = $db->getAll($query);
         return $arr;
     }
 
     public static function getPaintingsByCategoryID($id) {
-        $query = "SELECT * FROM paintings where category_id = ? ORDER BY id DESC";
+        $query = "
+            SELECT
+                paintings.*,
+                artists.name AS artist_name
+            FROM paintings
+            JOIN artists ON paintings.artist_id = artists.id
+            WHERE paintings.category_id = ?
+            ORDER BY paintings.id DESC
+        ";
         $db = new Database();
         $arr = $db->getAll($query, [$id]);
         return $arr;
@@ -29,11 +56,11 @@ class Paintings{
     }
 
     public static function getPaintingByID($id) {
-        $query = "SELECT paintings.*, categories.name AS category_name, artists.name as artist_name, users.username
+        $query = "SELECT paintings.*, categories.name AS category_name, artists.name as artist_name
         FROM paintings
         JOIN categories ON paintings.category_id = categories.id
         JOIN artists ON paintings.artist_id = artists.id
-        JOIN users ON artists.user_id = users.id
+        
         WHERE paintings.id = ? ";
         $db = new Database();
         $arr = $db->getOne($query, [$id]);
