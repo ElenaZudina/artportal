@@ -69,15 +69,22 @@ class ViewPaintings{
                     
                     echo "<h4 class='mb-3'>Artist</h4>";
                     echo "<p>".$item['artist_name']."</p>";
-                    
-                    echo "<h4 class='mb-3'>Year Created</h4>";
-                    echo "<p>".$item['year_created']."</p>";
+                    echo "<p><img src='images/" . htmlspecialchars($item['artist_avatar'], ENT_QUOTES, 'UTF-8') . "' alt='Avatar' class='img-thumbnail' style='max-width: 100px;'></p>";
                     
                     echo "<h4 class='mb-3'>Category</h4>";
-                    echo "<p>".$item['category_name']."</p>";
+                    echo "<p>".$item['category_name'] ?? 'Unknown'."</p>";
                     
                     echo "<h4 class='mb-3'>Description</h4>";
-                    echo "<p>".$item['description']."</p>";
+                    echo "<p>".$item['description'] ?? 'Unknown'."</p>";
+
+                    echo "<h4 class='mb-3'>Year Created</h4>";
+                    echo "<p>".$item['year_created'] ?? 'Unknown' ."</p>";
+
+                    echo "<h4 class='mb-3'>Medium</h4>";
+                    echo "<p>".$item['medium'] ?? 'Unknown'."</p>";
+
+                    echo "<h4 class='mb-3'>Dimensions</h4>";
+                    echo "<p>".$item['dimensions'] ?? 'Unknown'."</p>";
                 echo '</div>';
             echo '</div>';
         echo '</div>';

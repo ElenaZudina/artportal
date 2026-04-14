@@ -56,7 +56,7 @@ class Paintings{
     }
 
     public static function getPaintingByID($id) {
-        $query = "SELECT paintings.*, categories.name AS category_name, artists.name as artist_name
+        $query = "SELECT paintings.*, categories.name AS category_name, artists.name AS artist_name, artists.picture AS artist_avatar
         FROM paintings
         JOIN categories ON paintings.category_id = categories.id
         JOIN artists ON paintings.artist_id = artists.id
