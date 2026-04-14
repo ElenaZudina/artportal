@@ -30,7 +30,7 @@ class ViewPaintings{
         echo '<div class="row g-4">';
         foreach($arr as $value) {
             echo '<div class="col-sm-6 col-md-4 col-lg-4">'; // Адаптивные колонки
-                echo '<div class="card h-100">';
+                echo '<div class="card h-100 rounded-5 overflow-hidden">';
                     echo '<img src="images/' .htmlspecialchars( $value['image'] ?? 'test.jpg', ENT_QUOTES, 'UTF-8' ).'" class="card-img-top" alt="' . htmlspecialchars($value['title'], ENT_QUOTES, 'UTF-8') . '">';
                     echo '<div class="card-body">';
                         echo '<h5 class="card-title">' . htmlspecialchars($value['title'], ENT_QUOTES, 'UTF-8') . '</h5>';
@@ -64,27 +64,32 @@ class ViewPaintings{
                 
                 // Правая колонка: Описание
                 echo '<div class="col-12 col-md-6">';
-                    echo "<h2 class='mb-4'>".$item['title']."</h2>";
+                    echo "<h2 class='mb-4'>" . htmlspecialchars($item['title'] ?? 'Unknown', ENT_QUOTES, 'UTF-8') . "</h2>";
                     //Controller::CommentsCountWithAncor($item['id']); ПОЗЖЕ
                     
                     echo "<h4 class='mb-3'>Artist</h4>";
-                    echo "<p>".$item['artist_name']."</p>";
-                    echo "<p><img src='images/" . htmlspecialchars($item['artist_avatar'], ENT_QUOTES, 'UTF-8') . "' alt='Avatar' class='img-thumbnail' style='max-width: 100px;'></p>";
+                    echo "<p>" . htmlspecialchars($item['artist_name'] ?? 'Unknown', ENT_QUOTES, 'UTF-8') . "</p>";
+                    if (!empty($item['artist_avatar'])) {
+                        echo "<p><img src='images/" . htmlspecialchars($item['artist_avatar'] ?? 'test.jpg', ENT_QUOTES, 'UTF-8') . "' alt='Avatar' class='img-thumbnail' style='max-width: 100px;'></p>";
+                    } else {
+                        echo "<p><img src='images/test.jpg' alt='Avatar' class='img-thumbnail' style='max-width: 100px;'></p>";
+                    }
+                    
                     
                     echo "<h4 class='mb-3'>Category</h4>";
-                    echo "<p>".$item['category_name'] ?? 'Unknown'."</p>";
+                    echo "<p>" . htmlspecialchars($item['category_name'] ?? 'Unknown', ENT_QUOTES, 'UTF-8') . "</p>";
                     
                     echo "<h4 class='mb-3'>Description</h4>";
-                    echo "<p>".$item['description'] ?? 'Unknown'."</p>";
+                    echo "<p>" . htmlspecialchars($item['description'] ?? 'Unknown', ENT_QUOTES, 'UTF-8') . "</p>";
 
                     echo "<h4 class='mb-3'>Year Created</h4>";
-                    echo "<p>".$item['year_created'] ?? 'Unknown' ."</p>";
+                    echo "<p>" . htmlspecialchars($item['year_created'] ?? 'Unknown', ENT_QUOTES, 'UTF-8') . "</p>";
 
                     echo "<h4 class='mb-3'>Medium</h4>";
-                    echo "<p>".$item['medium'] ?? 'Unknown'."</p>";
+                    echo "<p>" . htmlspecialchars($item['medium'] ?? 'Unknown', ENT_QUOTES, 'UTF-8') . "</p>";
 
                     echo "<h4 class='mb-3'>Dimensions</h4>";
-                    echo "<p>".$item['dimensions'] ?? 'Unknown'."</p>";
+                    echo "<p>" . htmlspecialchars($item['dimensions'] ?? 'Unknown', ENT_QUOTES, 'UTF-8') . "</p>";
                 echo '</div>';
             echo '</div>';
         echo '</div>';

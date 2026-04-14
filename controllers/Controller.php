@@ -22,6 +22,7 @@ class Controller {
 
      public static function PaintingsByCategoryID($id) {
         $arr = Paintings::getPaintingsByCategoryID($id);
+          $category = Categories::getCategoryByID($id);
         include_once 'views/partials/paintings.php';
         include_once 'views/paintings_by_category.php';
     }

@@ -37,9 +37,11 @@ class Paintings{
         $query = "
             SELECT
                 paintings.*,
-                artists.name AS artist_name
+                artists.name AS artist_name,
+                categories.name AS category
             FROM paintings
             JOIN artists ON paintings.artist_id = artists.id
+            JOIN categories ON paintings.category_id = categories.id
             WHERE paintings.category_id = ?
             ORDER BY paintings.id DESC
         ";
