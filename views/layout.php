@@ -7,16 +7,19 @@
             <!-- Bootstrap 5.3 CSS -->
              <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
              <!-- Custom CSS -->
-             <!-- <link rel= "stylesheet" type ="text/css" href="public/css/style.css"> -->
+             <link rel="stylesheet" type="text/css" href="public/css/style.css">
              <!-- Google Fonys -->
             <link href="https://fonts.googleapis.com/css?family=Noto+Serif" rel="stylesheet">
     </head>
     <body class="d-flex flex-column min-vh-100">
         <header>
-            <h1 class="visually-hidden">Art Portal</h1>
+            <h1 class="visually-hidden">ArtPortal</h1>
             <nav class="navbar navbar-expand-lg bg-white">
                 <div class="container">
-                    <a class="navbar-brand" href="./">Art Portal</a>
+                    <a class="navbar-brand" href="./">
+                        <span class="logo-icon">A</span>
+                        <span class="logo-text">ArtPortal</span>
+                    </a>
                     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarContent" aria-controls="navbarContent" aria-expanded="false" aria-label="Toggle navigation">
                         <span class="navbar-toggler-icon"></span>
                         </button>
