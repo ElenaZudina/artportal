@@ -11,7 +11,7 @@
              <!-- Google Fonys -->
             <link href="https://fonts.googleapis.com/css?family=Noto+Serif" rel="stylesheet">
     </head>
-    <body>
+    <body class="d-flex flex-column min-vh-100">
         <header>
             <h1 class="visually-hidden">Art Portal</h1>
             <nav class="navbar navbar-expand-lg bg-white">
@@ -39,7 +39,7 @@
                 </div>
             </nav>
         </header>
-        <main class = "container my-5">
+        <main class="container my-5 flex-grow-1">
             <?php
                 if (isset($content)) {
                     echo $content;
@@ -50,7 +50,7 @@
             ?>
         </main>
         <footer class="container text-center py-4">
-            <p class="mb-0">ArtPortal. Celebrating painters worldwide..</p>
+            <p class="mb-0">ArtPortal. Celebrating painters worldwide.</p>
              <p class="mb-0">JKTV24 2026a. &copy All Rights Reserved</p>
         </footer>
         <!-- Bootstrap 5.3 JS Bundle with Popper -->
