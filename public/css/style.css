@@ -3,11 +3,76 @@
 ========================= */
 
 body {
-  font-family: system-ui, sans-serif;
+  font-family: var(--font-body);
   font-size: 16px;
+  line-height: 1.5;
   background: #ffffff;
   color: #1a1a1a;
   margin: 0;
+}
+
+html {
+  font-size: var(--font-size);
+}
+
+h1 {
+  font-family: var(--font-heading);
+  font-size: var(--text-2xl);
+  font-weight: var(--font-weight-medium);
+  line-height: 1.5;
+}
+
+h2 {
+  font-family: var(--font-heading);
+  font-size: var(--text-xl);
+  font-weight: var(--font-weight-medium);
+  line-height: 1.5;
+}
+
+h3 {
+  font-family: var(--font-heading);
+  font-size: var(--text-lg);
+  font-weight: var(--font-weight-medium);
+  line-height: 1.5;
+}
+
+h5 {
+  font-family: var(--font-heading);
+  font-size: var(--text-base);
+  font-weight: var(--font-weight-medium);
+  line-height: 1.5;
+}
+
+h6 {
+  font-family: var(--font-heading);
+  font-size: 0.875rem;
+  font-weight: var(--font-weight-medium);
+  line-height: 1.5;
+}
+
+h4 {
+  font-family: var(--font-heading);
+  font-size: var(--text-base);
+  font-weight: var(--font-weight-medium);
+  line-height: 1.5;
+}
+
+label {
+  font-size: var(--text-base);
+  font-weight: var(--font-weight-medium);
+  line-height: 1.5;
+}
+
+button {
+  font-size: var(--text-base);
+  font-weight: var(--font-weight-medium);
+  line-height: 1.5;
+}
+
+input {
+  font-size: var(--text-base);
+  font-weight: var(--font-weight-normal);
+  line-height: 1.5;
 }
 
 /* =========================
@@ -15,6 +80,15 @@ body {
 ========================= */
 
 :root {
+  --font-body: "Inter", sans-serif;
+  --font-heading: "Playfair Display", serif;
+  --font-size: 16px;
+  --text-base: 1rem;
+  --text-lg: 1.25rem;
+  --text-xl: 1.5rem;
+  --text-2xl: 2rem;
+  --font-weight-normal: 400;
+  --font-weight-medium: 500;
   /* LOGO */
   --gradient-logo: linear-gradient(
     45deg,
@@ -44,7 +118,7 @@ body {
 /* ссылки = бренд */
 a {
   color: var(--primary);
-  text-decoration: none;
+  font-size: var(--text-lg);
 }
 
 a:hover {
@@ -81,7 +155,7 @@ a:hover {
   border-radius: 8px;
   border: none;
   cursor: pointer;
-  font-size: 16px;
+  font-size: var(--text-base);
   transition: 0.2s ease;
 }
 
@@ -117,7 +191,9 @@ textarea {
   padding: 10px;
   border: 1px solid rgba(0, 0, 0, 0.1);
   border-radius: 8px;
-  font-size: 16px;
+  font-size: var(--text-base);
+  font-weight: var(--font-weight-normal);
+  line-height: 1.5;
   background: #f3f3f5;
 }
 
@@ -154,9 +230,14 @@ textarea:focus {
 }
 
 .logo-text {
-  font-size: 1.125rem;
-  
+  font-family: var(--font-heading);
+  font-size: 1.5rem;
+  font-weight: 700;
   color: #1a1a1a;
+}
+
+.navbar .nav-link {
+  font-size: 1rem;
 }
 
 /* =========================
@@ -168,13 +249,21 @@ textarea:focus {
 }
 
 /* =========================
-   FOOTER (если в макете фиолетовый фон)
+   FOOTER
 ========================= */
 
 footer {
+  width: 100%;
   background: var(--gradient-footer);
   color: #ffffff;
-  padding: 20px;
+  padding: 40px 0;
+  margin-top: auto;
+}
+
+footer h3 {
+  font-size: var(--text-xl);
+  font-weight: 700;
+  margin-bottom: 0.75rem;
 }
 
 /* =========================

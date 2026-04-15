@@ -9,7 +9,7 @@
              <!-- Custom CSS -->
              <link rel="stylesheet" type="text/css" href="public/css/style.css">
              <!-- Google Fonys -->
-            <link href="https://fonts.googleapis.com/css?family=Noto+Serif" rel="stylesheet">
+            <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Inter:wght@400;500;700&display=swap" rel="stylesheet">
     </head>
     <body class="d-flex flex-column min-vh-100">
         <header>
@@ -52,9 +52,12 @@
                 }
             ?>
         </main>
-        <footer class="container text-center py-4">
-            <p class="mb-0">ArtPortal. Celebrating painters worldwide.</p>
-             <p class="mb-0">JKTV24 2026a. &copy All Rights Reserved</p>
+        <footer>
+            <div class="container text-center py-5">
+                <h3 class="mb-2">ArtPortal</h3>
+                <p class="mb-1">Footer text placeholder for your future final text.</p>
+                <p class="mb-0">JKTV24 2026a. &copy; All Rights Reserved</p>
+            </div>
         </footer>
         <!-- Bootstrap 5.3 JS Bundle with Popper -->
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
