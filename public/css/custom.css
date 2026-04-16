@@ -1,0 +1,29 @@
+/* =========================
+   CUSTOM TYPOGRAPHY - BOOTSTRAP CLASSES
+========================= */
+
+/* Card text - general text in cards */
+.card-text {
+  font-size: var(--text-sm);
+  font-weight: var(--font-weight-normal);
+}
+
+/* Price in paintings grid card */
+.card > .card-img-top + .card-body .card-text:last-of-type {
+  font-size: var(--text-md);
+  font-weight: var(--font-weight-medium);
+}
+
+/* Footer text */
+footer p {
+  font-size: var(--text-lg);
+  font-weight: var(--font-weight-normal);
+}
+
+/* Footer heading - H2 variation */
+.h2-footer {
+  font-family: var(--font-heading);
+  font-size: 80px;
+  font-weight: var(--font-weight-medium);
+  line-height: 1.5;
+}
