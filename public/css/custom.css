@@ -2,10 +2,31 @@
    CUSTOM TYPOGRAPHY - BOOTSTRAP CLASSES
 ========================= */
 
+/* Card title */
+.card-title {
+  font-size: var(--text-h3);
+  font-weight: var(--font-weight-medium);
+  line-height: 28px;
+  margin-bottom: 4px;
+}
+
 /* Card text - general text in cards */
 .card-text {
   font-size: var(--text-sm);
   font-weight: var(--font-weight-normal);
+  line-height: 20px;
+  margin-bottom: 8px;
+}
+
+/* Artist description in grid card: 2 lines max */
+.artist-description {
+  line-height: 22.8px;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+  line-clamp: 2;
+  overflow: hidden;
+  margin-bottom: 4px;
 }
 
 /* Price in paintings grid card */

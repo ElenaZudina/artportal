@@ -33,7 +33,7 @@ class ViewPaintings{
                 echo '<div class="card h-100 rounded-5 overflow-hidden">';
                     echo '<img src="images/' .htmlspecialchars( $value['image'] ?? 'test.jpg', ENT_QUOTES, 'UTF-8' ).'" class="card-img-top" alt="' . htmlspecialchars($value['title'], ENT_QUOTES, 'UTF-8') . '">';
                     echo '<div class="card-body">';
-                        echo '<h5 class="card-title">' . htmlspecialchars($value['title'], ENT_QUOTES, 'UTF-8') . '</h5>';
+                        echo '<h3 class="card-title">' . htmlspecialchars($value['title'], ENT_QUOTES, 'UTF-8') . '</h3>';
                         echo '<p class="card-text mb-1">';
                         echo 'Artist: ' . htmlspecialchars($value['artist_name'] ?? 'Unknown', ENT_QUOTES, 'UTF-8') . '<br>';
                         echo '</p>';
