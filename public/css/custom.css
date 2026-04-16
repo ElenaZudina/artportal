@@ -29,22 +29,54 @@
   margin-bottom: 4px;
 }
 
+/* Paintings grid title */
+.painting-title {
+  font-family: var(--font-body);
+  font-size: var(--text-h4);
+}
+
 /* Price in paintings grid card */
-.card > .card-img-top + .card-body .card-text:last-of-type {
+.painting-price {
   font-size: var(--text-md);
   font-weight: var(--font-weight-medium);
 }
 
+/* Category badge overlay on image */
+.card-img-wrapper {
+  position: relative;
+  overflow: hidden;
+}
+
+.category-badge {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background-color: rgba(0, 0, 0, 0.7);
+  color: #ffffff;
+  padding: 6px 12px;
+  border-radius: 4px;
+  font-size: 12px;
+  font-weight: 500;
+  z-index: 10;
+  max-width: 80%;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
 /* Footer text */
 footer p {
-  font-size: var(--text-lg);
+  font-size: var(--text-md);
   font-weight: var(--font-weight-normal);
+  line-height: 1.6;
+  margin-bottom: 18px;
 }
 
 /* Footer heading - H2 variation */
 .h2-footer {
   font-family: var(--font-heading);
-  font-size: 80px;
+  font-size: 55px;
   font-weight: var(--font-weight-medium);
-  line-height: 1.5;
+  line-height: 1;
+  margin-bottom: 24px;
 }

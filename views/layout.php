@@ -55,9 +55,9 @@
         </main>
         <footer>
             <div class="container text-center py-5">
-                <h3 class="mb-2">ArtPortal</h3>
-                <p class="mb-1">Footer text placeholder for your future final text.</p>
-                <p class="mb-0">JKTV24 2026a. &copy; All Rights Reserved</p>
+                <h2 class="h2-footer">ArtPortal</h2>
+                <p>Footer text placeholder for your future final text.</p>
+                <p>JKTV24 2026a. &copy; All Rights Reserved</p>
             </div>
         </footer>
         <!-- Bootstrap 5.3 JS Bundle with Popper -->
