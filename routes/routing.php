@@ -4,6 +4,11 @@ $host = explode('?', $_SERVER['REQUEST_URI'])[0];
 $num = substr_count($host, '/');
 $path = explode('/', $host)[$num];
 
+$activeRoute = ($path == '' || $path == 'index' || $path == 'index.php') ? 'home' : $path;
+if (!defined('ACTIVE_ROUTE')) {
+    define('ACTIVE_ROUTE', $activeRoute);
+}
+
 $id = isset($_GET['id']) ? (int)$_GET['id'] : 0;
 
 if($path == '' || $path == 'index' || $path == 'index.php') {
