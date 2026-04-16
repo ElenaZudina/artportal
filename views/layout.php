@@ -10,7 +10,7 @@
              <link rel="stylesheet" type="text/css" href="public/css/style.css">
              <link rel="stylesheet" type="text/css" href="public/css/custom.css">
              <!-- Google Fonts -->
-            <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Inter:wght@400;500;700&display=swap" rel="stylesheet">
+            <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;700&family=Inter:wght@400;500;700&display=swap" rel="stylesheet">
     </head>
     <body class="d-flex flex-column min-vh-100">
         <header>
