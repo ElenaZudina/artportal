@@ -4,7 +4,7 @@ $activeRoute = defined('ACTIVE_ROUTE') ? ACTIVE_ROUTE : 'home';
 $isHome = $activeRoute === 'home';
 $isInfo = $activeRoute === 'testError';
 $isArtists = $activeRoute === 'artists' || $activeRoute === 'artist';
-$isCategories = $activeRoute === 'category';
+$isCategories = $activeRoute === 'category' || $activeRoute === 'all';
 $isRegister = $activeRoute === 'registerForm' || $activeRoute === 'registerAnswer';
 ?>
 
@@ -40,7 +40,7 @@ $isRegister = $activeRoute === 'registerForm' || $activeRoute === 'registerAnswe
                             <li class="nav-item"><a class="nav-link<?php echo $isInfo ? ' active' : ''; ?>" href="testError">Info</a></li>
                             <li class="nav-item"><a class="nav-link<?php echo $isArtists ? ' active' : ''; ?>" href="artists">Artists</a></li>
                             <li class="nav-item dropdown">
-                                <a class="nav-link dropdown-toggle<?php echo $isCategories ? ' active' : ''; ?>" href="#" id="categoriesDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">Categories</a>
+                                <button class="nav-link dropdown-toggle<?php echo $isCategories ? ' active' : ''; ?>" type="button" id="categoriesDropdown" data-bs-toggle="dropdown" aria-expanded="false">Categories</button>
                                 <ul class="dropdown-menu" aria-labelledby="categoriesDropdown">
                                     <?php
                                         Controller::AllCategories();

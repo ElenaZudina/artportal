@@ -269,6 +269,11 @@ textarea:focus {
   position: relative;
 }
 
+.navbar button.nav-link {
+  border: 0;
+  background: transparent;
+}
+
 .navbar .nav-link.active,
 .navbar .nav-link.show {
   color: #9810FA;
@@ -283,8 +288,8 @@ textarea:focus {
   color: #101828;
 }
 
-.navbar .nav-link.active::after,
-.navbar .nav-link.show::after {
+.navbar .nav-link.active::before,
+.navbar .nav-link.show::before {
   content: "";
   position: absolute;
   left: 0.5rem;
@@ -294,6 +299,14 @@ textarea:focus {
   border: 0;
   background-color: #9810FA;
   border-radius: 999px;
+}
+
+.navbar-nav:has(#categoriesDropdown.show) .nav-link.active:not(#categoriesDropdown)::before {
+  content: none;
+}
+
+.navbar-nav:has(#categoriesDropdown.show) .nav-link.active:not(#categoriesDropdown) {
+  color: #4A5565;
 }
 
 /* =========================
