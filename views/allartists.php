@@ -5,7 +5,7 @@ ob_start();
 <br>
 
 <?php
-ViewArtists::ArtistsGrid($arr);
+ViewArtists::ArtistsGrid($arr, true);
 $content = ob_get_clean();
 include_once 'views/layout.php';
 

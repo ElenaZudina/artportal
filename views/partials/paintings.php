@@ -13,8 +13,6 @@ class ViewPaintings{
                         echo '<div class="col-md-8">';
                             echo '<div class="card-body">';
                                 echo '<h5 class="card-title">' . htmlspecialchars($value['title'], ENT_QUOTES, 'UTF-8') . '</h5>';
-                                //Controller::CommentsCount($value['id']); будет добавлено позже, когда будет реализована модель комментариев
-                                echo '<a href="paintings?id=' . $value['id'] . '" class="btn btn-primary">View details</a>';
                             echo '</div>';
                         echo '</div>';
                     echo '</div>';
@@ -41,10 +39,7 @@ class ViewPaintings{
                         echo '<p class="card-text painting-price text-nowrap mb-0">' . htmlspecialchars($value['price'] ?? 'Unknown', ENT_QUOTES, 'UTF-8') .  '</p>';
                     echo '</div>';
                         echo '<p class="card-text mb-1">' . htmlspecialchars($value['artist_name'] ?? 'Unknown', ENT_QUOTES, 'UTF-8') . '</p>';
-                        echo '<p class="card-text mb-1">' . htmlspecialchars($value['category'] ?? 'Unknown', ENT_QUOTES, 'UTF-8') . '</p>';
-                        
-                        //Controller::CommentsCount($value['id']); будет добавлено позже, когда будет реализована модель комментариев
-                        echo '<a href="paintings?id=' . $value['id'] . '" class="btn btn-primary">View details</a>';
+                        //echo '<p class="card-text mb-1">' . htmlspecialchars($value['category'] ?? 'Unknown', ENT_QUOTES, 'UTF-8') . '</p>';
                     echo '</div>';
                 echo '</div>';
             echo '</div>';

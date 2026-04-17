@@ -27,7 +27,7 @@
   -webkit-line-clamp: 2;
   line-clamp: 2;
   overflow: hidden;
-  margin-bottom: 4px;
+  margin-bottom: 14px;
   color: #4A5565;
 }
 
@@ -73,6 +73,18 @@
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
+}
+
+/* View Profile link */
+.view-profile {
+  display: inline-flex;
+  align-items: center;
+  font-family: var(--font-body);
+  font-size: var(--text-base);
+  font-weight: var(--font-weight-medium);
+  line-height: 24px;
+  color: #9810FA;
+  text-decoration: none;
 }
 
 /* Footer text */
