@@ -5,18 +5,20 @@ class ViewPaintings{
         echo '<div class="row">';
         foreach($arr as $value) {
             echo '<div class="col-12 mb-4">'; // Полная ширина для вертикального списка
-                echo '<div class="card h-100">';
-                    echo '<div class="row g-0">';
-                        echo '<div class="col-md-4">';
-                            echo '<img src="images/' .htmlspecialchars( $value['image'] ?? 'test.jpg', ENT_QUOTES, 'UTF-8' ).'" class="img-fluid rounded-start" alt="' . htmlspecialchars($value['title'], ENT_QUOTES, 'UTF-8') . '">';
-                        echo '</div>';
-                        echo '<div class="col-md-8">';
-                            echo '<div class="card-body">';
-                                echo '<h5 class="card-title">' . htmlspecialchars($value['title'], ENT_QUOTES, 'UTF-8') . '</h5>';
+                echo '<a href="paintings?id=' . $value['id'] . '" class="d-block h-100 text-reset text-decoration-none">';
+                    echo '<div class="card h-100">';
+                        echo '<div class="row g-0">';
+                            echo '<div class="col-md-4">';
+                                echo '<img src="images/' .htmlspecialchars( $value['image'] ?? 'test.jpg', ENT_QUOTES, 'UTF-8' ).'" class="img-fluid rounded-start" alt="' . htmlspecialchars($value['title'], ENT_QUOTES, 'UTF-8') . '">';
+                            echo '</div>';
+                            echo '<div class="col-md-8">';
+                                echo '<div class="card-body">';
+                                    echo '<h5 class="card-title">' . htmlspecialchars($value['title'], ENT_QUOTES, 'UTF-8') . '</h5>';
+                                echo '</div>';
                             echo '</div>';
                         echo '</div>';
                     echo '</div>';
-                echo '</div>';
+                echo '</a>';
             echo '</div>';
         }
         echo '</div>';
@@ -28,20 +30,22 @@ class ViewPaintings{
         echo '<div class="row g-4">';
         foreach($arr as $value) {
             echo '<div class="col-sm-6 col-md-4 col-lg-4">'; // Адаптивные колонки
-                echo '<div class="card h-100 rounded-5 overflow-hidden">';
-                    echo '<div class="card-img-wrapper position-relative">';
-                        echo '<img src="images/' .htmlspecialchars( $value['image'] ?? 'test.jpg', ENT_QUOTES, 'UTF-8' ).'" class="card-img-top" alt="' . htmlspecialchars($value['title'], ENT_QUOTES, 'UTF-8') . '">';
-                        echo '<span class="category-badge">' . htmlspecialchars($value['category'] ?? 'Unknown', ENT_QUOTES, 'UTF-8') . '</span>';
+                echo '<a href="paintings?id=' . $value['id'] . '" class="d-block h-100 text-reset text-decoration-none">';
+                    echo '<div class="card h-100 rounded-5 overflow-hidden">';
+                        echo '<div class="card-img-wrapper position-relative">';
+                            echo '<img src="images/' .htmlspecialchars( $value['image'] ?? 'test.jpg', ENT_QUOTES, 'UTF-8' ).'" class="card-img-top" alt="' . htmlspecialchars($value['title'], ENT_QUOTES, 'UTF-8') . '">';
+                            echo '<span class="category-badge">' . htmlspecialchars($value['category'] ?? 'Unknown', ENT_QUOTES, 'UTF-8') . '</span>';
+                        echo '</div>';
+                        echo '<div class="card-body">';
+                        echo '<div class="painting-meta d-flex justify-content-between align-items-start gap-2 mb-2">';
+                            echo '<h3 class="card-title painting-title mb-0">' . htmlspecialchars($value['title'], ENT_QUOTES, 'UTF-8') . '</h3>';
+                            echo '<p class="card-text painting-price text-nowrap mb-0">' . htmlspecialchars($value['price'] ?? 'Unknown', ENT_QUOTES, 'UTF-8') .  '</p>';
+                        echo '</div>';
+                            echo '<p class="card-text mb-1">' . htmlspecialchars($value['artist_name'] ?? 'Unknown', ENT_QUOTES, 'UTF-8') . '</p>';
+                            //echo '<p class="card-text mb-1">' . htmlspecialchars($value['category'] ?? 'Unknown', ENT_QUOTES, 'UTF-8') . '</p>';
+                        echo '</div>';
                     echo '</div>';
-                    echo '<div class="card-body">';
-                    echo '<div class="painting-meta d-flex justify-content-between align-items-start gap-2 mb-2">';
-                        echo '<h3 class="card-title painting-title mb-0">' . htmlspecialchars($value['title'], ENT_QUOTES, 'UTF-8') . '</h3>';
-                        echo '<p class="card-text painting-price text-nowrap mb-0">' . htmlspecialchars($value['price'] ?? 'Unknown', ENT_QUOTES, 'UTF-8') .  '</p>';
-                    echo '</div>';
-                        echo '<p class="card-text mb-1">' . htmlspecialchars($value['artist_name'] ?? 'Unknown', ENT_QUOTES, 'UTF-8') . '</p>';
-                        //echo '<p class="card-text mb-1">' . htmlspecialchars($value['category'] ?? 'Unknown', ENT_QUOTES, 'UTF-8') . '</p>';
-                    echo '</div>';
-                echo '</div>';
+                echo '</a>';
             echo '</div>';
         }
         echo '</div>';
