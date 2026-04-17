@@ -1,7 +1,7 @@
 <?php
 ob_start();
 ?>
-<h1>All artists </h1>
+<h1>Meet our artists </h1>
 <br>
 
 <?php
