@@ -57,28 +57,26 @@ class ViewArtists{
     public static function SingleArtist($item) {
         echo '<div class="container my-4">';
         
-            echo '<div class="row align-items-start">';
+            echo '<div class="row align-items-stretch gx-5">';
                 // Левая колонка: Изображение
                 echo '<div class="col-12 col-md-6 mb-4 mb-md-0">';
-                    echo '<img src="images/' . htmlspecialchars( $item['picture'] ?? 'test.jpg', ENT_QUOTES, 'UTF-8' ) . '" class="img-fluid rounded" alt="' . htmlspecialchars($item['name'], ENT_QUOTES, 'UTF-8') . '" />';
+                    echo '<img src="images/' . htmlspecialchars( $item['picture'] ?? 'test.jpg', ENT_QUOTES, 'UTF-8' ) . '" class="img-fluid w-100 rounded-5" alt="' . htmlspecialchars($item['name'], ENT_QUOTES, 'UTF-8') . '" />';
                 echo '</div>';
                 
                 // Правая колонка: Описание
-                echo '<div class="col-12 col-md-6">';
-                    echo "<h2 class='mb-4'>" . htmlspecialchars($item['name'] ?? 'Unknown', ENT_QUOTES, 'UTF-8') . "</h2>";
+                echo '<div class="col-12 col-md-6 d-flex flex-column justify-content-center">';
+                    echo "<h1 class='artist-card-title mb-4'>" . htmlspecialchars($item['name'] ?? 'Unknown', ENT_QUOTES, 'UTF-8') . "</h1>";
                     //Controller::CommentsCountWithAncor($item['id']); ПОЗЖЕ
                     
-                    echo "<h4 class='mb-3'>Location</h4>";
-                    echo "<p>" . htmlspecialchars($item['location'] ?? 'Unknown', ENT_QUOTES, 'UTF-8') . "</p>";
+                    echo "<p class='card-text'><svg class='location-marker-icon' width='14' height='18' viewBox='0 0 24 24' aria-hidden='true' focusable='false'><path d='M12 22s7-7.2 7-12a7 7 0 1 0-14 0c0 4.8 7 12 7 12z' fill='none' stroke='#4A5565' stroke-width='1.8' stroke-linecap='round' stroke-linejoin='round'></path><circle cx='12' cy='10' r='2.4' fill='#4A5565'></circle></svg> " . htmlspecialchars($item['location'] ?? 'Unknown', ENT_QUOTES, 'UTF-8') . "</p>";
                     
-                    echo "<h4 class='mb-3'>Birth Date</h4>";
-                    echo "<p>" . htmlspecialchars($item['birth_date'] ?? 'Unknown', ENT_QUOTES, 'UTF-8') . "</p>";
+                    //echo "<h4 class='mb-3'>Birth Date</h4>";
+                    //echo "<p>" . htmlspecialchars($item['birth_date'] ?? 'Unknown', ENT_QUOTES, 'UTF-8') . "</p>";
                     
-                    echo "<h4 class='mb-3'>Biography</h4>";
-                    echo "<p>" . htmlspecialchars($item['bio'] ?? 'Unknown', ENT_QUOTES, 'UTF-8') . "</p>";
+                    echo "<p class='card-text single-artist-description'>" . htmlspecialchars($item['bio'] ?? 'Unknown', ENT_QUOTES, 'UTF-8') . "</p>";
 
-                    echo "<h4 class='mb-3'>Joined</h4>";
-                    echo "<p>" . htmlspecialchars(date("Y", strtotime($item['created_at'] ?? 'now')), ENT_QUOTES, 'UTF-8') . "</p>";
+                    //echo "<h4 class='mb-3'>Joined</h4>";
+                    //echo "<p>" . htmlspecialchars(date("Y", strtotime($item['created_at'] ?? 'now')), ENT_QUOTES, 'UTF-8') . "</p>";
                 echo '</div>';
             echo '</div>';
         echo '</div>';
@@ -88,13 +86,13 @@ class ViewArtists{
         if (!empty($item['paintings']) && is_array($item['paintings'])) {
             echo '<div class="container my-4">'; // контейнер для портфолио
     
-            echo '<h3 class="mb-3">Portfolio</h3>';
+            echo '<h2 class="mb-3">Portfolio</h2>';
             echo '<div class="row g-3">';
                 foreach ($item['paintings'] as $painting) {
                     echo '<div class="col-12 col-sm-6 col-md-4 col-lg-3">'; // Адаптивные колонки
-                        echo '<div class="card h-100 rounded overflow-hidden">'; // Карточка для каждой картины
+                        echo '<div class="card h-100 rounded-5 overflow-hidden">'; // Карточка для каждой картины
                             echo '<img src="images/' . htmlspecialchars($painting['image'] ?? 'test.jpg', ENT_QUOTES, 'UTF-8') . '" 
-                                 class="card-img-top rounded-top" 
+                                 class="card-img-top" 
                                  alt="' . htmlspecialchars($painting['title'] ?? 'Без названия', ENT_QUOTES, 'UTF-8') . '">';
                         echo '</div>';
                     echo '</div>';
@@ -112,3 +110,4 @@ class ViewArtists{
 
 }
 ?>
+

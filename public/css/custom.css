@@ -27,7 +27,14 @@
   -webkit-line-clamp: 2;
   line-clamp: 2;
   overflow: hidden;
-  margin-bottom: 14px;
+  margin: 14px 0;
+  color: #4A5565;
+}
+
+.single-artist-description {
+  font-size: 20px;
+  line-height: 32.5px;
+  margin: 24px 0;
   color: #4A5565;
 }
 
@@ -103,3 +110,5 @@ footer p {
   line-height: 1;
   margin-bottom: 24px;
 }
+
+
