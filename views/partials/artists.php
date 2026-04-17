@@ -65,7 +65,7 @@ class ViewArtists{
                 
                 // Правая колонка: Описание
                 echo '<div class="col-12 col-md-6 d-flex flex-column justify-content-center">';
-                    echo "<h1 class='artist-card-title mb-4'>" . htmlspecialchars($item['name'] ?? 'Unknown', ENT_QUOTES, 'UTF-8') . "</h1>";
+                    echo "<h1 class='single-card-title mb-4'>" . htmlspecialchars($item['name'] ?? 'Unknown', ENT_QUOTES, 'UTF-8') . "</h1>";
                     //Controller::CommentsCountWithAncor($item['id']); ПОЗЖЕ
                     
                     echo "<p class='card-text'><svg class='location-marker-icon' width='14' height='18' viewBox='0 0 24 24' aria-hidden='true' focusable='false'><path d='M12 22s7-7.2 7-12a7 7 0 1 0-14 0c0 4.8 7 12 7 12z' fill='none' stroke='#4A5565' stroke-width='1.8' stroke-linecap='round' stroke-linejoin='round'></path><circle cx='12' cy='10' r='2.4' fill='#4A5565'></circle></svg> " . htmlspecialchars($item['location'] ?? 'Unknown', ENT_QUOTES, 'UTF-8') . "</p>";
