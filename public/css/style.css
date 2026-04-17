@@ -291,6 +291,7 @@ textarea:focus {
   right: 0.5rem;
   bottom: 0.1rem;
   height: 2px;
+  border: 0;
   background-color: #9810FA;
   border-radius: 999px;
 }
