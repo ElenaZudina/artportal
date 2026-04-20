@@ -154,4 +154,50 @@ footer p {
   margin-bottom: 24px;
 }
 
+/* =========================
+   INTERACTIONS
+========================= */
+
+.card {
+  transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
+}
+
+a.d-block.h-100.text-reset.text-decoration-none:hover .card,
+a.d-block.h-100.text-reset.text-decoration-none:focus-visible .card {
+  transform: translateY(-4px);
+  box-shadow: 0 14px 28px rgba(15, 23, 42, 0.14);
+  border-color: #E2E8F0;
+}
+
+.card-img-top,
+.img-fluid {
+  transition: transform 0.35s ease;
+}
+
+a.d-block.h-100.text-reset.text-decoration-none:hover .card-img-top,
+a.d-block.h-100.text-reset.text-decoration-none:focus-visible .card-img-top,
+a.d-block.h-100.text-reset.text-decoration-none:hover .img-fluid,
+a.d-block.h-100.text-reset.text-decoration-none:focus-visible .img-fluid {
+  transform: scale(1.03);
+}
+
+.view-profile,
+.artist-profile-link {
+  transition: color 0.2s ease, opacity 0.2s ease;
+}
+
+.view-profile:hover,
+.view-profile:focus-visible,
+.artist-profile-link:hover,
+.artist-profile-link:focus-visible {
+  color: #7E22CE;
+  opacity: 1;
+}
+
+.navbar .nav-link,
+.dropdown-menu .dropdown-item,
+.navbar-brand {
+  transition: color 0.2s ease;
+}
+
 
