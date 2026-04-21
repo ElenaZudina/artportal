@@ -2,12 +2,14 @@
 class ViewArtists{
     public static function ArtistsGrid($arr, $showProfile = false) {
         echo '<div class="container my-4">'; //общий контейнер
-        echo '<div class="row g-4">'; // ряд для карточек
+        echo '<div class="row g-4 artists-grid">'; // ряд для карточек
             foreach($arr as $value) {
                 echo '<div class="col-sm-6 col-md-4 col-lg-4">'; // Адаптивные колонки
                 echo '<a href="artist?id=' . $value['id'] . '" class="d-block h-100 text-reset text-decoration-none">';
                     echo '<div class="card h-100 rounded-5 overflow-hidden">'; // карточка
-                        echo '<img src="images/' .htmlspecialchars( $value['picture'] ?? 'test.jpg', ENT_QUOTES, 'UTF-8' ).'" class="img-fluid" alt="' . htmlspecialchars($value['name'], ENT_QUOTES, 'UTF-8') . '">'; // Изображение внутри обертки
+                        echo '<div class="card-img-wrapper">';
+                            echo '<img src="images/' .htmlspecialchars( $value['picture'] ?? 'test.jpg', ENT_QUOTES, 'UTF-8' ).'" class="card-img-top" alt="' . htmlspecialchars($value['name'], ENT_QUOTES, 'UTF-8') . '">'; // Изображение внутри обертки
+                        echo '</div>';
                         echo '<div class="card-body d-flex flex-column pb-4">';
                             echo '<h3 class="card-title">' . htmlspecialchars($value['name'], ENT_QUOTES, 'UTF-8') . '</h3>';
                             echo '<p class="card-text">'. htmlspecialchars($value['location'] ?? 'Unknown', ENT_QUOTES, 'UTF-8') . '</p>';

@@ -124,6 +124,17 @@
   object-fit: cover;
 }
 
+.artists-grid .card-img-wrapper {
+  aspect-ratio: 1 / 1;
+  background: #F9FAFB;
+}
+
+.artists-grid .card-img-top {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
 .category-badge {
   position: absolute;
   top: 10px;
