@@ -27,7 +27,7 @@ class ViewPaintings{
 
     public static function PaintingsGrid($arr) {
         echo '<div class="container my-4">';
-        echo '<div class="row g-4">';
+        echo '<div class="row g-4 paintings-grid">';
         foreach($arr as $value) {
             echo '<div class="col-sm-6 col-md-4 col-lg-4">'; // Адаптивные колонки
                 echo '<a href="paintings?id=' . $value['id'] . '" class="d-block h-100 text-reset text-decoration-none">';
@@ -58,7 +58,7 @@ class ViewPaintings{
             echo '<div class="row align-items-start">';
                 // Левая колонка: Изображение
                 echo '<div class="col-12 col-md-6 mb-4 mb-md-0">';
-                    echo '<img src="images/' . htmlspecialchars( $item['image'] ?? 'test.jpg', ENT_QUOTES, 'UTF-8' ) . '" class="img-fluid rounded" alt="' . htmlspecialchars($item['title'], ENT_QUOTES, 'UTF-8') . '" />';
+                    echo '<img src="images/' . htmlspecialchars( $item['image'] ?? 'test.jpg', ENT_QUOTES, 'UTF-8' ) . '" class="img-fluid rounded one-painting-image" alt="' . htmlspecialchars($item['title'], ENT_QUOTES, 'UTF-8') . '" />';
                 echo '</div>';
                 
                 // Правая колонка: Описание

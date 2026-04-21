@@ -45,6 +45,15 @@
   color: #56586B;
 }
 
+.one-painting-image {
+  display: block;
+  max-width: 100%;
+  height: auto;
+  max-height: 80vh;
+  margin-left: auto;
+  margin-right: auto;
+}
+
 .artist-profile {
   display: flex;
   align-items: center;
@@ -102,6 +111,17 @@
 .card-img-wrapper {
   position: relative;
   overflow: hidden;
+}
+
+.paintings-grid .card-img-wrapper {
+  aspect-ratio: 1 / 1;
+  background: #F9FAFB;
+}
+
+.paintings-grid .card-img-top {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
 }
 
 .category-badge {
