@@ -62,7 +62,7 @@ class ViewArtists{
             echo '<div class="row align-items-stretch gx-5">';
                 // Левая колонка: Изображение
                 echo '<div class="col-12 col-md-6 mb-4 mb-md-0">';
-                    echo '<img src="images/' . htmlspecialchars( $item['picture'] ?? 'test.jpg', ENT_QUOTES, 'UTF-8' ) . '" class="img-fluid w-100 rounded-5" alt="' . htmlspecialchars($item['name'], ENT_QUOTES, 'UTF-8') . '" />';
+                    echo '<img src="images/' . htmlspecialchars( $item['picture'] ?? 'test.jpg', ENT_QUOTES, 'UTF-8' ) . '" class="img-fluid w-100 rounded-5 single-artist-image" alt="' . htmlspecialchars($item['name'], ENT_QUOTES, 'UTF-8') . '" />';
                 echo '</div>';
                 
                 // Правая колонка: Описание

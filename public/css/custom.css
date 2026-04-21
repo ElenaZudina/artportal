@@ -38,6 +38,11 @@
   color: #56586B;
 }
 
+.single-artist-image {
+  aspect-ratio: 1 / 1;
+  object-fit: cover;
+}
+
 .one-painting-description {
   font-size: 18px;
   line-height: 32.5px;
