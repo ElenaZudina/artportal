@@ -39,7 +39,6 @@
 
 /* Artist description in grid card: 2 lines max */
 .artist-description {
-  font-size: 18px;
   line-height: 22.8px;
   display: -webkit-box;
   -webkit-box-orient: vertical;
@@ -193,75 +192,12 @@
   overflow: hidden;
 }
 
-/* Gallery asymmetric grid (Figma-like) */
-.paintings-grid--asymmetric {
-  display: grid;
-  grid-template-columns: 1fr;
-  gap: 1.5rem;
-  margin-right: 0 !important;
-  margin-left: 0 !important;
-}
-
-/* Neutralize Bootstrap column behavior inside CSS grid */
-.paintings-grid--asymmetric > div {
-  width: 100% !important;
-  max-width: 100% !important;
-  padding-right: 0 !important;
-  padding-left: 0 !important;
-}
-
-.paintings-grid--asymmetric > div > a,
-.paintings-grid--asymmetric > div > a > .card {
-  height: 100%;
-}
-
-.paintings-grid--asymmetric > div > a > .card {
-  display: flex;
-  flex-direction: column;
-}
-
-.paintings-grid--asymmetric .card-body {
-  flex: 0 0 auto;
-}
-
-@media (min-width: 768px) {
-  .paintings-grid--asymmetric {
-    grid-template-columns: repeat(2, 1fr);
-    grid-auto-rows: 440px;
-  }
-}
-
-@media (min-width: 992px) {
-  .paintings-grid--asymmetric {
-    grid-template-columns: repeat(3, 1fr);
-    grid-auto-rows: 520px;
-    grid-auto-flow: dense;
-  }
-
-  .paintings-grid-item--large {
-    grid-column: span 2;
-    grid-row: span 2;
-  }
-
-  .paintings-grid-item--tall {
-    grid-row: span 2;
-  }
-
-  /* Make the image clearly taller in tall/large cards */
-  .paintings-grid-item--tall .card-img-wrapper,
-  .paintings-grid-item--large .card-img-wrapper {
-    min-height: 760px;
-  }
-}
-
-.paintings-grid--asymmetric .card-img-wrapper {
-  flex: 1;
-  min-height: 340px;
-  aspect-ratio: auto;
+.paintings-grid .card-img-wrapper {
+  aspect-ratio: 1 / 1;
   background: var(--background);
 }
 
-.paintings-grid--asymmetric .card-img-top {
+.paintings-grid .card-img-top {
   width: 100%;
   height: 100%;
   object-fit: cover;

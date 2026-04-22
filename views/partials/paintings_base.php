@@ -25,44 +25,25 @@ class ViewPaintings{
         echo '</div>';
     }
 
-    public static function PaintingsGrid($arr, $imagesOnly = false, $asymmetric = true) {
+    public static function PaintingsGrid($arr) {
         echo '<div class="container my-4">';
-        $gridClass = $asymmetric ? 'row g-4 paintings-grid paintings-grid--asymmetric' : 'row g-4';
-        echo '<div class="' . $gridClass . '">';
-        foreach($arr as $index => $value) {
-            $itemClasses = $asymmetric ? 'paintings-grid-item' : 'col-sm-6 col-md-4 col-lg-4';
-            $displayIndex = $index + 1;
-
-            if ($asymmetric) {
-                if ($displayIndex % 7 === 1) {
-                    $itemClasses .= ' paintings-grid-item--large';
-                }
-                if ($displayIndex % 5 === 1) {
-                    $itemClasses .= ' paintings-grid-item--tall';
-                }
-            }
-
-            echo '<div class="' . $itemClasses . '">';
-                $linkClass = $asymmetric ? 'd-block text-reset' : 'd-block h-100 text-reset';
-                $cardClass = $asymmetric ? 'card rounded-5 overflow-hidden' : 'card h-100 rounded-5 overflow-hidden';
-                echo '<a href="paintings?id=' . $value['id'] . '" class="' . $linkClass . '">';
-                    echo '<div class="' . $cardClass . '">';
+        echo '<div class="row g-4 paintings-grid">';
+        foreach($arr as $value) {
+            echo '<div class="col-sm-6 col-md-4 col-lg-4">'; // Адаптивные колонки
+                echo '<a href="paintings?id=' . $value['id'] . '" class="d-block h-100 text-reset">';
+                    echo '<div class="card h-100 rounded-5 overflow-hidden">';
                         echo '<div class="card-img-wrapper position-relative">';
                             echo '<img src="images/' . htmlspecialchars($value['image'] ?? '', ENT_QUOTES, 'UTF-8') . '" class="card-img-top" alt="' . htmlspecialchars($value['title'], ENT_QUOTES, 'UTF-8') . '" onerror="this.onerror=null;this.src=\'images/test.jpg\';">';
-                            if (!$imagesOnly) {
-                                echo '<span class="category-badge">' . htmlspecialchars($value['category'] ?? 'Unknown', ENT_QUOTES, 'UTF-8') . '</span>';
-                            }
+                            echo '<span class="category-badge">' . htmlspecialchars($value['category'] ?? 'Unknown', ENT_QUOTES, 'UTF-8') . '</span>';
                         echo '</div>';
-                        if (!$imagesOnly) {
-                            echo '<div class="card-body">';
-                            echo '<div class="painting-meta d-flex justify-content-between align-items-start gap-2 mb-2">';
-                                echo '<h3 class="card-title painting-title mb-0">' . htmlspecialchars($value['title'], ENT_QUOTES, 'UTF-8') . '</h3>';
-                                echo '<p class="card-text painting-price text-nowrap mb-0">' . htmlspecialchars($value['price'] ?? 'Unknown', ENT_QUOTES, 'UTF-8') . ' €</p>';
-                            echo '</div>';
-                                echo '<p class="card-text mb-1">' . htmlspecialchars($value['artist_name'] ?? 'Unknown', ENT_QUOTES, 'UTF-8') . '</p>';
-                                //echo '<p class="card-text mb-1">' . htmlspecialchars($value['category'] ?? 'Unknown', ENT_QUOTES, 'UTF-8') . '</p>';
-                            echo '</div>';
-                        }
+                        echo '<div class="card-body">';
+                        echo '<div class="painting-meta d-flex justify-content-between align-items-start gap-2 mb-2">';
+                            echo '<h3 class="card-title painting-title mb-0">' . htmlspecialchars($value['title'], ENT_QUOTES, 'UTF-8') . '</h3>';
+                            echo '<p class="card-text painting-price text-nowrap mb-0">' . htmlspecialchars($value['price'] ?? 'Unknown', ENT_QUOTES, 'UTF-8') . ' €</p>';
+                        echo '</div>';
+                            echo '<p class="card-text mb-1">' . htmlspecialchars($value['artist_name'] ?? 'Unknown', ENT_QUOTES, 'UTF-8') . '</p>';
+                            //echo '<p class="card-text mb-1">' . htmlspecialchars($value['category'] ?? 'Unknown', ENT_QUOTES, 'UTF-8') . '</p>';
+                        echo '</div>';
                     echo '</div>';
                 echo '</a>';
             echo '</div>';

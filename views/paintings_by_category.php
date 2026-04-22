@@ -5,7 +5,7 @@ ob_start();
 <br>
 
 <?php
-ViewPaintings::PaintingsGrid($arr);
+ViewPaintings::PaintingsGrid($arr, false, false);
 $content = ob_get_clean();
 include_once 'views/layout.php';
 
