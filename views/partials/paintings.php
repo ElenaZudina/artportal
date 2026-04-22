@@ -9,7 +9,7 @@ class ViewPaintings{
                     echo '<div class="card h-100">';
                         echo '<div class="row g-0">';
                             echo '<div class="col-md-4">';
-                                echo '<img src="images/' .htmlspecialchars( $value['image'] ?? 'test.jpg', ENT_QUOTES, 'UTF-8' ).'" class="img-fluid rounded-start" alt="' . htmlspecialchars($value['title'], ENT_QUOTES, 'UTF-8') . '">';
+                                echo '<img src="images/' . htmlspecialchars($value['image'] ?? '', ENT_QUOTES, 'UTF-8') . '" class="img-fluid rounded-start" alt="' . htmlspecialchars($value['title'], ENT_QUOTES, 'UTF-8') . '" onerror="this.onerror=null;this.src=\'images/test.jpg\';">';
                             echo '</div>';
                             echo '<div class="col-md-8">';
                                 echo '<div class="card-body">';
@@ -33,7 +33,7 @@ class ViewPaintings{
                 echo '<a href="paintings?id=' . $value['id'] . '" class="d-block h-100 text-reset text-decoration-none">';
                     echo '<div class="card h-100 rounded-5 overflow-hidden">';
                         echo '<div class="card-img-wrapper position-relative">';
-                            echo '<img src="images/' .htmlspecialchars( $value['image'] ?? 'test.jpg', ENT_QUOTES, 'UTF-8' ).'" class="card-img-top" alt="' . htmlspecialchars($value['title'], ENT_QUOTES, 'UTF-8') . '">';
+                            echo '<img src="images/' . htmlspecialchars($value['image'] ?? '', ENT_QUOTES, 'UTF-8') . '" class="card-img-top" alt="' . htmlspecialchars($value['title'], ENT_QUOTES, 'UTF-8') . '" onerror="this.onerror=null;this.src=\'images/test.jpg\';">';
                             echo '<span class="category-badge">' . htmlspecialchars($value['category'] ?? 'Unknown', ENT_QUOTES, 'UTF-8') . '</span>';
                         echo '</div>';
                         echo '<div class="card-body">';
@@ -61,7 +61,7 @@ class ViewPaintings{
                     echo '<div class="one-painting-container">';
                         echo '<div class="one-painting-image-wrapper">';
                             echo '<span class="category-badge category-badge--accent category-badge--top-left">' . htmlspecialchars($item['category_name'] ?? 'Unknown', ENT_QUOTES, 'UTF-8') . '</span>';
-                            echo '<img src="images/' . htmlspecialchars( $item['image'] ?? 'test.jpg', ENT_QUOTES, 'UTF-8' ) . '" class="img-fluid one-painting-image" alt="' . htmlspecialchars($item['title'], ENT_QUOTES, 'UTF-8') . '" />';
+                            echo '<img src="images/' . htmlspecialchars($item['image'] ?? '', ENT_QUOTES, 'UTF-8') . '" class="img-fluid one-painting-image" alt="' . htmlspecialchars($item['title'], ENT_QUOTES, 'UTF-8') . '" onerror="this.onerror=null;this.src=\'images/test.jpg\';" />';
                         echo '</div>';
                     echo '</div>';
                 echo '</div>';
@@ -72,8 +72,8 @@ class ViewPaintings{
                     //Controller::CommentsCountWithAncor($item['id']); ПОЗЖЕ
                     
                     echo '<div class="artist-profile mb-4">';
-                        $artistAvatar = !empty($item['artist_avatar']) ? $item['artist_avatar'] : 'test.jpg';
-                        echo '<img src="images/artists/' . htmlspecialchars($artistAvatar, ENT_QUOTES, 'UTF-8') . '" alt="' . htmlspecialchars($item['artist_name'] ?? 'Artist', ENT_QUOTES, 'UTF-8') . '" class="artist-avatar">';
+                        $artistAvatar = $item['artist_avatar'] ?? '';
+                        echo '<img src="images/artists/' . htmlspecialchars($artistAvatar, ENT_QUOTES, 'UTF-8') . '" alt="' . htmlspecialchars($item['artist_name'] ?? 'Artist', ENT_QUOTES, 'UTF-8') . '" class="artist-avatar" onerror="this.onerror=null;this.src=\'images/test.jpg\';">';
                         echo '<div class="artist-profile-content">';
                             echo '<p class="painting-specs-label">Artist</p>';
                             echo '<a href="artist?id=' . urlencode((string)($item['artist_id'] ?? '')) . '" class="artist-profile-link">' . htmlspecialchars($item['artist_name'] ?? 'Unknown', ENT_QUOTES, 'UTF-8') . '</a>';

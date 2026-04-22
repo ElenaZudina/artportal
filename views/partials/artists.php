@@ -8,7 +8,7 @@ class ViewArtists{
                 echo '<a href="artist?id=' . $value['id'] . '" class="d-block h-100 text-reset text-decoration-none">';
                     echo '<div class="card h-100 rounded-5 overflow-hidden">'; // карточка
                         echo '<div class="card-img-wrapper">';
-                            echo '<img src="images/artists/' .htmlspecialchars( $value['picture'] ?? 'test.jpg', ENT_QUOTES, 'UTF-8' ).'" class="card-img-top" alt="' . htmlspecialchars($value['name'], ENT_QUOTES, 'UTF-8') . '">'; // Изображение внутри обертки
+                            echo '<img src="images/artists/' . htmlspecialchars($value['picture'] ?? '', ENT_QUOTES, 'UTF-8') . '" class="card-img-top" alt="' . htmlspecialchars($value['name'], ENT_QUOTES, 'UTF-8') . '" onerror="this.onerror=null;this.src=\'images/test.jpg\';">'; // Изображение внутри обертки
                         echo '</div>';
                         echo '<div class="card-body d-flex flex-column pb-4">';
                             echo '<h3 class="card-title">' . htmlspecialchars($value['name'], ENT_QUOTES, 'UTF-8') . '</h3>';
@@ -36,7 +36,7 @@ class ViewArtists{
                     echo '<div class="card h-100 ">';
                         echo '<div class="row g-0">';
                             echo '<div class="col-md-4">';
-                                echo '<img src="images/' .htmlspecialchars( $value['picture'] ?? 'test.jpg', ENT_QUOTES, 'UTF-8' ).'" class="img-fluid rounded-start" alt="' . htmlspecialchars($value['name'], ENT_QUOTES, 'UTF-8') . '">';
+                                echo '<img src="images/' . htmlspecialchars($value['picture'] ?? '', ENT_QUOTES, 'UTF-8') . '" class="img-fluid rounded-start" alt="' . htmlspecialchars($value['name'], ENT_QUOTES, 'UTF-8') . '" onerror="this.onerror=null;this.src=\'images/test.jpg\';">';
                             echo '</div>';
                             echo '<div class="col-md-8">';
                                 echo '<div class="card-body d-flex flex-column pb-4">';
@@ -64,7 +64,7 @@ class ViewArtists{
                 echo '<div class="col-12 col-md-6 mb-4 mb-md-0">';
                     echo '<div class="single-artist-container">';
                         echo '<div class="single-artist-image-wrapper">';
-                            echo '<img src="images/artists/' . htmlspecialchars( $item['picture'] ?? 'test.jpg', ENT_QUOTES, 'UTF-8' ) . '" class="img-fluid w-100 single-artist-image" alt="' . htmlspecialchars($item['name'], ENT_QUOTES, 'UTF-8') . '" />';
+                            echo '<img src="images/artists/' . htmlspecialchars($item['picture'] ?? '', ENT_QUOTES, 'UTF-8') . '" class="img-fluid w-100 single-artist-image" alt="' . htmlspecialchars($item['name'], ENT_QUOTES, 'UTF-8') . '" onerror="this.onerror=null;this.src=\'images/test.jpg\';" />';
                         echo '</div>';
                     echo '</div>';
                 echo '</div>';
@@ -99,9 +99,10 @@ class ViewArtists{
                         echo '<a href="paintings?id=' . urlencode((string)($painting['id'] ?? '')) . '" class="d-block h-100 text-reset text-decoration-none">';
                             echo '<div class="card h-100 rounded-5 overflow-hidden">'; // Карточка для каждой картины
                                 echo '<div class="card-img-wrapper">';
-                                    echo '<img src="images/' . htmlspecialchars($painting['image'] ?? 'test.jpg', ENT_QUOTES, 'UTF-8') . '" 
+                                     echo '<img src="images/' . htmlspecialchars($painting['image'] ?? '', ENT_QUOTES, 'UTF-8') . '" 
                                          class="card-img-top" 
-                                         alt="' . htmlspecialchars($painting['title'] ?? 'Без названия', ENT_QUOTES, 'UTF-8') . '">';
+                                         alt="' . htmlspecialchars($painting['title'] ?? 'Без названия', ENT_QUOTES, 'UTF-8') . '" 
+                                         onerror="this.onerror=null;this.src=\'images/test.jpg\';">';
                                 echo '</div>';
                             echo '</div>';
                         echo '</a>';
