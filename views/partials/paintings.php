@@ -73,7 +73,7 @@ class ViewPaintings{
                     
                     echo '<div class="artist-profile mb-4">';
                         $artistAvatar = !empty($item['artist_avatar']) ? $item['artist_avatar'] : 'test.jpg';
-                        echo '<img src="images/' . htmlspecialchars($artistAvatar, ENT_QUOTES, 'UTF-8') . '" alt="' . htmlspecialchars($item['artist_name'] ?? 'Artist', ENT_QUOTES, 'UTF-8') . '" class="artist-avatar">';
+                        echo '<img src="images/artists/' . htmlspecialchars($artistAvatar, ENT_QUOTES, 'UTF-8') . '" alt="' . htmlspecialchars($item['artist_name'] ?? 'Artist', ENT_QUOTES, 'UTF-8') . '" class="artist-avatar">';
                         echo '<div class="artist-profile-content">';
                             echo '<p class="painting-specs-label">Artist</p>';
                             echo '<a href="artist?id=' . urlencode((string)($item['artist_id'] ?? '')) . '" class="artist-profile-link">' . htmlspecialchars($item['artist_name'] ?? 'Unknown', ENT_QUOTES, 'UTF-8') . '</a>';
