@@ -55,10 +55,15 @@ class ViewPaintings{
 
     public static function OnePainting($item) {
         echo '<div class="container my-4">';
-            echo '<div class="row align-items-start">';
+            echo '<div class="row align-items-start gx-5">';
                 // Левая колонка: Изображение
                 echo '<div class="col-12 col-md-6 mb-4 mb-md-0">';
-                    echo '<img src="images/' . htmlspecialchars( $item['image'] ?? 'test.jpg', ENT_QUOTES, 'UTF-8' ) . '" class="img-fluid rounded one-painting-image" alt="' . htmlspecialchars($item['title'], ENT_QUOTES, 'UTF-8') . '" />';
+                    echo '<div class="one-painting-container">';
+                        echo '<div class="one-painting-image-wrapper">';
+                            echo '<span class="category-badge category-badge--accent category-badge--top-left">' . htmlspecialchars($item['category_name'] ?? 'Unknown', ENT_QUOTES, 'UTF-8') . '</span>';
+                            echo '<img src="images/' . htmlspecialchars( $item['image'] ?? 'test.jpg', ENT_QUOTES, 'UTF-8' ) . '" class="img-fluid one-painting-image" alt="' . htmlspecialchars($item['title'], ENT_QUOTES, 'UTF-8') . '" />';
+                        echo '</div>';
+                    echo '</div>';
                 echo '</div>';
                 
                 // Правая колонка: Описание
@@ -77,8 +82,8 @@ class ViewPaintings{
 
                     echo '<div class="card rounded-5 mb-4">';
                         echo '<div class="card-body">';
-                            echo "<p class='card-text mb-2'>Price</p>";
-                            echo "<p class='mb-0'>" . htmlspecialchars($item['price'] ?? 'Unknown', ENT_QUOTES, 'UTF-8') . " €</p>";
+                            echo "<p class='card-text mb-2 one-painting-price-label'>Price</p>";
+                            echo "<p class='mb-0 one-painting-price-value'>" . htmlspecialchars($item['price'] ?? 'Unknown', ENT_QUOTES, 'UTF-8') . " €</p>";
                         echo '</div>';
                     echo '</div>';
                     
@@ -117,6 +122,8 @@ class ViewPaintings{
                             echo '</div>';
                         echo '</div>';
                     echo '</div>';
+
+                    echo '<button type="button" class="btn buy-button">Buy</button>';
                 echo '</div>';
             echo '</div>';
         echo '</div>';

@@ -51,7 +51,7 @@ class Paintings{
     }
 
     public static function getPaintingsByArtistID($id) {
-        $query = "SELECT title, image FROM paintings where artist_id = ? ORDER BY id DESC";
+        $query = "SELECT id, title, image FROM paintings where artist_id = ? ORDER BY id DESC";
         $db = new Database();
         $arr = $db->getAll($query, [$id]);
         return $arr;
