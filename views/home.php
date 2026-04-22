@@ -2,17 +2,19 @@
 ob_start();
 ?>
 
-<h2 class="mt-5">Our Artists</h2>
-    <?php
-        ViewArtists::ArtistsGrid($artistArr);
-    ?>
-    
-<div class="container my-4">
-    <h2 class="mb-3">Gallery Collection</h2>
-    <?php
-        ViewPaintings::PaintingsGrid($arr);
-    ?>
+<div class="d-flex justify-content-between align-items-center mb-3">
+    <h2 class="mb-0">Our Artists</h2>
+    <a href="artists" class="section-link">View All <span class="ms-1 small">&#8599;</span></a>
 </div>
+
+<?php
+    ViewArtists::ArtistsGrid($artistArr);
+?>
+
+<h2 class="mb-3">Gallery Collection</h2>
+<?php
+    ViewPaintings::PaintingsGrid($arr);
+?>
 
 
 <?php

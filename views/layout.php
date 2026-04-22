@@ -39,7 +39,7 @@ $isRegister = $activeRoute === 'registerForm' || $activeRoute === 'registerAnswe
                     <div class="collapse navbar-collapse" id="navbarContent">
                         <ul class="navbar-nav ms-auto">
                             <li class="nav-item"><a class="nav-link<?php echo $isHome ? ' active' : ''; ?>" href="./">Home</a></li>
-                            <li class="nav-item"><a class="nav-link<?php echo $isInfo ? ' active' : ''; ?>" href="testError">Info</a></li>
+                            <!--<li class="nav-item"><a class="nav-link<?php echo $isInfo ? ' active' : ''; ?>" href="testError">Info</a></li>-->
                             <li class="nav-item"><a class="nav-link<?php echo $isArtists ? ' active' : ''; ?>" href="artists">Artists</a></li>
                             <li class="nav-item dropdown">
                                 <button class="nav-link dropdown-toggle<?php echo $isCategories ? ' active' : ''; ?>" type="button" id="categoriesDropdown" data-bs-toggle="dropdown" aria-expanded="false">Categories</button>

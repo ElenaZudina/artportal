@@ -5,7 +5,7 @@ class ViewPaintings{
         echo '<div class="row">';
         foreach($arr as $value) {
             echo '<div class="col-12 mb-4">'; // Полная ширина для вертикального списка
-                echo '<a href="paintings?id=' . $value['id'] . '" class="d-block h-100 text-reset text-decoration-none">';
+                echo '<a href="paintings?id=' . $value['id'] . '" class="d-block h-100 text-reset">';
                     echo '<div class="card h-100">';
                         echo '<div class="row g-0">';
                             echo '<div class="col-md-4">';
@@ -30,7 +30,7 @@ class ViewPaintings{
         echo '<div class="row g-4 paintings-grid">';
         foreach($arr as $value) {
             echo '<div class="col-sm-6 col-md-4 col-lg-4">'; // Адаптивные колонки
-                echo '<a href="paintings?id=' . $value['id'] . '" class="d-block h-100 text-reset text-decoration-none">';
+                echo '<a href="paintings?id=' . $value['id'] . '" class="d-block h-100 text-reset">';
                     echo '<div class="card h-100 rounded-5 overflow-hidden">';
                         echo '<div class="card-img-wrapper position-relative">';
                             echo '<img src="images/' . htmlspecialchars($value['image'] ?? '', ENT_QUOTES, 'UTF-8') . '" class="card-img-top" alt="' . htmlspecialchars($value['title'], ENT_QUOTES, 'UTF-8') . '" onerror="this.onerror=null;this.src=\'images/test.jpg\';">';

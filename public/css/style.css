@@ -193,9 +193,6 @@ a {
   color: var(--primary);
   font-size: var(--text-base);
   font-weight: var(--font-weight-normal);
-}
-
-a:hover {
   text-decoration: none;
 }
 

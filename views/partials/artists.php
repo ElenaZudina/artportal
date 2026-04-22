@@ -5,7 +5,7 @@ class ViewArtists{
         echo '<div class="row g-4 artists-grid">'; // ряд для карточек
             foreach($arr as $value) {
                 echo '<div class="col-sm-6 col-md-4 col-lg-4">'; // Адаптивные колонки
-                echo '<a href="artist?id=' . $value['id'] . '" class="d-block h-100 text-reset text-decoration-none">';
+                echo '<a href="artist?id=' . $value['id'] . '" class="d-block h-100 text-reset">';
                     echo '<div class="card h-100 rounded-5 overflow-hidden">'; // карточка
                         echo '<div class="card-img-wrapper">';
                             echo '<img src="images/artists/' . htmlspecialchars($value['picture'] ?? '', ENT_QUOTES, 'UTF-8') . '" class="card-img-top" alt="' . htmlspecialchars($value['name'], ENT_QUOTES, 'UTF-8') . '" onerror="this.onerror=null;this.src=\'images/test.jpg\';">'; // Изображение внутри обертки
@@ -16,7 +16,7 @@ class ViewArtists{
                             echo '<p class="card-text artist-description">'. htmlspecialchars($value['bio'] ?? 'Unknown', ENT_QUOTES, 'UTF-8') . '</p>';
                             //Controller::CommentsCount($value['id']); будет добавлено позже, когда будет реализована модель комментариев
                             if ($showProfile) {
-                                echo '<span class="view-profile mt-auto align-self-end">View Profile <span class="ms-1 small">&#8599;</span></span>';
+                                echo '<span class="section-link mt-auto align-self-end">View Profile <span class="ms-1 small">&#8599;</span></span>';
                             }
                         echo '</div>'; // Закрываем card-body
                     echo '</div>'; // Закрываем карточку
@@ -32,7 +32,7 @@ class ViewArtists{
         echo '<div class="row">';
         foreach($arr as $value) {
             echo '<div class="col-12 mb-4">'; // Полная ширина для вертикального списка
-                echo '<a href="artist?id=' . $value['id'] . '" class="d-block h-100 text-reset text-decoration-none">';
+                echo '<a href="artist?id=' . $value['id'] . '" class="d-block h-100 text-reset">';
                     echo '<div class="card h-100 ">';
                         echo '<div class="row g-0">';
                             echo '<div class="col-md-4">';
@@ -43,7 +43,7 @@ class ViewArtists{
                                     echo '<h5 class="card-title">' . htmlspecialchars($value['name'], ENT_QUOTES, 'UTF-8') . '</h5>';
                                     //Controller::CommentsCount($value['id']); будет добавлено позже, когда будет реализована модель комментариев
                                     if ($showProfile) {
-                                        echo '<span class="view-profile mt-auto align-self-end">View Profile <span class="ms-1 small">&#8599;</span></span>';
+                                        echo '<span class="section-link mt-auto align-self-end">View Profile <span class="ms-1 small">&#8599;</span></span>';
                                     }
                                 echo '</div>';
                             echo '</div>';
@@ -96,7 +96,7 @@ class ViewArtists{
             echo '<div class="row g-3 artist-portfolio-grid">';
                 foreach ($item['paintings'] as $painting) {
                     echo '<div class="col-12 col-sm-6 col-md-6 col-lg-4">'; // Более крупные карточки портфолио
-                        echo '<a href="paintings?id=' . urlencode((string)($painting['id'] ?? '')) . '" class="d-block h-100 text-reset text-decoration-none">';
+                        echo '<a href="paintings?id=' . urlencode((string)($painting['id'] ?? '')) . '" class="d-block h-100 text-reset">';
                             echo '<div class="card h-100 rounded-5 overflow-hidden">'; // Карточка для каждой картины
                                 echo '<div class="card-img-wrapper">';
                                      echo '<img src="images/' . htmlspecialchars($painting['image'] ?? '', ENT_QUOTES, 'UTF-8') . '" 
