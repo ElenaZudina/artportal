@@ -75,21 +75,17 @@ class ViewPaintings{
                         $artistAvatar = !empty($item['artist_avatar']) ? $item['artist_avatar'] : 'test.jpg';
                         echo '<img src="images/' . htmlspecialchars($artistAvatar, ENT_QUOTES, 'UTF-8') . '" alt="' . htmlspecialchars($item['artist_name'] ?? 'Artist', ENT_QUOTES, 'UTF-8') . '" class="artist-avatar">';
                         echo '<div class="artist-profile-content">';
-                            echo '<p class="card-text">Artist</p>';
+                            echo '<p class="painting-specs-label">Artist</p>';
                             echo '<a href="artist?id=' . urlencode((string)($item['artist_id'] ?? '')) . '" class="artist-profile-link">' . htmlspecialchars($item['artist_name'] ?? 'Unknown', ENT_QUOTES, 'UTF-8') . '</a>';
                         echo '</div>';
                     echo '</div>';
 
                     echo '<div class="card rounded-5 mb-4">';
                         echo '<div class="card-body">';
-                            echo "<p class='card-text mb-2 one-painting-price-label'>Price</p>";
-                            echo "<p class='mb-0 one-painting-price-value'>" . htmlspecialchars($item['price'] ?? 'Unknown', ENT_QUOTES, 'UTF-8') . " €</p>";
+                            echo "<p class='painting-specs-label painting-price-label mb-2'>Price</p>";
+                            echo "<p class='painting-specs-value painting-price-value mb-0'>" . htmlspecialchars($item['price'] ?? 'Unknown', ENT_QUOTES, 'UTF-8') . " €</p>";
                         echo '</div>';
                     echo '</div>';
-                    
-                    
-                    echo "<h4 class='mb-3'>Category</h4>";
-                    echo "<p>" . htmlspecialchars($item['category_name'] ?? 'Unknown', ENT_QUOTES, 'UTF-8') . "</p>";
 
                     echo "<h3 class='mb-3'>About This Work</h3>";
                     echo "<p class='one-painting-description'>" . htmlspecialchars($item['description'] ?? 'Unknown', ENT_QUOTES, 'UTF-8') . "</p>";
@@ -98,8 +94,8 @@ class ViewPaintings{
                         echo '<div class="col-12 col-md-6">';
                             echo '<div class="card rounded-5 h-100">';
                                 echo '<div class="card-body">';
-                                    echo "<p class='card-text mb-2'>Year</p>";
-                                    echo "<p class='mb-0'>" . htmlspecialchars($item['year_created'] ?? 'Unknown', ENT_QUOTES, 'UTF-8') . "</p>";
+                                    echo "<p class='painting-specs-label mb-2'>Year</p>";
+                                    echo "<p class='painting-specs-value mb-0'>" . htmlspecialchars($item['year_created'] ?? 'Unknown', ENT_QUOTES, 'UTF-8') . "</p>";
                                 echo '</div>';
                             echo '</div>';
                         echo '</div>';
@@ -107,8 +103,8 @@ class ViewPaintings{
                         echo '<div class="col-12 col-md-6">';
                             echo '<div class="card rounded-5 h-100">';
                                 echo '<div class="card-body">';
-                                    echo "<p class='card-text mb-2'>Medium</p>";
-                                    echo "<p class='mb-0'>" . htmlspecialchars($item['medium'] ?? 'Unknown', ENT_QUOTES, 'UTF-8') . "</p>";
+                                    echo "<p class='painting-specs-label mb-2'>Medium</p>";
+                                    echo "<p class='painting-specs-value mb-0'>" . htmlspecialchars($item['medium'] ?? 'Unknown', ENT_QUOTES, 'UTF-8') . "</p>";
                                 echo '</div>';
                             echo '</div>';
                         echo '</div>';
@@ -116,8 +112,8 @@ class ViewPaintings{
                         echo '<div class="col-12">';
                             echo '<div class="card rounded-5 h-100">';
                                 echo '<div class="card-body">';
-                                    echo "<p class='card-text mb-2'>Dimensions</p>";
-                                    echo "<p class='mb-0'>" . htmlspecialchars($item['dimensions'] ?? 'Unknown', ENT_QUOTES, 'UTF-8') . "</p>";
+                                    echo "<p class='painting-specs-label mb-2'>Dimensions</p>";
+                                    echo "<p class='painting-specs-value mb-0'>" . htmlspecialchars($item['dimensions'] ?? 'Unknown', ENT_QUOTES, 'UTF-8') . "</p>";
                                 echo '</div>';
                             echo '</div>';
                         echo '</div>';

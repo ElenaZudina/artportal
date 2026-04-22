@@ -16,7 +16,25 @@
   font-weight: var(--font-weight-normal);
   line-height: 20px;
   margin-bottom: 8px;
-  color: #6A7282;
+  color: var(--muted-foreground);
+}
+
+/* Painting specs label - matches artist profile label */
+.painting-specs-label {
+  font-size: 12px;
+  font-weight: var(--font-weight-medium);
+  letter-spacing: 0.08em;
+  color: var(--muted-foreground);
+  line-height: 1.2;
+}
+
+/* Painting specs value - matches artist profile link styling */
+.painting-specs-value {
+  font-size: 18px;
+  font-weight: var(--font-weight-medium);
+  line-height: 1.3;
+  color: var(--foreground);
+  text-decoration: none;
 }
 
 /* Artist description in grid card: 2 lines max */
@@ -28,14 +46,14 @@
   line-clamp: 2;
   overflow: hidden;
   margin: 14px 0;
-  color: #4A5565;
+  color: var(--muted-foreground);
 }
 
 .single-artist-description {
   font-size: 20px;
   line-height: 32.5px;
   margin: 24px 0;
-  color: #56586B;
+  color: var(--muted-foreground);
 }
 
 .single-artist-image {
@@ -51,7 +69,7 @@
 .single-artist-container {
   position: relative;
   border-radius: 1.5rem;
-  background: #ffffff;
+  background: var(--card);
   box-shadow: 0 4px 12px 0 rgba(0, 0, 0, 0.12), 0 24px 48px 0 rgba(0, 0, 0, 0.1);
   display: block;
   width: 100%;
@@ -62,12 +80,12 @@
   font-size: 18px;
   line-height: 32.5px;
   margin: 24px 0;
-  color: #56586B;
+  color: var(--muted-foreground);
 }
 
 .buy-button {
   background: var(--gradient-footer);
-  color: #FFFFFF;
+  color: var(--primary-foreground);
   border: none;
   border-radius: 999px;
   padding: 14px 30px;
@@ -77,18 +95,24 @@
 
 .buy-button:hover,
 .buy-button:focus-visible {
-  color: #FFFFFF;
+  color: var(--primary-foreground);
   opacity: 0.92;
 }
 
-.one-painting-price-label {
-  color: #9810FA;
-}
-
 .one-painting-price-value {
-  color: #9810FA;
+  color: var(--primary);
   font-size: var(--text-xl);
   font-weight: var(--font-weight-bold);
+}
+
+.painting-price-value {
+  color: var(--primary);
+  font-size: var(--text-xl);
+  font-weight: var(--font-weight-bold);
+}
+
+.painting-price-label {
+  color: var(--primary);
 }
 
 .one-painting-image {
@@ -108,7 +132,7 @@
 .one-painting-container {
   position: relative;
   border-radius: 1.5rem;
-  background: #ffffff;
+  background: var(--card);
   box-shadow: 0 4px 12px 0 rgba(0, 0, 0, 0.12), 0 24px 48px 0 rgba(0, 0, 0, 0.1);
   padding: 32px;
   display: block;
@@ -136,19 +160,13 @@
   min-width: 0;
 }
 
-.artist-profile-label {
-  font-size: 12px;
-  font-weight: var(--font-weight-medium);
-  letter-spacing: 0.08em;
-  color: #6A7282;
-  line-height: 1.2;
-}
+
 
 .artist-profile-link {
   font-size: 18px;
   font-weight: var(--font-weight-medium);
   line-height: 1.3;
-  color: #111827;
+  color: var(--foreground);
   text-decoration: none;
 }
 
@@ -162,7 +180,7 @@
 .painting-price {
   font-size: var(--text-md);
   font-weight: var(--font-weight-medium);
-  color: #9810FA;
+  color: var(--primary);
   background-image: var(--gradient-footer);
   -webkit-background-clip: text;
   background-clip: text;
@@ -177,7 +195,7 @@
 
 .paintings-grid .card-img-wrapper {
   aspect-ratio: 1 / 1;
-  background: #F9FAFB;
+  background: var(--background);
 }
 
 .paintings-grid .card-img-top {
@@ -188,7 +206,7 @@
 
 .artists-grid .card-img-wrapper {
   aspect-ratio: 1 / 1;
-  background: #F9FAFB;
+  background: var(--background);
 }
 
 .artists-grid .card-img-top {
@@ -199,7 +217,7 @@
 
 .artist-portfolio-grid .card-img-wrapper {
   aspect-ratio: 3 / 4;
-  background: #F9FAFB;
+  background: var(--background);
 }
 
 .artist-portfolio-grid .card-img-top {
@@ -222,7 +240,7 @@
   font-weight: var(--font-weight-medium);
   line-height: 1;
   background: rgba(255, 255, 255, 0.9);
-  color: #101828;
+  color: var(--foreground);
   backdrop-filter: blur(10px);
   box-shadow: 0 4px 10px rgba(0,0,0,0.1), 0 1px 3px rgba(0,0,0,0.06);
   z-index: 10;
@@ -240,7 +258,7 @@
 
 .category-badge--accent {
   background: linear-gradient(135deg, #AD46FF 0%, #9810FA 100%);
-  color: #FFFFFF;
+  color: var(--primary-foreground);
   box-shadow: 0 10px 24px rgba(152, 16, 250, 0.28);
 }
 
@@ -252,7 +270,7 @@
   font-size: var(--text-base);
   font-weight: var(--font-weight-medium);
   line-height: 24px;
-  color: #9810FA;
+  color: var(--primary);
   text-decoration: none;
 }
 
@@ -285,7 +303,7 @@ a.d-block.h-100.text-reset.text-decoration-none:hover .card,
 a.d-block.h-100.text-reset.text-decoration-none:focus-visible .card {
   transform: translateY(-4px);
   box-shadow: 0 14px 28px rgba(15, 23, 42, 0.14);
-  border-color: #E2E8F0;
+  border-color: var(--accent);
 }
 
 .card-img-top,
@@ -309,7 +327,7 @@ a.d-block.h-100.text-reset.text-decoration-none:focus-visible .img-fluid {
 .view-profile:focus-visible,
 .artist-profile-link:hover,
 .artist-profile-link:focus-visible {
-  color: #7E22CE;
+  color: var(--primary-dark);
   opacity: 1;
 }
 
