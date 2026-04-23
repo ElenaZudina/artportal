@@ -43,7 +43,7 @@ class ViewPaintings{
             }
 
             echo '<div class="' . $itemClasses . '">';
-                $linkClass = $asymmetric ? 'd-block text-reset' : 'd-block h-100 text-reset';
+                $linkClass = 'd-block h-100 text-reset';
                 $cardClass = $asymmetric ? 'card rounded-5 overflow-hidden' : 'card h-100 rounded-5 overflow-hidden';
                 echo '<a href="paintings?id=' . $value['id'] . '" class="' . $linkClass . '">';
                     echo '<div class="' . $cardClass . '">';
