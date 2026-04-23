@@ -5,6 +5,7 @@ include_once 'config/Database.php';
 require 'models/Categories.php';
 require 'models/Paintings.php';
 require 'models/Artists.php';
+require 'models/Exhibitions.php';
 // Добавляю этот код на следующем этапе
 //require 'models/Comments.php';
 //require 'models/Register.php';

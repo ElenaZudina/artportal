@@ -41,6 +41,17 @@ elseif($path == 'artist') {
         $response = Controller::error404();
     }
 }
+elseif($path == 'exhibitions') {
+    $response = Controller::AllExhibitions();
+}
+elseif($path == 'current-exhibition') {
+    if ($id > 0) {
+        $response = Controller::ExhibitionByID($id); 
+    } else {
+        $response = Controller::error404();
+    }
+}
+
 /*
 elseif($path == 'insertcomment' and isset($_GET['comment'],$_GET['id'])) {
     $response = Controller::InsertComment($_GET['comment'],$_GET['id']);
