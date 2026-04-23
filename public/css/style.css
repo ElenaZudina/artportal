@@ -6,7 +6,7 @@ body {
   font-family: var(--font-body);
   font-size: 16px;
   line-height: 1.5;
-  background: var(--background);
+  background: var(--gradient-body);
   color: var(--foreground);
   margin: 0;
 }
@@ -160,12 +160,19 @@ input {
   );
 
   /* Body */
-  --gradient-body: linear-gradient(
+  /*--gradient-body: linear-gradient(
     33deg,
     #F9FAFB,
     #FFFFFF,
     #FAF5FF
-  );
+  );*/
+
+  --gradient-body: linear-gradient(
+  to bottom right,
+  #f9fafb 0%,
+  #ffffff 50%,
+  rgba(243, 232, 255, 0.3) 100%
+);
 
   
   /* Footer */
