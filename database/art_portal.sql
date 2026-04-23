@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Хост: 127.0.0.1
--- Время создания: Апр 10 2026 г., 07:12
+-- Время создания: Апр 23 2026 г., 14:16
 -- Версия сервера: 10.4.32-MariaDB
 -- Версия PHP: 8.2.12
 
@@ -44,10 +44,12 @@ CREATE TABLE `artists` (
 --
 
 INSERT INTO `artists` (`id`, `name`, `location`, `birth_date`, `bio`, `picture`, `created_at`, `user_id`, `updated_at`) VALUES
-(1, 'Lada Kalasho', 'Estonia', '1976-01-14', 'Borned in Ukraine', 'test.jpg', '2026-01-28 11:06:17', 4, '2026-04-09 10:25:14'),
-(2, 'Viktoriia Slavinska', 'Ukraine', '1976-01-01', 'Borned in Ukraine. ', NULL, '2026-01-28 11:09:28', 5, '2026-04-09 10:25:14'),
-(3, 'Elena Sizonenko', 'Ukraine', '1987-05-20', 'Test', NULL, '2026-01-29 08:49:46', 6, '2026-04-09 10:25:14'),
-(4, 'Marina Beikmane', 'Latvia', '1978-04-18', 'From Latvia', NULL, '2026-01-29 09:06:17', 7, '2026-04-09 10:25:14');
+(1, 'Marina Chen', 'Estonia, Tartu', '1976-01-14', 'Contemporary abstract painter exploring the intersection of color theory and emotional resonance through bold gestural works.', 'marina-chen.jpg', '2026-01-28 11:06:17', 4, '2026-04-09 10:25:14'),
+(2, 'Alexandre Dubois', 'Estonia, Tallinn', '1976-01-01', 'Digital-first artist creating immersive installations that blur the boundaries between physical and virtual art spaces.', 'alexandre-dubois.jpg', '2026-01-28 11:09:28', 5, '2026-04-09 10:25:14'),
+(3, 'Yuki Tanaka', 'Estonia, Tallinn', '1987-05-20', 'Minimalist painter focused on the power of negative space and subtle tonal variations in monochromatic compositions.', 'yuki-tanaka.jpg', '2026-01-29 08:49:46', 6, '2026-04-09 10:25:14'),
+(4, 'Sofia Rodriguez', 'Estonia, Pärnu', '1978-04-18', 'Mixed media artist combining traditional painting techniques with modern materials to create textured, layered narratives.', 'sofia-rodriguez.jpg', '2026-01-29 09:06:17', 7, '2026-04-09 10:25:14'),
+(11, 'David Park', 'Estonia, Tallinn', '0000-00-00', 'Contemporary portrait artist known for expressive brushwork and vibrant color palettes that capture emotional depth.', 'david-park.jpg', '2026-04-23 09:14:39', 8, '2026-04-23 09:14:39'),
+(12, 'Emma Williams', 'Estonia, Tartu', '0000-00-00', 'Geometric abstraction specialist creating harmonious compositions inspired by architecture and urban landscapes.', 'emma-williams.jpg', '2026-04-23 09:14:39', 9, '2026-04-23 09:14:39');
 
 -- --------------------------------------------------------
 
@@ -68,7 +70,34 @@ INSERT INTO `categories` (`id`, `name`) VALUES
 (1, 'Abstract'),
 (2, 'Animals'),
 (3, 'Landsacape'),
-(4, 'Still life');
+(4, 'Still life'),
+(5, 'Contemporary'),
+(6, 'Minimalism'),
+(7, 'Digital'),
+(8, 'Portraiture'),
+(9, 'Geometric'),
+(10, 'Mixed Media');
+
+-- --------------------------------------------------------
+
+--
+-- Структура таблицы `collections`
+--
+
+CREATE TABLE `collections` (
+  `id` int(11) NOT NULL,
+  `title` varchar(255) NOT NULL,
+  `type` varchar(100) NOT NULL COMMENT 'keyword | popular | latest | random',
+  `param` varchar(100) DEFAULT NULL COMMENT 'filter parameter'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Дамп данных таблицы `collections`
+--
+
+INSERT INTO `collections` (`id`, `title`, `type`, `param`) VALUES
+(1, 'Artworks having energy in title', 'keyword', 'energy'),
+(2, 'Latest artworks', 'latest', NULL);
 
 -- --------------------------------------------------------
 
@@ -93,6 +122,28 @@ INSERT INTO `comments` (`id`, `user_id`, `painting_id`, `text`, `date`) VALUES
 (2, 1, 4, 'I like it', '2026-03-25 13:41:56'),
 (3, 3, 3, 'So cute', '2026-03-25 13:42:49'),
 (4, NULL, 10, 'Great work!', '2026-03-25 13:42:49');
+
+-- --------------------------------------------------------
+
+--
+-- Структура таблицы `exhibitions`
+--
+
+CREATE TABLE `exhibitions` (
+  `id` int(11) NOT NULL,
+  `title` varchar(100) NOT NULL,
+  `description` text DEFAULT NULL,
+  `collection_id` int(11) NOT NULL,
+  `start_date` datetime NOT NULL,
+  `end_date` datetime NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Дамп данных таблицы `exhibitions`
+--
+
+INSERT INTO `exhibitions` (`id`, `title`, `description`, `collection_id`, `start_date`, `end_date`) VALUES
+(2, 'Energy World', 'Artworks connected to Energy', 1, '2026-04-23 13:13:20', '2026-04-23 13:13:20');
 
 -- --------------------------------------------------------
 
@@ -141,12 +192,14 @@ CREATE TABLE `paintings` (
 --
 
 INSERT INTO `paintings` (`id`, `title`, `description`, `image`, `year_created`, `category_id`, `artist_id`, `medium`, `dimensions`, `price`, `created_at`, `updated_at`) VALUES
-(3, 'Cute Ginger Cat', 'Cute Ginger Cat is a charming original painting depicting a sweet ginger cat with a warm, playful character. Painted in acrylic on cardboard, this one-of-a-kind artwork brings coziness and gentle emotion to any space. Perfect for cat lovers and collectors of unique art.', 'test.jpg', '2021', 2, 1, '', '', 0.00, '2026-04-09 10:22:14', '2026-04-09 10:22:14'),
-(4, 'Evening Istanbul', 'A quiet evening unfolds over Istanbul as warm city lights meet the deep blue of the Bosphorus. A solitary cat watches the scene, adding a poetic touch to this impressionistic oil painting. Rich textures and atmospheric colors capture the charm of the city at dusk. Painted on high-quality 290 gsm artist paper, the artwork is signed by the artist on both the front and back and comes with a certificate of authenticity.', 'test.jpg', '2001', 3, 2, '', '', 0.00, '2026-04-09 10:22:14', '2026-04-09 10:22:14'),
-(9, 'Sailing Boats on the Sea', 'Sailing Boats on the Sea is an original impressionist oil painting depicting graceful sailboats drifting across calm waters. Soft blue and beige tones create a peaceful, airy mood, while expressive palette knife textures add depth and gentle movement. A serene coastal artwork that brings a sense of freedom and tranquility to any interior.', 'test.jpg', '2025', 3, 2, '', '', 0.00, '2026-04-09 10:22:14', '2026-04-09 10:22:14'),
-(10, 'The Horizon’s Fiery Dance', 'The Horizon’s Fiery Dance is a vibrant acrylic seascape filled with movement, energy, and bold color. Racing sailboats cut through the waves as they head toward a glowing, swirling sun on the horizon. Dynamic brushstrokes of red, orange, and deep blue create a dramatic sky, evoking wind, speed, and freedom.\r\n\r\nExpressive and powerful, this one-of-a-kind artwork captures the raw emotion of the sea and the thrill of motion. Painted in acrylic on stretched canvas, it makes a striking focal point for a modern interior and comes with a certificate of authenticity.', 'test.jpg', '1987', 3, 1, '', '', 0.00, '2026-04-09 10:22:14', '2026-04-09 10:22:14'),
-(11, 'Lemons on the Table', '“Lemons on the Table” is an original 3D oil painting featuring vibrant citrus fruits. Rich texture created with oil paint and marble-chip putty adds depth and tactile appeal. A small yet expressive still life that brings freshness and light into any interior.', 'test.jpg', '2024', 4, 3, '', '', 0.00, '2026-04-09 10:22:14', '2026-04-09 10:22:14'),
-(12, 'After the Rain on a Quiet Irish Street', 'After the Rain on a Quiet Irish Street is an original acrylic painting that captures a fleeting moment of calm after rainfall. Wet pavement reflects soft light and passing figures, while a small café and flowering windows add warmth and life to the scene. Painted in an impressionist style, expressive brushstrokes and layered color create depth and mood without over-detail.\r\n\r\nThis one-of-a-kind artwork celebrates everyday street life, gentle movement, and the romantic atmosphere of a rainy day in a European town. The painted, staple-free canvas edges make it ready to hang without framing—perfect for a living room, hallway, or as a thoughtful gift for lovers of travel and atmospheric cityscapes.', 'test.jpg', '2026', 3, 4, '', '', 0.00, '2026-04-09 10:22:14', '2026-04-09 10:22:14');
+(3, 'Ethereal Horizons', 'A sweeping abstract composition that captures the liminal space between consciousness and dreams through layered washes of color.', 'ethereal-horizons.jpg', '2026', 1, 1, 'Acrylic on Canvas', '72\" × 48\"', 450.00, '2026-04-09 10:22:14', '2026-04-09 10:22:14'),
+(4, 'Digital Synthesis', 'An exploration of the intersection between traditional painting and digital aesthetics, creating a unique visual language.', 'digital-synthesis.jpg', '2026', 10, 2, 'Mixed Media', '60\" × 40\"', 875.00, '2026-04-09 10:22:14', '2026-04-09 10:22:14'),
+(9, 'Void Studies III', 'A meditation on absence and presence through carefully calibrated tones and the strategic use of empty space.', 'void-studies.jpg', '2026', 6, 3, 'Oil on Linen', '48\" × 48\"', 350.00, '2026-04-09 10:22:14', '2026-04-09 10:22:14'),
+(10, 'Urban Light Installation', 'The Horizon’s Fiery Dance is a vibrant acrylic seascape filled with movement, energy, and bold color. Racing sailboats cut through the waves as they head toward a glowing, swirling sun on the horizon. Dynamic brushstrokes of red, orange, and deep blue create a dramatic sky, evoking wind, speed, and freedom.\r\n\r\nExpressive and powerful, this one-of-a-kind artwork captures the raw emotion of the sea and the thrill of motion. Painted in acrylic on stretched canvas, it makes a striking focal point for a modern interior and comes with a certificate of authenticity.', 'urban-light-installation.jpg', '2026', 7, 2, 'Digital Art', 'Variable', 660.00, '2026-04-09 10:22:14', '2026-04-09 10:22:14'),
+(11, 'Portrait of Tomorrow', 'A contemporary portrait that captures the essence of modern identity through expressive brushstrokes and bold color choices.', 'portrait-of-tomorrow.jpg', '2025', 8, 11, 'Oil on Canvas\'', '36\" × 28\"', 777.00, '2026-04-09 10:22:14', '2026-04-09 10:22:14'),
+(12, 'Chromatic Energy', 'A vibrant explosion of color that celebrates the raw energy and emotion of abstract expressionism.', 'chromatic-energy.jpg', '2025', 1, 1, 'Acrylic on Canvas', '', 999.00, '2026-04-09 10:22:14', '2026-04-09 10:22:14'),
+(13, 'Geometric Meditation', 'Precise geometric forms create a sense of balance and harmony, inviting contemplation and visual exploration.', 'geometric-meditation.jpg', '2025', 9, 12, 'Acrylic on Panel', '40\" × 40\"', 1100.00, '2026-04-23 09:39:00', '2026-04-23 09:39:00'),
+(14, 'Layered Narratives', 'Complex layers of paint, paper, and found materials come together to tell a multifaceted story of texture and depth.', 'layered-narratives.jpg', '2025', 10, 4, 'Mixed Media', '48\" × 36\"', 555.00, '2026-04-23 09:43:58', '2026-04-23 09:43:58');
 
 -- --------------------------------------------------------
 
@@ -171,10 +224,12 @@ INSERT INTO `users` (`id`, `username`, `email`, `password`, `role`, `created_at`
 (1, 'admin', 'admin@newsportal.ee', '$2y$12$pxB2ofiiNZkxObmbBvBOyegwCjHCVFYhapjiSsdYXUaJ9Z1IH6pQW', 'admin', '2019-11-05 00:00:00'),
 (2, 'anonim', 'user@newsportal.ee', '$2y$10$dYK1sCogKL/zZBef.V/gBeynL5mdt0QxZlwvEUBkS0jkdXYRMPHRa', 'user', '2019-11-05 00:00:00'),
 (3, 'vasya', 'vasya@mail.ru', '$2y$10$EIn5N6yvbp807VbgEHgr0OUAt1T14c4fXwE0eo02E0x4KbFrCSXbK', 'user', '2020-09-19 00:00:00'),
-(4, 'lada', 'lada@artportal.ee', '$2y$10$8MJVIEt3Q3LKq04gSRgMjOrqkf1MATsQVZvHPtUFVrhN96S0QvSby', 'artist', '2026-03-25 11:17:55'),
-(5, 'viktoria', 'viktoria@artportal.ee', '$2y$10$X5Rsi.xtMaYpWrVpzLZ2o.3NSYmG35tEPsshp4RgFbMKQw2GAkTEu', 'artist', '2026-03-25 13:07:23'),
-(6, 'elena', 'elena@artportal.ee', '$2y$10$8XvUTjGe.ONCraihaVsQW.yUAa7lNVxlqcpZWwvoRSNBa0o/aU2Q2', 'artist', '2026-03-25 13:08:46'),
-(7, 'marina', 'marina@artportal', '$2y$10$WLfGLuEgxd0BwcB9ZVjrU.cSFM/CyDTbfmY2xb.vZq/YoRihfONiO', 'user', '2026-03-25 13:12:53');
+(4, 'marina', 'marina@artportal.ee', '$2y$10$3BaKKk1rcaMpEx2pBQfBnuTp8AkPG33P6EyvY6OIkctda3rSICbs6', 'artist', '2026-03-25 11:17:55'),
+(5, 'alexandre', 'alexandre@artportal.ee', '$2y$10$T4XRXaxjEK3ifIxgQzHnZe3f9cAFVTt57NBnsA8PgHguWkuj6BLGe', 'artist', '2026-03-25 13:07:23'),
+(6, 'yuki', 'yuki@artportal.ee', '$2y$10$BrSY3RMOOQYnAHAHd29CbeTui.PWY6.YVb4m8.rryrNde0hzMk4PW', 'artist', '2026-03-25 13:08:46'),
+(7, 'sofia', 'sofia@artportal', '$2y$10$HOX69EjaxPtXhIqwGbEC/OQtl0brd4WiJ8NWINc0/gnHau77Ka3.a', 'user', '2026-03-25 13:12:53'),
+(8, 'david', 'david@artportal.ee', '$2y$10$isZBs0DDwi1nNtQQ/qwpXO49auxCLTqlhkQM12g0wBNznyeNUuIeC', 'user', '2026-04-23 09:11:04'),
+(9, 'emma', 'emma@artportal.ee', '$2y$10$ZE9d5dGo7gmiTDJ/dh4OyuYmvuFr75YBa0cbowZLv9mR/yA0VEUka', 'user', '2026-04-23 09:11:04');
 
 --
 -- Индексы сохранённых таблиц
@@ -194,12 +249,25 @@ ALTER TABLE `categories`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Индексы таблицы `collections`
+--
+ALTER TABLE `collections`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Индексы таблицы `comments`
 --
 ALTER TABLE `comments`
   ADD PRIMARY KEY (`id`),
   ADD KEY `painting_id` (`painting_id`),
   ADD KEY `user_id` (`user_id`);
+
+--
+-- Индексы таблицы `exhibitions`
+--
+ALTER TABLE `exhibitions`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `collection_id` (`collection_id`);
 
 --
 -- Индексы таблицы `gallery_images`
@@ -232,19 +300,31 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT для таблицы `artists`
 --
 ALTER TABLE `artists`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
 
 --
 -- AUTO_INCREMENT для таблицы `categories`
 --
 ALTER TABLE `categories`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+
+--
+-- AUTO_INCREMENT для таблицы `collections`
+--
+ALTER TABLE `collections`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT для таблицы `comments`
 --
 ALTER TABLE `comments`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+
+--
+-- AUTO_INCREMENT для таблицы `exhibitions`
+--
+ALTER TABLE `exhibitions`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT для таблицы `gallery_images`
@@ -256,13 +336,13 @@ ALTER TABLE `gallery_images`
 -- AUTO_INCREMENT для таблицы `paintings`
 --
 ALTER TABLE `paintings`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
 
 --
 -- AUTO_INCREMENT для таблицы `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
 -- Ограничения внешнего ключа сохраненных таблиц
@@ -280,6 +360,12 @@ ALTER TABLE `artists`
 ALTER TABLE `comments`
   ADD CONSTRAINT `comments_ibfk_1` FOREIGN KEY (`painting_id`) REFERENCES `paintings` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
   ADD CONSTRAINT `comments_ibfk_2` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE SET NULL ON UPDATE CASCADE;
+
+--
+-- Ограничения внешнего ключа таблицы `exhibitions`
+--
+ALTER TABLE `exhibitions`
+  ADD CONSTRAINT `exhibitions_ibfk_1` FOREIGN KEY (`collection_id`) REFERENCES `collections` (`id`);
 
 --
 -- Ограничения внешнего ключа таблицы `gallery_images`
