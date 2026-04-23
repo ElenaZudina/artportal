@@ -27,7 +27,7 @@ class ViewPaintings{
 
     public static function PaintingsGrid($arr, $imagesOnly = false, $asymmetric = true) {
         echo '<div class="container my-4">';
-        $gridClass = $asymmetric ? 'row g-4 paintings-grid paintings-grid--asymmetric' : 'row g-4';
+        $gridClass = $asymmetric ? 'row g-4 paintings-grid paintings-grid--asymmetric' : 'row g-4 paintings-grid paintings-grid--regular';
         echo '<div class="' . $gridClass . '">';
         foreach($arr as $index => $value) {
             $itemClasses = $asymmetric ? 'paintings-grid-item' : 'col-sm-6 col-md-4 col-lg-4';

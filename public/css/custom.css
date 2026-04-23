@@ -193,6 +193,17 @@
   overflow: hidden;
 }
 
+.paintings-grid--regular .card-img-wrapper {
+  max-height: 520px;
+  background: var(--background);
+}
+
+.paintings-grid--regular .card-img-top {
+  width: 100%;
+  height: auto;
+  object-fit: cover;
+}
+
 /* Gallery asymmetric grid (Figma-like) */
 .paintings-grid--asymmetric {
   display: grid;
