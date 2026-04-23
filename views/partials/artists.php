@@ -99,7 +99,7 @@ class ViewArtists{
                         echo '<a href="paintings?id=' . urlencode((string)($painting['id'] ?? '')) . '" class="d-block h-100 text-reset">';
                             echo '<div class="card h-100 rounded-5 overflow-hidden">'; // Карточка для каждой картины
                                 echo '<div class="card-img-wrapper">';
-                                     echo '<img src="images/' . htmlspecialchars($painting['image'] ?? '', ENT_QUOTES, 'UTF-8') . '" 
+                                     echo '<img src="images/paintings/' . htmlspecialchars($painting['image'] ?? '', ENT_QUOTES, 'UTF-8') . '" 
                                          class="card-img-top" 
                                          alt="' . htmlspecialchars($painting['title'] ?? 'Без названия', ENT_QUOTES, 'UTF-8') . '" 
                                          onerror="this.onerror=null;this.src=\'images/test.jpg\';">';

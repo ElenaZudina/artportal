@@ -48,7 +48,7 @@ class ViewPaintings{
                 echo '<a href="paintings?id=' . $value['id'] . '" class="' . $linkClass . '">';
                     echo '<div class="' . $cardClass . '">';
                         echo '<div class="card-img-wrapper position-relative">';
-                            echo '<img src="images/' . htmlspecialchars($value['image'] ?? '', ENT_QUOTES, 'UTF-8') . '" class="card-img-top" alt="' . htmlspecialchars($value['title'], ENT_QUOTES, 'UTF-8') . '" onerror="this.onerror=null;this.src=\'images/test.jpg\';">';
+                            echo '<img src="images/paintings/' . htmlspecialchars($value['image'] ?? '', ENT_QUOTES, 'UTF-8') . '" class="card-img-top" alt="' . htmlspecialchars($value['title'], ENT_QUOTES, 'UTF-8') . '" onerror="this.onerror=null;this.src=\'images/test.jpg\';">';
                             if (!$imagesOnly) {
                                 echo '<span class="category-badge">' . htmlspecialchars($value['category'] ?? 'Unknown', ENT_QUOTES, 'UTF-8') . '</span>';
                             }
@@ -80,7 +80,7 @@ class ViewPaintings{
                     echo '<div class="one-painting-container">';
                         echo '<div class="one-painting-image-wrapper">';
                             echo '<span class="category-badge category-badge--accent category-badge--top-left">' . htmlspecialchars($item['category_name'] ?? 'Unknown', ENT_QUOTES, 'UTF-8') . '</span>';
-                            echo '<img src="images/' . htmlspecialchars($item['image'] ?? '', ENT_QUOTES, 'UTF-8') . '" class="img-fluid one-painting-image" alt="' . htmlspecialchars($item['title'], ENT_QUOTES, 'UTF-8') . '" onerror="this.onerror=null;this.src=\'images/test.jpg\';" />';
+                            echo '<img src="images/paintings/' . htmlspecialchars($item['image'] ?? '', ENT_QUOTES, 'UTF-8') . '" class="img-fluid one-painting-image" alt="' . htmlspecialchars($item['title'], ENT_QUOTES, 'UTF-8') . '" onerror="this.onerror=null;this.src=\'images/test.jpg\';" />';
                         echo '</div>';
                     echo '</div>';
                 echo '</div>';
