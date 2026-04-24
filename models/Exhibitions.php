@@ -14,7 +14,7 @@ class Exhibitions {
         return $arr;
     }
     public static function getCurrentExhibition() {
-        $query = "SELECT * FROM exhibitions WHERE start_date <= CURDATE() AND end_date >= CURDATE() ORDER BY start_date DESC LIMIT 1";
+        $query = "SELECT * FROM exhibitions WHERE start_date <= NOW() AND end_date >= NOW() ORDER BY start_date DESC LIMIT 1";
         $db = new Database();
         $arr = $db->getOne($query);
         return $arr;

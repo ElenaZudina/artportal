@@ -62,10 +62,28 @@ class Paintings{
         FROM paintings
         JOIN categories ON paintings.category_id = categories.id
         JOIN artists ON paintings.artist_id = artists.id
-        
         WHERE paintings.id = ? ";
         $db = new Database();
         $arr = $db->getOne($query, [$id]);
+        return $arr;
+    }
+
+    public static function getPaintingsByCollectionID($id) {
+        // Получаем коллекцию и её параметр
+        $collection = Collections::getCollectionByID($id);
+        if (!$collection) {
+            return [];
+        }
+        $param = $collection['param'];
+        // Динамический фильтр по ключевому слову
+        $query = "SELECT paintings.*, artists.name AS artist_name, categories.name AS category_name
+        FROM paintings
+        JOIN artists ON paintings.artist_id = artists.id
+        JOIN categories ON paintings.category_id = categories.id
+        WHERE paintings.title LIKE ? OR paintings.description LIKE ?
+        ORDER BY paintings.id DESC";
+        $db = new Database();
+        $arr = $db->getAll($query, ["%$param%", "%$param%"]);
         return $arr;
     }
 }

@@ -14,8 +14,8 @@ class Controller {
             }
         include_once 'views/partials/paintings.php';// Подключаем представление для отображения списка картин на главной странице
         include_once 'views/partials/artists.php';// Подключаем представление для отображения списка художников на главной странице
-        include_once 'views/partials/slid.php';// Подключаем cлайдер
         include_once 'views/home.php';// Подключаем представление для отображения главной страницы, если нужно добавить дополнительный контент
+        include_once 'views/partials/slider.php';// 
     }
 
     public static function AllCategories() {

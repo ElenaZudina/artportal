@@ -2,10 +2,12 @@
 ob_start();
 ?>
 
+
 <div class="d-flex justify-content-between align-items-center mb-3">
     <h2 class="mb-0">Our Artists</h2>
     <a href="artists" class="section-link">View All <span class="ms-1 small">&#8599;</span></a>
 </div>
+
 
 <?php
     ViewArtists::ArtistsGrid($artistArr);
