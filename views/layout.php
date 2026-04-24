@@ -56,8 +56,6 @@ $isRegister = $activeRoute === 'registerForm' || $activeRoute === 'registerAnswe
             </nav>
         </header>
         <main class="container my-5 flex-grow-1">
-
-        <?php include 'views/partials/slider.php'; ?>
             
             <?php
                 if (isset($content)) {

@@ -1,6 +1,8 @@
-<?php if (!empty($sliderPaintings)): ?>
-
-<div id="paintingsCarousel" class="carousel slide" data-bs-ride="carousel">
+<?php
+class ViewSlider {
+    public static function render($sliderPaintings) {
+        if (!empty($sliderPaintings)): ?>
+        <div id="paintingsCarousel" class="carousel slide" data-bs-ride="carousel">
 
     <!-- индикаторы -->
     <div class="carousel-indicators">
@@ -49,6 +51,6 @@
 
 </div>
 
-<?php else: ?>
-    <div>Нет картин</div>
-<?php endif; ?>
+        <?php endif;
+    }
+}

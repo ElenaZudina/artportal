@@ -1,7 +1,9 @@
 <?php
 ob_start();
 ?>
-
+<?php
+ViewSlider::render($sliderPaintings);
+?>
 
 <div class="d-flex justify-content-between align-items-center mb-3">
     <h2 class="mb-0">Our Artists</h2>
