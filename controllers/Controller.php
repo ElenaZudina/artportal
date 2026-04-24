@@ -4,7 +4,7 @@ class Controller {
     public static function StartSite() {
         $arr = Paintings::getLast10Paintings();
         $artistArr = Artists::getLast10Artists();
-        $exhibition = Exhibitions::getCurrentExhibitions();
+        $exhibition = Exhibitions::getCurrentExhibition();
 
         $sliderPaintings = [];
 
