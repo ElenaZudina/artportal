@@ -55,7 +55,8 @@ elseif($path == 'current-exhibition') {
 /*
 elseif($path == 'insertcomment' and isset($_GET['comment'],$_GET['id'])) {
     $response = Controller::InsertComment($_GET['comment'],$_GET['id']);
-}
+}*/
+
 //register user
 elseif ($path == 'registerForm' ) {
     //form register
@@ -64,7 +65,7 @@ elseif ($path == 'registerForm' ) {
 elseif ($path == 'registerAnswer') {
     //register user
     $response = Controller::registerUser();
-}*/
+}
 
 //error page
 else{

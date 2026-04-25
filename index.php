@@ -10,7 +10,7 @@ require 'models/Collections.php';
 
 // Добавляю этот код на следующем этапе
 //require 'models/Comments.php';
-//require 'models/Register.php';
+require 'models/Register.php';
 
 // Убрала view из index.php - нужно добавить в контроллер
 //include_once 'views/paintings.php';
