@@ -10,6 +10,7 @@ require 'models/Collections.php';
 
 // Добавляю этот код на следующем этапе
 //require 'models/Comments.php';
+require 'services/AuthService.php';
 require 'models/Register.php';
 
 // Убрала view из index.php - нужно добавить в контроллер

@@ -98,7 +98,7 @@ class Controller {
         include_once('views/formRegister.php');
     }
     public static function registerUser() {
-        $result = Register::registerUser();
+        $result = RegisterService::register($_POST);
         include_once('views/answerRegister.php');
     }
 } //end class

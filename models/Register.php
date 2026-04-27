@@ -1,7 +1,7 @@
 <?php
 class Register{
     //----------register
-    public static function registerUser() {
+    /*public static function registerUser() {
         $controll=array(0=>false, 1=>'error');
         if(isset($_POST['save'])) {
             $errorString="";
@@ -36,6 +36,35 @@ class Register{
             }
         }
         return $controll;
+    }*/
+    public static function saveUser($cleanData) {
+        $db = new Database();
+
+        // Проверка уникальности email
+        $user = $db->getOne("SELECT * FROM users WHERE email = ?", [$cleanData['email']]);
+        if ($user) {
+            return ['success' => false, 'errors' => ['Email exists already']];
+        }
+
+        // Проверка уникальности username
+        $user = $db->getOne("SELECT * FROM users WHERE username = ?", [$cleanData['name']]);
+        if ($user) {
+            return ['success' => false, 'errors' => ['Username exists already']];
+        }
+
+        $query = "INSERT INTO `users` (`id`, `username`, `email`, `password`, `role`, `created_at`) VALUES (NULL, ?, ?, ?, 'user', ?)";
+        $params = [
+            $cleanData['name'],
+            $cleanData['email'],
+            password_hash($cleanData['password'], PASSWORD_DEFAULT),
+            date("Y-m-d")
+        ];
+        $result = $db->executeRun($query, $params);
+        if ($result) {
+            return ['success' => true];
+        } else {
+            return ['success' => false, 'errors' => ['Database error: Unable to save user']];
+        }
     }
 }
 ?>

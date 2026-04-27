@@ -21,6 +21,7 @@ $isRegister = $activeRoute === 'registerForm' || $activeRoute === 'registerAnswe
              <!-- Custom CSS -->
              <link rel="stylesheet" type="text/css" href="public/css/style.css">
              <link rel="stylesheet" type="text/css" href="public/css/custom.css">
+             <link rel="stylesheet" type="text/css" href="public/css/login.css">
              <!-- Google Fonts -->
             <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;700;900&family=Inter:wght@400;500;700;900&display=swap" rel="stylesheet">
     </head>
