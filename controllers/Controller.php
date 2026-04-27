@@ -3,9 +3,18 @@ class Controller {
 
     public static function StartSite() {
         $arr = Paintings::getLast10Paintings();
-        $artistArr = Artists::getLast10Artists();// Обращаемся к модели к методу получения последних 10 картин
+        $artistArr = Artists::getLast10Artists();
+        $exhibition = Exhibitions::getCurrentExhibition();
+
+        $sliderPaintings = [];
+
+        if($exhibition) {
+            $collection = Collections::getCollectionByID($exhibition['collection_id']);
+            $sliderPaintings = Paintings::getPaintingsByCollectionID($collection['id']);
+            }
         include_once 'views/partials/paintings.php';// Подключаем представление для отображения списка картин на главной странице
         include_once 'views/partials/artists.php';// Подключаем представление для отображения списка художников на главной странице
+        include_once 'views/partials/slider.php';
         include_once 'views/home.php';// Подключаем представление для отображения главной страницы, если нужно добавить дополнительный контент
     }
 
@@ -22,7 +31,7 @@ class Controller {
 
      public static function PaintingsByCategoryID($id) {
         $arr = Paintings::getPaintingsByCategoryID($id);
-          $category = Categories::getCategoryByID($id);
+        $category = Categories::getCategoryByID($id);
         include_once 'views/partials/paintings.php';
         include_once 'views/paintings_by_category.php';
     }
@@ -44,6 +53,20 @@ class Controller {
         $item['paintings'] = Paintings::getPaintingsByArtistID($id);
         include_once 'views/partials/artists.php';
         include_once 'views/viewartist.php';
+    }
+
+    public static function AllExhibitions() {
+        $arr = Exhibitions::getAllExhibitions();
+        include_once 'views/partials/exhibitions.php';
+        include_once 'views/allexhibitions.php';
+    }
+
+      public static function ExhibitionByID($id) {
+        $exhibition = Exhibitions::getExhibitionByID($id);
+        $collection = Collections::getCollectionByID($exhibition['collection_id']);
+        $paintings = Paintings::getPaintingsByCollectionID($collection['id']);
+        include_once 'views/partials/exhibitions.php';
+        include_once 'views/viewexhibition.php';
     }
 
     public static function error404() {
@@ -69,13 +92,13 @@ class Controller {
     public static function CommentsCountWithAncor($paintingid) {
         $arr = Comments::getCommentsCountByPaintingID($paintingid);
         ViewComments::CommentsCountWithAncor($arr);
-    }
+    }*/
     // Регистрация
     public static function registerForm() {
-        include_once('view/formRegister.php');
+        include_once('views/formRegister.php');
     }
     public static function registerUser() {
-        $result = Register::registerUser();
-        include_once('view/answerRegister.php');
-    }*/
+        $result = RegisterService::register($_POST);
+        include_once('views/answerRegister.php');
+    }
 } //end class

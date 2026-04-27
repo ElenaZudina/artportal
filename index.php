@@ -5,9 +5,13 @@ include_once 'config/Database.php';
 require 'models/Categories.php';
 require 'models/Paintings.php';
 require 'models/Artists.php';
+require 'models/Exhibitions.php';
+require 'models/Collections.php';
+
 // Добавляю этот код на следующем этапе
 //require 'models/Comments.php';
-//require 'models/Register.php';
+require 'services/AuthService.php';
+require 'models/Register.php';
 
 // Убрала view из index.php - нужно добавить в контроллер
 //include_once 'views/paintings.php';
