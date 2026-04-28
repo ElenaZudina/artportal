@@ -1,12 +1,14 @@
 <html>
     <head>
         <title>Dashbord <?php echo $_SESSION["name"]; ?></title>
-        <link href="../public/css/bootstrap.css" rel="stylesheet">
-        <link href="../public/css/mystyle.css" rel="stylesheet">
+        <!-- <link href="../public/css/bootstrap.css" rel="stylesheet"> -->
+        <link href="../public/css/login.css" rel="stylesheet">
         <!-- Font Awesome--> <link rel="stylesheet" href="../public/css/font-awesome.min.css">
         <!-- SCRIPT -->
         <script src="../public/js/jquery.min.js"></script>
-        <script src="../public/js/bootstrap.min.js"></script>
+        <!-- <script src="../public/js/bootstrap.min.js"></script> -->
+         <!-- Bootstrap 5.3 CSS -->
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
         <script type="text/javascript" src="../public/js/ajaxupload.3.5.js"></script>
     </head>
     <body>
@@ -62,7 +64,7 @@
         <?php echo $content ?>
         </div>
         <footer class="footer">
-            <p> &copy; 2026 Design <?php echo $_SESSION["name"]; ?> dashboard<i class="fa fa-child"></i></p>
+            <p> &copy; 2026 Design Admin Dashboard<i class="fa fa-child"></i></p>
         </footer>
         </div><!-- /container -->
     </body>

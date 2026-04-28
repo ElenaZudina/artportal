@@ -12,4 +12,4 @@ include_once("controllersAdmin/controllerAdmin.php");
 
 include('routesAdmin/routingAdmin.php'); //!!!!
 
-echo $response;
+//echo $response;
