@@ -8,7 +8,7 @@ class RegisterService {
         }
 
         $name = trim($data['name'] ?? '');
-        $email = trim($data['email'] ?? '');
+        $email = strtolower(trim($data['email'] ?? ''));
         $password = $data['password'] ?? '';
         $confirm = $data['confirm'] ?? '';
 
