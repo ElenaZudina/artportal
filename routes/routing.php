@@ -66,6 +66,20 @@ elseif ($path == 'registerAnswer') {
     //register user
     $response = Controller::registerUser();
 }
+elseif ($path == 'login' OR $path == 'admin' ) {
+    // Cтраница входа
+    $response = controllerAuth::formLoginSite();
+}
+// ------- ВХОД в зависимости  от роли-----------------------
+
+elseif ($path == 'auth') {
+    // Форма входа
+    $response = controllerAuth::loginAction();
+}
+elseif ($path == 'logout') {
+    // Выход
+    $response = controllerAuth::logoutAction();
+}
 
 //error page
 else{

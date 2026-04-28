@@ -3,25 +3,29 @@ $host = explode('?', $_SERVER['REQUEST_URI'])[0];
 $num=substr_count($host, '/');
 $path = explode('/',$host)[$num];
 
-if ($path == '' OR $path == 'index.php' OR $path == 'login' ) {
+/*if ($path == '' OR $path == 'index.php' OR $path == 'login' ) {
     // Cтраница входа
-    $response = controllerAdmin::formLoginSite();
+    $response = controllerAuth::formLoginSite();
 }
 // ------- ВХОД в зависимости  от роли-----------------------
 
-elseif ($path == 'auth') {
+/*elseif ($path == 'auth') {
     // Форма входа
     $response = controllerAdmin::loginAction();
-}
+}*/
 
-elseif ($path == 'startAdmin') {
+if ($path == '' || $path == 'index.php' || $path == 'admin' || $path == 'login') {
+    header('Location: /artportal/login');
+    exit;
+}
+if ($path == 'startAdmin') {
     // Форма входа на старт Админ
     $response = controllerAdmin::startAdminPanel();
 }
 
 elseif ($path == 'logout') {
-    // Выход
-    $response = controllerAdmin::logoutAction();
+    header('Location: /artportal/logout');
+    exit;
 }
 /*
 //-------- listPaintings
@@ -48,9 +52,9 @@ elseif ($path=='paintingDel' && isset($_GET['id'])) {
 }
 elseif ($path == 'paintingDelResult' && isset($_GET['id'])) {
     $response = controllerAdminPaintings::paintingDeleteResult($_GET['id']);
-}*/
+}
 else 
 {
     // Страница не существует
 $response = controllerAdmin::error404();
-}
+}*/

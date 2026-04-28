@@ -1,16 +1,16 @@
 <?php
-class controllerAdmin {
+class controllerAuth {
 
-    /*public static function formLoginSite() {
-        include_once('viewsAdmin/formLogin.php');
+    public static function formLoginSite() {
+        include_once('views/formLogin.php');
     }
-    // Форма авторизации с учетом ролей
+    // Авторизация с учетом ролей
     public static function loginAction() {
-        $login=modelAdmin::userAuthentication();
+        $login=Auth::userAuthentication();
         if ($login==true) {
             // $_SESSION["status"] = admin/artist/user
             if ($_SESSION["status"] == "admin") {
-            header("Location: startAdmin");
+            header("Location: admin/startAdmin");
             exit;
         }
         if ($_SESSION["status"] == "artist") {
@@ -27,21 +27,21 @@ class controllerAdmin {
             header("Location: login");
             exit;
         }
-    }*/
+    }
 
-    // Вход в админ панель
+    /*// Вход в админ панель
     public static function startAdminPanel() {
         include_once('viewsAdmin/startAdmin.php');
-}
+}*/
 
 
-  /*  // Выход из админ панели
+    // Выход из аккаунта
     public static function logoutAction() {
-        modelAdmin::userLogout();
+        Auth::userLogout();
         header("Location: login");
         exit;
     }
-    // Страница Error
+   /* // Страница Error
     public static function error404() {
         include_once('viewsAdmin/error404.php');
     }*/
