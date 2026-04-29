@@ -8,7 +8,7 @@ if (isset($_SESSION['last_activity']) && (time() - $_SESSION['last_activity'] > 
     session_unset();
     session_destroy();
     // Редирект на страницу входа
-    header("Location: formLogin.php");
+    header("Location: artportal/login");
     exit();
 }
 $_SESSION['last_activity'] = time();

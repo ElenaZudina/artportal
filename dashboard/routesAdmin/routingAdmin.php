@@ -14,10 +14,7 @@ $path = explode('/',$host)[$num];
     $response = controllerAdmin::loginAction();
 }*/
 
-if ($path == '' || $path == 'index.php' || $path == 'admin' || $path == 'login') {
-    header('Location: /artportal/login');
-    exit;
-}
+
 if ($path == 'startAdmin') {
     // Форма входа на старт Админ
     $response = controllerAdmin::startAdminPanel();

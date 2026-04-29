@@ -66,7 +66,7 @@ elseif ($path == 'registerAnswer') {
     //register user
     $response = Controller::registerUser();
 }
-elseif ($path == 'login' OR $path == 'admin' ) {
+elseif ($path == 'login' ) {
     // Cтраница входа
     $response = controllerAuth::formLoginSite();
 }
