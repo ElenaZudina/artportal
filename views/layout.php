@@ -51,6 +51,11 @@ $isRegister = $activeRoute === 'registerForm' || $activeRoute === 'registerAnswe
                                 </ul>
                             </li>
                             <li class="nav-item"><a class="nav-link<?php echo $isRegister ? ' active' : ''; ?>" href="registerForm">Register</a></li>
+                            <?php if (!isset($_SESSION['userId'])): ?>
+                                <li class="nav-item"><a class="nav-link" href="login">Login</a></li>
+                            <?php else: ?>
+                                <li class="nav-item"><a class="nav-link" href="logout">Logout</a></li>
+                            <?php endif; ?>
                         </ul>
                     </div>
                 </div>
