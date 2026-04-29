@@ -9,4 +9,4 @@
 </article>
 
 <?php $content = ob_get_clean(); ?>
-<?php include "viewsAdmin/templates/layout.php"; ?>
+<?php include "views/templates/layout.php"; ?>

@@ -15,13 +15,13 @@ $_SESSION['last_activity'] = time();
 //session_destroy();
 require_once '../config/Database.php';
 
-include_once("modelsAdmin/modelAdmin.php");
+include_once("models/modelAdmin.php");
 //include_once("modelsAdmin/modelAdminPaintings.php");
 //include_once("modelsAdmin/modelAdminStyle.php");
 
-include_once("controllersAdmin/controllerAdmin.php");
+include_once("controllers/AdminController.php");
 //include_once("controllersAdmin/controllerAdminPaintings.php");
 
-include('routesAdmin/routingAdmin.php'); //!!!!
+include('routes/routing.php'); //!!!!
 
 //echo $response;

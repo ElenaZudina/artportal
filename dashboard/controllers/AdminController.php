@@ -1,5 +1,5 @@
 <?php
-class controllerAdmin {
+class AdminController {
 
     /*public static function formLoginSite() {
         include_once('viewsAdmin/formLogin.php');
@@ -31,7 +31,7 @@ class controllerAdmin {
 
     // Вход в админ панель
     public static function startAdminPanel() {
-        include_once('viewsAdmin/startAdmin.php');
+        include_once('views/startAdmin.php');
 }
 
 
