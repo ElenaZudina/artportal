@@ -1,14 +1,14 @@
 <?php
 session_start();
 
-$timeout = 900; // 15 минут в секундах
+$timeout = 10; // 15 минут в секундах
 
 if (isset($_SESSION['last_activity']) && (time() - $_SESSION['last_activity'] > $timeout)) {
     // Время неактивности превышено — сбрасываем сессию
     session_unset();
     session_destroy();
     // Редирект на страницу входа
-    header("Location: artportal/login");
+    header("Location: /artportal/login");
     exit();
 }
 $_SESSION['last_activity'] = time();
