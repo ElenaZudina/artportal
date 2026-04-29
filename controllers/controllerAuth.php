@@ -10,7 +10,7 @@ class controllerAuth {
         if ($login==true) {
             // $_SESSION["status"] = admin/artist/user
             if ($_SESSION["status"] == "admin") {
-            header("Location: admin/startAdmin");
+            header("Location: dashboard/startAdmin");
             exit;
         }
         if ($_SESSION["status"] == "artist") {

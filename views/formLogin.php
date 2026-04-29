@@ -3,7 +3,7 @@ ob_start();
 if (isset ($_SESSION['userId']) && isset($_SESSION['status'])) {
     switch ($_SESSION['status']) {
         case 'admin':
-            header('Location: admin/startAdmin');
+            header('Location: dashboard/startAdmin');
             break;
         case 'artist':
             header('Location: startArtist');
