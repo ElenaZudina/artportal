@@ -20,7 +20,7 @@ class Auth {
                         $loginEmail = strtolower(trim($_POST['email']));
                         $password = $_POST['password'];
                         if ($loginEmail == $item['email'] && password_verify($password, $item['password'])) {
-                            $_SESSION['sessionId']=session_id();
+                            $_SESSION['sessionId']=session_id(); // не обязательно хранить, так как session_id() всегда возвращает текущую сессию
                             $_SESSION['userId']=$item['id'];
                             $_SESSION['name']=$item['username'];
                             $_SESSION['status']=$item['role'];
@@ -36,7 +36,7 @@ class Auth {
     }
     // ВЫХОД ИЗ АККАУНТА
     public static function userLogout() {
-        unset($_SESSION['sessionId']);
+        unset($_SESSION['sessionId']); // заменить на session_unset(); 
         unset($_SESSION['userId']);
         unset($_SESSION['name']);
         unset($_SESSION['status']);
