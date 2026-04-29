@@ -1,7 +1,7 @@
 <?php
 session_start();
 
-$timeout = 10; // 15 минут в секундах
+$timeout = 900; // 15 минут в секундах
 
 if (isset($_SESSION['last_activity']) && (time() - $_SESSION['last_activity'] > $timeout)) {
     // Время неактивности превышено — сбрасываем сессию
