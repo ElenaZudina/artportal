@@ -49,9 +49,9 @@ elseif ($path=='paintingDel' && isset($_GET['id'])) {
 }
 elseif ($path == 'paintingDelResult' && isset($_GET['id'])) {
     $response = controllerAdminPaintings::paintingDeleteResult($_GET['id']);
-}
+}*/
 else 
 {
     // Страница не существует
-$response = controllerAdmin::error404();
-}*/
+$response = AdminController::error404();
+}
