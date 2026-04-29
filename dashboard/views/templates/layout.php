@@ -43,7 +43,7 @@
             <!-- Offcanvas sidebar for small screens (move to body root) -->
             <div class="offcanvas offcanvas-start" tabindex="-1" id="offcanvasSidebar" aria-labelledby="offcanvasSidebarLabel">
               <div class="offcanvas-header">
-                <h5 class="offcanvas-title" id="offcanvasSidebarLabel">Admin Menu</h5>
+                <h5 class="offcanvas-title" id="offcanvasSidebarLabel">Menu</h5>
                 <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
               </div>
               <div class="offcanvas-body">
@@ -52,18 +52,20 @@
         echo '<h4><a href="../" target= _blank>ArtPortal</a>';
         echo ' &#187 <a href="./startAdmin" >Start '.$_SESSION["name"].' </a>';
         echo ' &#187 <a href="categoryAdmin">Styles </a>';
-        echo ' &#187 <a href="paintingsAdmin"> Paintings List </a>';
+        echo ' &#187 <a href="collections"> Collections Lists </a>';
+        echo ' &#187 <a href="exhibtions"> Exhibitions List </a>';
+        echo ' &#187 <a href="users"> Users </a>';
         echo ' </h4>';
     }
     elseif(isset($_SESSION["status"]) && $_SESSION["status"]=="artist") {
         echo '<h4><a href="../" target= _blank>ArtPortal</a>';
-        echo ' &#187 <a href="./" >Start '.$_SESSION["name"].' </a>';
+        echo ' &#187 <a href="./startArtist" >Start '.$_SESSION["name"].' </a>';
         echo ' &#187 <a href="paintingsAdmin"> My Paintings List </a>';
         echo ' </h4>';
     }
     elseif(isset($_SESSION["status"]) && $_SESSION["status"]=="user") {
-        echo '<h4><a href="../" target= _blank>ArtPorta</a>';
-        echo ' &#187 <a href="./" >Start '.$_SESSION["name"].' </a>';
+        echo '<h4><a href="../" target= _blank>ArtPortal</a>';
+        echo ' &#187 <a href="./startUser" >Start '.$_SESSION["name"].' </a>';
         echo ' </h4>';
     }
     else {
@@ -79,13 +81,32 @@
                     <div class="p-3">
                         <?php
     if(isset($_SESSION["status"]) && $_SESSION["status"]=="admin") {
-
-        echo '<h4><a href="../" target= _blank>ArtPortal</a>';
-        echo ' &#187 <a href="./startAdmin" >Start '.$_SESSION["name"].' </a>';
-        echo ' &#187 <a href="categoryAdmin">Styles </a>';
-        echo ' &#187 <a href="paintingsAdmin"> Paintings List </a>';
-        
-        echo ' </h4>';
+        // Admin sidebar blocks
+        echo '<div class="mb-4">';
+        echo '<h4><a href="../" target= _blank>ArtPortal</a></h4>';
+        echo '</div>';
+        // Moderation block
+        echo '<div class="mb-4">';
+        echo '<h5 class="text-uppercase text-secondary">Moderation</h5>';
+        // Здесь будут ссылки на управление пользователями (добавить позже)
+        echo '<ul class="nav flex-column small">';
+        echo '<li class="nav-item"><span class="nav-link disabled">User management (coming soon)</span></li>';
+        echo '</ul>';
+        echo '</div>';
+        // Content management block
+        echo '<div class="mb-4">';
+        echo '<h5 class="text-uppercase text-secondary">Content management</h5>';
+        echo '<ul class="nav flex-column">';
+        echo '<li class="nav-item"><a class="nav-link" href="./startAdmin">Start '.$_SESSION["name"].'</a></li>';
+        echo '<li class="nav-item"><a class="nav-link" href="categoryAdmin">Styles</a></li>';
+        echo '<li class="nav-item"><a class="nav-link" href="paintingsAdmin">Paintings List</a></li>';
+        echo '</ul>';
+        echo '</div>';
+        // Статистика (будет добавлена позже)
+        echo '<div class="mb-4">';
+        echo '<h5 class="text-uppercase text-secondary">Statistics</h5>';
+        echo '<span class="text-muted">Coming soon...</span>';
+        echo '</div>';
     }
     elseif(isset($_SESSION["status"]) && $_SESSION["status"]=="artist") {
         echo '<h4><a href="../" target= _blank>ArtPortal</a>';
@@ -108,6 +129,21 @@
                 <!-- Main content area -->
                 <main class="col-12 col-lg-10 p-4">
                     <div class="container">
+                        <?php
+                        // Основные admin-ссылки под Hello admin и Logout
+                        if (isset($_SESSION["userId"]) && isset($_SESSION["sessionId"]) && isset($_SESSION["status"]) && $_SESSION["status"]=="admin") {
+                            echo '<div class="mb-4">';
+                            echo '<h4 style="font-size:1.1rem;">';
+                            echo '<a href="../" target="_blank">WEB SITE PAINTERS ONLINE</a>';
+                            echo ' &#187; <a href="./startAdmin">Start admin</a>';
+                            echo ' &#187 <a href="categoryAdmin">Styles </a>';
+                            echo ' &#187 <a href="collections"> Collections Lists </a>';
+                            echo ' &#187 <a href="exhibtions"> Exhibitions List </a>';
+                            echo ' &#187 <a href="users"> Users </a>';
+                            echo '</h4>';
+                            echo '</div>';
+                        }
+                        ?>
                         <?php echo $content ?>
                     </div>
                 </main>
@@ -126,7 +162,7 @@
 
             <footer class="footer mt-5 bg-light border-top">
                 <div class="container py-3">
-                    <p class="mb-0">&copy; 2026 Design Admin Dashboard <i class="fa fa-child"></i></p>
+                    <p class="mb-0 text-center">&copy; 2026 Design Dashboard <i class="fa fa-child"></i></p>
                 </div>
             </footer>
         </div>
