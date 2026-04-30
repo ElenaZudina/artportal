@@ -1,8 +1,9 @@
 <html>
     <head>
-        <title>Dashbord <?php echo $_SESSION["name"]; ?></title>
+        <title>Dashboard <?php echo $_SESSION["name"]; ?></title>
         <link href="../public/css/login.css" rel="stylesheet">
-        <link rel="stylesheet" href="../public/css/font-awesome.min.css">
+        <!-- <link rel="stylesheet" href="../public/css/font-awesome.min.css"> -->
+         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
         
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
         <script type="text/javascript" src="../public/js/ajaxupload.3.5.js"></script>
@@ -51,10 +52,10 @@
     if(isset($_SESSION["status"]) && $_SESSION["status"]=="admin") {
         echo '<h4><a href="../" target= _blank>ArtPortal</a>';
         echo ' &#187 <a href="./startAdmin" >Start '.$_SESSION["name"].' </a>';
-        echo ' &#187 <a href="categoryAdmin">Styles </a>';
-        echo ' &#187 <a href="collections"> Collections Lists </a>';
-        echo ' &#187 <a href="exhibtions"> Exhibitions List </a>';
-        echo ' &#187 <a href="users"> Users </a>';
+        echo ' &#187 <a href="categories">Categories</a>';
+        echo ' &#187 <a href="collections">Collections</a>';
+        echo ' &#187 <a href="exhibtions">Exhibitions</a>';
+        echo ' &#187 <a href="users">Users</a>';
         echo ' </h4>';
     }
     elseif(isset($_SESSION["status"]) && $_SESSION["status"]=="artist") {
@@ -97,8 +98,8 @@
         echo '<div class="mb-4">';
         echo '<h5 class="text-uppercase text-secondary">Content management</h5>';
         echo '<ul class="nav flex-column">';
-        echo '<li class="nav-item"><a class="nav-link" href="./startAdmin">Start '.$_SESSION["name"].'</a></li>';
-        echo '<li class="nav-item"><a class="nav-link" href="categoryAdmin">Styles</a></li>';
+        //echo '<li class="nav-item"><a class="nav-link" href="./startAdmin">Start '.$_SESSION["name"].'</a></li>';
+        echo '<li class="nav-item"><a class="nav-link" href="categories">Categories</a></li>';
         echo '<li class="nav-item"><a class="nav-link" href="paintingsAdmin">Paintings List</a></li>';
         echo '</ul>';
         echo '</div>';
@@ -136,9 +137,9 @@
                             echo '<h4 style="font-size:1.1rem;">';
                             echo '<a href="../" target="_blank">WEB SITE PAINTERS ONLINE</a>';
                             echo ' &#187; <a href="./startAdmin">Start admin</a>';
-                            echo ' &#187 <a href="categoryAdmin">Styles </a>';
+                            echo ' &#187 <a href="categories">Categories </a>';
                             echo ' &#187 <a href="collections"> Collections Lists </a>';
-                            echo ' &#187 <a href="exhibtions"> Exhibitions List </a>';
+                            echo ' &#187 <a href="exhibitions"> Exhibitions List </a>';
                             echo ' &#187 <a href="users"> Users </a>';
                             echo '</h4>';
                             echo '</div>';
@@ -151,12 +152,8 @@
 
             <?php
             } else {
-                // If no session, show content full-width
-            ?>
-            <div class="container py-4">
-                <?php echo $content ?>
-            </div>
-            <?php
+                // Если нет сессии, выводим отказ в доступе
+                echo '<div class="container py-4"><h4>Access denied!</h4></div>';
             }
             ?>
 

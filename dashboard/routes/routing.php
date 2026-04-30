@@ -24,6 +24,11 @@ elseif ($path == 'logout') {
     header('Location: /artportal/logout');
     exit;
 }
+
+//-------- Category List
+elseif($path == 'categories') {
+    $response = CategoryController::categoryList();
+}
 /*
 //-------- listPaintings
 elseif($path == 'paintingsAdmin') {
