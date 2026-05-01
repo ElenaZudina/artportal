@@ -17,7 +17,7 @@
     <body>
         <div class="container-fluid">
             <?php
-            if (isset($_SESSION["userId"]) && isset($_SESSION["sessionId"]))
+            if (isset($_SESSION["userId"]))
             {
             ?>
             <!-- Top navbar -->
@@ -132,7 +132,7 @@
                     <div class="container">
                         <?php
                         // Основные admin-ссылки под Hello admin и Logout
-                        if (isset($_SESSION["userId"]) && isset($_SESSION["sessionId"]) && isset($_SESSION["status"]) && $_SESSION["status"]=="admin") {
+                        if (isset($_SESSION["userId"]) && isset($_SESSION["status"]) && $_SESSION["status"]=="admin") {
                             echo '<div class="mb-4">';
                             echo '<h4 style="font-size:1.1rem;">';
                             echo '<a href="../" target="_blank">WEB SITE PAINTERS ONLINE</a>';

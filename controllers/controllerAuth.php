@@ -6,25 +6,31 @@ class controllerAuth {
     }
     // Авторизация с учетом ролей
     public static function loginAction() {
-        $login=Auth::userAuthentication();
-        if ($login==true) {
-            // $_SESSION["status"] = admin/artist/user
-            if ($_SESSION["status"] == "admin") {
+        //$login=Auth::userAuthentication();
+        $login = AuthService::login($_POST);
+        if(!$login['success']){
+            $_SESSION['errorString']='Incorrect username and password';
+            header("Location: login");
+            exit;
+        }
+
+        $user = $login['user'];
+
+        $_SESSION['userId'] = $user['id'];
+        $_SESSION['name'] = $user['username'];
+        $_SESSION['status'] = $user['role'];
+
+        
+        if ($user["role"] == "admin") {
             header("Location: dashboard/startAdmin");
             exit;
         }
-        if ($_SESSION["status"] == "artist") {
+        if ($user["role"] == "artist") {
             header("Location: startArtist");
             exit;
         }
-        if ($_SESSION["status"] == "user") {
+        if ($user["role"] == "user") {
             header("Location: startUser");
-            exit;
-        }
-        }
-        else{
-            $_SESSION['errorString']='Incorrect username and password';
-            header("Location: login");
             exit;
         }
     }
@@ -37,7 +43,9 @@ class controllerAuth {
 
     // Выход из аккаунта
     public static function logoutAction() {
-        Auth::userLogout();
+       session_unset(); // удаляет все переменные сессии
+        session_destroy();
+        
         header("Location: login");
         exit;
     }

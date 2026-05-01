@@ -38,3 +38,33 @@ class RegisterService {
         return Register::saveUser($cleanData);
     }
 }
+class AuthService {
+    public static function login($data) {
+        $errors = [];
+        if (!is_array($data) || empty($data)) {
+            return ['success' => false, 'errors' => ['No data provided']];
+        }
+        $email = strtolower(trim($data['email'] ?? ''));
+        $password = $data['password'] ?? '';
+        if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+            $errors[] = 'Invalid email address';
+        }
+        if (strlen($password) < 6) {
+            $errors[] = 'Password must be at least 6 characters long';
+        }
+        if (!empty($errors)) {
+            return ['success' => false, 'errors' => $errors];
+        }
+
+        $user=Auth::findUserByEmail($email);
+
+        if(!$user) {
+            return ['success' => false, 'errors' => ['User not found']];
+        }
+        if (!password_verify($password, $user['password'])) {
+            return ['success' => false, 'errors' => ['Incorrect password']];
+        }
+            
+        return ['success' => true, 'user' => $user];
+    }
+}
