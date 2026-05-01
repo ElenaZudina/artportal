@@ -1,5 +1,5 @@
 <?php
-class AdminController {
+class HomeController {
 
     /*public static function formLoginSite() {
         include_once('viewsAdmin/formLogin.php');

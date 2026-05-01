@@ -17,7 +17,7 @@ $path = explode('/',$host)[$num];
 
 if ($path == 'startAdmin') {
     // Форма входа на старт Админ
-    $response = AdminController::startAdminPanel();
+    $response = HomeController::startAdminPanel();
 }
 
 elseif ($path == 'logout') {
