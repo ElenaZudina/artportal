@@ -29,13 +29,34 @@ elseif ($path == 'logout') {
 elseif($path == 'categories') {
     $response = CategoryController::categoryList();
 }
-/*
+//-------- create category
+elseif ($path == 'create') {
+    $response = CategoryController::create();
+}
+elseif ($path == 'store') {
+    $response = CategoryController::store();
+}
+//========= edit painting
+elseif ($path =='paintingEdit' && isset($_GET['id'])) {
+    $response = controllerAdminPaintings::paintingEditForm($_GET['id']);
+}
+elseif ($path == 'paintingEditResult' && isset($_GET['id'])) {
+    $response = controllerAdminPaintings::paintingEditResult($_GET['id']);
+}
+//==========delete painting
+elseif ($path=='paintingDel' && isset($_GET['id'])) {
+    $response=controllerAdminPaintings::paintingDeleteForm($_GET['id']);
+}
+elseif ($path == 'paintingDelResult' && isset($_GET['id'])) {
+    $response = controllerAdminPaintings::paintingDeleteResult($_GET['id']);
+}
 //-------- listPaintings
-elseif($path == 'paintingsAdmin') {
+elseif($path == 'paintings') {
     $response = controllerAdminPaintings::PaintingsList();
 }
+
 //-------- add painting
-elseif ($path == 'paintingAdd') {
+elseif ($path == 'add') {
     $response = controllerAdminPaintings::paintingAddForm();
 }
 elseif ($path == 'paintingAddResult') {
@@ -54,7 +75,7 @@ elseif ($path=='paintingDel' && isset($_GET['id'])) {
 }
 elseif ($path == 'paintingDelResult' && isset($_GET['id'])) {
     $response = controllerAdminPaintings::paintingDeleteResult($_GET['id']);
-}*/
+}
 else 
 {
     // Страница не существует

@@ -1,20 +1,23 @@
 <?php
+//require_once __DIR__ . '/../../../models/Artists.php';
+
 class CategoryController {
     //list Paintings
     public static function categoryList() {
         $arr=Category::getCategoriesList();
         include_once 'views/category-list.php';
-    }/*
-    //--------add
-    public static function paintingAddForm() {
-        $styles = modelAdminStyle::getStyleList();
-        $artists = modelAdminPaintings::getArtistList();
-        include_once('viewAdmin/paintingAddForm.php');
+    }
+    //--------create
+    public static function create() {
+        $categories = Category::getCategoriesList();
+        include_once('views/category-add-form.php');
     }
 
-    public static function paintingAddResult() {
-        $test = modelAdminPaintings::getPaintingAdd();
-        include_once('viewAdmin/paintingAddForm.php');
+    public static function store() {
+        $result = CategoryService::createCategory($_POST);
+        $test = $result['success'];
+        $errorMessage = $result['errorMessage'];
+        include_once('views/category-add-form.php');
     }
     //------------edit
     public static function paintingEditForm($id) {
@@ -37,5 +40,5 @@ class CategoryController {
     public static function paintingDeleteResult($id) {
         $test = modelAdminPaintings::getPaintingDelete($id);
         include_once('viewAdmin/paintingDeleteForm.php');
-    }*/
+    }
 }

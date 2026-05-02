@@ -86,5 +86,7 @@ class Paintings{
         $arr = $db->getAll($query, ["%$param%", "%$param%"]);
         return $arr;
     }
+
+    
 }
 ?>

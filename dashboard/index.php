@@ -17,8 +17,9 @@ $_SESSION['last_activity'] = time();
 require_once '../config/Database.php';
 
 include_once("models/Category.php");
-//include_once("modelsAdmin/modelAdminPaintings.php");
+include_once("../models/Paintings.php");
 //include_once("modelsAdmin/modelAdminStyle.php");
+include_once("../services/CategoryService.php");
 
 include_once("controllers/Admin/HomeController.php");
 include_once("controllers/Admin/CategoryController.php");
