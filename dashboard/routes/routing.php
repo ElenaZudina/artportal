@@ -29,6 +29,37 @@ elseif ($path == 'logout') {
 elseif($path == 'categories') {
     $response = CategoryController::categoryList();
 }
+//-------- Collections List
+elseif($path == 'collections') {
+    $response = CollectionController::collectionsList();
+}
+elseif ($path == 'create-collection') {
+    $response = CollectionController::create();
+}
+elseif ($path == 'store-collection') {
+    $response = CollectionController::store();
+}
+elseif ($path == 'edit-collection' && isset($_GET['id'])) {
+    $response = CollectionController::edit($_GET['id']);
+}
+elseif ($path == 'result-edit-collection' && isset($_GET['id'])) {
+    $response = CollectionController::update($_GET['id']);
+}
+elseif ($path == 'delete-collection' && isset($_GET['id'])) {
+    $response = CollectionController::delete($_GET['id']);
+}
+elseif ($path == 'result-delete-collection' && isset($_GET['id'])) {
+    $response = CollectionController::destroy($_GET['id']);
+}
+elseif ($path == 'exhibitions') {
+    $response = ExhibitionController::exhibitionsList();
+}
+elseif ($path == 'create-exhibition') {
+    $response = ExhibitionController::create();
+}
+elseif ($path == 'store-exhibition') {
+    $response = ExhibitionController::store();
+}
 //-------- create category
 elseif ($path == 'create-category') {
     $response = CategoryController::create();

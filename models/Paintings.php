@@ -74,17 +74,54 @@ class Paintings{
         if (!$collection) {
             return [];
         }
-        $param = $collection['param'];
+        $db = new Database();
+       
         // Динамический фильтр по ключевому слову
-        $query = "SELECT paintings.*, artists.name AS artist_name, categories.name AS category_name
+        $baseQuery = "SELECT paintings.*, artists.name AS artist_name, categories.name AS category_name
         FROM paintings
         JOIN artists ON paintings.artist_id = artists.id
-        JOIN categories ON paintings.category_id = categories.id
-        WHERE paintings.title LIKE ? OR paintings.description LIKE ?
-        ORDER BY paintings.id DESC";
-        $db = new Database();
-        $arr = $db->getAll($query, ["%$param%", "%$param%"]);
-        return $arr;
+        JOIN categories ON paintings.category_id = categories.id";
+
+        switch ($collection['type']) {
+
+        case 'keyword':
+            $param = trim($collection['param'] ?? '');
+
+            if ($param === '') return [];
+
+            $query = $baseQuery . "
+                WHERE paintings.title LIKE ? 
+                   OR paintings.description LIKE ?
+                ORDER BY paintings.id DESC";
+
+            return $db->getAll($query, ["%$param%", "%$param%"]);
+
+        case 'latest':
+            $query = $baseQuery . "
+                ORDER BY paintings.created_at DESC
+                LIMIT 10";
+
+            return $db->getAll($query);
+
+        case 'random':
+            $query = $baseQuery . "
+                ORDER BY RAND()
+                LIMIT 10";
+
+            return $db->getAll($query);
+
+        case 'popular':
+            // предполагаем, что есть поле views
+            $query = $baseQuery . "
+                ORDER BY paintings.views DESC
+                LIMIT 10";
+
+            return $db->getAll($query);
+
+        default:
+            return [];
+    }
+        
     }
 
     

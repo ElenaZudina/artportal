@@ -112,6 +112,8 @@
         //echo '<li class="nav-item"><a class="nav-link" href="./startAdmin">Start '.$_SESSION["name"].'</a></li>';
         echo '<li class="nav-item"><a class="nav-link" style="font-size:1rem;" href="categories">Categories</a></li>';
         echo '<li class="nav-item"><a class="nav-link" style="font-size:1rem;" href="paintingsAdmin">Paintings List</a></li>';
+        echo '<li class="nav-item"><a class="nav-link" style="font-size:1rem;" href="collections">Collections List</a></li>';
+        echo '<li class="nav-item"><a class="nav-link" style="font-size:1rem;" href="exhibitions">Exhibitions</a></li>';
         echo '</ul>';
         echo '</div>';
         // Статистика (будет добавлена позже)
@@ -150,6 +152,7 @@
                             echo ' &#187; <a href="./startAdmin">Start admin</a>';
                             echo ' &#187 <a href="categories">Categories </a>';
                             echo ' &#187 <a href="collections"> Collections Lists </a>';
+                            echo ' &#187 <a href="create-collection"> Add collection </a>';
                             echo ' &#187 <a href="exhibitions"> Exhibitions List </a>';
                             echo ' &#187 <a href="users"> Users </a>';
                             echo '</h4>';
