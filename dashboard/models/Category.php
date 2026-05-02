@@ -52,4 +52,12 @@ class Category {
 
         return $item == true;
     }
+
+    public static function deleteCategory($id) {
+        $db = new Database();
+        $sql = "DELETE FROM `categories` WHERE `id` = ?";
+        $item = $db->executeRun($sql, [$id]);
+
+        return $item == true;
+    }
 }

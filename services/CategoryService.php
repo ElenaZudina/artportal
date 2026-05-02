@@ -36,4 +36,16 @@ class CategoryService {
 
         return ['success' => true, 'errorMessage' => null];
     }
+
+    public static function deleteCategory($id, $data) {
+        if (!isset($data['save'])) {
+            return ['success' => false, 'errorMessage' => 'Delete action was not confirmed'];
+        }
+
+        if (!Category::deleteCategory($id)) {
+            return ['success' => false, 'errorMessage' => 'Database error while deleting category'];
+        }
+
+        return ['success' => true, 'errorMessage' => null];
+    }
 }

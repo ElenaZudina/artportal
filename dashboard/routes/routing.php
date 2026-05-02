@@ -43,6 +43,13 @@ elseif ($path =='edit-category' && isset($_GET['id'])) {
 elseif ($path == 'result-edit-category' && isset($_GET['id'])) {
     $response = CategoryController::update($_GET['id']);
 }
+//========= delete category
+elseif ($path =='delete-category' && isset($_GET['id'])) {
+    $response = CategoryController::delete($_GET['id']);
+}
+elseif ($path == 'result-delete-category' && isset($_GET['id'])) {
+    $response = CategoryController::destroy($_GET['id']);
+}
 //==========delete painting
 elseif ($path=='paintingDel' && isset($_GET['id'])) {
     $response=controllerAdminPaintings::paintingDeleteForm($_GET['id']);
@@ -68,13 +75,6 @@ elseif ($path =='paintingEdit' && isset($_GET['id'])) {
 }
 elseif ($path == 'paintingEditResult' && isset($_GET['id'])) {
     $response = controllerAdminPaintings::paintingEditResult($_GET['id']);
-}
-//==========delete painting
-elseif ($path=='paintingDel' && isset($_GET['id'])) {
-    $response=controllerAdminPaintings::paintingDeleteForm($_GET['id']);
-}
-elseif ($path == 'paintingDelResult' && isset($_GET['id'])) {
-    $response = controllerAdminPaintings::paintingDeleteResult($_GET['id']);
 }
 else 
 {

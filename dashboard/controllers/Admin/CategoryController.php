@@ -32,14 +32,15 @@ class CategoryController {
         include_once('views/category-edit-form.php');
     }
     //-------delete
-    public static function paintingDeleteForm($id) {
-        $styles = modelAdminStyle::getStyleList();
-        $artists = modelAdminPaintings::getArtistList();
-        $detail = modelAdminPaintings::getPaintingDetail($id);
-        include_once('viewAdmin/paintingDeleteForm.php');
+    public static function delete($id) {
+        $category = Category::getCategoryById($id);
+        include_once('views/category-delete-form.php');
     }
-    public static function paintingDeleteResult($id) {
-        $test = modelAdminPaintings::getPaintingDelete($id);
-        include_once('viewAdmin/paintingDeleteForm.php');
+    public static function destroy($id) {
+        $result = CategoryService::deleteCategory($id, $_POST);
+        $test = $result['success'];
+        $errorMessage = $result['errorMessage'];
+        $category = Category::getCategoryById($id);
+        include_once('views/category-delete-form.php');
     }
 }
