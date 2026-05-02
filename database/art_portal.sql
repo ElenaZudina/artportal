@@ -31,9 +31,10 @@ CREATE TABLE `artists` (
   `id` int(11) NOT NULL,
   `name` varchar(255) NOT NULL,
   `location` varchar(100) NOT NULL,
-  `birth_date` date NOT NULL,
+  `birth_date` date DEFAULT NULL,
   `bio` text DEFAULT NULL,
   `picture` varchar(255) DEFAULT NULL,
+  `status` enum('pending','approved','rejected','') NOT NULL DEFAULT 'pending',
   `created_at` datetime NOT NULL DEFAULT current_timestamp(),
   `user_id` int(11) NOT NULL,
   `updated_at` datetime NOT NULL DEFAULT current_timestamp()
@@ -43,13 +44,13 @@ CREATE TABLE `artists` (
 -- Дамп данных таблицы `artists`
 --
 
-INSERT INTO `artists` (`id`, `name`, `location`, `birth_date`, `bio`, `picture`, `created_at`, `user_id`, `updated_at`) VALUES
-(1, 'Marina Chen', 'Estonia, Tartu', '1976-01-14', 'Contemporary abstract painter exploring the intersection of color theory and emotional resonance through bold gestural works.', 'marina-chen.jpg', '2026-01-28 11:06:17', 4, '2026-04-09 10:25:14'),
-(2, 'Alexandre Dubois', 'Estonia, Tallinn', '1976-01-01', 'Digital-first artist creating immersive installations that blur the boundaries between physical and virtual art spaces.', 'alexandre-dubois.jpg', '2026-01-28 11:09:28', 5, '2026-04-09 10:25:14'),
-(3, 'Yuki Tanaka', 'Estonia, Tallinn', '1987-05-20', 'Minimalist painter focused on the power of negative space and subtle tonal variations in monochromatic compositions.', 'yuki-tanaka.jpg', '2026-01-29 08:49:46', 6, '2026-04-09 10:25:14'),
-(4, 'Sofia Rodriguez', 'Estonia, Pärnu', '1978-04-18', 'Mixed media artist combining traditional painting techniques with modern materials to create textured, layered narratives.', 'sofia-rodriguez.jpg', '2026-01-29 09:06:17', 7, '2026-04-09 10:25:14'),
-(11, 'David Park', 'Estonia, Tallinn', '0000-00-00', 'Contemporary portrait artist known for expressive brushwork and vibrant color palettes that capture emotional depth.', 'david-park.jpg', '2026-04-23 09:14:39', 8, '2026-04-23 09:14:39'),
-(12, 'Emma Williams', 'Estonia, Tartu', '0000-00-00', 'Geometric abstraction specialist creating harmonious compositions inspired by architecture and urban landscapes.', 'emma-williams.jpg', '2026-04-23 09:14:39', 9, '2026-04-23 09:14:39');
+INSERT INTO `artists` (`id`, `name`, `location`, `birth_date`, `bio`, `picture`, `status`, `created_at`, `user_id`, `updated_at`) VALUES
+(1, 'Marina Chen', 'Estonia, Tartu', '1976-01-14', 'Contemporary abstract painter exploring the intersection of color theory and emotional resonance through bold gestural works.', 'marina-chen.jpg', 'approved', '2026-01-28 11:06:17', 4, '2026-04-09 10:25:14'),
+(2, 'Alexandre Dubois', 'Estonia, Tallinn', '1976-01-01', 'Digital-first artist creating immersive installations that blur the boundaries between physical and virtual art spaces.', 'alexandre-dubois.jpg', 'approved', '2026-01-28 11:09:28', 5, '2026-04-09 10:25:14'),
+(3, 'Yuki Tanaka', 'Estonia, Tallinn', '1987-05-20', 'Minimalist painter focused on the power of negative space and subtle tonal variations in monochromatic compositions.', 'yuki-tanaka.jpg', 'approved', '2026-01-29 08:49:46', 6, '2026-04-09 10:25:14'),
+(4, 'Sofia Rodriguez', 'Estonia, Pärnu', '1978-04-18', 'Mixed media artist combining traditional painting techniques with modern materials to create textured, layered narratives.', 'sofia-rodriguez.jpg', 'approved', '2026-01-29 09:06:17', 7, '2026-04-09 10:25:14'),
+(11, 'David Park', 'Estonia, Tallinn', NULL, 'Contemporary portrait artist known for expressive brushwork and vibrant color palettes that capture emotional depth.', 'david-park.jpg', 'approved', '2026-04-23 09:14:39', 8, '2026-04-23 09:14:39'),
+(12, 'Emma Williams', 'Estonia, Tartu', NULL, 'Geometric abstraction specialist creating harmonious compositions inspired by architecture and urban landscapes.', 'emma-williams.jpg', 'approved', '2026-04-23 09:14:39', 9, '2026-04-23 09:14:39');
 
 -- --------------------------------------------------------
 
