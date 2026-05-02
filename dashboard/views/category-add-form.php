@@ -3,14 +3,14 @@ ob_start();
 ?>
 
 <div class="container" style="min-height:400px;">
-    <div class="col-mid-11">
+    <div class="col-md-11">
         <h2>Category Add</h2>
         <?php
         if(isset($test)) {
             if($test==true)
             {
                 ?>
-                <div class="alert alert-ifo">
+                <div class="alert alert-info">
                     <strong>Record added successfully. </strong><a href="categories">Go to category list</a>
                 </div>
                 <?php
@@ -36,10 +36,10 @@ ob_start();
                      <tr>
                         <td colspan="2">
                             <button type="submit" class="btn btn-primary" name="save">
-                        <span class="glyphicon glyphicon-plus"></span> Save
+                        <span class="fa-solid fa-plus"></span> Save
                         </button>
-                        <a href="categories" class="btn btn-large btn-success">
-                            <i class="glyphicon glyphicon-backward"></i> &nbsp;Back to list
+                        <a href="categories" class="btn btn-lg btn-success">
+                            <i class="fa-solid fa-arrow-left"></i> &nbsp;Back to list
                         </a>
                         </td>
                      </tr>

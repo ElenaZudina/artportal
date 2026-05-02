@@ -54,7 +54,7 @@
         echo ' &#187 <a href="./startAdmin" >Start '.$_SESSION["name"].' </a>';
         echo ' &#187 <a href="categories">Categories</a>';
         echo ' &#187 <a href="collections">Collections</a>';
-        echo ' &#187 <a href="exhibtions">Exhibitions</a>';
+        echo ' &#187 <a href="exhibitions">Exhibitions</a>';
         echo ' &#187 <a href="users">Users</a>';
         echo ' </h4>';
     }

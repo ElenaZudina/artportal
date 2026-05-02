@@ -9,7 +9,8 @@ ob_start();
         <a class="btn btn-primary" href="create-category" role="button">Add category</a>
     </div>
     <div class="col-md-11">
-        <table class='table table-bordered table-responsive'>
+        <div class="table-responsive">
+        <table class='table table-bordered'>
             <tr>
                 <th width="10%">ID</th>
                 <th width="70%">Category</th>
@@ -20,7 +21,7 @@ ob_start();
                 echo '<tr>';
                 echo '<td>'.$row['id'].'</td> ';
                 echo '<td>';
-                echo $row['name'].'</i>';
+                echo $row['name'];
                 //echo '<br><b>Artist: </b><i>'.$row['artist_name'].'</i>';
 
                 echo '</td>';
@@ -32,6 +33,7 @@ ob_start();
             }
             ?>
         </table>
+        </div>
     </div>
 </div>
 <?php $content = ob_get_clean(); ?>
