@@ -50,6 +50,19 @@ elseif ($path =='delete-category' && isset($_GET['id'])) {
 elseif ($path == 'result-delete-category' && isset($_GET['id'])) {
     $response = CategoryController::destroy($_GET['id']);
 }
+//-------- artist moderation
+elseif ($path == 'moderation-artists') {
+    $response = ModerationController::pendingList();
+}
+elseif ($path == 'moderation-artist' && isset($_GET['id'])) {
+    $response = ModerationController::viewProfile($_GET['id']);
+}
+elseif ($path == 'approve-artist' && isset($_GET['id'])) {
+    $response = ModerationController::approve($_GET['id']);
+}
+elseif ($path == 'reject-artist' && isset($_GET['id'])) {
+    $response = ModerationController::reject($_GET['id']);
+}
 //==========delete painting
 elseif ($path=='paintingDel' && isset($_GET['id'])) {
     $response=controllerAdminPaintings::paintingDeleteForm($_GET['id']);
@@ -57,6 +70,7 @@ elseif ($path=='paintingDel' && isset($_GET['id'])) {
 elseif ($path == 'paintingDelResult' && isset($_GET['id'])) {
     $response = controllerAdminPaintings::paintingDeleteResult($_GET['id']);
 }
+
 //-------- listPaintings
 elseif($path == 'paintings') {
     $response = controllerAdminPaintings::PaintingsList();

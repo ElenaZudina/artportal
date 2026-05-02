@@ -49,14 +49,25 @@
               </div>
               <div class="offcanvas-body">
                 <?php
-    if(isset($_SESSION["status"]) && $_SESSION["status"]=="admin") {
-        echo '<h4><a href="../" target= _blank>ArtPortal</a>';
-        echo ' &#187 <a href="./startAdmin" >Start '.$_SESSION["name"].' </a>';
-        echo ' &#187 <a href="categories">Categories</a>';
-        echo ' &#187 <a href="collections">Collections</a>';
-        echo ' &#187 <a href="exhibitions">Exhibitions</a>';
-        echo ' &#187 <a href="users">Users</a>';
-        echo ' </h4>';
+        if(isset($_SESSION["status"]) && $_SESSION["status"]=="admin") {
+        // Offcanvas: show same block structure as desktop sidebar
+        echo '<div class="mb-3">';
+        echo '<h5 class="text-uppercase text-secondary">Moderation</h5>';
+        echo '<ul class="nav flex-column" style="font-size:1rem;">';
+        echo '<li class="nav-item"><a class="nav-link" style="font-size:1rem;" href="moderation-artists">Approve artist profiles</a></li>';
+        echo '</ul>';
+        echo '</div>';
+
+        echo '<div class="mb-3">';
+        echo '<h5 class="text-uppercase text-secondary">Content management</h5>';
+        echo '<ul class="nav flex-column" style="font-size:1rem;">';
+        echo '<li class="nav-item"><a class="nav-link" style="font-size:1rem;" href="categories">Categories</a></li>';
+        echo '<li class="nav-item"><a class="nav-link" style="font-size:1rem;" href="paintingsAdmin">Paintings List</a></li>';
+        echo '<li class="nav-item"><a class="nav-link" style="font-size:1rem;" href="collections">Collections</a></li>';
+        echo '<li class="nav-item"><a class="nav-link" style="font-size:1rem;" href="exhibitions">Exhibitions</a></li>';
+        echo '<li class="nav-item"><a class="nav-link" style="font-size:1rem;" href="users">Users</a></li>';
+        echo '</ul>';
+        echo '</div>';
     }
     elseif(isset($_SESSION["status"]) && $_SESSION["status"]=="artist") {
         echo '<h4><a href="../" target= _blank>ArtPortal</a>';
@@ -91,16 +102,16 @@
         echo '<h5 class="text-uppercase text-secondary">Moderation</h5>';
         // Здесь будут ссылки на управление пользователями (добавить позже)
         echo '<ul class="nav flex-column small">';
-        echo '<li class="nav-item"><span class="nav-link disabled">User management (coming soon)</span></li>';
+        echo '<li class="nav-item"><a class="nav-link" style="font-size:1rem;" href="moderation-artists">Approve artist profiles</a></li>';
         echo '</ul>';
         echo '</div>';
         // Content management block
         echo '<div class="mb-4">';
         echo '<h5 class="text-uppercase text-secondary">Content management</h5>';
-        echo '<ul class="nav flex-column">';
+        echo '<ul class="nav flex-column small">';
         //echo '<li class="nav-item"><a class="nav-link" href="./startAdmin">Start '.$_SESSION["name"].'</a></li>';
-        echo '<li class="nav-item"><a class="nav-link" href="categories">Categories</a></li>';
-        echo '<li class="nav-item"><a class="nav-link" href="paintingsAdmin">Paintings List</a></li>';
+        echo '<li class="nav-item"><a class="nav-link" style="font-size:1rem;" href="categories">Categories</a></li>';
+        echo '<li class="nav-item"><a class="nav-link" style="font-size:1rem;" href="paintingsAdmin">Paintings List</a></li>';
         echo '</ul>';
         echo '</div>';
         // Статистика (будет добавлена позже)

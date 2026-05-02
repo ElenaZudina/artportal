@@ -17,12 +17,14 @@ $_SESSION['last_activity'] = time();
 require_once '../config/Database.php';
 
 include_once("models/Category.php");
+include_once("../models/Artists.php");
 include_once("../models/Paintings.php");
 //include_once("modelsAdmin/modelAdminStyle.php");
 include_once("../services/CategoryService.php");
 
 include_once("controllers/Admin/HomeController.php");
 include_once("controllers/Admin/CategoryController.php");
+include_once("controllers/Admin/ModerationController.php");
 //include_once("controllersAdmin/controllerAdminPaintings.php");
 
 include('routes/routing.php'); //!!!!
