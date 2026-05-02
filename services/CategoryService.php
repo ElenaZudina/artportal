@@ -18,4 +18,22 @@ class CategoryService {
 
         return ['success' => true, 'errorMessage' => null];
     }
+
+    public static function updateCategory($id, $data) {
+        $name = trim($data['name'] ?? '');
+
+        if ($name === '') {
+            return ['success' => false, 'errorMessage' => 'Category name is required'];
+        }
+
+        if (Category::existsByNameExceptId($name, $id)) {
+            return ['success' => false, 'errorMessage' => 'Category already exists'];
+        }
+
+        if (!Category::updateCategory($id, $name)) {
+            return ['success' => false, 'errorMessage' => 'Database error while updating category'];
+        }
+
+        return ['success' => true, 'errorMessage' => null];
+    }
 }

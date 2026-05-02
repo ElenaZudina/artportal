@@ -2,16 +2,18 @@
 ob_start();
 ?>
 
+<?php $category = $category ?? []; ?>
+
 <div class="container" style="min-height:400px;">
     <div class="col-mid-11">
-        <h2>Category Add</h2>
+        <h2>Category Edit</h2>
         <?php
         if(isset($test)) {
             if($test==true)
             {
                 ?>
-                <div class="alert alert-ifo">
-                    <strong>Record added successfully. </strong><a href="categories">Go to category list</a>
+                <div class="alert alert-success">
+                    <strong>Record updated successfully. </strong><a href="categories">Go to category list</a>
                 </div>
                 <?php
             }
@@ -19,18 +21,18 @@ ob_start();
             {
                 ?>
                 <div class="alert alert-warning">
-                    <strong><?php echo !empty($errorMessage) ? htmlspecialchars($errorMessage) : 'Error adding record!'; ?> </strong><a href="categories">Go to category list</a>
+                    <strong><?php echo !empty($errorMessage) ? htmlspecialchars($errorMessage) : 'Error updating record!'; ?> </strong><a href="categories">Go to category list</a>
                 </div>
                 <?php
             }
         }
         else {
             ?>
-            <form method='POST' action="store-category" enctype="multipart/form-data">
+            <form method='POST' action="result-edit-category?id=<?php echo (int)($category['id'] ?? 0); ?>">
                 <table class='table table-bordered'>
                     <tr>
                         <td>Category title</td>
-                        <td><input type='text' name='name' class='form-control' required></td>
+                        <td><input type='text' name='name' class='form-control' required value="<?php echo htmlspecialchars($category['name'] ?? ''); ?>"></td>
                     </tr>
 
                      <tr>
@@ -52,4 +54,3 @@ ob_start();
 </div>
 <?php $content = ob_get_clean(); ?>
 <?php include "views/templates/layout.php"; ?>
-

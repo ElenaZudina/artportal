@@ -6,7 +6,7 @@ ob_start();
 
 <div class="container" style="min-height:400px;">
     <div style="margin:20px;">
-        <a class="btn btn-primary" href="create" role="button">Add category</a>
+        <a class="btn btn-primary" href="create-category" role="button">Add category</a>
     </div>
     <div class="col-md-11">
         <table class='table table-bordered table-responsive'>
@@ -25,7 +25,7 @@ ob_start();
 
                 echo '</td>';
                 echo'<td>
-                <a href="edit?id='.$row['id'].'">Edit <i class="fa fa-pen" aria-hidden="true"></i></a>
+                <a href="edit-category?id='.$row['id'].'">Edit <i class="fa fa-pen" aria-hidden="true"></i></a>
                 <a href="delete?id='.$row['id'].'">Delete <i class="fa fa-trash" aria-hidden="true"></i></a>
                 </td>';
                 echo '</tr>';

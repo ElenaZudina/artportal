@@ -30,18 +30,18 @@ elseif($path == 'categories') {
     $response = CategoryController::categoryList();
 }
 //-------- create category
-elseif ($path == 'create') {
+elseif ($path == 'create-category') {
     $response = CategoryController::create();
 }
-elseif ($path == 'store') {
+elseif ($path == 'store-category') {
     $response = CategoryController::store();
 }
-//========= edit painting
-elseif ($path =='paintingEdit' && isset($_GET['id'])) {
-    $response = controllerAdminPaintings::paintingEditForm($_GET['id']);
+//========= edit category
+elseif ($path =='edit-category' && isset($_GET['id'])) {
+    $response = CategoryController::edit($_GET['id']);
 }
-elseif ($path == 'paintingEditResult' && isset($_GET['id'])) {
-    $response = controllerAdminPaintings::paintingEditResult($_GET['id']);
+elseif ($path == 'result-edit-category' && isset($_GET['id'])) {
+    $response = CategoryController::update($_GET['id']);
 }
 //==========delete painting
 elseif ($path=='paintingDel' && isset($_GET['id'])) {
@@ -79,5 +79,5 @@ elseif ($path == 'paintingDelResult' && isset($_GET['id'])) {
 else 
 {
     // Страница не существует
-$response = AdminController::error404();
+$response = HomeController::error404();
 }

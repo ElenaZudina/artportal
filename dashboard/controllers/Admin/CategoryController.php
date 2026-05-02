@@ -20,15 +20,16 @@ class CategoryController {
         include_once('views/category-add-form.php');
     }
     //------------edit
-    public static function paintingEditForm($id) {
-        $styles = modelAdminStyle::getStylelist();
-        $artists = modelAdminPaintings::getArtistList();
-        $detail = modelAdminPaintings::getPaintingDetail($id);
-        include_once('viewAdmin/paintingEditform.php');
+    public static function edit($id) {
+        $category = Category::getCategoryById($id);
+        include_once('views/category-edit-form.php');
     }
-    public static function paintingEditResult($id) {
-        $test = modelAdminPaintings::getPaintingEdit($id);
-        include_once('viewAdmin/paintingEditForm.php');
+    public static function update($id) {
+        $result = CategoryService::updateCategory($id, $_POST);
+        $test = $result['success'];
+        $errorMessage = $result['errorMessage'];
+        $category = Category::getCategoryById($id);
+        include_once('views/category-edit-form.php');
     }
     //-------delete
     public static function paintingDeleteForm($id) {
