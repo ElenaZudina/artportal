@@ -18,4 +18,32 @@ class ExhibitionController {
         $errorMessage = $result['errorMessage'];
         include_once 'views/exhibitions-add-form.php';
     }
+
+    public static function edit($id) {
+        $exhibition = Exhibitions::getExhibitionById($id);
+        $collections = Collection::getCollectionsList();
+        include_once 'views/exhibitions-edit-form.php';
+    }
+
+    public static function update($id) {
+        $collections = Collection::getCollectionsList();
+        $result = ExhibitionService::updateExhibition($id, $_POST);
+        $test = $result['success'];
+        $errorMessage = $result['errorMessage'];
+        $exhibition = Exhibitions::getExhibitionById($id);
+        include_once 'views/exhibitions-edit-form.php';
+    }
+
+    public static function delete($id) {
+        $exhibition = Exhibitions::getExhibitionById($id);
+        include_once 'views/exhibitions-delete-form.php';
+    }
+
+    public static function destroy($id) {
+        $result = ExhibitionService::deleteExhibition($id, $_POST);
+        $test = $result['success'];
+        $errorMessage = $result['errorMessage'];
+        $exhibition = Exhibitions::getExhibitionById($id);
+        include_once 'views/exhibitions-delete-form.php';
+    }
 }

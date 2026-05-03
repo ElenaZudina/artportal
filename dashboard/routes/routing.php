@@ -64,6 +64,18 @@ elseif ($path == 'create-exhibition') {
 elseif ($path == 'store-exhibition') {
     $response = ExhibitionController::store();
 }
+elseif ($path == 'edit-exhibition' && isset($_GET['id'])) {
+    $response = ExhibitionController::edit($_GET['id']);
+}
+elseif ($path == 'result-edit-exhibition' && isset($_GET['id'])) {
+    $response = ExhibitionController::update($_GET['id']);
+}
+elseif ($path == 'delete-exhibition' && isset($_GET['id'])) {
+    $response = ExhibitionController::delete($_GET['id']);
+}
+elseif ($path == 'result-delete-exhibition' && isset($_GET['id'])) {
+    $response = ExhibitionController::destroy($_GET['id']);
+}
 //-------- create category
 elseif ($path == 'create-category') {
     $response = CategoryController::create();

@@ -30,8 +30,8 @@ ob_start();
                             <td class="text-nowrap"><?php echo htmlspecialchars($row['start_date'] ?? '', ENT_QUOTES, 'UTF-8'); ?></td>
                             <td class="text-nowrap"><?php echo htmlspecialchars($row['end_date'] ?? '', ENT_QUOTES, 'UTF-8'); ?></td>
                             <td class="text-nowrap">
-                                <a href="#">Edit <i class="fa fa-pen" aria-hidden="true"></i></a>
-                                <a href="#">Delete <i class="fa fa-trash" aria-hidden="true"></i></a>
+                                <a href="edit-exhibition?id=<?php echo (int)$row['id']; ?>">Edit <i class="fa fa-pen" aria-hidden="true"></i></a>
+                                <a href="delete-exhibition?id=<?php echo (int)$row['id']; ?>">Delete <i class="fa fa-trash" aria-hidden="true"></i></a>
                             </td>
                         </tr>
                     <?php endforeach; ?>

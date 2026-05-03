@@ -27,4 +27,38 @@ class Exhibitions {
 
         return $exhibition ? true : false;
     }
+
+    public static function getExhibitionById($id) {
+        $db = new Database();
+        return $db->getOne(
+            "SELECT id, title, description, collection_id, start_date, end_date FROM exhibitions WHERE id = ?",
+            [$id]
+        );
+    }
+
+    public static function existsByTitleExceptId($title, $id) {
+        $db = new Database();
+        $exhibition = $db->getOne(
+            "SELECT id FROM exhibitions WHERE TRIM(LOWER(title)) = TRIM(LOWER(?)) AND id <> ? LIMIT 1",
+            [$title, $id]
+        );
+
+        return $exhibition ? true : false;
+    }
+
+    public static function updateExhibition($id, $title, $description, $collectionId, $startDate, $endDate) {
+        $db = new Database();
+        $sql = "UPDATE `exhibitions` SET `title` = ?, `description` = ?, `collection_id` = ?, `start_date` = ?, `end_date` = ? WHERE `id` = ?";
+        $item = $db->executeRun($sql, [$title, $description, $collectionId, $startDate, $endDate, $id]);
+
+        return $item == true;
+    }
+
+    public static function deleteExhibition($id) {
+        $db = new Database();
+        $sql = "DELETE FROM `exhibitions` WHERE `id` = ?";
+        $item = $db->executeRun($sql, [$id]);
+
+        return $item == true;
+    }
 }
