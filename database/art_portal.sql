@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Хост: 127.0.0.1
--- Время создания: Апр 23 2026 г., 14:16
+-- Время создания: Май 03 2026 г., 21:02
 -- Версия сервера: 10.4.32-MariaDB
 -- Версия PHP: 8.2.12
 
@@ -49,8 +49,8 @@ INSERT INTO `artists` (`id`, `name`, `location`, `birth_date`, `bio`, `picture`,
 (2, 'Alexandre Dubois', 'Estonia, Tallinn', '1976-01-01', 'Digital-first artist creating immersive installations that blur the boundaries between physical and virtual art spaces.', 'alexandre-dubois.jpg', 'approved', '2026-01-28 11:09:28', 5, '2026-04-09 10:25:14'),
 (3, 'Yuki Tanaka', 'Estonia, Tallinn', '1987-05-20', 'Minimalist painter focused on the power of negative space and subtle tonal variations in monochromatic compositions.', 'yuki-tanaka.jpg', 'approved', '2026-01-29 08:49:46', 6, '2026-04-09 10:25:14'),
 (4, 'Sofia Rodriguez', 'Estonia, Pärnu', '1978-04-18', 'Mixed media artist combining traditional painting techniques with modern materials to create textured, layered narratives.', 'sofia-rodriguez.jpg', 'approved', '2026-01-29 09:06:17', 7, '2026-04-09 10:25:14'),
-(11, 'David Park', 'Estonia, Tallinn', NULL, 'Contemporary portrait artist known for expressive brushwork and vibrant color palettes that capture emotional depth.', 'david-park.jpg', 'approved', '2026-04-23 09:14:39', 8, '2026-04-23 09:14:39'),
-(12, 'Emma Williams', 'Estonia, Tartu', NULL, 'Geometric abstraction specialist creating harmonious compositions inspired by architecture and urban landscapes.', 'emma-williams.jpg', 'approved', '2026-04-23 09:14:39', 9, '2026-04-23 09:14:39');
+(11, 'David Park', 'Estonia, Tallinn', '2000-04-06', 'Contemporary portrait artist known for expressive brushwork and vibrant color palettes that capture emotional depth.', 'david-park.jpg', 'approved', '2026-04-23 09:14:39', 8, '2026-05-02 18:40:12'),
+(12, 'Emma Williams', 'Estonia, Tartu', '1996-05-21', 'Geometric abstraction specialist creating harmonious compositions inspired by architecture and urban landscapes.', 'emma-williams.jpg', 'approved', '2026-04-23 09:14:39', 9, '2026-05-02 18:49:04');
 
 -- --------------------------------------------------------
 
@@ -77,7 +77,11 @@ INSERT INTO `categories` (`id`, `name`) VALUES
 (7, 'Digital'),
 (8, 'Portraiture'),
 (9, 'Geometric'),
-(10, 'Mixed Media');
+(10, 'Mixed Media'),
+(11, 'test'),
+(13, 'test'),
+(14, 'test'),
+(15, 'Портрет');
 
 -- --------------------------------------------------------
 
@@ -88,7 +92,7 @@ INSERT INTO `categories` (`id`, `name`) VALUES
 CREATE TABLE `collections` (
   `id` int(11) NOT NULL,
   `title` varchar(255) NOT NULL,
-  `type` varchar(100) NOT NULL COMMENT 'keyword | popular | latest | random',
+  `type` enum('keyword','category','latest','random','popular') NOT NULL,
   `param` varchar(100) DEFAULT NULL COMMENT 'filter parameter'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
@@ -98,7 +102,11 @@ CREATE TABLE `collections` (
 
 INSERT INTO `collections` (`id`, `title`, `type`, `param`) VALUES
 (1, 'Artworks having energy in title', 'keyword', 'energy'),
-(2, 'Latest artworks', 'latest', NULL);
+(2, 'Latest artworks', 'latest', NULL),
+(4, 'The most new test', 'popular', ''),
+(5, 'Collection', 'popular', ''),
+(6, 'Collection made throe Exhibition', 'keyword', 'cat'),
+(7, 'test', 'popular', '');
 
 -- --------------------------------------------------------
 
@@ -144,7 +152,8 @@ CREATE TABLE `exhibitions` (
 --
 
 INSERT INTO `exhibitions` (`id`, `title`, `description`, `collection_id`, `start_date`, `end_date`) VALUES
-(2, 'Energy World', 'Artworks connected to Energy', 1, '2026-04-23 13:13:20', '2026-04-23 13:13:20');
+(2, 'Energy World', 'Artworks connected to Energy', 1, '2026-04-23 13:13:20', '2026-05-23 13:13:20'),
+(3, 'New test', 'test', 2, '2026-05-07 21:11:00', '2026-05-10 21:12:00');
 
 -- --------------------------------------------------------
 
@@ -230,7 +239,12 @@ INSERT INTO `users` (`id`, `username`, `email`, `password`, `role`, `created_at`
 (6, 'yuki', 'yuki@artportal.ee', '$2y$10$BrSY3RMOOQYnAHAHd29CbeTui.PWY6.YVb4m8.rryrNde0hzMk4PW', 'artist', '2026-03-25 13:08:46'),
 (7, 'sofia', 'sofia@artportal', '$2y$10$HOX69EjaxPtXhIqwGbEC/OQtl0brd4WiJ8NWINc0/gnHau77Ka3.a', 'user', '2026-03-25 13:12:53'),
 (8, 'david', 'david@artportal.ee', '$2y$10$isZBs0DDwi1nNtQQ/qwpXO49auxCLTqlhkQM12g0wBNznyeNUuIeC', 'user', '2026-04-23 09:11:04'),
-(9, 'emma', 'emma@artportal.ee', '$2y$10$ZE9d5dGo7gmiTDJ/dh4OyuYmvuFr75YBa0cbowZLv9mR/yA0VEUka', 'user', '2026-04-23 09:11:04');
+(9, 'emma', 'emma@artportal.ee', '$2y$10$ZE9d5dGo7gmiTDJ/dh4OyuYmvuFr75YBa0cbowZLv9mR/yA0VEUka', 'user', '2026-04-23 09:11:04'),
+(10, 'test', 'test@test.ee', '$2y$10$5bOaxg0.ue40sLfgp.CONOT8hcincHJrt.DlQUS.L5JrvhtVebfoa', 'user', '2026-04-25 00:00:00'),
+(12, 'test1', 'test1@test1.ee', '$2y$10$ngeHiLWjqUYUoKbopSniDuQ.yFBN4f9LEMa26W73eqi0t1Yzw.z3O', 'user', '2026-04-25 00:00:00'),
+(14, 'test2', 'test2@test2.ee', '$2y$10$Hy43cA5HApKjCXJYitwsBuH5z8MbVNzTb0Y/fh1/Fbsqf5mTHFlIa', 'user', '2026-04-25 00:00:00'),
+(15, 'new', 'new@test.ee', '$2y$10$Az1Vc5SggqlAtvEin3gAu.58u7zAVro7wJBVhyqfzHw9tBOY1FeBC', 'user', '2026-04-25 00:00:00'),
+(17, 'Newnew', 'myemail@mail.ee', '$2y$10$zwYuLFQMSHaaXe01dAhhH.BllpgW.LhM0FVlDM9iYjm9f7hpb629e', 'user', '2026-05-02 00:00:00');
 
 --
 -- Индексы сохранённых таблиц
@@ -291,7 +305,7 @@ ALTER TABLE `paintings`
 ALTER TABLE `users`
   ADD PRIMARY KEY (`id`),
   ADD UNIQUE KEY `email` (`email`),
-  ADD UNIQUE KEY `username` (`id`);
+  ADD UNIQUE KEY `username` (`username`);
 
 --
 -- AUTO_INCREMENT для сохранённых таблиц
@@ -301,19 +315,19 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT для таблицы `artists`
 --
 ALTER TABLE `artists`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
 
 --
 -- AUTO_INCREMENT для таблицы `categories`
 --
 ALTER TABLE `categories`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
 
 --
 -- AUTO_INCREMENT для таблицы `collections`
 --
 ALTER TABLE `collections`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- AUTO_INCREMENT для таблицы `comments`
@@ -325,7 +339,7 @@ ALTER TABLE `comments`
 -- AUTO_INCREMENT для таблицы `exhibitions`
 --
 ALTER TABLE `exhibitions`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT для таблицы `gallery_images`
@@ -343,7 +357,7 @@ ALTER TABLE `paintings`
 -- AUTO_INCREMENT для таблицы `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
 
 --
 -- Ограничения внешнего ключа сохраненных таблиц
