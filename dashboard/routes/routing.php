@@ -51,6 +51,10 @@ elseif ($path == 'delete-collection' && isset($_GET['id'])) {
 elseif ($path == 'result-delete-collection' && isset($_GET['id'])) {
     $response = CollectionController::destroy($_GET['id']);
 }
+elseif ($path == 'store-collection-ajax') {
+    // AJAX-обработка для создания коллекции из модального окна
+    CollectionController::storeAjax();
+}
 elseif ($path == 'exhibitions') {
     $response = ExhibitionController::exhibitionsList();
 }

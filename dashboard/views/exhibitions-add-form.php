@@ -31,7 +31,10 @@ ob_start();
                 ?>
                 <div class="alert alert-warning">
                     <strong>No collections available. </strong>
-                    <a href="create-collection">Create a collection first</a>
+                    <!-- Кнопка для создания коллекции через модальное окно -->
+                    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#createCollectionModal">
+                        <i class="fa-solid fa-plus"></i> Create collection
+                    </button>
                 </div>
                 <?php
             }
@@ -50,12 +53,18 @@ ob_start();
                         <tr>
                             <td>Collection</td>
                             <td>
-                                <select name="collection_id" class="form-select" required>
-                                    <option value="">Select collection</option>
-                                    <?php foreach ($collections as $collection): ?>
-                                        <option value="<?php echo (int)$collection['id']; ?>"><?php echo htmlspecialchars($collection['title'] ?? '', ENT_QUOTES, 'UTF-8'); ?></option>
-                                    <?php endforeach; ?>
-                                </select>
+                                <div class="d-flex gap-2">
+                                    <select name="collection_id" id="collectionSelect" class="form-select" required>
+                                        <option value="">Select collection</option>
+                                        <?php foreach ($collections as $collection): ?>
+                                            <option value="<?php echo (int)$collection['id']; ?>"><?php echo htmlspecialchars($collection['title'] ?? '', ENT_QUOTES, 'UTF-8'); ?></option>
+                                        <?php endforeach; ?>
+                                    </select>
+                                    <!-- Кнопка для создания новой коллекции через модальное окно -->
+                                    <button type="button" class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#createCollectionModal">
+                                        <i class="fa-solid fa-plus"></i> New
+                                    </button>
+                                </div>
                             </td>
                         </tr>
                         <tr>
@@ -85,5 +94,154 @@ ob_start();
         ?>
     </div>
 </div>
+
+<!-- ===================== МОДАЛЬНОЕ ОКНО ===================== -->
+<!-- Bootstrap модальное окно для создания коллекции -->
+<div class="modal fade" id="createCollectionModal" tabindex="-1" aria-labelledby="createCollectionLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <!-- Заголовок модали -->
+            <div class="modal-header">
+                <h5 class="modal-title" id="createCollectionLabel">Create New Collection</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+
+            <!-- Тело модали с формой -->
+            <div class="modal-body">
+                <!-- Контейнер для вывода ошибок -->
+                <div id="collectionErrorAlert" class="alert alert-danger" style="display: none;"></div>
+
+                <!-- Контейнер для вывода успеха -->
+                <div id="collectionSuccessAlert" class="alert alert-success" style="display: none;"></div>
+
+                <!-- Форма создания коллекции -->
+                <form id="createCollectionForm" method="POST" action="store-collection">
+                    <!-- Название коллекции (обязательное) -->
+                    <div class="mb-3">
+                        <label for="collectionTitle" class="form-label">Collection Title *</label>
+                        <input type="text" class="form-control" id="collectionTitle" name="title" required>
+                    </div>
+
+                    <!-- Тип коллекции (обязательное) -->
+                    <div class="mb-3">
+                        <label for="collectionType" class="form-label">Collection Type *</label>
+                        <select class="form-select" id="collectionType" name="type" required>
+                            <option value="">Select type</option>
+                            <option value="keyword">Keyword</option>
+                            <option value="latest">Latest</option>
+                            <option value="random">Random</option>
+                            <option value="popular">Popular</option>
+                        </select>
+                    </div>
+
+                    <!-- Параметр коллекции (опционально) -->
+                    <div class="mb-3">
+                        <label for="collectionParam" class="form-label">Parameter (optional)</label>
+                        <input type="text" class="form-control" id="collectionParam" name="param" placeholder="e.g., search keyword">
+                    </div>
+                </form>
+            </div>
+
+            <!-- Футер модали с кнопками -->
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                <button type="button" class="btn btn-primary" id="saveCollectionBtn">Save Collection</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- ===================== JAVASCRIPT ===================== -->
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    // Получаем элементы из DOM
+    const createCollectionForm = document.getElementById('createCollectionForm');
+    const saveCollectionBtn = document.getElementById('saveCollectionBtn');
+    const collectionErrorAlert = document.getElementById('collectionErrorAlert');
+    const collectionSuccessAlert = document.getElementById('collectionSuccessAlert');
+    const collectionSelect = document.getElementById('collectionSelect');
+    const createCollectionModal = document.getElementById('createCollectionModal');
+
+    // Обработчик клика на кнопку "Save Collection"
+    saveCollectionBtn.addEventListener('click', function(e) {
+        e.preventDefault();
+
+        // Скрываем старые сообщения об ошибках/успехе
+        collectionErrorAlert.style.display = 'none';
+        collectionSuccessAlert.style.display = 'none';
+
+        // Проверяем базовую валидацию формы
+        if (!createCollectionForm.checkValidity()) {
+            collectionErrorAlert.textContent = 'Please fill in all required fields';
+            collectionErrorAlert.style.display = 'block';
+            return;
+        }
+
+        // Собираем данные формы
+        const formData = new FormData(createCollectionForm);
+
+        // Отправляем AJAX-запрос на сервер
+        fetch('store-collection-ajax', {
+            method: 'POST',
+            body: formData
+        })
+        .then(response => {
+            // Проверяем, что ответ - валидный JSON
+            if (!response.ok) {
+                throw new Error('Network error: ' + response.status);
+            }
+            return response.json();
+        })
+        .then(data => {
+            // Обрабатываем ответ от сервера
+            if (data.success) {
+                // Успешное создание коллекции
+
+                // Показываем сообщение об успехе
+                collectionSuccessAlert.textContent = data.message || 'Collection created successfully!';
+                collectionSuccessAlert.style.display = 'block';
+
+                // Очищаем форму
+                createCollectionForm.reset();
+
+                // Добавляем новую коллекцию в селект (если он есть)
+                if (collectionSelect) {
+                    const newOption = document.createElement('option');
+                    newOption.value = data.id;
+                    newOption.textContent = data.title;
+                    collectionSelect.appendChild(newOption);
+
+                    // Автоматически выбираем новую коллекцию
+                    collectionSelect.value = data.id;
+                }
+
+                // Закрываем модальное окно через 1.5 секунды
+                setTimeout(() => {
+                    const modal = bootstrap.Modal.getInstance(createCollectionModal);
+                    if (modal) {
+                        modal.hide();
+                    }
+                }, 1500);
+            } else {
+                // Ошибка при создании коллекции
+
+                // Показываем сообщение об ошибке
+                collectionErrorAlert.textContent = data.message || 'Error creating collection';
+                collectionErrorAlert.style.display = 'block';
+            }
+        })
+        .catch(error => {
+            // Обработка ошибок сети или парсинга JSON
+            console.error('Error:', error);
+            collectionErrorAlert.textContent = 'Network error. Please try again.';
+            collectionErrorAlert.style.display = 'block';
+        });
+    });
+
+    // Fallback: если JavaScript отключен, форма работает через обычный POST
+    // Это достигается благодаря атрибутам method="POST" и action="store-collection"
+});
+</script>
+
 <?php $content = ob_get_clean(); ?>
 <?php include "views/templates/layout.php"; ?>

@@ -20,11 +20,13 @@ class CollectionService {
             return ['success' => false, 'errorMessage' => 'Collection already exists'];
         }
 
-        if (!Collection::create($title, $type, $param)) {
+        // Collection::create() теперь возвращает ID новой коллекции (или false при ошибке)
+        $newId = Collection::create($title, $type, $param);
+        if (!$newId) {
             return ['success' => false, 'errorMessage' => 'Database error while adding collection'];
         }
 
-        return ['success' => true, 'errorMessage' => null];
+        return ['success' => true, 'errorMessage' => null, 'id' => $newId];
     }
 
     public static function updateCollection($id, $data) {

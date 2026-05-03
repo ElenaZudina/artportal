@@ -42,4 +42,54 @@ class CollectionController {
         $collection = Collection::getCollectionById($id);
         include_once 'views/collections-delete-form.php';
     }
+
+    // Обработка AJAX-запроса для создания коллекции
+    public static function storeAjax() {
+        // Проверяем, что это POST-запрос
+        if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
+            header('Content-Type: application/json');
+            echo json_encode(['success' => false, 'message' => 'Invalid request method']);
+            exit;
+        }
+
+        // Создаем коллекцию через service
+        $result = CollectionService::createCollection($_POST);
+
+        header('Content-Type: application/json');
+
+        if ($result['success']) {
+            // Получаем ID из результата Service
+            $collectionId = $result['id'] ?? null;
+
+            if ($collectionId) {
+                // Получаем полные данные коллекции по ID
+                $newCollection = Collection::getCollectionById($collectionId);
+
+                if ($newCollection) {
+                    echo json_encode([
+                        'success' => true,
+                        'id' => $newCollection['id'],
+                        'title' => $newCollection['title'],
+                        'message' => 'Collection created successfully'
+                    ]);
+                } else {
+                    echo json_encode([
+                        'success' => false,
+                        'message' => 'Collection created but could not retrieve data'
+                    ]);
+                }
+            } else {
+                echo json_encode([
+                    'success' => false,
+                    'message' => 'Collection created but ID not returned'
+                ]);
+            }
+        } else {
+            echo json_encode([
+                'success' => false,
+                'message' => $result['errorMessage'] ?? 'Unknown error'
+            ]);
+        }
+        exit;
+    }
 }

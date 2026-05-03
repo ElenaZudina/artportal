@@ -19,9 +19,10 @@ class Collection {
     public static function create($title, $type, $param) {
         $db = new Database();
         $sql = "INSERT INTO `collections` (`title`, `type`, `param`) VALUES (?, ?, ?)";
-        $item = $db->executeRun($sql, [$title, $type, $param]);
+        $stmt = $db->executeRun($sql, [$title, $type, $param]);
 
-        return $item == true;
+        // Возвращаем ID новой записи (или false если ошибка)
+        return $stmt ? $db->getLastInsertId() : false;
     }
 
     public static function getCollectionById($id) {
