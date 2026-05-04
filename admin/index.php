@@ -16,9 +16,9 @@ $_SESSION['last_activity'] = time();
 //session_destroy();
 require_once '../config/Database.php';
 
-include_once("models/Category.php");
-include_once("models/Collection.php");
-include_once("models/Exhibitions.php");
+include_once("../models/Categories.php");
+include_once("../models/Collections.php");
+include_once("../models/Exhibitions.php");
 include_once("../models/Artists.php");
 include_once("../models/Paintings.php");
 //include_once("modelsAdmin/modelAdminStyle.php");

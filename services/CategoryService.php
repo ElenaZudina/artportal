@@ -8,11 +8,11 @@ class CategoryService {
             return ['success' => false, 'errorMessage' => 'Category name is required'];
         }
 
-        if (Category::existsByName($name)) {
+        if (Categories::existsByName($name)) {
             return ['success' => false, 'errorMessage' => 'Category already exists'];
         }
 
-        if (!Category::create($name)) {
+        if (!Categories::create($name)) {
             return ['success' => false, 'errorMessage' => 'Database error while adding category'];
         }
 
@@ -26,11 +26,11 @@ class CategoryService {
             return ['success' => false, 'errorMessage' => 'Category name is required'];
         }
 
-        if (Category::existsByNameExceptId($name, $id)) {
+        if (Categories::existsByNameExceptId($name, $id)) {
             return ['success' => false, 'errorMessage' => 'Category already exists'];
         }
 
-        if (!Category::updateCategory($id, $name)) {
+        if (!Categories::updateCategory($id, $name)) {
             return ['success' => false, 'errorMessage' => 'Database error while updating category'];
         }
 
@@ -42,7 +42,7 @@ class CategoryService {
             return ['success' => false, 'errorMessage' => 'Delete action was not confirmed'];
         }
 
-        if (!Category::deleteCategory($id)) {
+        if (!Categories::deleteCategory($id)) {
             return ['success' => false, 'errorMessage' => 'Database error while deleting category'];
         }
 

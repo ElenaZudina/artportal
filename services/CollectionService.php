@@ -16,12 +16,12 @@ class CollectionService {
             return ['success' => false, 'errorMessage' => 'Please select a valid collection type'];
         }
 
-        if (Collection::existsByTitle($title)) {
+        if (Collections::existsByTitle($title)) {
             return ['success' => false, 'errorMessage' => 'Collection already exists'];
         }
 
-        // Collection::create() теперь возвращает ID новой коллекции (или false при ошибке)
-        $newId = Collection::create($title, $type, $param);
+        // Collections::create() теперь возвращает ID новой коллекции (или false при ошибке)
+        $newId = Collections::create($title, $type, $param);
         if (!$newId) {
             return ['success' => false, 'errorMessage' => 'Database error while adding collection'];
         }
@@ -44,11 +44,11 @@ class CollectionService {
             return ['success' => false, 'errorMessage' => 'Please select a valid collection type'];
         }
 
-        if (Collection::existsByTitleExceptId($title, $id)) {
+        if (Collections::existsByTitleExceptId($title, $id)) {
             return ['success' => false, 'errorMessage' => 'Collection already exists'];
         }
 
-        if (!Collection::updateCollection($id, $title, $type, $param)) {
+        if (!Collections::updateCollection($id, $title, $type, $param)) {
             return ['success' => false, 'errorMessage' => 'Database error while updating collection'];
         }
 
@@ -60,7 +60,7 @@ class CollectionService {
             return ['success' => false, 'errorMessage' => 'Delete action was not confirmed'];
         }
 
-        if (!Collection::deleteCollection($id)) {
+        if (!Collections::deleteCollection($id)) {
             return ['success' => false, 'errorMessage' => 'Database error while deleting collection'];
         }
 

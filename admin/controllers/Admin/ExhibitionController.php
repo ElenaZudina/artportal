@@ -7,12 +7,12 @@ class ExhibitionController {
     }
 
     public static function create() {
-        $collections = Collection::getCollectionsList();
+        $collections = Collections::getCollectionsList();
         include_once 'views/exhibitions-add-form.php';
     }
 
     public static function store() {
-        $collections = Collection::getCollectionsList();
+        $collections = Collections::getCollectionsList();
         $result = ExhibitionService::createExhibition($_POST);
         $test = $result['success'];
         $errorMessage = $result['errorMessage'];
@@ -21,12 +21,12 @@ class ExhibitionController {
 
     public static function edit($id) {
         $exhibition = Exhibitions::getExhibitionById($id);
-        $collections = Collection::getCollectionsList();
+        $collections = Collections::getCollectionsList();
         include_once 'views/exhibitions-edit-form.php';
     }
 
     public static function update($id) {
-        $collections = Collection::getCollectionsList();
+        $collections = Collections::getCollectionsList();
         $result = ExhibitionService::updateExhibition($id, $_POST);
         $test = $result['success'];
         $errorMessage = $result['errorMessage'];

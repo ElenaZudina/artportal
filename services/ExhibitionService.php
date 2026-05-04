@@ -16,7 +16,7 @@ class ExhibitionService {
             return ['success' => false, 'errorMessage' => 'Please select a collection'];
         }
 
-        if (!Collection::getCollectionById($collectionId)) {
+        if (!Collections::getCollectionByID($collectionId)) {
             return ['success' => false, 'errorMessage' => 'Selected collection does not exist'];
         }
 
@@ -61,7 +61,7 @@ class ExhibitionService {
             return ['success' => false, 'errorMessage' => 'Please select a collection'];
         }
 
-        if (!Collection::getCollectionById($collectionId)) {
+        if (!Collections::getCollectionByID($collectionId)) {
             return ['success' => false, 'errorMessage' => 'Selected collection does not exist'];
         }
 
