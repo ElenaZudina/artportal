@@ -31,10 +31,10 @@ class controllerAuth {
 
         
         if ($user["role"] == "admin") {
-            header("Location: admin/startAdmin");
+            header("Location: /artportal/admin/startAdmin");
             exit;
         } else {
-            header("Location: dashboard");
+            header("Location: /artportal/dashboard/startDashboard");
             exit;
         }
         /*

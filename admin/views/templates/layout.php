@@ -71,13 +71,13 @@
     }
     elseif(isset($_SESSION["status"]) && $_SESSION["status"]=="artist") {
         echo '<h4><a href="../" target= _blank>ArtPortal</a>';
-        echo ' &#187 <a href="./startArtist" >Start '.$_SESSION["name"].' </a>';
+        echo ' &#187 <a href="/artportal/dashboard/startDashboard" >Start '.$_SESSION["name"].' </a>';
         echo ' &#187 <a href="paintingsAdmin"> My Paintings List </a>';
         echo ' </h4>';
     }
     elseif(isset($_SESSION["status"]) && $_SESSION["status"]=="user") {
         echo '<h4><a href="../" target= _blank>ArtPortal</a>';
-        echo ' &#187 <a href="./startUser" >Start '.$_SESSION["name"].' </a>';
+        echo ' &#187 <a href="/artportal/dashboard/startDashboard" >Start '.$_SESSION["name"].' </a>';
         echo ' </h4>';
     }
     else {
@@ -124,13 +124,13 @@
     }
     elseif(isset($_SESSION["status"]) && $_SESSION["status"]=="artist") {
         echo '<h4><a href="../" target= _blank>ArtPortal</a>';
-        echo ' &#187 <a href="./" >Start '.$_SESSION["name"].' </a>';
+        echo ' &#187 <a href="/artportal/dashboard/startDashboard" >Start '.$_SESSION["name"].' </a>';
         echo ' &#187 <a href="paintingsAdmin"> My Paintings List </a>';
         echo ' </h4>';
     }
     elseif(isset($_SESSION["status"]) && $_SESSION["status"]=="user") {
         echo '<h4><a href="../" target= _blank>ArtPortal</a>';
-        echo ' &#187 <a href="./" >Start '.$_SESSION["name"].' </a>';
+        echo ' &#187 <a href="/artportal/dashboard/startDashboard" >Start '.$_SESSION["name"].' </a>';
         echo ' </h4>';
     }
     else {

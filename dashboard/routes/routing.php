@@ -15,7 +15,7 @@ $path = explode('/',$host)[$num];
 }*/
 
 
-if ($path == '' OR $path == 'index.php' OR $path == 'login') {
+if ($path == 'startDashboard') {
     // Форма входа в Дашборд
     $response = HomeController::startDashboard();
 }

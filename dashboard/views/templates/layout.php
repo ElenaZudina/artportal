@@ -183,7 +183,7 @@
                             echo '<div class="mb-4">';
                             echo '<h4 style="font-size:1.1rem;">';
                             echo '<a href="../" target="_blank">WEB SITE</a>';
-                            echo ' &#187; <a href="./">Start</a>';
+                            echo ' &#187; <a href="/artportal/dashboard/startDashboard">Start</a>';
                             echo ' &#187 <a href="my-paintings"> My Paintings </a>';
                             echo ' &#187 <a href="add-painting"><i class="fa fa-plus"></i> Add Painting </a>';
                             echo ' &#187 <a href="profile"> Profile </a>';
@@ -194,7 +194,7 @@
                             echo '<div class="mb-4">';
                             echo '<h4 style="font-size:1.1rem;">';
                             echo '<a href="../" target="_blank">WEB SITE</a>';
-                            echo ' &#187; <a href="./">Start</a>';
+                            echo ' &#187; <a href="/artportal/dashboard/startDashboard">Start</a>';
                             echo ' &#187 <a href="profile"> Profile </a>';
                             echo '</h4>';
                             echo '</div>';

@@ -3,16 +3,16 @@ ob_start();
 if (isset ($_SESSION['userId']) && isset($_SESSION['status'])) {
     switch ($_SESSION['status']) {
         case 'admin':
-            header('Location: admin/startAdmin');
+            header('Location: /artportal/admin/startAdmin');
             break;
         case 'artist':
-            header('Location: startArtist');
+            header('Location: /artportal/dashboard/startDashboard');
             break;
         case 'user':
-            header('Location: startUser');
+            header('Location: /artportal/dashboard/startDashboard');
             break;
         default:
-            header('Location: login');
+            header('Location: /artportal/login');
     }
     exit;
 }
