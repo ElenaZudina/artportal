@@ -37,15 +37,50 @@ class Artists {
     }
 
     public static function approveArtist($id) {
-        $query = "UPDATE artists SET status = 'approved', updated_at = NOW() WHERE id = ?";
         $db = new Database();
-        return $db->executeRun($query, [$id]);
+
+        $artist = self::getArtistByIDAny($id);
+        if (!$artist) {
+            return false;
+        }
+
+        $queryArtist = "UPDATE artists SET status = 'approved', updated_at = NOW() WHERE id = ?";
+        $db->executeRun($queryArtist, [$id]);
+
+        $queryUser = "UPDATE users SET role = 'artist' WHERE id = ?";
+        $db->executeRun($queryUser, [$artist['user_id']]);
+
+        return true;
     }
 
     public static function rejectArtist($id) {
         $query = "UPDATE artists SET status = 'rejected', updated_at = NOW() WHERE id = ?";
         $db = new Database();
         return $db->executeRun($query, [$id]);
+    }
+
+    public static function getArtistByUserId($userId) {
+        $query = "SELECT * FROM artists WHERE user_id = ?";
+        $db = new Database();
+        return $db->getOne($query, [$userId]);
+    }
+
+    public static function insertArtistProfile($cleanData) {
+        $query = "INSERT INTO artists (name, location, birth_date, bio, picture, status, user_id, created_at, updated_at)
+                  VALUES (?, ?, ?, ?, ?, ?, ?, NOW(), NOW())";
+
+        $params = [
+            $cleanData['name'],
+            $cleanData['location'],
+            $cleanData['birth_date'],
+            $cleanData['bio'],
+            $cleanData['picture'],
+            $cleanData['status'],
+            $cleanData['user_id']
+        ];
+
+        $db = new Database();
+        return $db->executeRun($query, $params);
     }
 }
 ?>

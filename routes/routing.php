@@ -66,6 +66,12 @@ elseif ($path == 'registerAnswer') {
     //register user
     $response = Controller::registerUser();
 }
+elseif ($path == 'artistProfileForm') {
+    $response = Controller::artistProfileForm();
+}
+elseif ($path == 'artistProfileSave') {
+    $response = Controller::artistProfileSave();
+}
 elseif ($path == 'login' ) {
     // Cтраница входа
     $response = controllerAuth::formLoginSite();

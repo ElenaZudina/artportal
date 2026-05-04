@@ -6,7 +6,11 @@ if (isset($result)) {
         ?>
         <div class="my-alert-success text-center mb-4 mt-5 p-4" style="border-radius: var(--radius);">
             <strong>User has been added</strong><br>
-            <a href="admin" class="my-alert-btn">Go to Dashboard</a>
+            <p class="mt-3 mb-3">If you want to become an artist, please fill out your artist profile.</p>
+            <div class="d-flex justify-content-center gap-2 flex-wrap">
+                <a href="artistProfileForm" class="my-alert-btn">Fill Artist Profile</a>
+                <a href="login" class="my-alert-btn">Go to Login</a>
+            </div>
         </div>
         <?php
     } else {

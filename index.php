@@ -11,6 +11,7 @@ require 'models/Collections.php';
 // Добавляю этот код на следующем этапе
 //require 'models/Comments.php';
 require 'services/AuthService.php';
+require 'services/ArtistProfileService.php';
 require 'models/Register.php';
 
 require 'models/Auth.php';

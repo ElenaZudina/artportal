@@ -99,6 +99,45 @@ class Controller {
     }
     public static function registerUser() {
         $result = RegisterService::register($_POST);
+
+        if (!empty($result['success']) && !empty($result['user'])) {
+            $_SESSION['userId'] = $result['user']['id'];
+            $_SESSION['name'] = $result['user']['username'];
+            $_SESSION['status'] = $result['user']['role'];
+        }
+
         include_once('views/answerRegister.php');
+    }
+
+    public static function artistProfileForm() {
+        if (empty($_SESSION['userId'])) {
+            header('Location: /artportal/login');
+            exit;
+        }
+
+        $existingProfile = Artists::getArtistByUserId((int)$_SESSION['userId']);
+        include_once('views/formArtistProfile.php');
+    }
+
+    public static function artistProfileSave() {
+        if (empty($_SESSION['userId'])) {
+            header('Location: /artportal/login');
+            exit;
+        }
+
+        if (($_SERVER['REQUEST_METHOD'] ?? 'GET') !== 'POST') {
+            header('Location: /artportal/artistProfileForm');
+            exit;
+        }
+
+        $resultArtist = ArtistProfileService::createProfile($_POST, (int)$_SESSION['userId']);
+        if (!empty($resultArtist['success'])) {
+            include_once('views/answerArtistProfile.php');
+            return;
+        }
+
+        $existingProfile = Artists::getArtistByUserId((int)$_SESSION['userId']);
+        $formData = $resultArtist['data'] ?? [];
+        include_once('views/formArtistProfile.php');
     }
 } //end class
