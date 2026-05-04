@@ -20,6 +20,18 @@ if ($path == 'startDashboard') {
     $response = HomeController::startDashboard();
 }
 
+elseif ($path == 'profile') {
+    $response = HomeController::profile();
+}
+
+elseif ($path == 'edit-profile') {
+    $response = HomeController::editProfile();
+}
+
+elseif ($path == 'update-profile') {
+    $response = HomeController::updateProfile();
+}
+
 elseif ($path == 'logout') {
     header('Location: /artportal/logout');
     exit;

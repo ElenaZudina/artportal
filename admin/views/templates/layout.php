@@ -143,22 +143,6 @@
                 <!-- Main content area -->
                 <main class="col-12 col-lg-10 p-4">
                     <div class="container">
-                        <?php
-                        // Основные admin-ссылки под Hello admin и Logout
-                        if (isset($_SESSION["userId"]) && isset($_SESSION["status"]) && $_SESSION["status"]=="admin") {
-                            echo '<div class="mb-4">';
-                            echo '<h4 style="font-size:1.1rem;">';
-                            echo '<a href="../" target="_blank">WEB SITE PAINTERS ONLINE</a>';
-                            echo ' &#187; <a href="./startAdmin">Start admin</a>';
-                            echo ' &#187 <a href="categories">Categories </a>';
-                            echo ' &#187 <a href="collections"> Collections Lists </a>';
-                            echo ' &#187 <a href="create-collection"> Add collection </a>';
-                            echo ' &#187 <a href="exhibitions"> Exhibitions List </a>';
-                            echo ' &#187 <a href="users"> Users </a>';
-                            echo '</h4>';
-                            echo '</div>';
-                        }
-                        ?>
                         <?php echo $content ?>
                     </div>
                 </main>

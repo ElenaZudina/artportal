@@ -6,6 +6,12 @@ class Auth {
         $db = new Database();
         return $db->getOne($sql);
     }
+
+    public static function getUserByID($id) {
+        $sql = 'SELECT * FROM `users` WHERE `id` = ?';
+        $db = new Database();
+        return $db->getOne($sql, [$id]);
+    }
 }
 
 ?>

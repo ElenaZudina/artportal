@@ -82,5 +82,24 @@ class Artists {
         $db = new Database();
         return $db->executeRun($query, $params);
     }
+
+    public static function updateArtistProfile($cleanData, $userId) {
+        $query = "UPDATE artists
+                  SET name = ?, location = ?, birth_date = ?, bio = ?, picture = ?, status = ?, updated_at = NOW()
+                  WHERE user_id = ?";
+
+        $params = [
+            $cleanData['name'],
+            $cleanData['location'],
+            $cleanData['birth_date'],
+            $cleanData['bio'],
+            $cleanData['picture'],
+            $cleanData['status'],
+            $userId
+        ];
+
+        $db = new Database();
+        return $db->executeRun($query, $params);
+    }
 }
 ?>
