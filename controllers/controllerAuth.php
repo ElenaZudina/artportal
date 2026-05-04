@@ -22,7 +22,7 @@ class controllerAuth {
 
         
         if ($user["role"] == "admin") {
-            header("Location: dashboard/startAdmin");
+            header("Location: admin/startAdmin");
             exit;
         }
         if ($user["role"] == "artist") {
