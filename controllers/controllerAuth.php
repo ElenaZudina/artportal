@@ -20,11 +20,24 @@ class controllerAuth {
         $_SESSION['name'] = $user['username'];
         $_SESSION['status'] = $user['role'];
 
+        // Проверяем, есть ли профиль художника для этого пользователя
+        if ($user['role'] == 'user') {
+            $db = new Database();
+            $artist = $db->getOne("SELECT id FROM artists WHERE user_id = ?", [$user['id']]);
+            if ($artist) {
+                $_SESSION['status'] = 'artist';
+            }
+        }
+
         
         if ($user["role"] == "admin") {
             header("Location: admin/startAdmin");
             exit;
+        } else {
+            header("Location: dashboard");
+            exit;
         }
+        /*
         if ($user["role"] == "artist") {
             header("Location: startArtist");
             exit;
@@ -32,7 +45,7 @@ class controllerAuth {
         if ($user["role"] == "user") {
             header("Location: startUser");
             exit;
-        }
+        }*/
     }
 
     /*// Вход в админ панель
