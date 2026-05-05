@@ -31,7 +31,7 @@ $formData = $formData ?? [];
                             <strong>pending</strong> status by default.
                         </p>
 
-                        <form method="POST" action="artistProfileSave">
+                        <form method="POST" action="artistProfileSave" enctype="multipart/form-data">
                             <div class="mb-3">
                                 <label for="artist_name" class="form-label">Name *</label>
                                 <input id="artist_name" type="text" name="name" class="form-control" required maxlength="255" value="<?php echo htmlspecialchars($formData['name'] ?? '', ENT_QUOTES, 'UTF-8'); ?>">
@@ -53,8 +53,8 @@ $formData = $formData ?? [];
                             </div>
 
                             <div class="mb-3">
-                                <label for="artist_picture" class="form-label">Picture Filename</label>
-                                <input id="artist_picture" type="text" name="picture" class="form-control" maxlength="255" placeholder="example.jpg" value="<?php echo htmlspecialchars($formData['picture'] ?? '', ENT_QUOTES, 'UTF-8'); ?>">
+                                <label for="artist_picture" class="form-label">Picture</label>
+                                <input id="artist_picture" type="file" name="picture_file" class="form-control" accept="image/*">
                             </div>
 
                             <button type="submit" class="btn btn-primary w-100">Submit Artist Profile</button>

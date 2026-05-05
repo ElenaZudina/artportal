@@ -1,7 +1,56 @@
 <?php
 
 class ArtistProfileService {
-    public static function createProfile($data, $userId) {
+    private static function resolvePictureValue(array $data, array $files, ?string $existingPicture = null, array &$errors = []) {
+        $upload = $files['picture_file'] ?? null;
+
+        if (is_array($upload) && ($upload['error'] ?? UPLOAD_ERR_NO_FILE) === UPLOAD_ERR_OK) {
+            $tmpName = (string)($upload['tmp_name'] ?? '');
+            $originalName = (string)($upload['name'] ?? '');
+            $fileSize = (int)($upload['size'] ?? 0);
+
+            if ($tmpName === '' || !is_uploaded_file($tmpName)) {
+                $errors[] = 'Uploaded picture is invalid';
+                return $existingPicture;
+            }
+
+            if ($fileSize <= 0) {
+                $errors[] = 'Uploaded picture is empty';
+                return $existingPicture;
+            }
+
+            $extension = strtolower(pathinfo($originalName, PATHINFO_EXTENSION));
+            $allowedExtensions = ['jpg', 'jpeg', 'png', 'gif', 'webp'];
+            if ($extension === '' || !in_array($extension, $allowedExtensions, true)) {
+                $errors[] = 'Picture must be a JPG, PNG, GIF, or WEBP file';
+                return $existingPicture;
+            }
+
+            $directory = __DIR__ . '/../images/artists';
+            if (!is_dir($directory)) {
+                $errors[] = 'Upload directory is missing';
+                return $existingPicture;
+            }
+
+            $fileName = uniqid('artist_', true) . '.' . $extension;
+            $targetPath = $directory . '/' . $fileName;
+            if (!move_uploaded_file($tmpName, $targetPath)) {
+                $errors[] = 'Failed to save uploaded picture';
+                return $existingPicture;
+            }
+
+            return $fileName;
+        }
+
+        if ($existingPicture !== null) {
+            return $existingPicture;
+        }
+
+        $legacyPicture = trim((string)($data['picture'] ?? ''));
+        return $legacyPicture !== '' ? $legacyPicture : null;
+    }
+
+    public static function createProfile($data, $files, $userId) {
         $errors = [];
 
         if (!is_array($data) || empty($data)) {
@@ -36,13 +85,18 @@ class ArtistProfileService {
             $errors[] = 'Bio is too long';
         }
 
-        if ($normalized['picture'] !== '' && mb_strlen($normalized['picture']) > 255) {
-            $errors[] = 'Picture filename is too long';
-        }
-
         $existing = Artists::getArtistByUserId((int)$userId);
         if ($existing) {
             $errors[] = 'Artist profile already exists for this user';
+        }
+
+        if (!empty($errors)) {
+            return ['success' => false, 'errors' => $errors, 'data' => $normalized];
+        }
+
+        $picture = self::resolvePictureValue($data, $files, null, $errors);
+        if ($picture !== null && mb_strlen($picture) > 255) {
+            $errors[] = 'Picture filename is too long';
         }
 
         if (!empty($errors)) {
@@ -54,7 +108,7 @@ class ArtistProfileService {
             'location' => $normalized['location'],
             'birth_date' => $normalized['birth_date'] !== '' ? $normalized['birth_date'] : null,
             'bio' => $normalized['bio'] !== '' ? $normalized['bio'] : null,
-            'picture' => $normalized['picture'] !== '' ? $normalized['picture'] : null,
+            'picture' => $picture,
             'status' => 'pending',
             'user_id' => (int)$userId,
         ];
@@ -67,7 +121,7 @@ class ArtistProfileService {
         return ['success' => true, 'data' => $cleanData];
     }
 
-    public static function updateProfile($data, $userId) {
+    public static function updateProfile($data, $files, $userId) {
         $errors = [];
 
         if (!is_array($data) || empty($data)) {
@@ -107,7 +161,12 @@ class ArtistProfileService {
             $errors[] = 'Bio is too long';
         }
 
-        if ($normalized['picture'] !== '' && mb_strlen($normalized['picture']) > 255) {
+        if (!empty($errors)) {
+            return ['success' => false, 'errors' => $errors, 'data' => $normalized];
+        }
+
+        $picture = self::resolvePictureValue($data, $files, $existing['picture'] ?? null, $errors);
+        if ($picture !== null && mb_strlen($picture) > 255) {
             $errors[] = 'Picture filename is too long';
         }
 
@@ -120,7 +179,7 @@ class ArtistProfileService {
             'location' => $normalized['location'],
             'birth_date' => $normalized['birth_date'] !== '' ? $normalized['birth_date'] : null,
             'bio' => $normalized['bio'] !== '' ? $normalized['bio'] : null,
-            'picture' => $normalized['picture'] !== '' ? $normalized['picture'] : null,
+            'picture' => $picture,
             'status' => $existing['status'] ?? 'pending',
             'user_id' => (int)$userId,
         ];

@@ -57,6 +57,16 @@ class Paintings{
         return $arr;
     }
 
+    public static function getPaintingsByArtistPortfolio($id) {
+        $query = "SELECT paintings.*, categories.name AS category_name
+        FROM paintings
+        JOIN categories ON paintings.category_id = categories.id
+        WHERE paintings.artist_id = ?
+        ORDER BY paintings.id DESC";
+        $db = new Database();
+        return $db->getAll($query, [$id]);
+    }
+
     public static function getPaintingByID($id) {
         $query = "SELECT paintings.*, categories.name AS category_name, artists.name AS artist_name, artists.picture AS artist_avatar
         FROM paintings
@@ -66,6 +76,54 @@ class Paintings{
         $db = new Database();
         $arr = $db->getOne($query, [$id]);
         return $arr;
+    }
+
+    public static function insertPainting(array $cleanData) {
+        $query = "INSERT INTO paintings (title, description, image, year_created, category_id, artist_id, medium, dimensions, price, created_at, updated_at)
+        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, NOW(), NOW())";
+
+        $params = [
+            $cleanData['title'],
+            $cleanData['description'],
+            $cleanData['image'],
+            $cleanData['year_created'],
+            $cleanData['category_id'],
+            $cleanData['artist_id'],
+            $cleanData['medium'],
+            $cleanData['dimensions'],
+            $cleanData['price'],
+        ];
+
+        $db = new Database();
+        return $db->executeRun($query, $params);
+    }
+
+    public static function updatePainting($id, array $cleanData) {
+        $query = "UPDATE paintings
+        SET title = ?, description = ?, image = ?, year_created = ?, category_id = ?, medium = ?, dimensions = ?, price = ?, updated_at = NOW()
+        WHERE id = ? AND artist_id = ?";
+
+        $params = [
+            $cleanData['title'],
+            $cleanData['description'],
+            $cleanData['image'],
+            $cleanData['year_created'],
+            $cleanData['category_id'],
+            $cleanData['medium'],
+            $cleanData['dimensions'],
+            $cleanData['price'],
+            $id,
+            $cleanData['artist_id'],
+        ];
+
+        $db = new Database();
+        return $db->executeRun($query, $params);
+    }
+
+    public static function deletePainting($id, $artistId) {
+        $query = "DELETE FROM paintings WHERE id = ? AND artist_id = ?";
+        $db = new Database();
+        return $db->executeRun($query, [$id, $artistId]);
     }
 
     public static function getPaintingsByCollectionID($id) {

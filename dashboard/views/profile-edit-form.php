@@ -29,7 +29,7 @@ $formData = $formData ?? $profile ?? [];
                     <?php endif; ?>
 
                     <?php if (!isset($test)): ?>
-                    <form method="POST" action="update-profile">
+                    <form method="POST" action="update-profile" enctype="multipart/form-data">
                         <div class="mb-3">
                             <label for="artist_name" class="form-label">Name *</label>
                             <input id="artist_name" type="text" name="name" class="form-control" required maxlength="255" value="<?php echo htmlspecialchars($formData['name'] ?? '', ENT_QUOTES, 'UTF-8'); ?>">
@@ -51,8 +51,11 @@ $formData = $formData ?? $profile ?? [];
                         </div>
 
                         <div class="mb-3">
-                            <label for="artist_picture" class="form-label">Picture Filename</label>
-                            <input id="artist_picture" type="text" name="picture" class="form-control" maxlength="255" placeholder="example.jpg" value="<?php echo htmlspecialchars($formData['picture'] ?? '', ENT_QUOTES, 'UTF-8'); ?>">
+                            <label for="artist_picture" class="form-label">Picture</label>
+                            <input id="artist_picture" type="file" name="picture_file" class="form-control" accept="image/*">
+                            <?php if (!empty($formData['picture'])): ?>
+                                <div class="form-text">Current file: <?php echo htmlspecialchars($formData['picture'], ENT_QUOTES, 'UTF-8'); ?></div>
+                            <?php endif; ?>
                         </div>
 
                         <div class="d-flex gap-2 flex-wrap">

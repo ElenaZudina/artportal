@@ -130,7 +130,7 @@ class Controller {
             exit;
         }
 
-        $resultArtist = ArtistProfileService::createProfile($_POST, (int)$_SESSION['userId']);
+        $resultArtist = ArtistProfileService::createProfile($_POST, $_FILES, (int)$_SESSION['userId']);
         if (!empty($resultArtist['success'])) {
             include_once('views/answerArtistProfile.php');
             return;

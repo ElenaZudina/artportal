@@ -51,6 +51,27 @@ elseif ($path == 'edit-profile') {
 elseif ($path == 'update-profile') {
     $response = HomeController::updateProfile();
 }
+elseif ($path == 'my-paintings') {
+    $response = HomeController::myPaintings();
+}
+elseif ($path == 'add-painting') {
+    $response = HomeController::addPainting();
+}
+elseif ($path == 'store-painting') {
+    $response = HomeController::storePainting();
+}
+elseif ($path == 'edit-painting' && isset($_GET['id'])) {
+    $response = HomeController::editPainting();
+}
+elseif ($path == 'update-painting' && isset($_GET['id'])) {
+    $response = HomeController::updatePainting();
+}
+elseif ($path == 'delete-painting' && isset($_GET['id'])) {
+    $response = HomeController::deletePainting();
+}
+elseif ($path == 'destroy-painting' && isset($_GET['id'])) {
+    $response = HomeController::destroyPainting();
+}
 
 elseif ($path == 'logout') {
     header('Location: /artportal/logout');

@@ -19,7 +19,6 @@ ob_start();
                         <div class="mb-2"><strong>Name:</strong> <?php echo htmlspecialchars($user['username'] ?? $_SESSION['name'] ?? '', ENT_QUOTES, 'UTF-8'); ?></div>
                         <div class="mb-2"><strong>Email:</strong> <?php echo htmlspecialchars($user['email'] ?? 'Unknown', ENT_QUOTES, 'UTF-8'); ?></div>
                         <div class="mb-2"><strong>Role:</strong> <?php echo htmlspecialchars($user['role'] ?? ($_SESSION['status'] ?? 'Unknown'), ENT_QUOTES, 'UTF-8'); ?></div>
-                        <div class="mb-2"><strong>User ID:</strong> <?php echo htmlspecialchars((string)($user['id'] ?? ''), ENT_QUOTES, 'UTF-8'); ?></div>
                     </div>
                 </div>
             </div>
