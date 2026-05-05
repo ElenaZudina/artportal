@@ -73,6 +73,10 @@ elseif ($path == 'destroy-painting' && isset($_GET['id'])) {
     $response = HomeController::destroyPainting();
 }
 
+elseif ($path == 'price-calculate') {
+    $response = PriceController::calculate();
+}
+
 elseif ($path == 'logout') {
     header('Location: /artportal/logout');
     exit;

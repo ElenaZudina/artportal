@@ -29,6 +29,7 @@ include_once("../services/ArtistProfileService.php");
 include_once("../services/PaintingService.php");
 
 include_once("controllers/HomeController.php");
+include_once("controllers/PriceController.php");
 
 include('routes/routing.php'); //!!!!
 
