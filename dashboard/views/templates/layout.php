@@ -91,7 +91,7 @@
         echo '<h5 class="text-uppercase text-secondary">Portfolio</h5>';
         echo '<ul class="nav flex-column" style="font-size:1rem;">';
         echo '<li class="nav-item"><a class="nav-link" style="font-size:1rem;" href="my-paintings">My Paintings</a></li>';
-        echo '<li class="nav-item"><a class="nav-link" style="font-size:1rem; color: #28a745;" href="add-painting"><i class="fa fa-plus"></i> Add Painting</a></li>';
+        echo '<li class="nav-item"><a class="nav-link" style="font-size:1rem; color: #28a745;" href="add-painting">Add Painting</a></li>';
         echo '</ul>';
         echo '</div>';
     }
@@ -173,7 +173,7 @@
         echo '<h5 class="text-uppercase text-secondary">Portfolio</h5>';
         echo '<ul class="nav flex-column small">';
         echo '<li class="nav-item"><a class="nav-link" style="font-size:1rem;" href="my-paintings">My Paintings</a></li>';
-        echo '<li class="nav-item"><a class="nav-link" style="font-size:1rem;" href="add-painting" style="color: #28a745;"><i class="fa fa-plus"></i> Add Painting</a></li>';
+        echo '<li class="nav-item"><a class="nav-link" style="font-size:1rem;" href="add-painting">Add Painting</a></li>';
         echo '</ul>';
         echo '</div>';
     }
@@ -214,7 +214,7 @@
                             echo ' &#187 <a href="profile"> View Profile </a>';
                             echo ' &#187 <a href="edit-profile"> Edit Profile </a>';
                             echo ' &#187 <a href="my-paintings"> My Paintings </a>';
-                            echo ' &#187 <a href="add-painting"><i class="fa fa-plus"></i> Add Painting </a>';
+                            echo ' &#187 <a href="add-painting">Add Painting </a>';
                             echo '</h4>';
                             echo '</div>';
                         }
