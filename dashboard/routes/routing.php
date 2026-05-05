@@ -24,6 +24,26 @@ elseif ($path == 'profile') {
     $response = HomeController::profile();
 }
 
+elseif ($path == 'account') {
+    $response = HomeController::account();
+}
+
+elseif ($path == 'edit-account') {
+    $response = HomeController::editAccount();
+}
+
+elseif ($path == 'update-account') {
+    $response = HomeController::updateAccount();
+}
+
+elseif ($path == 'change-password') {
+    $response = HomeController::changePassword();
+}
+
+elseif ($path == 'update-password') {
+    $response = HomeController::updatePassword();
+}
+
 elseif ($path == 'edit-profile') {
     $response = HomeController::editProfile();
 }

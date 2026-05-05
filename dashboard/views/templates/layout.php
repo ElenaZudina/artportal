@@ -71,9 +71,19 @@
     }
     elseif(isset($_SESSION["status"]) && $_SESSION["status"]=="artist") {
         echo '<div class="mb-3">';
+        echo '<h5 class="text-uppercase text-secondary">Account</h5>';
+        echo '<ul class="nav flex-column" style="font-size:1rem;">';
+        echo '<li class="nav-item"><a class="nav-link" style="font-size:1rem;" href="account">View Account</a></li>';
+        echo '<li class="nav-item"><a class="nav-link" style="font-size:1rem;" href="edit-account">Edit Email / Username</a></li>';
+        echo '<li class="nav-item"><a class="nav-link" style="font-size:1rem;" href="change-password">Change Password</a></li>';
+        echo '</ul>';
+        echo '</div>';
+
+        echo '<div class="mb-3">';
         echo '<h5 class="text-uppercase text-secondary">Profile</h5>';
         echo '<ul class="nav flex-column" style="font-size:1rem;">';
-        echo '<li class="nav-item"><a class="nav-link" style="font-size:1rem;" href="profile">My Profile</a></li>';
+        echo '<li class="nav-item"><a class="nav-link" style="font-size:1rem;" href="profile">View Profile</a></li>';
+        echo '<li class="nav-item"><a class="nav-link" style="font-size:1rem;" href="edit-profile">Edit Profile</a></li>';
         echo '</ul>';
         echo '</div>';
         
@@ -89,7 +99,9 @@
         echo '<div class="mb-3">';
         echo '<h5 class="text-uppercase text-secondary">Account</h5>';
         echo '<ul class="nav flex-column" style="font-size:1rem;">';
-        echo '<li class="nav-item"><a class="nav-link" style="font-size:1rem;" href="profile">My Profile</a></li>';
+        echo '<li class="nav-item"><a class="nav-link" style="font-size:1rem;" href="account">View Account</a></li>';
+        echo '<li class="nav-item"><a class="nav-link" style="font-size:1rem;" href="edit-account">Edit Email / Username</a></li>';
+        echo '<li class="nav-item"><a class="nav-link" style="font-size:1rem;" href="change-password">Change Password</a></li>';
         echo '</ul>';
         echo '</div>';
     }
@@ -139,11 +151,21 @@
         echo '<div class="mb-4">';
         echo '<h4><a href="../" target= _blank>ArtPortal</a></h4>';
         echo '</div>';
+        // Account block
+        echo '<div class="mb-4">';
+        echo '<h5 class="text-uppercase text-secondary">Account</h5>';
+        echo '<ul class="nav flex-column small">';
+        echo '<li class="nav-item"><a class="nav-link" style="font-size:1rem;" href="account">View Account</a></li>';
+        echo '<li class="nav-item"><a class="nav-link" style="font-size:1rem;" href="edit-account">Edit Email / Username</a></li>';
+        echo '<li class="nav-item"><a class="nav-link" style="font-size:1rem;" href="change-password">Change Password</a></li>';
+        echo '</ul>';
+        echo '</div>';
         // Profile block
         echo '<div class="mb-4">';
         echo '<h5 class="text-uppercase text-secondary">Profile</h5>';
         echo '<ul class="nav flex-column small">';
-        echo '<li class="nav-item"><a class="nav-link" style="font-size:1rem;" href="profile">My Profile</a></li>';
+        echo '<li class="nav-item"><a class="nav-link" style="font-size:1rem;" href="profile">View Profile</a></li>';
+        echo '<li class="nav-item"><a class="nav-link" style="font-size:1rem;" href="edit-profile">Edit Profile</a></li>';
         echo '</ul>';
         echo '</div>';
         // Portfolio block
@@ -159,11 +181,13 @@
         echo '<div class="mb-4">';
         echo '<h4><a href="../" target= _blank>ArtPortal</a></h4>';
         echo '</div>';
-        // User profile block
+        // User account block
         echo '<div class="mb-4">';
         echo '<h5 class="text-uppercase text-secondary">Account</h5>';
         echo '<ul class="nav flex-column small">';
-        echo '<li class="nav-item"><a class="nav-link" style="font-size:1rem;" href="profile">My Profile</a></li>';
+        echo '<li class="nav-item"><a class="nav-link" style="font-size:1rem;" href="account">View Account</a></li>';
+        echo '<li class="nav-item"><a class="nav-link" style="font-size:1rem;" href="edit-account">Edit Email / Username</a></li>';
+        echo '<li class="nav-item"><a class="nav-link" style="font-size:1rem;" href="change-password">Change Password</a></li>';
         echo '</ul>';
         echo '</div>';
     }
@@ -184,9 +208,13 @@
                             echo '<h4 style="font-size:1.1rem;">';
                             echo '<a href="../" target="_blank">WEB SITE</a>';
                             echo ' &#187; <a href="/artportal/dashboard/startDashboard">Start</a>';
+                            echo ' &#187 <a href="account"> View Account </a>';
+                            echo ' &#187 <a href="edit-account"> Edit Account </a>';
+                            echo ' &#187 <a href="change-password"> Change Password </a>';
+                            echo ' &#187 <a href="profile"> View Profile </a>';
+                            echo ' &#187 <a href="edit-profile"> Edit Profile </a>';
                             echo ' &#187 <a href="my-paintings"> My Paintings </a>';
                             echo ' &#187 <a href="add-painting"><i class="fa fa-plus"></i> Add Painting </a>';
-                            echo ' &#187 <a href="profile"> Profile </a>';
                             echo '</h4>';
                             echo '</div>';
                         }
@@ -195,7 +223,9 @@
                             echo '<h4 style="font-size:1.1rem;">';
                             echo '<a href="../" target="_blank">WEB SITE</a>';
                             echo ' &#187; <a href="/artportal/dashboard/startDashboard">Start</a>';
-                            echo ' &#187 <a href="profile"> Profile </a>';
+                            echo ' &#187 <a href="account"> View Account </a>';
+                            echo ' &#187 <a href="edit-account"> Edit Account </a>';
+                            echo ' &#187 <a href="change-password"> Change Password </a>';
                             echo '</h4>';
                             echo '</div>';
                         }
