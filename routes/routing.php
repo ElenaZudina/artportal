@@ -87,6 +87,18 @@ elseif ($path == 'logout') {
     $response = controllerAuth::logoutAction();
 }
 
+elseif ($path == 'add-to-favorite') {
+    $response = FavoriteController::addFavorite();
+}
+
+elseif ($path == 'remove-from-favorite') {
+    $response = FavoriteController::removeFavorite();
+}
+
+elseif ($path == 'toggle-favorite') {
+    $response = FavoriteController::toggleFavorite();
+}
+
 //error page
 else{
     $response = Controller::error404();
