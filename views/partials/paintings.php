@@ -80,6 +80,12 @@ class ViewPaintings{
                     echo '<div class="one-painting-container">';
                         echo '<div class="one-painting-image-wrapper">';
                             echo '<span class="category-badge category-badge--accent category-badge--top-left">' . htmlspecialchars($item['category_name'] ?? 'Unknown', ENT_QUOTES, 'UTF-8') . '</span>';
+                            echo '<form method="POST" action="/artportal/dashboard/toggle-favorite" class="painting-favorite-form">';
+                                echo '<input type="hidden" name="painting_id" value="' . (int)($item['id'] ?? 0) . '">';
+                                echo '<button type="submit" class="category-badge category-badge--accent category-badge--favorite" aria-label="Add to favorites">';
+                                    echo '<i class="fa fa-heart-o"></i>';
+                                echo '</button>';
+                            echo '</form>';
                             echo '<img src="images/paintings/' . htmlspecialchars($item['image'] ?? '', ENT_QUOTES, 'UTF-8') . '" class="img-fluid one-painting-image" alt="' . htmlspecialchars($item['title'], ENT_QUOTES, 'UTF-8') . '" onerror="this.onerror=null;this.src=\'images/test.jpg\';" />';
                         echo '</div>';
                     echo '</div>';
