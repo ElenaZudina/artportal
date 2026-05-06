@@ -151,10 +151,10 @@ $formData = $formData ?? $currentPainting ?? [];
 
                                             <div id="price-calc-result" class="d-none">
                                                 <div class="row g-3">
-                                                    <div class="col-md-6"><strong>Price:</strong> <span id="calc_result_price">0.00</span></div>
-                                                    <div class="col-md-6"><strong>Commission:</strong> <span id="calc_result_commission">0.00</span></div>
+                                                    <div class="col-md-6"><strong id="result_main_label">Your price:</strong> <span id="calc_result_main">0.00</span></div>
                                                     <div class="col-md-6"><strong>Tax:</strong> <span id="calc_result_tax">0.00</span></div>
-                                                    <div class="col-md-6"><strong>Net income:</strong> <span id="calc_result_net">0.00</span></div>
+                                                    <div class="col-md-6"><strong>Commission:</strong> <span id="calc_result_commission">0.00</span></div>
+                                                    <div class="col-md-6"><strong>Expenses:</strong> <span id="calc_result_expenses">0.00</span></div>
                                                 </div>
                                             </div>
                                         </div>
@@ -180,10 +180,11 @@ $formData = $formData ?? $currentPainting ?? [];
                                 var useBtn = document.getElementById('calc_use_price_btn');
                                 var alertEl = document.getElementById('price-calc-alert');
                                 var resultWrapEl = document.getElementById('price-calc-result');
-                                var priceOutEl = document.getElementById('calc_result_price');
+                                var mainLabelEl = document.getElementById('result_main_label');
+                                var mainOutputEl = document.getElementById('calc_result_main');
                                 var commissionOutEl = document.getElementById('calc_result_commission');
                                 var taxOutEl = document.getElementById('calc_result_tax');
-                                var netOutEl = document.getElementById('calc_result_net');
+                                var expensesOutEl = document.getElementById('calc_result_expenses');
                                 var priceInputEl = document.getElementById('painting_price');
                                 var latestPrice = null;
 
@@ -240,10 +241,20 @@ $formData = $formData ?? $currentPainting ?? [];
                                         }
 
                                         latestPrice = Number(json.data.price || 0);
-                                        priceOutEl.textContent = Number(json.data.price || 0).toFixed(2);
-                                        commissionOutEl.textContent = Number(json.data.commissionAmount || 0).toFixed(2);
+                                        var isIncomeMode = modeEl.value === 'income';
+                                        
+                                        if (isIncomeMode) {
+                                            mainLabelEl.textContent = 'Your price:';
+                                            mainOutputEl.textContent = Number(json.data.price || 0).toFixed(2);
+                                        } else {
+                                            mainLabelEl.textContent = 'Net profit:';
+                                            mainOutputEl.textContent = Number(json.data.netIncome || 0).toFixed(2);
+                                        }
+                                        
                                         taxOutEl.textContent = Number(json.data.taxAmount || 0).toFixed(2);
-                                        netOutEl.textContent = Number(json.data.netIncome || 0).toFixed(2);
+                                        commissionOutEl.textContent = Number(json.data.commissionAmount || 0).toFixed(2);
+                                        expensesOutEl.textContent = Number(json.data.expenses || 0).toFixed(2);
+                                        
                                         resultWrapEl.classList.remove('d-none');
                                         useBtn.disabled = false;
                                     })

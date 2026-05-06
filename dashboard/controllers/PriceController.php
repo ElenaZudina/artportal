@@ -63,6 +63,7 @@ class PriceController {
             if (isset($result['error'])) {
                 echo json_encode(['success' => false, 'message' => $result['error'] ?? 'Unknown error']);
             } else {
+                $result['expenses'] = $expenses;
                 echo json_encode(['success' => true, 'data' => $result]);
             }
         } catch (Exception $e) {
