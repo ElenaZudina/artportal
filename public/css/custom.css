@@ -132,12 +132,22 @@
   border-radius: 1.5rem;
 }
 
-.painting-favorite-form {
+.painting-overlays {
   position: absolute;
-  top: 10px;
-  right: 10px;
+  inset: 10px 10px auto 10px;
   z-index: 11;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  pointer-events: none;
+}
+
+.painting-overlays .category-badge,
+.painting-overlays .painting-favorite-form {
+  position: static;
   margin: 0;
+  pointer-events: auto;
 }
 
 .category-badge--favorite {
@@ -147,11 +157,38 @@
   appearance: none;
   -webkit-appearance: none;
   font: inherit;
+  width: 34px;
+  height: 34px;
+  padding: 0;
+  border-radius: 50%;
+  max-width: none;
+  overflow: visible;
+  text-overflow: clip;
+  white-space: normal;
+}
+
+.category-badge--favorite .fa {
+  font-size: 16px;
+  line-height: 1;
+}
+
+.category-badge--favorite.is-inactive .fa-heart-o {
+  color: var(--accent-foreground);
+}
+
+.category-badge--favorite.is-active {
+  background: linear-gradient(135deg, #AD46FF 0%, #9810FA 100%);
+  color: var(--primary-foreground);
+  box-shadow: 0 10px 24px rgba(152, 16, 250, 0.28);
+}
+
+.category-badge--favorite.is-active .fa-heart {
+  color: var(--primary-foreground);
 }
 
 .category-badge--favorite:hover,
 .category-badge--favorite:focus-visible {
-  color: #ff4d4f;
+  color: inherit;
 }
 
 .one-painting-container {
@@ -226,28 +263,6 @@
   width: 100%;
   height: auto;
   object-fit: cover;
-}
-
-/* Gallery asymmetric grid (Figma-like) */
-.paintings-grid--asymmetric {
-  display: grid;
-  grid-template-columns: 1fr;
-  gap: 1.5rem;
-  margin-right: 0 !important;
-  margin-left: 0 !important;
-}
-
-/* Neutralize Bootstrap column behavior inside CSS grid */
-.paintings-grid--asymmetric > div {
-  width: 100% !important;
-  max-width: 100% !important;
-  padding-right: 0 !important;
-  padding-left: 0 !important;
-}
-
-.paintings-grid--asymmetric > div > a,
-.paintings-grid--asymmetric > div > a > .card {
-  height: 100%;
 }
 
 .paintings-grid--asymmetric > div > a > .card {
@@ -369,6 +384,48 @@
   font-weight: var(--font-weight-medium);
   line-height: 24px;
   color: var(--primary);
+}
+
+/* Specific overrides for favorite badge to ensure circular shape and proper colors */
+.category-badge.category-badge--favorite {
+  width: 34px;
+  height: 34px;
+  padding: 0;
+  border-radius: 50%;
+  gap: 6px;
+  cursor: pointer;
+  border: 0;
+  appearance: none;
+  -webkit-appearance: none;
+  font: inherit;
+  max-width: none;
+  overflow: visible;
+  text-overflow: clip;
+  white-space: normal;
+}
+
+.category-badge.category-badge--favorite .fa {
+  font-size: 16px;
+  line-height: 1;
+}
+
+.category-badge.category-badge--favorite.is-inactive .fa-heart-o {
+  color: var(--accent-foreground);
+}
+
+.category-badge.category-badge--favorite.is-active {
+  background: linear-gradient(135deg, #AD46FF 0%, #9810FA 100%);
+  color: var(--primary-foreground);
+  box-shadow: 0 10px 24px rgba(152, 16, 250, 0.28);
+}
+
+.category-badge.category-badge--favorite.is-active .fa-heart {
+  color: var(--primary-foreground);
+}
+
+.category-badge.category-badge--favorite:hover,
+.category-badge.category-badge--favorite:focus-visible {
+  color: inherit;
 }
 
 /* Footer text */

@@ -79,23 +79,26 @@ class ViewPaintings{
                 echo '<div class="col-12 col-md-6 mb-4 mb-md-0">';
                     echo '<div class="one-painting-container">';
                         echo '<div class="one-painting-image-wrapper">';
-                            echo '<span class="category-badge category-badge--accent category-badge--top-left">' . htmlspecialchars($item['category_name'] ?? 'Unknown', ENT_QUOTES, 'UTF-8') . '</span>';
-                            echo '<form method="POST" action="/artportal/toggle-favorite" class="painting-favorite-form">';
-                                echo '<input type="hidden" name="painting_id" value="' . (int)($item['id'] ?? 0) . '">';
-                                $isFavorite = false;
-                                $favIcon = 'fa-heart-o';
-                                $favLabel = 'Add to favorites';
-                                if (isset($_SESSION['userId'])) {
-                                    $isFavorite = Favorite::isFavorite((int)$_SESSION['userId'], (int)($item['id'] ?? 0));
-                                    if ($isFavorite) {
-                                        $favIcon = 'fa-heart';
-                                        $favLabel = 'Remove from favorites';
+                            echo '<div class="painting-overlays">';
+                                echo '<span class="category-badge category-badge--accent">' . htmlspecialchars($item['category_name'] ?? 'Unknown', ENT_QUOTES, 'UTF-8') . '</span>';
+                                echo '<form method="POST" action="/artportal/toggle-favorite" class="painting-favorite-form">';
+                                    echo '<input type="hidden" name="painting_id" value="' . (int)($item['id'] ?? 0) . '">';
+                                    $isFavorite = false;
+                                    $favIcon = 'fa-heart-o';
+                                    $favLabel = 'Add to favorites';
+                                    if (isset($_SESSION['userId'])) {
+                                        $isFavorite = Favorite::isFavorite((int)$_SESSION['userId'], (int)($item['id'] ?? 0));
+                                        if ($isFavorite) {
+                                            $favIcon = 'fa-heart';
+                                            $favLabel = 'Remove from favorites';
+                                        }
                                     }
-                                }
-                                echo '<button type="submit" class="category-badge category-badge--accent category-badge--favorite" aria-label="' . htmlspecialchars($favLabel, ENT_QUOTES, 'UTF-8') . '">';
-                                    echo '<i class="fa ' . htmlspecialchars($favIcon, ENT_QUOTES, 'UTF-8') . '"></i>';
-                                echo '</button>';
-                            echo '</form>';
+                                    $favStateClass = $isFavorite ? 'is-active' : 'is-inactive';
+                                    echo '<button type="submit" class="category-badge category-badge--favorite ' . $favStateClass . '" aria-label="' . htmlspecialchars($favLabel, ENT_QUOTES, 'UTF-8') . '">';
+                                        echo '<i class="fa ' . htmlspecialchars($favIcon, ENT_QUOTES, 'UTF-8') . '"></i>';
+                                    echo '</button>';
+                                echo '</form>';
+                            echo '</div>';
                             echo '<img src="images/paintings/' . htmlspecialchars($item['image'] ?? '', ENT_QUOTES, 'UTF-8') . '" class="img-fluid one-painting-image" alt="' . htmlspecialchars($item['title'], ENT_QUOTES, 'UTF-8') . '" onerror="this.onerror=null;this.src=\'images/test.jpg\';" />';
                         echo '</div>';
                     echo '</div>';
