@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Хост: 127.0.0.1
--- Время создания: Май 07 2026 г., 08:58
+-- Время создания: Май 07 2026 г., 13:17
 -- Версия сервера: 10.4.32-MariaDB
 -- Версия PHP: 8.2.12
 
@@ -176,7 +176,9 @@ CREATE TABLE `favorites` (
 
 INSERT INTO `favorites` (`id`, `user_id`, `painting_id`, `created_at`) VALUES
 (9, 1, 17, '2026-05-07 09:12:37'),
-(25, 10, 14, '2026-05-07 09:57:40');
+(28, 10, 14, '2026-05-07 10:39:30'),
+(57, 10, 17, '2026-05-07 11:35:53'),
+(59, 10, 11, '2026-05-07 12:23:23');
 
 -- --------------------------------------------------------
 
@@ -238,6 +240,27 @@ INSERT INTO `paintings` (`id`, `title`, `description`, `image`, `year_created`, 
 -- --------------------------------------------------------
 
 --
+-- Структура таблицы `purchase_requests`
+--
+
+CREATE TABLE `purchase_requests` (
+  `id` int(11) NOT NULL,
+  `user_id` int(11) DEFAULT NULL,
+  `painting_id` int(11) DEFAULT NULL,
+  `created_at` datetime NOT NULL DEFAULT current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Дамп данных таблицы `purchase_requests`
+--
+
+INSERT INTO `purchase_requests` (`id`, `user_id`, `painting_id`, `created_at`) VALUES
+(1, 10, 3, '2026-05-07 13:36:00'),
+(3, NULL, 12, '2026-05-07 13:39:16');
+
+-- --------------------------------------------------------
+
+--
 -- Структура таблицы `users`
 --
 
@@ -265,7 +288,6 @@ INSERT INTO `users` (`id`, `username`, `email`, `password`, `role`, `created_at`
 (8, 'david', 'david@artportal.ee', '$2y$10$isZBs0DDwi1nNtQQ/qwpXO49auxCLTqlhkQM12g0wBNznyeNUuIeC', 'user', '2026-04-23 09:11:04'),
 (9, 'emma', 'emma@artportal.ee', '$2y$10$ZE9d5dGo7gmiTDJ/dh4OyuYmvuFr75YBa0cbowZLv9mR/yA0VEUka', 'user', '2026-04-23 09:11:04'),
 (10, 'test', 'test@test.ee', '$2y$10$5bOaxg0.ue40sLfgp.CONOT8hcincHJrt.DlQUS.L5JrvhtVebfoa', 'user', '2026-04-25 00:00:00'),
-(12, 'test1', 'test1@test1.ee', '$2y$10$ngeHiLWjqUYUoKbopSniDuQ.yFBN4f9LEMa26W73eqi0t1Yzw.z3O', 'user', '2026-04-25 00:00:00'),
 (14, 'test2', 'test2@test2.ee', '$2y$10$Hy43cA5HApKjCXJYitwsBuH5z8MbVNzTb0Y/fh1/Fbsqf5mTHFlIa', 'user', '2026-04-25 00:00:00'),
 (15, 'new', 'new@test.ee', '$2y$10$Az1Vc5SggqlAtvEin3gAu.58u7zAVro7wJBVhyqfzHw9tBOY1FeBC', 'user', '2026-04-25 00:00:00'),
 (17, 'Newnew', 'myemail@mail.ee', '$2y$10$zwYuLFQMSHaaXe01dAhhH.BllpgW.LhM0FVlDM9iYjm9f7hpb629e', 'user', '2026-05-02 00:00:00'),
@@ -334,6 +356,14 @@ ALTER TABLE `paintings`
   ADD KEY `category_id` (`category_id`);
 
 --
+-- Индексы таблицы `purchase_requests`
+--
+ALTER TABLE `purchase_requests`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `purchase_requests_ibfk_2` (`painting_id`),
+  ADD KEY `purchase_requests_ibfk_1` (`user_id`);
+
+--
 -- Индексы таблицы `users`
 --
 ALTER TABLE `users`
@@ -379,7 +409,7 @@ ALTER TABLE `exhibitions`
 -- AUTO_INCREMENT для таблицы `favorites`
 --
 ALTER TABLE `favorites`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=27;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=60;
 
 --
 -- AUTO_INCREMENT для таблицы `gallery_images`
@@ -392,6 +422,12 @@ ALTER TABLE `gallery_images`
 --
 ALTER TABLE `paintings`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
+
+--
+-- AUTO_INCREMENT для таблицы `purchase_requests`
+--
+ALTER TABLE `purchase_requests`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT для таблицы `users`
@@ -441,6 +477,13 @@ ALTER TABLE `gallery_images`
 ALTER TABLE `paintings`
   ADD CONSTRAINT `paintings_ibfk_1` FOREIGN KEY (`category_id`) REFERENCES `categories` (`id`) ON UPDATE CASCADE,
   ADD CONSTRAINT `paintings_ibfk_3` FOREIGN KEY (`artist_id`) REFERENCES `artists` (`id`) ON UPDATE CASCADE;
+
+--
+-- Ограничения внешнего ключа таблицы `purchase_requests`
+--
+ALTER TABLE `purchase_requests`
+  ADD CONSTRAINT `purchase_requests_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE SET NULL ON UPDATE CASCADE,
+  ADD CONSTRAINT `purchase_requests_ibfk_2` FOREIGN KEY (`painting_id`) REFERENCES `paintings` (`id`) ON DELETE SET NULL ON UPDATE CASCADE;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

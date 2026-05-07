@@ -99,6 +99,14 @@ elseif ($path == 'toggle-favorite') {
     $response = FavoriteController::toggleFavorite();
 }
 
+elseif ($path == 'purchase-request') {
+    if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+        PurchaseRequestController::create();
+    } else {
+        $response = Controller::error404();
+    }
+}
+
 //error page
 else{
     $response = Controller::error404();

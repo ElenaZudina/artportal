@@ -158,7 +158,10 @@ class ViewPaintings{
                     echo '</div>';
 
                     echo '<div class="action-buttons">';
-                        echo '<button type="button" class="btn buy-button">Inquire About Purchase</button>';
+                        echo '<form method="POST" action="purchase-request" class="m-0">';
+                            echo '<input type="hidden" name="painting_id" value="' . htmlspecialchars((string)($item['id'] ?? ''), ENT_QUOTES, 'UTF-8') . '">';
+                            echo '<button type="submit" class="btn buy-button">Inquire About Purchase</button>';
+                        echo '</form>';
                         echo '<button type="button" class="btn collection-button">Add to collection</button>';
                     echo '</div>';
                 echo '</div>';

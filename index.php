@@ -34,8 +34,10 @@ require 'models/Auth.php';
 //include_once 'views/paintings.php';
 //include_once 'views/comments.php';
 
+require 'models/PurchaseRequest.php';
 include_once 'controllers/Controller.php';
 include_once 'controllers/controllerAuth.php';
+include_once 'controllers/PurchaseRequestController.php';
 include_once 'dashboard/controllers/FavoriteController.php';
 include_once 'routes/routing.php';
 
