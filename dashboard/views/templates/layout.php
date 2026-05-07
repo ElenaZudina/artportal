@@ -104,6 +104,13 @@
         echo '<li class="nav-item"><a class="nav-link" style="font-size:1rem;" href="change-password">Change Password</a></li>';
         echo '</ul>';
         echo '</div>';
+
+        echo '<div class="mb-3">';
+        echo '<h5 class="text-uppercase text-secondary">Favorites</h5>';
+        echo '<ul class="nav flex-column" style="font-size:1rem;">';
+        echo '<li class="nav-item"><a class="nav-link" style="font-size:1rem;" href="my-favorites">My Favorites</a></li>';
+        echo '</ul>';
+        echo '</div>';
     }
     else {
         echo '<h4>Access denied!</h4>';
@@ -190,6 +197,13 @@
         echo '<li class="nav-item"><a class="nav-link" style="font-size:1rem;" href="change-password">Change Password</a></li>';
         echo '</ul>';
         echo '</div>';
+        // Favorites block
+        echo '<div class="mb-4">';
+        echo '<h5 class="text-uppercase text-secondary">Favorites</h5>';
+        echo '<ul class="nav flex-column small">';
+        echo '<li class="nav-item"><a class="nav-link" style="font-size:1rem;" href="my-favorites">My Favorites</a></li>';
+        echo '</ul>';
+        echo '</div>';
     }
     else {
         echo '<h4>Access denied!</h4>';
@@ -226,6 +240,7 @@
                             echo ' &#187 <a href="account"> View Account </a>';
                             echo ' &#187 <a href="edit-account"> Edit Account </a>';
                             echo ' &#187 <a href="change-password"> Change Password </a>';
+                            echo ' &#187 <a href="my-favorites"> My Favorites </a>';
                             echo '</h4>';
                             echo '</div>';
                         }

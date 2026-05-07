@@ -7,6 +7,7 @@ require 'models/Paintings.php';
 require 'models/Artists.php';
 require 'models/Exhibitions.php';
 require 'models/Collections.php';
+require 'models/Favourite.php';
 
 // Добавляю этот код на следующем этапе
 //require 'models/Comments.php';

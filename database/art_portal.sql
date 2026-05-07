@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Хост: 127.0.0.1
--- Время создания: Май 03 2026 г., 21:02
+-- Время создания: Май 07 2026 г., 08:58
 -- Версия сервера: 10.4.32-MariaDB
 -- Версия PHP: 8.2.12
 
@@ -50,7 +50,9 @@ INSERT INTO `artists` (`id`, `name`, `location`, `birth_date`, `bio`, `picture`,
 (3, 'Yuki Tanaka', 'Estonia, Tallinn', '1987-05-20', 'Minimalist painter focused on the power of negative space and subtle tonal variations in monochromatic compositions.', 'yuki-tanaka.jpg', 'approved', '2026-01-29 08:49:46', 6, '2026-04-09 10:25:14'),
 (4, 'Sofia Rodriguez', 'Estonia, Pärnu', '1978-04-18', 'Mixed media artist combining traditional painting techniques with modern materials to create textured, layered narratives.', 'sofia-rodriguez.jpg', 'approved', '2026-01-29 09:06:17', 7, '2026-04-09 10:25:14'),
 (11, 'David Park', 'Estonia, Tallinn', '2000-04-06', 'Contemporary portrait artist known for expressive brushwork and vibrant color palettes that capture emotional depth.', 'david-park.jpg', 'approved', '2026-04-23 09:14:39', 8, '2026-05-02 18:40:12'),
-(12, 'Emma Williams', 'Estonia, Tartu', '1996-05-21', 'Geometric abstraction specialist creating harmonious compositions inspired by architecture and urban landscapes.', 'emma-williams.jpg', 'approved', '2026-04-23 09:14:39', 9, '2026-05-02 18:49:04');
+(12, 'Emma Williams', 'Estonia, Tartu', '1996-05-21', 'Geometric abstraction specialist creating harmonious compositions inspired by architecture and urban landscapes.', 'emma-williams.jpg', 'approved', '2026-04-23 09:14:39', 9, '2026-05-02 18:49:04'),
+(15, 'Ivav Ivanov', 'Estonia, Viljandi', '1996-06-22', 'I\'m the best artist of the world', 'artist_69f9c29d9e5ef5.15303290.jpg', 'approved', '2026-05-05 13:12:45', 18, '2026-05-05 13:13:58'),
+(16, 'Maria White', 'Estonia, Valga', '1960-02-23', 'Art is my passion and life', 'artist_69f9c50e4979f5.57596857.jpg', 'pending', '2026-05-05 13:23:10', 19, '2026-05-05 13:23:10');
 
 -- --------------------------------------------------------
 
@@ -81,7 +83,7 @@ INSERT INTO `categories` (`id`, `name`) VALUES
 (11, 'test'),
 (13, 'test'),
 (14, 'test'),
-(15, 'Портрет');
+(15, 'Портрет большой');
 
 -- --------------------------------------------------------
 
@@ -158,6 +160,27 @@ INSERT INTO `exhibitions` (`id`, `title`, `description`, `collection_id`, `start
 -- --------------------------------------------------------
 
 --
+-- Структура таблицы `favorites`
+--
+
+CREATE TABLE `favorites` (
+  `id` int(11) NOT NULL,
+  `user_id` int(11) NOT NULL,
+  `painting_id` int(11) NOT NULL,
+  `created_at` datetime NOT NULL DEFAULT current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Дамп данных таблицы `favorites`
+--
+
+INSERT INTO `favorites` (`id`, `user_id`, `painting_id`, `created_at`) VALUES
+(9, 1, 17, '2026-05-07 09:12:37'),
+(25, 10, 14, '2026-05-07 09:57:40');
+
+-- --------------------------------------------------------
+
+--
 -- Структура таблицы `gallery_images`
 --
 
@@ -209,7 +232,8 @@ INSERT INTO `paintings` (`id`, `title`, `description`, `image`, `year_created`, 
 (11, 'Portrait of Tomorrow', 'A contemporary portrait that captures the essence of modern identity through expressive brushstrokes and bold color choices.', 'portrait-of-tomorrow.jpg', '2025', 8, 11, 'Oil on Canvas\'', '36\" × 28\"', 777.00, '2026-04-09 10:22:14', '2026-04-09 10:22:14'),
 (12, 'Chromatic Energy', 'A vibrant explosion of color that celebrates the raw energy and emotion of abstract expressionism.', 'chromatic-energy.jpg', '2025', 1, 1, 'Acrylic on Canvas', '', 999.00, '2026-04-09 10:22:14', '2026-04-09 10:22:14'),
 (13, 'Geometric Meditation', 'Precise geometric forms create a sense of balance and harmony, inviting contemplation and visual exploration.', 'geometric-meditation.jpg', '2025', 9, 12, 'Acrylic on Panel', '40\" × 40\"', 1100.00, '2026-04-23 09:39:00', '2026-04-23 09:39:00'),
-(14, 'Layered Narratives', 'Complex layers of paint, paper, and found materials come together to tell a multifaceted story of texture and depth.', 'layered-narratives.jpg', '2025', 10, 4, 'Mixed Media', '48\" × 36\"', 555.00, '2026-04-23 09:43:58', '2026-04-23 09:43:58');
+(14, 'Layered Narratives', 'Complex layers of paint, paper, and found materials come together to tell a multifaceted story of texture and depth.', 'layered-narratives.jpg', '2025', 10, 4, 'Mixed Media', '48\" × 36\"', 555.00, '2026-04-23 09:43:58', '2026-04-23 09:43:58'),
+(17, 'test', 'test', 'painting_69fc23fa89c496.30305810.jpg', '2023', 2, 1, 'test', '123', 50.00, '2026-05-07 08:32:42', '2026-05-07 08:32:42');
 
 -- --------------------------------------------------------
 
@@ -244,7 +268,9 @@ INSERT INTO `users` (`id`, `username`, `email`, `password`, `role`, `created_at`
 (12, 'test1', 'test1@test1.ee', '$2y$10$ngeHiLWjqUYUoKbopSniDuQ.yFBN4f9LEMa26W73eqi0t1Yzw.z3O', 'user', '2026-04-25 00:00:00'),
 (14, 'test2', 'test2@test2.ee', '$2y$10$Hy43cA5HApKjCXJYitwsBuH5z8MbVNzTb0Y/fh1/Fbsqf5mTHFlIa', 'user', '2026-04-25 00:00:00'),
 (15, 'new', 'new@test.ee', '$2y$10$Az1Vc5SggqlAtvEin3gAu.58u7zAVro7wJBVhyqfzHw9tBOY1FeBC', 'user', '2026-04-25 00:00:00'),
-(17, 'Newnew', 'myemail@mail.ee', '$2y$10$zwYuLFQMSHaaXe01dAhhH.BllpgW.LhM0FVlDM9iYjm9f7hpb629e', 'user', '2026-05-02 00:00:00');
+(17, 'Newnew', 'myemail@mail.ee', '$2y$10$zwYuLFQMSHaaXe01dAhhH.BllpgW.LhM0FVlDM9iYjm9f7hpb629e', 'user', '2026-05-02 00:00:00'),
+(18, 'ivan', 'ivan@artportal.ee', '$2y$10$D/.GOeM/AAo9zgabK3UCJeyPm2ZR6a3Ozq7AD05vCwN5egKmAbvwa', 'artist', '2026-05-05 00:00:00'),
+(19, 'maria', 'maria@artportal.ee', '$2y$10$qLDaDXNvrGBH5KgWDak9s.m/W8arYP7o6TFuxJEYyULZr99Qszxr6', 'user', '2026-05-05 00:00:00');
 
 --
 -- Индексы сохранённых таблиц
@@ -285,6 +311,14 @@ ALTER TABLE `exhibitions`
   ADD KEY `collection_id` (`collection_id`);
 
 --
+-- Индексы таблицы `favorites`
+--
+ALTER TABLE `favorites`
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `user_painting_unique` (`user_id`,`painting_id`),
+  ADD KEY `painting_id` (`painting_id`);
+
+--
 -- Индексы таблицы `gallery_images`
 --
 ALTER TABLE `gallery_images`
@@ -315,7 +349,7 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT для таблицы `artists`
 --
 ALTER TABLE `artists`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
 
 --
 -- AUTO_INCREMENT для таблицы `categories`
@@ -342,6 +376,12 @@ ALTER TABLE `exhibitions`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
+-- AUTO_INCREMENT для таблицы `favorites`
+--
+ALTER TABLE `favorites`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=27;
+
+--
 -- AUTO_INCREMENT для таблицы `gallery_images`
 --
 ALTER TABLE `gallery_images`
@@ -351,13 +391,13 @@ ALTER TABLE `gallery_images`
 -- AUTO_INCREMENT для таблицы `paintings`
 --
 ALTER TABLE `paintings`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
 
 --
 -- AUTO_INCREMENT для таблицы `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
 
 --
 -- Ограничения внешнего ключа сохраненных таблиц
@@ -381,6 +421,13 @@ ALTER TABLE `comments`
 --
 ALTER TABLE `exhibitions`
   ADD CONSTRAINT `exhibitions_ibfk_1` FOREIGN KEY (`collection_id`) REFERENCES `collections` (`id`);
+
+--
+-- Ограничения внешнего ключа таблицы `favorites`
+--
+ALTER TABLE `favorites`
+  ADD CONSTRAINT `favorites_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `favorites_ibfk_2` FOREIGN KEY (`painting_id`) REFERENCES `paintings` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Ограничения внешнего ключа таблицы `gallery_images`

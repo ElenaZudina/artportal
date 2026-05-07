@@ -177,6 +177,13 @@ class HomeController {
         include_once('views/profile-edit-form.php');
     }
 
+    public static function myFavorites() {
+        self::requireAuth();
+
+        $favorites = Favorite::getUserFavorites((int)$_SESSION['userId']);
+        include_once('views/my-favorites.php');
+    }
+
     public static function myPaintings() {
         self::requireAuth();
 

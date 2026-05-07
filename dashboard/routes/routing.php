@@ -77,6 +77,10 @@ elseif ($path == 'price-calculate') {
     $response = PriceController::calculate();
 }
 
+elseif ($path == 'my-favorites') {
+    $response = HomeController::myFavorites();
+}
+
 elseif ($path == 'logout') {
     header('Location: /artportal/logout');
     exit;

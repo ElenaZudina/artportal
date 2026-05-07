@@ -16,7 +16,22 @@ public static function isFavorite($userId, $paintingId) {
         return (bool)$db->getOne($query, [$userId, $paintingId]);
 }
 public static function getUserFavorites($userId) {
-        $query = 'SELECT * FROM paintings JOIN favorites ON paintings.id = favorites.painting_id WHERE favorites.user_id = ?';
+        $query = 'SELECT paintings.id AS painting_id,
+                         paintings.title,
+                         paintings.description,
+                         paintings.image,
+                         paintings.year_created,
+                         paintings.category_id,
+                         paintings.artist_id,
+                         artists.name AS artist_name,
+                         paintings.medium,
+                         paintings.dimensions,
+                         paintings.price,
+                         favorites.id AS favorite_id
+                  FROM paintings
+                  JOIN favorites ON paintings.id = favorites.painting_id
+                  JOIN artists ON paintings.artist_id = artists.id
+                  WHERE favorites.user_id = ?';
         $db = new Database();
         return $db->getAll($query, [$userId]);
 }

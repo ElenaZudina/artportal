@@ -27,6 +27,7 @@ include_once("../services/CollectionService.php");
 include_once("../services/ExhibitionService.php");
 include_once("../services/ArtistProfileService.php");
 include_once("../services/PaintingService.php");
+include_once("../models/Favourite.php");
 
 include_once("controllers/HomeController.php");
 include_once("controllers/PriceController.php");
