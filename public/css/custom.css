@@ -274,6 +274,27 @@
   flex: 0 0 auto;
 }
 
+.paintings-grid--asymmetric {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1.5rem;
+  margin-right: 0 !important;
+  margin-left: 0 !important;
+}
+
+/* Neutralize Bootstrap column behavior inside CSS grid */
+.paintings-grid--asymmetric > div {
+  width: 100% !important;
+  max-width: 100% !important;
+  padding-right: 0 !important;
+  padding-left: 0 !important;
+}
+
+.paintings-grid--asymmetric > div > a,
+.paintings-grid--asymmetric > div > a > .card {
+  height: 100%;
+}
+
 @media (min-width: 768px) {
   .paintings-grid--asymmetric {
     grid-template-columns: repeat(2, 1fr);
