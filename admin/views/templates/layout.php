@@ -143,6 +143,44 @@
                 <!-- Main content area -->
                 <main class="col-12 col-lg-10 p-4">
                     <div class="container">
+                        <?php
+                        if (isset($_SESSION["userId"]) && isset($_SESSION["status"]) && $_SESSION["status"]=="admin") {
+                            echo '<div class="mb-4">';
+                            echo '<h4 style="font-size:1.1rem;">';
+                            echo '<a href="../" target="_blank">WEB SITE</a>';
+                            echo ' &#187; <a href="/artportal/admin/startAdmin">Start</a>';
+                            echo ' &#187; <a href="moderation-artists">Approve Artist Profiles</a>';
+                            echo ' &#187; <a href="categories">Categories</a>';
+                            echo ' &#187; <a href="collections">Collections</a>';
+                            echo ' &#187; <a href="exhibitions">Exhibitions</a>';
+                            echo '</h4>';
+                            echo '</div>';
+                        }
+                        elseif (isset($_SESSION["userId"]) && isset($_SESSION["status"]) && $_SESSION["status"]=="artist") {
+                            echo '<div class="mb-4">';
+                            echo '<h4 style="font-size:1.1rem;">';
+                            echo '<a href="../" target="_blank">WEB SITE</a>';
+                            echo ' &#187; <a href="/artportal/dashboard/startDashboard">Start</a>';
+                            echo ' &#187; <a href="account">View Account</a>';
+                            echo ' &#187; <a href="edit-account">Edit Account</a>';
+                            echo ' &#187; <a href="change-password">Change Password</a>';
+                            echo ' &#187; <a href="profile">View Profile</a>';
+                            echo ' &#187; <a href="edit-profile">Edit Profile</a>';
+                            echo '</h4>';
+                            echo '</div>';
+                        }
+                        elseif (isset($_SESSION["userId"]) && isset($_SESSION["status"]) && $_SESSION["status"]=="user") {
+                            echo '<div class="mb-4">';
+                            echo '<h4 style="font-size:1.1rem;">';
+                            echo '<a href="../" target="_blank">WEB SITE</a>';
+                            echo ' &#187; <a href="/artportal/dashboard/startDashboard">Start</a>';
+                            echo ' &#187; <a href="account">View Account</a>';
+                            echo ' &#187; <a href="edit-account">Edit Account</a>';
+                            echo ' &#187; <a href="change-password">Change Password</a>';
+                            echo '</h4>';
+                            echo '</div>';
+                        }
+                        ?>
                         <?php echo $content ?>
                     </div>
                 </main>
