@@ -81,6 +81,11 @@ class ViewArtists{
                     
                     echo "<p class='card-text single-artist-description'>" . htmlspecialchars($item['bio'] ?? 'Unknown', ENT_QUOTES, 'UTF-8') . "</p>";
 
+                    echo '<div class="action-buttons">';
+                        echo '<button type="button" class="btn follow-button">Follow Artist</button>';
+                        echo '<button type="button" class="btn contact-button">Contact</button>';
+                    echo '</div>';
+
                     //echo "<h4 class='mb-3'>Joined</h4>";
                     //echo "<p>" . htmlspecialchars(date("Y", strtotime($item['created_at'] ?? 'now')), ENT_QUOTES, 'UTF-8') . "</p>";
                 echo '</div>';

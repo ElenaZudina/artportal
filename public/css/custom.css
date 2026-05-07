@@ -84,7 +84,8 @@
   color: var(--muted-foreground);
 }
 
-.buy-button {
+.buy-button,
+.follow-button {
   background: var(--gradient-footer);
   color: var(--primary-foreground);
   border: none;
@@ -95,9 +96,38 @@
 }
 
 .buy-button:hover,
-.buy-button:focus-visible {
+.buy-button:focus-visible,
+.follow-button:hover,
+.follow-button:focus-visible {
   color: var(--primary-foreground);
   opacity: 0.92;
+}
+
+.action-buttons {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  align-items: center;
+}
+
+.collection-button,
+.contact-button {
+  background: transparent;
+  color: var(--foreground);
+  border: 1px solid rgba(0, 0, 0, 0.14);
+  border-radius: 999px;
+  padding: 14px 30px;
+  min-width: 140px;
+  font-weight: var(--font-weight-medium);
+}
+
+.collection-button:hover,
+.collection-button:focus-visible,
+.contact-button:hover,
+.contact-button:focus-visible {
+  color: var(--foreground);
+  background: rgba(0, 0, 0, 0.02);
+  border-color: rgba(0, 0, 0, 0.2);
 }
 
 .one-painting-price-value {

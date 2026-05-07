@@ -157,7 +157,10 @@ class ViewPaintings{
                         echo '</div>';
                     echo '</div>';
 
-                    echo '<button type="button" class="btn buy-button">Buy</button>';
+                    echo '<div class="action-buttons">';
+                        echo '<button type="button" class="btn buy-button">Inquire About Purchase</button>';
+                        echo '<button type="button" class="btn collection-button">Add to collection</button>';
+                    echo '</div>';
                 echo '</div>';
             echo '</div>';
         echo '</div>';
