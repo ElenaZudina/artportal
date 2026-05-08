@@ -48,7 +48,8 @@
 }
 /* Logo icon */
 .logo-icon { 
-  background: var(--gradient-logo) !important; 
+  background: var(--gradient-logo) !important;
+  color: var(--primary-foreground) !important;
 }
 
 /* Универсальный стиль для всех input и textarea с фокусом */

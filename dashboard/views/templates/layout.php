@@ -7,6 +7,8 @@
         
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
         <script type="text/javascript" src="../public/js/ajaxupload.3.5.js"></script>
+        <!-- Google Fonts -->
+        <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;700;900&family=Inter:wght@400;500;700;900&display=swap" rel="stylesheet">
         <style>
         /* Basic sidebar styles for admin */
         .admin-sidebar { min-height: 100vh; padding-top: 1rem; }
@@ -23,7 +25,10 @@
             <!-- Top navbar -->
             <nav class="navbar navbar-expand-lg navbar-light bg-white border-bottom">
                 <div class="container-fluid">
-                    <a class="navbar-brand admin-brand" href="../" target="_blank">ArtPortal</a>
+                    <a class="navbar-brand admin-brand" href="../" target="_blank" style="display: inline-flex; align-items: center; gap: 0.5rem; text-decoration: none;">
+                        <span class="logo-icon" style="width: 2.25rem; height: 2.25rem; border-radius: 0.5rem; color: #ffffff; display: inline-flex; align-items: center; justify-content: center; font-size: 1.125rem; font-weight: 700; flex-shrink: 0;">A</span>
+                        <span style="font-family: var(--font-heading); font-size: var(--text-xl); font-weight: 700;">ArtPortal</span>
+                    </a>
                     <button class="btn btn-sm btn-outline-secondary d-lg-none" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasSidebar" aria-controls="offcanvasSidebar">Menu</button>
                     <div class="d-flex ms-auto align-items-center">
         <?php
@@ -73,25 +78,25 @@
         echo '<div class="mb-3">';
         echo '<h5 class="text-uppercase text-secondary">Account</h5>';
         echo '<ul class="nav flex-column" style="font-size:1rem;">';
-        echo '<li class="nav-item"><a class="nav-link" style="font-size:1rem;" href="account">View Account</a></li>';
-        echo '<li class="nav-item"><a class="nav-link" style="font-size:1rem;" href="edit-account">Edit Email / Username</a></li>';
-        echo '<li class="nav-item"><a class="nav-link" style="font-size:1rem;" href="change-password">Change Password</a></li>';
+        echo '<li class="nav-item"><a class="nav-link" style="font-size:1rem;" href="account"><i class="fa-solid fa-user me-2"></i>View Account</a></li>';
+        echo '<li class="nav-item"><a class="nav-link" style="font-size:1rem;" href="edit-account"><i class="fa-solid fa-pencil me-2"></i>Edit Email / Username</a></li>';
+        echo '<li class="nav-item"><a class="nav-link" style="font-size:1rem;" href="change-password"><i class="fa-solid fa-lock me-2"></i>Change Password</a></li>';
         echo '</ul>';
         echo '</div>';
 
         echo '<div class="mb-3">';
         echo '<h5 class="text-uppercase text-secondary">Profile</h5>';
         echo '<ul class="nav flex-column" style="font-size:1rem;">';
-        echo '<li class="nav-item"><a class="nav-link" style="font-size:1rem;" href="profile">View Profile</a></li>';
-        echo '<li class="nav-item"><a class="nav-link" style="font-size:1rem;" href="edit-profile">Edit Profile</a></li>';
+        echo '<li class="nav-item"><a class="nav-link" style="font-size:1rem;" href="profile"><i class="fa-solid fa-image me-2"></i>View Profile</a></li>';
+        echo '<li class="nav-item"><a class="nav-link" style="font-size:1rem;" href="edit-profile"><i class="fa-solid fa-pencil me-2"></i>Edit Profile</a></li>';
         echo '</ul>';
         echo '</div>';
         
         echo '<div class="mb-3">';
         echo '<h5 class="text-uppercase text-secondary">Portfolio</h5>';
         echo '<ul class="nav flex-column" style="font-size:1rem;">';
-        echo '<li class="nav-item"><a class="nav-link" style="font-size:1rem;" href="my-paintings">My Paintings</a></li>';
-        echo '<li class="nav-item"><a class="nav-link" style="font-size:1rem; color: #28a745;" href="add-painting">Add Painting</a></li>';
+        echo '<li class="nav-item"><a class="nav-link" style="font-size:1rem;" href="my-paintings"><i class="fa-solid fa-images me-2"></i>My Paintings</a></li>';
+        echo '<li class="nav-item"><a class="nav-link" style="font-size:1rem; color: #28a745;" href="add-painting"><i class="fa-solid fa-plus me-2"></i>Add Painting</a></li>';
         echo '</ul>';
         echo '</div>';
     }
@@ -155,53 +160,47 @@
         echo '</div>';
     }
     elseif(isset($_SESSION["status"]) && $_SESSION["status"]=="artist") {
-        echo '<div class="mb-4">';
-        echo '<h4><a href="../" target= _blank>ArtPortal</a></h4>';
-        echo '</div>';
         // Account block
         echo '<div class="mb-4">';
         echo '<h5 class="text-uppercase text-secondary">Account</h5>';
         echo '<ul class="nav flex-column small">';
-        echo '<li class="nav-item"><a class="nav-link" style="font-size:1rem;" href="account">View Account</a></li>';
-        echo '<li class="nav-item"><a class="nav-link" style="font-size:1rem;" href="edit-account">Edit Email / Username</a></li>';
-        echo '<li class="nav-item"><a class="nav-link" style="font-size:1rem;" href="change-password">Change Password</a></li>';
+        echo '<li class="nav-item"><a class="nav-link" style="font-size:1rem;" href="account"><i class="fa-solid fa-user me-2"></i>View Account</a></li>';
+        echo '<li class="nav-item"><a class="nav-link" style="font-size:1rem;" href="edit-account"><i class="fa-solid fa-pencil me-2"></i>Edit Email / Username</a></li>';
+        echo '<li class="nav-item"><a class="nav-link" style="font-size:1rem;" href="change-password"><i class="fa-solid fa-lock me-2"></i>Change Password</a></li>';
         echo '</ul>';
         echo '</div>';
         // Profile block
         echo '<div class="mb-4">';
         echo '<h5 class="text-uppercase text-secondary">Profile</h5>';
         echo '<ul class="nav flex-column small">';
-        echo '<li class="nav-item"><a class="nav-link" style="font-size:1rem;" href="profile">View Profile</a></li>';
-        echo '<li class="nav-item"><a class="nav-link" style="font-size:1rem;" href="edit-profile">Edit Profile</a></li>';
+        echo '<li class="nav-item"><a class="nav-link" style="font-size:1rem;" href="profile"><i class="fa-solid fa-image me-2"></i>View Profile</a></li>';
+        echo '<li class="nav-item"><a class="nav-link" style="font-size:1rem;" href="edit-profile"><i class="fa-solid fa-pencil me-2"></i>Edit Profile</a></li>';
         echo '</ul>';
         echo '</div>';
         // Portfolio block
         echo '<div class="mb-4">';
         echo '<h5 class="text-uppercase text-secondary">Portfolio</h5>';
         echo '<ul class="nav flex-column small">';
-        echo '<li class="nav-item"><a class="nav-link" style="font-size:1rem;" href="my-paintings">My Paintings</a></li>';
-        echo '<li class="nav-item"><a class="nav-link" style="font-size:1rem;" href="add-painting">Add Painting</a></li>';
+        echo '<li class="nav-item"><a class="nav-link" style="font-size:1rem;" href="my-paintings"><i class="fa-solid fa-images me-2"></i>My Paintings</a></li>';
+        echo '<li class="nav-item"><a class="nav-link" style="font-size:1rem;" href="add-painting"><i class="fa-solid fa-plus me-2"></i>Add Painting</a></li>';
         echo '</ul>';
         echo '</div>';
     }
     elseif(isset($_SESSION["status"]) && $_SESSION["status"]=="user") {
-        echo '<div class="mb-4">';
-        echo '<h4><a href="../" target= _blank>ArtPortal</a></h4>';
-        echo '</div>';
         // User account block
         echo '<div class="mb-4">';
         echo '<h5 class="text-uppercase text-secondary">Account</h5>';
         echo '<ul class="nav flex-column small">';
-        echo '<li class="nav-item"><a class="nav-link" style="font-size:1rem;" href="account">View Account</a></li>';
-        echo '<li class="nav-item"><a class="nav-link" style="font-size:1rem;" href="edit-account">Edit Email / Username</a></li>';
-        echo '<li class="nav-item"><a class="nav-link" style="font-size:1rem;" href="change-password">Change Password</a></li>';
+        echo '<li class="nav-item"><a class="nav-link" style="font-size:1rem;" href="account"><i class="fa-solid fa-user me-2"></i>View Account</a></li>';
+        echo '<li class="nav-item"><a class="nav-link" style="font-size:1rem;" href="edit-account"><i class="fa-solid fa-pencil me-2"></i>Edit Email / Username</a></li>';
+        echo '<li class="nav-item"><a class="nav-link" style="font-size:1rem;" href="change-password"><i class="fa-solid fa-lock me-2"></i>Change Password</a></li>';
         echo '</ul>';
         echo '</div>';
         // Favorites block
         echo '<div class="mb-4">';
         echo '<h5 class="text-uppercase text-secondary">Favorites</h5>';
         echo '<ul class="nav flex-column small">';
-        echo '<li class="nav-item"><a class="nav-link" style="font-size:1rem;" href="my-favorites">My Favorites</a></li>';
+        echo '<li class="nav-item"><a class="nav-link" style="font-size:1rem;" href="my-favorites"><i class="fa-solid fa-heart me-2"></i>My Favorites</a></li>';
         echo '</ul>';
         echo '</div>';
     }
