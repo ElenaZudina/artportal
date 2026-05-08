@@ -64,6 +64,24 @@ $isRegister = $activeRoute === 'registerForm' || $activeRoute === 'registerAnswe
         <main class="container my-5 flex-grow-1">
             
             <?php
+                if (isset($_SESSION['successString'])) {
+                    echo '<div class="alert alert-success alert-dismissible fade show" role="alert">';
+                    echo $_SESSION['successString'];
+                    echo '<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>';
+                    echo '</div>';
+                    unset($_SESSION['successString']);
+                }
+                
+                if (isset($_SESSION['errorString'])) {
+                    echo '<div class="alert alert-danger alert-dismissible fade show" role="alert">';
+                    echo $_SESSION['errorString'];
+                    echo '<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>';
+                    echo '</div>';
+                    unset($_SESSION['errorString']);
+                }
+            ?>
+            
+            <?php
                 if (isset($content)) {
                     echo $content;
                 }

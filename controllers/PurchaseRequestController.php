@@ -44,6 +44,22 @@ class PurchaseRequestController {
             exit;
         }
 
+        // Проверка временного интервала (1 час)
+        $lastRequestTime = PurchaseRequest::getLastRequestTime($userId, $paintingId);
+        if ($lastRequestTime !== null) {
+            $currentTime = time();
+            $timePassed = $currentTime - $lastRequestTime;
+            $timeInterval = 3600; // 1 час в секундах
+            
+            if ($timePassed < $timeInterval) {
+                $minutesRemaining = ceil(($timeInterval - $timePassed) / 60);
+                $_SESSION['errorString'] = 'You can send a new request for this painting in ' . $minutesRemaining . ' minute(s). Please wait.';
+                $redirect = $_SERVER['HTTP_REFERER'] ?? '/artportal/';
+                header('Location: ' . $redirect);
+                exit;
+            }
+        }
+
         // Создание записи в БД
         $result = PurchaseRequest::create($userId, $paintingId);
 

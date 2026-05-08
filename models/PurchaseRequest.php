@@ -39,6 +39,20 @@ class PurchaseRequest {
         }
     }
     
+    public static function getLastRequestTime($userId, $paintingId) {
+        $db = new Database();
+        $sql = 'SELECT UNIX_TIMESTAMP(created_at) as created_timestamp FROM `purchase_requests` 
+                WHERE user_id = ? AND painting_id = ? 
+                ORDER BY created_at DESC 
+                LIMIT 1';
+        $result = $db->getOne($sql, [$userId, $paintingId]);
+        
+        if ($result && isset($result['created_timestamp']) && !empty($result['created_timestamp'])) {
+            return (int)$result['created_timestamp'];
+        }
+        return null;
+    }
+    
     public static function getRequestById($requestId) {
         $sql = 'SELECT pr.*, 
                        u.email AS user_email, 
