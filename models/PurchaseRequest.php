@@ -56,15 +56,16 @@ class PurchaseRequest {
     public static function getRequestById($requestId) {
         $sql = 'SELECT pr.*, 
                        u.email AS user_email, 
-                       u.name AS user_name,
+                       u.username AS user_name,
                        p.title AS painting_title,
                        p.artist_id,
                        a.name AS artist_name,
-                       a.email AS artist_email
+                       au.email AS artist_email
                 FROM `purchase_requests` pr
                 JOIN `users` u ON pr.user_id = u.id
                 JOIN `paintings` p ON pr.painting_id = p.id
                 JOIN `artists` a ON p.artist_id = a.id
+                JOIN `users` au ON a.user_id = au.id
                 WHERE pr.id = ?
                 LIMIT 1';
         $db = new Database();
@@ -74,7 +75,7 @@ class PurchaseRequest {
     public static function getArtistRequests($artistId, $limit = 20, $offset = 0) {
         $sql = 'SELECT pr.*, 
                        u.email AS user_email,
-                       u.name AS user_name,
+                       u.username AS user_name,
                        p.title AS painting_title
                 FROM `purchase_requests` pr
                 JOIN `paintings` p ON pr.painting_id = p.id

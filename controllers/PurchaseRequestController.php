@@ -1,4 +1,6 @@
 <?php
+require_once __DIR__ . '/../services/EmailService.php';
+
 class PurchaseRequestController {
     
     public static function create() {
@@ -65,6 +67,15 @@ class PurchaseRequestController {
 
         if (!empty($result['success'])) {
             $_SESSION['successString'] = $result['message'] ?? 'Request sent successfully';
+            
+            // Отправка email уведомления художнику
+            $request = PurchaseRequest::getRequestById($result['id']);
+            if ($request) {
+                $emailSent = EmailService::sendPurchaseRequestNotification($request);
+                if (!$emailSent) {
+                    $_SESSION['warningString'] = 'Request saved, but email notification to artist failed.';
+                }
+            }
         } else {
             $_SESSION['errorString'] = $result['message'] ?? 'Failed to create request';
         }

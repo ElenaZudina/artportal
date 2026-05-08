@@ -72,6 +72,14 @@ $isRegister = $activeRoute === 'registerForm' || $activeRoute === 'registerAnswe
                     unset($_SESSION['successString']);
                 }
                 
+                if (isset($_SESSION['warningString'])) {
+                    echo '<div class="alert alert-warning alert-dismissible fade show" role="alert">';
+                    echo $_SESSION['warningString'];
+                    echo '<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>';
+                    echo '</div>';
+                    unset($_SESSION['warningString']);
+                }
+                
                 if (isset($_SESSION['errorString'])) {
                     echo '<div class="alert alert-danger alert-dismissible fade show" role="alert">';
                     echo $_SESSION['errorString'];
