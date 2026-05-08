@@ -101,5 +101,11 @@ class Artists {
         $db = new Database();
         return $db->executeRun($query, $params);
     }
+
+    public static function countPending() {
+        $db = new Database();
+        $row = $db->getOne("SELECT COUNT(*) AS cnt FROM artists WHERE status = 'pending'");
+        return intval($row['cnt'] ?? 0);
+    }
 }
 ?>

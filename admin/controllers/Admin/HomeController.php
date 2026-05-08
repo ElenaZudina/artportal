@@ -31,6 +31,11 @@ class HomeController {
 
     // Вход в админ панель
     public static function startAdminPanel() {
+        // Собираем статистику через общий сервис
+        $counts = StatsService::getCounts();
+        $userGrowth = StatsService::getUserGrowthByDay(7);
+
+        // Передаем в вид
         include_once('views/startAdmin.php');
 }
 

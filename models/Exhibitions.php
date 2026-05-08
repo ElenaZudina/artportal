@@ -67,4 +67,10 @@ class Exhibitions {
         $item = $db->executeRun($sql, [$id]);
         return $item == true;
     }
+
+    public static function count() {
+        $db = new Database();
+        $row = $db->getOne("SELECT COUNT(*) AS cnt FROM exhibitions");
+        return intval($row['cnt'] ?? 0);
+    }
 }

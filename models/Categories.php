@@ -59,4 +59,10 @@ class Categories {
         $item = $db->executeRun($sql, [$id]);
         return $item == true;
     }
+
+    public static function count() {
+        $db = new Database();
+        $row = $db->getOne("SELECT COUNT(*) AS cnt FROM categories");
+        return intval($row['cnt'] ?? 0);
+    }
 }

@@ -36,6 +36,18 @@ class Auth {
         $db = new Database();
         return $db->executeRun($sql, [$passwordHash, (int)$userId]);
     }
+
+    public static function count() {
+        $db = new Database();
+        $row = $db->getOne('SELECT COUNT(*) AS cnt FROM users');
+        return intval($row['cnt'] ?? 0);
+    }
+
+    public static function countByRole($role) {
+        $db = new Database();
+        $row = $db->getOne('SELECT COUNT(*) AS cnt FROM users WHERE role = ?', [$role]);
+        return intval($row['cnt'] ?? 0);
+    }
 }
 
 ?>

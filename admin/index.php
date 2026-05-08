@@ -1,6 +1,29 @@
 <?php
 session_start();
 
+// STRICT: Block all non-admin access immediately
+if (!isset($_SESSION['userId'])) {
+    // Not logged in
+    header('Location: /artportal/login');
+    exit;
+}
+
+if (!isset($_SESSION['status'])) {
+    // Status not set
+    session_destroy();
+    header('Location: /artportal/login');
+    exit;
+}
+
+if ($_SESSION['status'] !== 'admin') {
+    // User is not admin - clear session and redirect
+    session_unset();
+    session_destroy();
+    header('Location: /artportal/login');
+    exit;
+}
+
+// Only admins reach this point
 $timeout = 900; // 15 минут в секундах
 
 if (isset($_SESSION['last_activity']) && (time() - $_SESSION['last_activity'] > $timeout)) {
@@ -21,10 +44,12 @@ include_once("../models/Collections.php");
 include_once("../models/Exhibitions.php");
 include_once("../models/Artists.php");
 include_once("../models/Paintings.php");
+include_once("../models/Auth.php");
 //include_once("modelsAdmin/modelAdminStyle.php");
 include_once("../services/CategoryService.php");
 include_once("../services/CollectionService.php");
 include_once("../services/ExhibitionService.php");
+include_once("../services/StatsService.php");
 
 include_once("controllers/Admin/HomeController.php");
 include_once("controllers/Admin/CategoryController.php");
