@@ -7,12 +7,8 @@
         
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
         <script type="text/javascript" src="../public/js/ajaxupload.3.5.js"></script>
-        <style>
-        /* Basic sidebar styles for admin */
-        .admin-sidebar { min-height: 100vh; padding-top: 1rem; }
-        .admin-sidebar .nav-link { color: #333; }
-        .admin-brand { font-weight: 600; }
-        </style>
+        <!-- Google Fonts -->
+        <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;700;900&family=Inter:wght@400;500;700;900&display=swap" rel="stylesheet">
     </head>
     <body>
         <div class="container-fluid">
@@ -23,7 +19,10 @@
             <!-- Top navbar -->
             <nav class="navbar navbar-expand-lg navbar-light bg-white border-bottom">
                 <div class="container-fluid">
-                    <a class="navbar-brand admin-brand" href="../" target="_blank">ArtPortal</a>
+                    <a class="navbar-brand admin-brand" href="../" target="_blank" style="display: inline-flex; align-items: center; gap: 0.5rem; text-decoration: none;">
+                        <span class="logo-icon" style="width: 2.25rem; height: 2.25rem; border-radius: 0.5rem; color: var(--primary-foreground); display: inline-flex; align-items: center; justify-content: center; font-size: 1.125rem; font-weight: 700; flex-shrink: 0;">A</span>
+                        <span style="font-family: var(--font-heading); font-size: var(--text-xl); font-weight: 700;">ArtPortal</span>
+                    </a>
                     <button class="btn btn-sm btn-outline-secondary d-lg-none" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasSidebar" aria-controls="offcanvasSidebar">Menu</button>
                     <div class="d-flex ms-auto align-items-center">
         <?php
@@ -54,31 +53,25 @@
         echo '<div class="mb-3">';
         echo '<h5 class="text-uppercase text-secondary">Moderation</h5>';
         echo '<ul class="nav flex-column" style="font-size:1rem;">';
-        echo '<li class="nav-item"><a class="nav-link" style="font-size:1rem;" href="moderation-artists">Approve artist profiles</a></li>';
+        echo '<li class="nav-item"><a class="nav-link" style="font-size:1rem;" href="moderation-artists"><i class="fa-solid fa-shield-halved me-2"></i>Approve artist profiles</a></li>';
         echo '</ul>';
         echo '</div>';
 
         echo '<div class="mb-3">';
         echo '<h5 class="text-uppercase text-secondary">Content management</h5>';
         echo '<ul class="nav flex-column" style="font-size:1rem;">';
-        echo '<li class="nav-item"><a class="nav-link" style="font-size:1rem;" href="categories">Categories</a></li>';
-        echo '<li class="nav-item"><a class="nav-link" style="font-size:1rem;" href="paintingsAdmin">Paintings List</a></li>';
-        echo '<li class="nav-item"><a class="nav-link" style="font-size:1rem;" href="collections">Collections</a></li>';
-        echo '<li class="nav-item"><a class="nav-link" style="font-size:1rem;" href="exhibitions">Exhibitions</a></li>';
-        echo '<li class="nav-item"><a class="nav-link" style="font-size:1rem;" href="users">Users</a></li>';
+        echo '<li class="nav-item"><a class="nav-link" style="font-size:1rem;" href="categories"><i class="fa-solid fa-tag me-2"></i>Categories</a></li>';
+        echo '<li class="nav-item"><a class="nav-link" style="font-size:1rem;" href="collections"><i class="fa-solid fa-folder me-2"></i>Collections</a></li>';
+        echo '<li class="nav-item"><a class="nav-link" style="font-size:1rem;" href="exhibitions"><i class="fa-solid fa-image me-2"></i>Exhibitions</a></li>';
+        echo '<li class="nav-item"><a class="nav-link" style="font-size:1rem;" href="users"><i class="fa-solid fa-users me-2"></i>Users</a></li>';
         echo '</ul>';
         echo '</div>';
     }
     elseif(isset($_SESSION["status"]) && $_SESSION["status"]=="artist") {
-        echo '<h4><a href="../" target= _blank>ArtPortal</a>';
-        echo ' &#187 <a href="/artportal/dashboard/startDashboard" >Start '.$_SESSION["name"].' </a>';
-        echo ' &#187 <a href="paintingsAdmin"> My Paintings List </a>';
-        echo ' </h4>';
+        echo '<h4><a href="/artportal/dashboard/startDashboard" >Start '.$_SESSION["name"].' </a></h4>';
     }
     elseif(isset($_SESSION["status"]) && $_SESSION["status"]=="user") {
-        echo '<h4><a href="../" target= _blank>ArtPortal</a>';
-        echo ' &#187 <a href="/artportal/dashboard/startDashboard" >Start '.$_SESSION["name"].' </a>';
-        echo ' </h4>';
+        echo '<h4><a href="/artportal/dashboard/startDashboard" >Start '.$_SESSION["name"].' </a></h4>';
     }
     else {
         echo '<h4>Access denied!</h4>';
@@ -94,15 +87,12 @@
                         <?php
     if(isset($_SESSION["status"]) && $_SESSION["status"]=="admin") {
         // Admin sidebar blocks
-        echo '<div class="mb-4">';
-        echo '<h4><a href="../" target= _blank>ArtPortal</a></h4>';
-        echo '</div>';
         // Moderation block
         echo '<div class="mb-4">';
         echo '<h5 class="text-uppercase text-secondary">Moderation</h5>';
         // Здесь будут ссылки на управление пользователями (добавить позже)
         echo '<ul class="nav flex-column small">';
-        echo '<li class="nav-item"><a class="nav-link" style="font-size:1rem;" href="moderation-artists">Approve artist profiles</a></li>';
+        echo '<li class="nav-item"><a class="nav-link" style="font-size:1rem;" href="moderation-artists"><i class="fa-solid fa-shield-halved me-2"></i>Approve artist profiles</a></li>';
         echo '</ul>';
         echo '</div>';
         // Content management block
@@ -110,10 +100,9 @@
         echo '<h5 class="text-uppercase text-secondary">Content management</h5>';
         echo '<ul class="nav flex-column small">';
         //echo '<li class="nav-item"><a class="nav-link" href="./startAdmin">Start '.$_SESSION["name"].'</a></li>';
-        echo '<li class="nav-item"><a class="nav-link" style="font-size:1rem;" href="categories">Categories</a></li>';
-        echo '<li class="nav-item"><a class="nav-link" style="font-size:1rem;" href="paintingsAdmin">Paintings List</a></li>';
-        echo '<li class="nav-item"><a class="nav-link" style="font-size:1rem;" href="collections">Collections List</a></li>';
-        echo '<li class="nav-item"><a class="nav-link" style="font-size:1rem;" href="exhibitions">Exhibitions</a></li>';
+        echo '<li class="nav-item"><a class="nav-link" style="font-size:1rem;" href="categories"><i class="fa-solid fa-tag me-2"></i>Categories</a></li>';
+        echo '<li class="nav-item"><a class="nav-link" style="font-size:1rem;" href="collections"><i class="fa-solid fa-folder me-2"></i>Collections List</a></li>';
+        echo '<li class="nav-item"><a class="nav-link" style="font-size:1rem;" href="exhibitions"><i class="fa-solid fa-image me-2"></i>Exhibitions</a></li>';
         echo '</ul>';
         echo '</div>';
         // Статистика (будет добавлена позже)
@@ -123,15 +112,10 @@
         echo '</div>';
     }
     elseif(isset($_SESSION["status"]) && $_SESSION["status"]=="artist") {
-        echo '<h4><a href="../" target= _blank>ArtPortal</a>';
-        echo ' &#187 <a href="/artportal/dashboard/startDashboard" >Start '.$_SESSION["name"].' </a>';
-        echo ' &#187 <a href="paintingsAdmin"> My Paintings List </a>';
-        echo ' </h4>';
+        echo '<h4><a href="/artportal/dashboard/startDashboard" >Start '.$_SESSION["name"].' </a></h4>';
     }
     elseif(isset($_SESSION["status"]) && $_SESSION["status"]=="user") {
-        echo '<h4><a href="../" target= _blank>ArtPortal</a>';
-        echo ' &#187 <a href="/artportal/dashboard/startDashboard" >Start '.$_SESSION["name"].' </a>';
-        echo ' </h4>';
+        echo '<h4><a href="/artportal/dashboard/startDashboard" >Start '.$_SESSION["name"].' </a></h4>';
     }
     else {
         echo '<h4>Access denied!</h4>';

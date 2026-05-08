@@ -1,10 +1,55 @@
-﻿/*body {
+﻿/* Design tokens for admin panel */
+:root {
+  --primary: #9810FA;
+  --primary-foreground: #ffffff;
+  --primary-dark: #7E22CE;
+  --gradient-logo: linear-gradient(45deg, #AD46FF, #9810FA);
+  --font-heading: "Playfair Display", serif;
+  --text-xl: 24px;
+  --font-weight-bold: 700;
+  --font-weight-medium: 500;
+  --text-base: 16px;
+  --radius: 0.625rem;
+  --secondary: #ececf0;
+  --muted: #f3f3f5;
+  --accent: #e9ebef;
+  --foreground: #101828;
+  --input-background: #f3f3f5;
+  --accent-foreground: #101828;
+  --destructive: #d4183d;
+}
+
+/*body {
   padding-top: 40px;
   padding-bottom: 40px;
   background-color: #eee;
 }*/
 
 /* Удалены устаревшие стили .form-signin */
+
+/* Admin navbar styles */
+.navbar.border-bottom {
+  border-bottom: 3px solid #9810FA !important;
+}
+
+/* Admin sidebar styles */
+.admin-sidebar { 
+  min-height: 100vh; 
+  padding-top: 1rem; 
+}
+.admin-sidebar .nav-link { 
+  color: #333; 
+}
+.admin-sidebar .nav-link i { 
+  color: var(--primary); 
+}
+.admin-brand { 
+  font-weight: 600; 
+}
+/* Logo icon */
+.logo-icon { 
+  background: var(--gradient-logo) !important; 
+}
 
 /* Универсальный стиль для всех input и textarea с фокусом */
 .form-control:focus, input:focus, textarea:focus {

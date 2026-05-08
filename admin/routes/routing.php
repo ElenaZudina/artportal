@@ -118,11 +118,6 @@ elseif ($path == 'paintingDelResult' && isset($_GET['id'])) {
     $response = controllerAdminPaintings::paintingDeleteResult($_GET['id']);
 }
 
-//-------- listPaintings
-elseif($path == 'paintings') {
-    $response = controllerAdminPaintings::PaintingsList();
-}
-
 //-------- add painting
 elseif ($path == 'add') {
     $response = controllerAdminPaintings::paintingAddForm();
