@@ -99,6 +99,13 @@
         echo '<li class="nav-item"><a class="nav-link" style="font-size:1rem; color: #28a745;" href="add-painting"><i class="fa-solid fa-plus me-2"></i>Add Painting</a></li>';
         echo '</ul>';
         echo '</div>';
+        
+        echo '<div class="mb-3">';
+        echo '<h5 class="text-uppercase text-secondary">Sales</h5>';
+        echo '<ul class="nav flex-column" style="font-size:1rem;">';
+        echo '<li class="nav-item"><a class="nav-link" style="font-size:1rem;" href="purchase-requests"><i class="fa-solid fa-shopping-cart me-2"></i>Purchase Requests</a></li>';
+        echo '</ul>';
+        echo '</div>';
     }
     elseif(isset($_SESSION["status"]) && $_SESSION["status"]=="user") {
         echo '<div class="mb-3">';
@@ -184,8 +191,13 @@
         echo '<li class="nav-item"><a class="nav-link" style="font-size:1rem;" href="my-paintings"><i class="fa-solid fa-images me-2"></i>My Paintings</a></li>';
         echo '<li class="nav-item"><a class="nav-link" style="font-size:1rem;" href="add-painting"><i class="fa-solid fa-plus me-2"></i>Add Painting</a></li>';
         echo '</ul>';
-        echo '</div>';
-    }
+        echo '</div>';        
+        echo '<div class="mb-4">';
+        echo '<h5 class="text-uppercase text-secondary">Sales</h5>';
+        echo '<ul class="nav flex-column small">';
+        echo '<li class="nav-item"><a class="nav-link" style="font-size:1rem;" href="purchase-requests"><i class="fa-solid fa-shopping-cart me-2"></i>Purchase Requests</a></li>';
+        echo '</ul>';
+        echo '</div>';    }
     elseif(isset($_SESSION["status"]) && $_SESSION["status"]=="user") {
         // User account block
         echo '<div class="mb-4">';
@@ -228,6 +240,7 @@
                             echo ' &#187 <a href="edit-profile"> Edit Profile </a>';
                             echo ' &#187 <a href="my-paintings"> My Paintings </a>';
                             echo ' &#187 <a href="add-painting">Add Painting </a>';
+                            echo ' &#187 <a href="purchase-requests">Purchase Requests </a>';
                             echo '</h4>';
                             echo '</div>';
                         }

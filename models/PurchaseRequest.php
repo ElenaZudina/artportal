@@ -73,6 +73,8 @@ class PurchaseRequest {
     }
     
     public static function getArtistRequests($artistId, $limit = 20, $offset = 0) {
+        $limit = (int)$limit;
+        $offset = (int)$offset;
         $sql = 'SELECT pr.*, 
                        u.email AS user_email,
                        u.username AS user_name,
@@ -82,9 +84,9 @@ class PurchaseRequest {
                 JOIN `users` u ON pr.user_id = u.id
                 WHERE p.artist_id = ?
                 ORDER BY pr.created_at DESC
-                LIMIT ? OFFSET ?';
+                LIMIT ' . $limit . ' OFFSET ' . $offset;
         $db = new Database();
-        return $db->getAll($sql, [$artistId, $limit, $offset]);
+        return $db->getAll($sql, [$artistId]);
     }
 }
 ?>

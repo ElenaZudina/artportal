@@ -305,6 +305,26 @@ class HomeController {
     }
 
 
+    public static function purchaseRequests() {
+        self::requireAuth();
+        
+        if ($_SESSION['status'] !== 'artist') {
+            header('Location: /artportal/dashboard/startDashboard');
+            exit;
+        }
+        
+        $artist = Artists::getArtistByUserId((int)$_SESSION['userId']);
+        $artistId = $artist['id'] ?? null;
+        
+        if (empty($artistId)) {
+            $requests = [];
+        } else {
+            $requests = PurchaseRequest::getArtistRequests($artistId, 100, 0) ?? [];
+        }
+        
+        include_once('views/purchase-requests.php');
+    }
+
   /*  // Выход из админ панели
     public static function logoutAction() {
         modelAdmin::userLogout();

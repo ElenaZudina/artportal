@@ -81,6 +81,10 @@ elseif ($path == 'my-favorites') {
     $response = HomeController::myFavorites();
 }
 
+elseif ($path == 'purchase-requests') {
+    $response = HomeController::purchaseRequests();
+}
+
 elseif ($path == 'logout') {
     header('Location: /artportal/logout');
     exit;
