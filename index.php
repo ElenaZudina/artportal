@@ -2,15 +2,17 @@
 // Файл для запуска проекта
 session_start();
 
-$timeout = 900; // 15 минут в секундах
+$timeout = 10; // 15 минут в секундах
 
 if (isset($_SESSION['last_activity']) && (time() - $_SESSION['last_activity'] > $timeout)) {
     // Время неактивности превышено — сбрасываем сессию
-    session_unset();
-    session_destroy();
+    unset($_SESSION['userId']);
+    unset($_SESSION['status']);
+    unset($_SESSION['name']);
+    unset($_SESSION['last_activity']);
     // Редирект на страницу входа
-    header("Location: /artportal/login");
-    exit();
+    //header("Location: /artportal/login");
+    //exit();
 }
 $_SESSION['last_activity'] = time();
 
