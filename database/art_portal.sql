@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Хост: 127.0.0.1
--- Время создания: Май 07 2026 г., 13:17
+-- Время создания: Май 08 2026 г., 14:20
 -- Версия сервера: 10.4.32-MariaDB
 -- Версия PHP: 8.2.12
 
@@ -176,9 +176,8 @@ CREATE TABLE `favorites` (
 
 INSERT INTO `favorites` (`id`, `user_id`, `painting_id`, `created_at`) VALUES
 (9, 1, 17, '2026-05-07 09:12:37'),
-(28, 10, 14, '2026-05-07 10:39:30'),
-(57, 10, 17, '2026-05-07 11:35:53'),
-(59, 10, 11, '2026-05-07 12:23:23');
+(60, 10, 17, '2026-05-07 15:09:31'),
+(61, 10, 11, '2026-05-08 08:57:09');
 
 -- --------------------------------------------------------
 
@@ -256,7 +255,37 @@ CREATE TABLE `purchase_requests` (
 
 INSERT INTO `purchase_requests` (`id`, `user_id`, `painting_id`, `created_at`) VALUES
 (1, 10, 3, '2026-05-07 13:36:00'),
-(3, NULL, 12, '2026-05-07 13:39:16');
+(3, NULL, 12, '2026-05-07 13:39:16'),
+(4, 10, 17, '2026-05-07 15:08:22'),
+(5, 10, 17, '2026-05-07 15:08:24'),
+(6, 10, 17, '2026-05-07 15:08:26'),
+(7, 10, 17, '2026-05-07 15:09:38'),
+(8, 10, 17, '2026-05-07 15:09:40'),
+(9, 10, 17, '2026-05-07 15:09:42'),
+(10, 10, 17, '2026-05-07 15:09:43'),
+(11, 10, 17, '2026-05-07 15:09:44'),
+(12, 10, 17, '2026-05-07 15:09:46'),
+(13, 10, 17, '2026-05-07 15:09:47'),
+(14, 10, 17, '2026-05-07 15:09:47'),
+(15, 10, 17, '2026-05-07 15:09:52'),
+(16, 10, 17, '2026-05-07 15:09:57'),
+(17, 10, 17, '2026-05-07 15:09:57'),
+(18, 10, 17, '2026-05-07 15:09:59'),
+(19, 10, 17, '2026-05-07 15:11:32'),
+(20, 10, 17, '2026-05-07 15:11:34'),
+(21, 10, 17, '2026-05-07 15:15:40'),
+(22, 10, 17, '2026-05-07 15:15:41'),
+(23, 10, 17, '2026-05-08 08:18:18'),
+(24, 10, 17, '2026-05-08 08:18:19'),
+(25, 10, 17, '2026-05-08 08:18:20'),
+(26, 10, 17, '2026-05-08 08:18:21'),
+(27, 10, 17, '2026-05-08 08:18:21'),
+(28, 10, 14, '2026-05-08 08:31:22'),
+(29, 10, 4, '2026-05-08 08:32:45'),
+(30, 10, 11, '2026-05-08 08:57:11'),
+(31, 10, 13, '2026-05-08 09:17:19'),
+(32, 10, 9, '2026-05-08 09:26:44'),
+(33, 10, 12, '2026-05-08 09:28:13');
 
 -- --------------------------------------------------------
 
@@ -292,7 +321,12 @@ INSERT INTO `users` (`id`, `username`, `email`, `password`, `role`, `created_at`
 (15, 'new', 'new@test.ee', '$2y$10$Az1Vc5SggqlAtvEin3gAu.58u7zAVro7wJBVhyqfzHw9tBOY1FeBC', 'user', '2026-04-25 00:00:00'),
 (17, 'Newnew', 'myemail@mail.ee', '$2y$10$zwYuLFQMSHaaXe01dAhhH.BllpgW.LhM0FVlDM9iYjm9f7hpb629e', 'user', '2026-05-02 00:00:00'),
 (18, 'ivan', 'ivan@artportal.ee', '$2y$10$D/.GOeM/AAo9zgabK3UCJeyPm2ZR6a3Ozq7AD05vCwN5egKmAbvwa', 'artist', '2026-05-05 00:00:00'),
-(19, 'maria', 'maria@artportal.ee', '$2y$10$qLDaDXNvrGBH5KgWDak9s.m/W8arYP7o6TFuxJEYyULZr99Qszxr6', 'user', '2026-05-05 00:00:00');
+(19, 'maria', 'maria@artportal.ee', '$2y$10$qLDaDXNvrGBH5KgWDak9s.m/W8arYP7o6TFuxJEYyULZr99Qszxr6', 'user', '2026-05-05 00:00:00'),
+(20, 'nnn', 'nnn@artportal.ee', '$2y$10$KOXc9VF1ln5Fr9Q6B.JnSeNsLdXIM/V1Rw0VoQ0RkPLKt9JW6Vm4i', 'user', '2026-05-08 00:00:00'),
+(21, 'rrr', 'rrr@artportal.ee', '$2y$10$njW70kStMAr.rj7EVfYm5eUmgadXjm6IsRklWkO117EoMhUl.zMOm', 'user', '2026-05-08 00:00:00'),
+(22, 'qqq', 'qqq@artportal.ee', '$2y$10$oP1nodEp/ChLKJI4nNEDR.XDHpOKUm7A0Qaz7yrWUCcyGv7d2ycu2', 'user', '2026-05-08 00:00:00'),
+(23, 'vvv', 'vvv@artportal.ee', '$2y$10$jcXnkTE3eP2IuDCAwN2u3eTZhEev2bAwvzpZYVVTVn74YcnD6wAEu', 'user', '2026-05-08 00:00:00'),
+(24, 'aaa', 'aaa@artportal.ee', '$2y$10$o3yGCdXmDJoUMyfA20bO3OHwNiThr364UOkeEqEcxl1ISGFbvFmvO', 'user', '2026-05-08 00:00:00');
 
 --
 -- Индексы сохранённых таблиц
@@ -409,7 +443,7 @@ ALTER TABLE `exhibitions`
 -- AUTO_INCREMENT для таблицы `favorites`
 --
 ALTER TABLE `favorites`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=60;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=62;
 
 --
 -- AUTO_INCREMENT для таблицы `gallery_images`
@@ -427,13 +461,13 @@ ALTER TABLE `paintings`
 -- AUTO_INCREMENT для таблицы `purchase_requests`
 --
 ALTER TABLE `purchase_requests`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=34;
 
 --
 -- AUTO_INCREMENT для таблицы `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=25;
 
 --
 -- Ограничения внешнего ключа сохраненных таблиц

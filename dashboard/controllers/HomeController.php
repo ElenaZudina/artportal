@@ -10,6 +10,47 @@ class HomeController {
 
     // Вход в Дашборд
     public static function startDashboard() {
+        self::requireAuth();
+
+        $user = Auth::getUserByID((int)$_SESSION['userId']);
+        $isArtist = isset($_SESSION['status']) && $_SESSION['status'] === 'artist';
+
+        $artist = null;
+        $artistId = null;
+        $requests = [];
+        $requestsCount = 0;
+        $paintings = [];
+        $paintingsCount = 0;
+        $viewsTotal = 0;
+        $favoritesCount = 0;
+
+        if ($isArtist) {
+            $artist = Artists::getArtistByUserId((int)$_SESSION['userId']);
+            $artistId = $artist['id'] ?? null;
+            if (!empty($artistId)) {
+                // recent requests (limit 5)
+                $requests = PurchaseRequest::getArtistRequests($artistId, 5, 0) ?? [];
+                // total requests count (fetch larger set and count) — reasonable for dashboards
+                $allRequests = PurchaseRequest::getArtistRequests($artistId, 1000, 0) ?? [];
+                $requestsCount = is_array($allRequests) ? count($allRequests) : 0;
+
+                // paintings list for portfolio preview
+                $paintings = Paintings::getPaintingsByArtistID($artistId) ?? [];
+                $paintingsCount = is_array($paintings) ? count($paintings) : 0;
+
+                // aggregate stats: views (if present on paintings)
+                $portfolio = Paintings::getPaintingsByArtistPortfolio($artistId) ?? [];
+                foreach ($portfolio as $p) {
+                    $viewsTotal += (int)($p['views'] ?? 0);
+                }
+
+                // favorites count across artist paintings
+                $db = new Database();
+                $res = $db->getOne('SELECT COUNT(*) AS cnt FROM favorites JOIN paintings ON favorites.painting_id = paintings.id WHERE paintings.artist_id = ?', [$artistId]);
+                $favoritesCount = (int)($res['cnt'] ?? 0);
+            }
+        }
+
         include_once('views/start-dashboard.php');
 }
 

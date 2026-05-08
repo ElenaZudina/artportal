@@ -363,3 +363,42 @@
 .kpi-sub { font-size: 0.85rem; color: #6b7280; margin-bottom: 0.15rem; }
 .kpi-value { font-size: 1.25rem; font-weight: 700; color: var(--foreground); }
 
+/* СТИЛИ КАЛЬКУЛЯТОРА */
+.calculator-teaser {
+  background: linear-gradient(135deg, #ff8a00 0%, #ff4d6d 55%, #7b2cbf 100%);
+  color: #fff;
+  border: 0;
+  overflow: hidden;
+  position: relative;
+}
+
+.calculator-teaser::after {
+  content: "";
+  position: absolute;
+  inset: auto -40px -40px auto;
+  width: 180px;
+  height: 180px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.12);
+}
+
+.calculator-teaser .btn {
+  position: relative;
+  z-index: 1;
+}
+
+/* СТИЛИ ЧЕКБОКСА TAX RESIDENT */
+#calc_is_tax_resident {
+  width: 18px;
+  height: 18px;
+  cursor: pointer;
+  margin-right: 6px;
+  vertical-align: middle;
+}
+
+label[for="calc_is_tax_resident"] {
+  cursor: pointer;
+  margin-bottom: 0;
+  display: inline;
+}
+

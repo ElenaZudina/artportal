@@ -137,10 +137,10 @@ $formData = $formData ?? $currentPainting ?? [];
                                                     <label for="calc_expenses" class="form-label">Expenses</label>
                                                     <input id="calc_expenses" type="number" class="form-control" min="0" step="0.01" value="0">
                                                 </div>
-                                                <div class="col-md-6 d-flex align-items-end">
-                                                    <div class="form-check mb-2">
-                                                        <input class="form-check-input" type="checkbox" id="calc_is_tax_resident" checked>
-                                                        <label class="form-check-label" for="calc_is_tax_resident">
+                                                <div class="col-md-6">
+                                                    <div>
+                                                        <input type="checkbox" id="calc_is_tax_resident" checked>
+                                                        <label for="calc_is_tax_resident">
                                                             Tax resident
                                                         </label>
                                                     </div>

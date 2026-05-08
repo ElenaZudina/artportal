@@ -1,7 +1,7 @@
 <html>
     <head>
         <title>Dashboard <?php echo $_SESSION["name"]; ?></title>
-        <link href="../public/css/login.css" rel="stylesheet">
+        <link href="/artportal/public/css/login.css" rel="stylesheet">
         <!-- <link rel="stylesheet" href="../public/css/font-awesome.min.css"> -->
          <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
         
@@ -226,6 +226,7 @@
                 <!-- Main content area -->
                 <main class="col-12 col-lg-10 p-4">
                     <div class="container">
+                        <?php if (!isset($content)) { $content = ''; } ?>
                         <?php
                         // Основные ссылки под Hello и Logout
                         if (isset($_SESSION["userId"]) && isset($_SESSION["status"]) && $_SESSION["status"]=="artist") {
