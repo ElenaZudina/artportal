@@ -23,6 +23,10 @@ class HomeController {
         $paintingsCount = 0;
         $viewsTotal = 0;
         $favoritesCount = 0;
+        $favorites = [];
+        $userRequests = [];
+        $userRequestsCount = 0;
+        $recentPaintings = [];
 
         if ($isArtist) {
             $artist = Artists::getArtistByUserId((int)$_SESSION['userId']);
@@ -49,6 +53,33 @@ class HomeController {
                 $res = $db->getOne('SELECT COUNT(*) AS cnt FROM favorites JOIN paintings ON favorites.painting_id = paintings.id WHERE paintings.artist_id = ?', [$artistId]);
                 $favoritesCount = (int)($res['cnt'] ?? 0);
             }
+        } else {
+            // User dashboard data
+            $db = new Database();
+            
+            // Favorites
+            $favorites = Favorite::getUserFavorites((int)$_SESSION['userId']) ?? [];
+            $favoritesCount = is_array($favorites) ? count($favorites) : 0;
+            
+            // User requests (their purchase requests)
+            $userRequestsSql = 'SELECT pr.*, 
+                                       p.title AS painting_title,
+                                       a.name AS artist_name
+                                FROM `purchase_requests` pr
+                                JOIN `paintings` p ON pr.painting_id = p.id
+                                JOIN `artists` a ON p.artist_id = a.id
+                                WHERE pr.user_id = ?
+                                ORDER BY pr.created_at DESC
+                                LIMIT 5';
+            $userRequests = $db->getAll($userRequestsSql, [(int)$_SESSION['userId']]) ?? [];
+            
+            $userRequestsCountSql = 'SELECT COUNT(*) AS cnt FROM `purchase_requests` WHERE user_id = ?';
+            $userCountRes = $db->getOne($userRequestsCountSql, [(int)$_SESSION['userId']]);
+            $userRequestsCount = (int)($userCountRes['cnt'] ?? 0);
+            
+            // Recent paintings from all artists
+            $recentPaintingsSql = 'SELECT id, title, image FROM `paintings` ORDER BY id DESC LIMIT 6';
+            $recentPaintings = $db->getAll($recentPaintingsSql) ?? [];
         }
 
         include_once('views/start-dashboard.php');
