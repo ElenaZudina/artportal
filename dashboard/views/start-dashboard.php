@@ -1,6 +1,9 @@
 <?php ob_start() ?>
 <article>
     <div id="main" class="container">
+        
+        <?php if ($_SESSION['status'] === 'artist'): ?>
+        
         <h3>Artist Dashboard</h3>
 
         <div class="card calculator-teaser shadow-sm mb-3">
@@ -292,6 +295,20 @@
                 </div>
             </div>
         </div>
+        
+        <?php elseif ($_SESSION['status'] === 'user'): ?>
+        
+        <h3>Welcome to ArtPortal</h3>
+        <div class="card p-4 mb-3">
+            <p>Explore and discover amazing artworks from talented artists around the world.</p>
+            <div class="d-flex gap-2 mt-3">
+                <a href="../allpaintings.php" class="btn btn-primary">Browse Paintings</a>
+                <a href="../allartists.php" class="btn btn-outline-primary">Explore Artists</a>
+            </div>
+        </div>
+        
+        <?php endif; ?>
+        
     </div>
 </article>
 
