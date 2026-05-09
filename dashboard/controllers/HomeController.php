@@ -61,25 +61,12 @@ class HomeController {
             $favorites = Favorite::getUserFavorites((int)$_SESSION['userId']) ?? [];
             $favoritesCount = is_array($favorites) ? count($favorites) : 0;
             
-            // User requests (their purchase requests)
-            $userRequestsSql = 'SELECT pr.*, 
-                                       p.title AS painting_title,
-                                       a.name AS artist_name
-                                FROM `purchase_requests` pr
-                                JOIN `paintings` p ON pr.painting_id = p.id
-                                JOIN `artists` a ON p.artist_id = a.id
-                                WHERE pr.user_id = ?
-                                ORDER BY pr.created_at DESC
-                                LIMIT 5';
-            $userRequests = $db->getAll($userRequestsSql, [(int)$_SESSION['userId']]) ?? [];
-            
-            $userRequestsCountSql = 'SELECT COUNT(*) AS cnt FROM `purchase_requests` WHERE user_id = ?';
-            $userCountRes = $db->getOne($userRequestsCountSql, [(int)$_SESSION['userId']]);
-            $userRequestsCount = (int)($userCountRes['cnt'] ?? 0);
-            
-            // Recent paintings from all artists
-            $recentPaintingsSql = 'SELECT id, title, image FROM `paintings` ORDER BY id DESC LIMIT 6';
-            $recentPaintings = $db->getAll($recentPaintingsSql) ?? [];
+                 // User requests (their purchase requests) — use model methods
+                 $userRequests = PurchaseRequest::getUserRequests((int)$_SESSION['userId'], 5) ?? [];
+                 $userRequestsCount = PurchaseRequest::getUserRequestsCount((int)$_SESSION['userId']);
+
+                // Recent paintings from all artists — use existing model method
+                $recentPaintings = Paintings::getLastPaintings(6) ?? [];
         }
 
         include_once('views/start-dashboard.php');
@@ -254,6 +241,13 @@ class HomeController {
 
         $favorites = Favorite::getUserFavorites((int)$_SESSION['userId']);
         include_once('views/my-favorites.php');
+    }
+
+    public static function myRequests() {
+        self::requireAuth();
+
+        $requests = PurchaseRequest::getUserRequests((int)$_SESSION['userId'], 100, 0) ?? [];
+        include_once('views/my-requests.php');
     }
 
     public static function myPaintings() {

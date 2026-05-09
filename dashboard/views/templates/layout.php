@@ -123,6 +123,14 @@
         echo '<li class="nav-item"><a class="nav-link" style="font-size:1rem;" href="my-favorites">My Favorites</a></li>';
         echo '</ul>';
         echo '</div>';
+        // Requests link for users (offcanvas)
+        echo '<div class="mb-3">';
+        echo '<h5 class="text-uppercase text-secondary">Requests</h5>';
+        echo '<ul class="nav flex-column" style="font-size:1rem;">';
+        echo '<li class="nav-item"><a class="nav-link" style="font-size:1rem;" href="my-requests"><i class="fa-solid fa-list-check me-2"></i>My Requests</a></li>';
+        echo '</ul>';
+        echo '</div>';
+        
     }
     else {
         echo '<h4>Access denied!</h4>';
@@ -215,6 +223,14 @@
         echo '<li class="nav-item"><a class="nav-link" style="font-size:1rem;" href="my-favorites"><i class="fa-solid fa-heart me-2"></i>My Favorites</a></li>';
         echo '</ul>';
         echo '</div>';
+        // Requests block (desktop)
+        echo '<div class="mb-4">';
+        echo '<h5 class="text-uppercase text-secondary">Requests</h5>';
+        echo '<ul class="nav flex-column small">';
+        echo '<li class="nav-item"><a class="nav-link" style="font-size:1rem;" href="my-requests"><i class="fa-solid fa-list-check me-2"></i>My Requests</a></li>';
+        echo '</ul>';
+        echo '</div>'; 
+        
     }
     else {
         echo '<h4>Access denied!</h4>';
@@ -227,6 +243,31 @@
                 <main class="col-12 col-lg-10 p-4">
                     <div class="container">
                         <?php if (!isset($content)) { $content = ''; } ?>
+                        <?php
+                            if (isset($_SESSION['successString'])) {
+                                echo '<div class="alert alert-success alert-dismissible fade show" role="alert">';
+                                echo $_SESSION['successString'];
+                                echo '<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>';
+                                echo '</div>';
+                                unset($_SESSION['successString']);
+                            }
+
+                            if (isset($_SESSION['warningString'])) {
+                                echo '<div class="alert alert-warning alert-dismissible fade show" role="alert">';
+                                echo $_SESSION['warningString'];
+                                echo '<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>';
+                                echo '</div>';
+                                unset($_SESSION['warningString']);
+                            }
+
+                            if (isset($_SESSION['errorString'])) {
+                                echo '<div class="alert alert-danger alert-dismissible fade show" role="alert">';
+                                echo $_SESSION['errorString'];
+                                echo '<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>';
+                                echo '</div>';
+                                unset($_SESSION['errorString']);
+                            }
+                        ?>
                         <?php
                         // Основные ссылки под Hello и Logout
                         if (isset($_SESSION["userId"]) && isset($_SESSION["status"]) && $_SESSION["status"]=="artist") {

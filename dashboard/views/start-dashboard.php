@@ -310,7 +310,7 @@
             </style>
             <div class="row g-3">
                 <div class="col-6 col-md-2">
-                    <a href="#" class="kpi-link">
+                    <a href="my-favorites" class="kpi-link">
                         <div class="kpi-card text-center">
                             <div class="kpi-icon"><i class="fa-solid fa-heart"></i></div>
                             <div class="kpi-value"><?php echo $favoritesCount ?? '—'; ?></div>
@@ -319,7 +319,7 @@
                     </a>
                 </div>
                 <div class="col-6 col-md-2">
-                    <a href="#" class="kpi-link">
+                    <a href="my-requests" class="kpi-link">
                         <div class="kpi-card text-center">
                             <div class="kpi-icon"><i class="fa-solid fa-inbox"></i></div>
                             <div class="kpi-value"><?php echo $userRequestsCount ?? '—'; ?></div>
@@ -328,11 +328,13 @@
                     </a>
                 </div>
                 <div class="col-6 col-md-2">
-                    <div class="kpi-card text-center">
-                        <div class="kpi-icon"><i class="fa-solid fa-user"></i></div>
-                        <div class="kpi-value"><?php echo htmlspecialchars($user['username'] ?? $user['email'] ?? '—'); ?></div>
-                        <div class="kpi-sub">Account</div>
-                    </div>
+                    <a href="account" class="kpi-link">
+                        <div class="kpi-card text-center">
+                            <div class="kpi-icon"><i class="fa-solid fa-user"></i></div>
+                            <div class="kpi-value"><?php echo htmlspecialchars($user['username'] ?? $user['email'] ?? '—'); ?></div>
+                            <div class="kpi-sub">Account</div>
+                        </div>
+                    </a>
                 </div>
             </div>
         </div>
@@ -347,21 +349,21 @@
                                 <li class="list-group-item">
                                     <strong><?php echo htmlspecialchars($r['painting_title'] ?? 'Untitled'); ?></strong>
                                     <div class="small text-muted"><?php echo htmlspecialchars($r['artist_name'] ?? 'Unknown Artist'); ?></div>
-                                    <div class="small text-muted">Status: <?php echo htmlspecialchars($r['status'] ?? 'pending'); ?></div>
+                                    <div class="small text-muted">Requested: <?php echo htmlspecialchars($r['created_at'] ?? 'Unknown date'); ?></div>
                                 </li>
                             <?php endforeach; ?>
                         </ul>
                     <?php else: ?>
                         <p class="mb-0">No active requests</p>
                     <?php endif; ?>
-                    <div class="mt-2"><a href="#" class="btn btn-sm btn-outline-secondary">View all</a></div>
+                    <div class="mt-2"><a href="my-requests" class="btn btn-sm btn-outline-secondary">View all</a></div>
                 </div>
 
                 <div class="card p-3 mb-3">
                     <h5>Quick Actions</h5>
                     <div class="d-flex gap-2 flex-wrap">
-                        <a href="../allpaintings.php" class="btn btn-primary">Browse Paintings</a>
-                        <a href="../allartists.php" class="btn btn-outline-primary">Find Artists</a>
+                        <a href="../all" class="btn btn-primary">Browse Paintings</a>
+                        <a href="../artists" class="btn btn-outline-primary">Find Artists</a>
                     </div>
                 </div>
             </div>
@@ -373,7 +375,7 @@
                         <div class="d-flex flex-wrap gap-2">
                             <?php foreach (array_slice($favorites, 0, 6) as $f): ?>
                                 <div style="width:90px;text-align:center">
-                                    <a href="../viewpainting.php?id=<?php echo (int)($f['painting_id'] ?? 0); ?>">
+                                    <a href="../paintings?id=<?php echo (int)($f['painting_id'] ?? 0); ?>">
                                         <img src="/artportal/images/paintings/<?php echo htmlspecialchars($f['image'] ?? ''); ?>" alt="" style="width:90px;height:60px;object-fit:cover;border:1px solid #ddd">
                                     </a>
                                     <div class="small text-truncate"><?php echo htmlspecialchars($f['title'] ?? ''); ?></div>
@@ -381,9 +383,9 @@
                             <?php endforeach; ?>
                         </div>
                     <?php else: ?>
-                        <p class="mb-0">No favorites yet. <a href="../allpaintings.php">Add one</a></p>
+                        <p class="mb-0">No favorites yet. <a href="../all">Add one</a></p>
                     <?php endif; ?>
-                    <div class="mt-2"><a href="#" class="btn btn-sm btn-outline-secondary">View all</a></div>
+                    <div class="mt-2"><a href="my-favorites" class="btn btn-sm btn-outline-secondary">View all</a></div>
                 </div>
 
                 <div class="card p-3 mb-3">
@@ -392,7 +394,7 @@
                         <div class="d-flex flex-wrap gap-2">
                             <?php foreach (array_slice($recentPaintings, 0, 6) as $p): ?>
                                 <div style="width:90px;text-align:center">
-                                    <a href="../viewpainting.php?id=<?php echo (int)($p['id'] ?? 0); ?>">
+                                    <a href="../paintings?id=<?php echo (int)($p['id'] ?? 0); ?>">
                                         <img src="/artportal/images/paintings/<?php echo htmlspecialchars($p['image'] ?? ''); ?>" alt="" style="width:90px;height:60px;object-fit:cover;border:1px solid #ddd">
                                     </a>
                                     <div class="small text-truncate"><?php echo htmlspecialchars($p['title'] ?? ''); ?></div>
@@ -402,7 +404,7 @@
                     <?php else: ?>
                         <p class="mb-0">No works available</p>
                     <?php endif; ?>
-                    <div class="mt-2"><a href="../allpaintings.php" class="btn btn-sm btn-outline-secondary">Explore more</a></div>
+                    <div class="mt-2"><a href="../all" class="btn btn-sm btn-outline-secondary">Explore more</a></div>
                 </div>
             </div>
         </div>

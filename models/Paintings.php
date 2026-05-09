@@ -1,6 +1,6 @@
 <?php
 class Paintings{
-    public static function getLast10Paintings($limit = 10) {
+    public static function getLastPaintings($limit = 10) {
         $limit = (int)$limit;
         $query = "
             SELECT

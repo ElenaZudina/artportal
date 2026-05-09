@@ -88,5 +88,29 @@ class PurchaseRequest {
         $db = new Database();
         return $db->getAll($sql, [$artistId]);
     }
+
+    public static function getUserRequests($userId, $limit = 10, $offset = 0) {
+        $limit = (int)$limit;
+        $offset = (int)$offset;
+        $sql = 'SELECT pr.*, 
+                       p.title AS painting_title,
+                       p.image AS image,
+                       a.name AS artist_name
+                FROM `purchase_requests` pr
+                JOIN `paintings` p ON pr.painting_id = p.id
+                JOIN `artists` a ON p.artist_id = a.id
+                WHERE pr.user_id = ?
+                ORDER BY pr.created_at DESC
+                LIMIT ' . $limit . ' OFFSET ' . $offset;
+        $db = new Database();
+        return $db->getAll($sql, [$userId]);
+    }
+
+    public static function getUserRequestsCount($userId) {
+        $db = new Database();
+        $sql = 'SELECT COUNT(*) AS cnt FROM `purchase_requests` WHERE user_id = ?';
+        $res = $db->getOne($sql, [$userId]);
+        return (int)($res['cnt'] ?? 0);
+    }
 }
 ?>

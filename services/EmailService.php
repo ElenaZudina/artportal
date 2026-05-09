@@ -10,6 +10,11 @@ class EmailService {
      * Отправляет email уведомление художнику о новом запросе на покупку
      */
     public static function sendPurchaseRequestNotification($request) {
+        if (!class_exists('PHPMailer\\PHPMailer\\PHPMailer')) {
+            error_log('PHPMailer is not installed or could not be autoloaded. Skipping purchase request email.');
+            return false;
+        }
+
         $mail = new PHPMailer(true);
         
         try {
@@ -46,7 +51,7 @@ class EmailService {
             $result = $mail->send();
             return $result;
             
-        } catch (Exception $e) {
+        } catch (\Throwable $e) {
             error_log('PHPMailer Exception: ' . $e->getMessage());
             return false;
         }

@@ -28,6 +28,10 @@ ob_start();
                                 <p class="card-text painting-price text-nowrap mb-0"><?php echo htmlspecialchars($painting['price'] ?? 'Unknown', ENT_QUOTES, 'UTF-8'); ?> €</p>
                             </div>
                             <p class="card-text mb-2"><?php echo htmlspecialchars($painting['artist_name'] ?? 'Unknown', ENT_QUOTES, 'UTF-8'); ?></p>
+                            <form method="POST" action="../purchase-request" class="mb-2">
+                                <input type="hidden" name="painting_id" value="<?php echo (int)($painting['painting_id'] ?? 0); ?>">
+                                <button type="submit" class="btn btn-sm btn-outline-primary w-100">Inquire About Purchase</button>
+                            </form>
                             <form method="POST" action="../toggle-favorite" class="mt-3">
                                 <input type="hidden" name="painting_id" value="<?php echo (int)($painting['painting_id'] ?? 0); ?>">
                                 <button type="submit" class="btn btn-sm btn-outline-danger w-100">Remove from Favorites</button>

@@ -81,6 +81,10 @@ elseif ($path == 'my-favorites') {
     $response = HomeController::myFavorites();
 }
 
+elseif ($path == 'my-requests') {
+    $response = HomeController::myRequests();
+}
+
 elseif ($path == 'purchase-requests') {
     $response = HomeController::purchaseRequests();
 }
