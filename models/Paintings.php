@@ -1,6 +1,7 @@
 <?php
 class Paintings{
-    public static function getLast10Paintings() {
+    public static function getLast10Paintings($limit = 10) {
+        $limit = (int)$limit;
         $query = "
             SELECT
                 paintings.*,
@@ -10,7 +11,7 @@ class Paintings{
             JOIN artists ON paintings.artist_id = artists.id
             JOIN categories ON paintings.category_id = categories.id
             ORDER BY paintings.id DESC
-            LIMIT 10
+            LIMIT " . $limit . "
         ";
         $db = new Database();
         $arr = $db->getAll($query);
