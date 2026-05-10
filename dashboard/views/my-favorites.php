@@ -14,14 +14,14 @@ ob_start();
                 <div class="col-sm-6 col-md-4 col-lg-3">
                     <div class="card rounded-5 overflow-hidden h-100">
                         <div class="card-img-wrapper position-relative">
-                            <a href="../paintings?id=<?php echo (int)($painting['painting_id'] ?? 0); ?>" class="d-block text-reset text-decoration-none h-100">
+                            <a href="../paintings?id=<?php echo (int)($painting['painting_id'] ?? 0); ?>&from=dashboard" class="d-block text-reset text-decoration-none h-100">
                                 <img src="/artportal/images/paintings/<?php echo htmlspecialchars($painting['image'] ?? '', ENT_QUOTES, 'UTF-8'); ?>" class="card-img-top" alt="<?php echo htmlspecialchars($painting['title'], ENT_QUOTES, 'UTF-8'); ?>" onerror="this.onerror=null;this.src='/artportal/images/test.jpg';">
                             </a>
                         </div>
                         <div class="card-body">
                             <div class="painting-meta d-flex justify-content-between align-items-start gap-2 mb-2">
                                 <h3 class="card-title painting-title mb-0">
-                                    <a href="../paintings?id=<?php echo (int)($painting['painting_id'] ?? 0); ?>" class="text-reset text-decoration-none">
+                                    <a href="../paintings?id=<?php echo (int)($painting['painting_id'] ?? 0); ?>&from=dashboard" class="text-reset text-decoration-none">
                                         <?php echo htmlspecialchars($painting['title'], ENT_QUOTES, 'UTF-8'); ?>
                                     </a>
                                 </h3>

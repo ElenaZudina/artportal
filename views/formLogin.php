@@ -41,8 +41,9 @@ if (isset ($_SESSION['userId']) && isset($_SESSION['status'])) {
                         </div>
                     <?php endif; ?>
                 </form>
-                <div class="text-center mt-3">
-                    <a href="../">Web site</a>
+                <div class="d-flex justify-content-between align-items-center mt-3">
+                    <div class="form-text">Don't have an account?</div>
+                    <a href="registerForm" class="section-link">Register</a>
                 </div>
             </div>
         </div>

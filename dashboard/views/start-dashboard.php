@@ -375,7 +375,7 @@
                         <div class="d-flex flex-wrap gap-2">
                             <?php foreach (array_slice($favorites, 0, 6) as $f): ?>
                                 <div style="width:90px;text-align:center">
-                                    <a href="../paintings?id=<?php echo (int)($f['painting_id'] ?? 0); ?>">
+                                    <a href="../paintings?id=<?php echo (int)($f['painting_id'] ?? 0); ?>&from=dashboard">
                                         <img src="/artportal/images/paintings/<?php echo htmlspecialchars($f['image'] ?? ''); ?>" alt="" style="width:90px;height:60px;object-fit:cover;border:1px solid #ddd">
                                     </a>
                                     <div class="small text-truncate"><?php echo htmlspecialchars($f['title'] ?? ''); ?></div>
@@ -394,7 +394,7 @@
                         <div class="d-flex flex-wrap gap-2">
                             <?php foreach (array_slice($recentPaintings, 0, 6) as $p): ?>
                                 <div style="width:90px;text-align:center">
-                                    <a href="../paintings?id=<?php echo (int)($p['id'] ?? 0); ?>">
+                                    <a href="../paintings?id=<?php echo (int)($p['id'] ?? 0); ?>&from=dashboard">
                                         <img src="/artportal/images/paintings/<?php echo htmlspecialchars($p['image'] ?? ''); ?>" alt="" style="width:90px;height:60px;object-fit:cover;border:1px solid #ddd">
                                     </a>
                                     <div class="small text-truncate"><?php echo htmlspecialchars($p['title'] ?? ''); ?></div>
