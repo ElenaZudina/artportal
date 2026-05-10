@@ -36,6 +36,37 @@ class Paintings{
         return $arr;
     }
 
+    public static function getAllPaintingsCount() {
+        $query = "
+            SELECT COUNT(*) AS total
+            FROM paintings
+            JOIN artists ON paintings.artist_id = artists.id
+            WHERE artists.status = 'approved'
+        ";
+        $db = new Database();
+        $row = $db->getOne($query);
+        return (int)($row['total'] ?? 0);
+    }
+
+    public static function getAllPaintingsPaginated($limit, $offset) {
+       $limit = (int)$limit;
+       $offset = (int)$offset;
+       $query = "
+            SELECT
+                paintings.*, 
+                artists.name AS artist_name,
+                categories.name AS category
+            FROM paintings
+            JOIN artists ON paintings.artist_id = artists.id
+            JOIN categories ON paintings.category_id = categories.id
+            WHERE artists.status = 'approved'
+            ORDER BY paintings.id DESC
+            LIMIT " . $limit . " OFFSET " . $offset . "
+       ";
+       $db = new Database();
+       return $db->getAll($query);
+    }
+
     public static function getPaintingsByCategoryID($id) {
         $query = "
             SELECT

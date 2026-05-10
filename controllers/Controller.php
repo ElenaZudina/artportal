@@ -24,7 +24,21 @@ class Controller {
     }
 
     public static function AllPaintings() {
-        $arr = Paintings::getAllPaintings();
+        $perPage = 6;
+        $currentPage = isset($_GET['page']) ? max(1, (int)$_GET['page']) : 1;
+        $totalItems = Paintings::getAllPaintingsCount();
+        $totalPages = (int)ceil($totalItems / $perPage);
+        if ($totalPages > 0 && $currentPage > $totalPages) {
+            $currentPage = $totalPages;
+        }
+
+        $offset = ($currentPage - 1) * $perPage;
+        $arr = Paintings::getAllPaintingsPaginated($perPage, $offset);
+        $pagination = [
+            'currentPage' => $currentPage,
+            'totalPages' => $totalPages,
+            'perPage' => $perPage,
+        ];
         include_once 'views/partials/paintings.php';
         include_once 'views/allpaintings.php';
     }
