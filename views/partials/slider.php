@@ -28,9 +28,9 @@ class ViewSlider {
                      style="height:70vh; object-fit:cover;"
                      alt="<?= htmlspecialchars($painting['title']) ?>">
 
-                <div class="carousel-caption d-none d-md-block">
-                    <h5><?= htmlspecialchars($painting['title']) ?></h5>
-                    <p><?= htmlspecialchars($painting['artist_name']) ?></p>
+                <div class="carousel-caption d-none d-md-block slider-caption">
+                    <h5 class="painting-title slider-painting-title"><?= htmlspecialchars($painting['title']) ?></h5>
+                    <p class="slider-artist-name"><?= htmlspecialchars($painting['artist_name']) ?></p>
                 </div>
 
             </div>
@@ -39,14 +39,18 @@ class ViewSlider {
     </div>
 
     <!-- стрелки -->
-    <button class="carousel-control-prev" type="button"
-            data-bs-target="#paintingsCarousel" data-bs-slide="prev">
-        <span class="carousel-control-prev-icon"></span>
+    <button class="carousel-control-prev custom-carousel-control" type="button"
+            data-bs-target="#paintingsCarousel" data-bs-slide="prev" aria-label="Previous slide">
+        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+        <span class="carousel-arrow" aria-hidden="true">&#8249;</span>
+        <span class="visually-hidden">Previous</span>
     </button>
 
-    <button class="carousel-control-next" type="button"
-            data-bs-target="#paintingsCarousel" data-bs-slide="next">
-        <span class="carousel-control-next-icon"></span>
+    <button class="carousel-control-next custom-carousel-control" type="button"
+            data-bs-target="#paintingsCarousel" data-bs-slide="next" aria-label="Next slide">
+        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+        <span class="carousel-arrow" aria-hidden="true">&#8250;</span>
+        <span class="visually-hidden">Next</span>
     </button>
 
 </div>

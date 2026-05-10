@@ -61,7 +61,7 @@ $isRegister = $activeRoute === 'registerForm' || $activeRoute === 'registerAnswe
                 </div>
             </nav>
         </header>
-        <main class="container my-5 flex-grow-1">
+        <main class="container my-3 flex-grow-1">
             
             <?php
                 if (isset($_SESSION['successString'])) {
