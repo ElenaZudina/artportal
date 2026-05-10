@@ -7,7 +7,7 @@ class ModerationController {
     }
 
     public static function viewProfile($id) {
-        $item = Artists::getArtistByIDAny($id);
+        $item = Artists::getArtistByID($id);
         if (!$item) {
             include_once 'views/error404.php';
             return;

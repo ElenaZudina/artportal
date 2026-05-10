@@ -2,7 +2,7 @@
 class Controller {
 
     public static function StartSite() {
-        $arr = Paintings::getLast10Paintings();
+        $arr = Paintings::getLastPaintings();
         $artistArr = Artists::getLast10Artists();
         $exhibition = Exhibitions::getCurrentExhibition();
 
@@ -37,7 +37,11 @@ class Controller {
     }
 
     public static function PaintingByID($id) {
-        $item = Paintings::getPaintingByID($id);
+        $item = Paintings::getPublicPaintingByID($id);
+        if (!$item) {
+            include_once 'views/error404.php';
+            return;
+        }
         include_once 'views/partials/paintings.php';
         include_once 'views/viewpainting.php';
     }
@@ -49,7 +53,11 @@ class Controller {
     }
 
     public static function ArtistByID($id) {
-        $item = Artists::getArtistByID($id);
+        $item = Artists::getPublicArtistByID($id);
+        if (!$item) {
+            include_once 'views/error404.php';
+            return;
+        }
         $item['paintings'] = Paintings::getPaintingsByArtistID($id);
         include_once 'views/partials/artists.php';
         include_once 'views/viewartist.php';
@@ -64,7 +72,7 @@ class Controller {
       public static function ExhibitionByID($id) {
         $exhibition = Exhibitions::getExhibitionByID($id);
         $collection = Collections::getCollectionByID($exhibition['collection_id']);
-        $paintings = Paintings::getPaintingsByCollectionID($collection['id']);
+                $paintings = Paintings::getPaintingsByCollectionID($collection['id']);
         include_once 'views/partials/exhibitions.php';
         include_once 'views/viewexhibition.php';
     }

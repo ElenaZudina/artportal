@@ -40,13 +40,11 @@ ob_start();
                 <div class="row g-3 artist-portfolio-grid">
                     <?php foreach ($item['paintings'] as $painting): ?>
                         <div class="col-12 col-sm-6 col-md-6 col-lg-4">
-                            <a href="../paintings?id=<?php echo urlencode((string)($painting['id'] ?? '')); ?>" class="d-block h-100 text-reset">
-                                <div class="card h-100 rounded-5 overflow-hidden">
-                                    <div class="card-img-wrapper">
-                                        <img src="/artportal/images/paintings/<?php echo htmlspecialchars($painting['image'] ?? '', ENT_QUOTES, 'UTF-8'); ?>" class="card-img-top" alt="<?php echo htmlspecialchars($painting['title'] ?? 'Untitled', ENT_QUOTES, 'UTF-8'); ?>" onerror="this.onerror=null;this.src='/artportal/images/test.jpg';">
-                                    </div>
+                            <div class="card d-block h-100 rounded-5 overflow-hidden">
+                                <div class="card-img-wrapper">
+                                    <img src="/artportal/images/paintings/<?php echo htmlspecialchars($painting['image'] ?? '', ENT_QUOTES, 'UTF-8'); ?>" class="card-img-top" alt="<?php echo htmlspecialchars($painting['title'] ?? 'Untitled', ENT_QUOTES, 'UTF-8'); ?>" onerror="this.onerror=null;this.src='/artportal/images/test.jpg';">
                                 </div>
-                            </a>
+                            </div>
                         </div>
                     <?php endforeach; ?>
                 </div>

@@ -10,6 +10,7 @@ class Paintings{
             FROM paintings
             JOIN artists ON paintings.artist_id = artists.id
             JOIN categories ON paintings.category_id = categories.id
+            WHERE artists.status = 'approved'
             ORDER BY paintings.id DESC
             LIMIT " . $limit . "
         ";
@@ -27,6 +28,7 @@ class Paintings{
             FROM paintings
             JOIN artists ON paintings.artist_id = artists.id
             JOIN categories ON paintings.category_id = categories.id
+            WHERE artists.status = 'approved'
             ORDER BY paintings.id DESC
         ";
         $db = new Database();
@@ -44,6 +46,7 @@ class Paintings{
             JOIN artists ON paintings.artist_id = artists.id
             JOIN categories ON paintings.category_id = categories.id
             WHERE paintings.category_id = ?
+              AND artists.status = 'approved'
             ORDER BY paintings.id DESC
         ";
         $db = new Database();
@@ -69,11 +72,23 @@ class Paintings{
     }
 
     public static function getPaintingByID($id) {
+                $query = "SELECT paintings.*, categories.name AS category_name, artists.name AS artist_name, artists.picture AS artist_avatar
+                FROM paintings
+                JOIN categories ON paintings.category_id = categories.id
+                JOIN artists ON paintings.artist_id = artists.id
+                WHERE paintings.id = ? ";
+        $db = new Database();
+        $arr = $db->getOne($query, [$id]);
+        return $arr;
+    }
+
+    public static function getPublicPaintingByID($id) {
         $query = "SELECT paintings.*, categories.name AS category_name, artists.name AS artist_name, artists.picture AS artist_avatar
-        FROM paintings
-        JOIN categories ON paintings.category_id = categories.id
-        JOIN artists ON paintings.artist_id = artists.id
-        WHERE paintings.id = ? ";
+                FROM paintings
+                JOIN categories ON paintings.category_id = categories.id
+                JOIN artists ON paintings.artist_id = artists.id
+                WHERE paintings.id = ?
+                  AND artists.status = 'approved'";
         $db = new Database();
         $arr = $db->getOne($query, [$id]);
         return $arr;
@@ -139,19 +154,20 @@ class Paintings{
         $baseQuery = "SELECT paintings.*, artists.name AS artist_name, categories.name AS category_name
         FROM paintings
         JOIN artists ON paintings.artist_id = artists.id
-        JOIN categories ON paintings.category_id = categories.id";
+        JOIN categories ON paintings.category_id = categories.id
+        WHERE artists.status = 'approved'";
 
         switch ($collection['type']) {
 
         case 'keyword':
             $param = trim($collection['param'] ?? '');
 
-            if ($param === '') return [];
+                if ($param === '') return [];
 
-            $query = $baseQuery . "
-                WHERE paintings.title LIKE ? 
-                   OR paintings.description LIKE ?
-                ORDER BY paintings.id DESC";
+                $query = $baseQuery . "
+                     AND (paintings.title LIKE ? 
+                         OR paintings.description LIKE ?)
+                     ORDER BY paintings.id DESC";
 
             return $db->getAll($query, ["%$param%", "%$param%"]);
 

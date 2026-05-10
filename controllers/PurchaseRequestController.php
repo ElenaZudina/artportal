@@ -34,7 +34,7 @@ class PurchaseRequestController {
         }
 
         // Проверка существования картины
-        $painting = Paintings::getPaintingByID($paintingId);
+        $painting = Paintings::getPublicPaintingByID($paintingId);
         if (!$painting) {
             header('Location: /artportal/');
             exit;

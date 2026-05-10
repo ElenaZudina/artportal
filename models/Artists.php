@@ -14,15 +14,15 @@ class Artists {
         return $arr;
     }
 
-     public static function getArtistByID($id) {
+     public static function getPublicArtistByID($id) {
         $query = "SELECT * FROM artists
-        WHERE artists.id = ? AND status = 'approved' ";
+        WHERE artists.id = ? AND status = 'approved'";
         $db = new Database();
         $arr = $db->getOne($query, [$id]);
         return $arr;
     }
 
-    public static function getArtistByIDAny($id) {
+    public static function getArtistByID($id) {
         $query = "SELECT * FROM artists
         WHERE artists.id = ? ";
         $db = new Database();
@@ -39,7 +39,7 @@ class Artists {
     public static function approveArtist($id) {
         $db = new Database();
 
-        $artist = self::getArtistByIDAny($id);
+        $artist = self::getArtistByID($id);
         if (!$artist) {
             return false;
         }
