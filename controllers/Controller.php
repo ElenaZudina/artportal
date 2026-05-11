@@ -70,7 +70,21 @@ class Controller {
     }
 
      public static function AllArtists() {
-        $arr = Artists::getAllArtists();
+        $perPage = 6;
+        $currentPage = isset($_GET['page']) ? max(1, (int)$_GET['page']) : 1;
+        $totalItems = Artists::getAllArtistsCount();
+        $totalPages = (int)ceil($totalItems / $perPage);
+        if ($totalPages > 0 && $currentPage > $totalPages) {
+            $currentPage = $totalPages;
+        }
+
+        $offset = ($currentPage - 1) * $perPage;
+        $arr = Artists::getAllArtistsPaginated($perPage, $offset);
+        $pagination = [
+            'currentPage' => $currentPage,
+            'totalPages' => $totalPages,
+            'perPage' => $perPage,
+        ];
         include_once 'views/partials/artists.php';
         include_once 'views/allartists.php';
     }

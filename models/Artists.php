@@ -14,6 +14,21 @@ class Artists {
         return $arr;
     }
 
+    public static function getAllArtistsCount() {
+        $query = "SELECT COUNT(*) AS total FROM artists WHERE status = 'approved'";
+        $db = new Database();
+        $row = $db->getOne($query);
+        return (int)($row['total'] ?? 0);
+    }
+
+    public static function getAllArtistsPaginated($limit, $offset) {
+        $limit = (int)$limit;
+        $offset = (int)$offset;
+        $query = "SELECT * FROM artists WHERE status = 'approved' ORDER BY id DESC LIMIT " . $limit . " OFFSET " . $offset;
+        $db = new Database();
+        return $db->getAll($query);
+    }
+
      public static function getPublicArtistByID($id) {
         $query = "SELECT * FROM artists
         WHERE artists.id = ? AND status = 'approved'";
