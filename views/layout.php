@@ -62,6 +62,45 @@ $isLogin = $activeRoute === 'login';
                 </div>
             </nav>
         </header>
+        
+        <?php if ($isHome): ?>
+        <section class="hero">
+            <div class="container hero-container">
+            <div class="hero-wrapper">
+                <div class="hero-content">
+                    <h1 class="hero-title"><span class="hero-title-dark">Where Art</span><br><span class="hero-title-accent">Meets Vision</span></h1>
+                    <p class="hero-text">Discover extraordinary artworks from emerging and established artists. A curated platform celebrating creativity in the digital age.</p>
+                    <div class="hero-buttons">
+                        <a href="artists" class="btn-hero btn-hero--primary">Explore Artists</a>
+                        <a href="all" class="btn-hero btn-hero--secondary">View Gallery</a>
+                    </div>
+                </div>
+                <div class="hero-grid">
+                    <?php 
+                    $heroPaintings = Paintings::getLastPaintings(3);
+                    if (!empty($heroPaintings) && count($heroPaintings) >= 1) {
+                        $largePainting = $heroPaintings[0];
+                        $smallPaintings = array_slice($heroPaintings, 1, 2);
+                        $largeImage = !empty($largePainting['image']) ? 'images/paintings/' . htmlspecialchars($largePainting['image'], ENT_QUOTES, 'UTF-8') : 'images/paintings/chromatic-energy.jpg';
+                    ?>
+                    <div class="hero-main">
+                        <img src="<?php echo $largeImage; ?>" alt="<?php echo htmlspecialchars($largePainting['title'] ?? 'Featured artwork', ENT_QUOTES, 'UTF-8'); ?>" loading="lazy">
+                        <div class="overlay"></div>
+                    </div>
+                    <?php foreach ($smallPaintings as $painting):
+                        $smallImage = !empty($painting['image']) ? 'images/paintings/' . htmlspecialchars($painting['image'], ENT_QUOTES, 'UTF-8') : 'images/paintings/digital-synthesis.jpg';
+                    ?>
+                    <div class="hero-small">
+                        <img src="<?php echo $smallImage; ?>" alt="<?php echo htmlspecialchars($painting['title'] ?? 'Artwork thumbnail', ENT_QUOTES, 'UTF-8'); ?>" loading="lazy">
+                    </div>
+                    <?php endforeach; ?>
+                    <?php } ?>
+                </div>
+            </div>
+            </div>
+        </section>
+        <?php endif; ?>
+        
         <main class="container my-3 flex-grow-1">
             
             <?php
