@@ -53,6 +53,15 @@ class Controller {
     public static function PaintingByID($id) {
         $item = Paintings::getPublicPaintingByID($id);
         if (!$item) {
+            $painting = Paintings::getPaintingByID($id);
+            if ($painting) {
+                $errorTitle = 'Painting is not available publicly';
+                $errorMessage = 'This painting exists, but it is not shown in the public area because the artist has not been approved yet.';
+            } else {
+                $errorTitle = 'Painting not found';
+                $errorMessage = 'There is no painting with this ID.';
+            }
+
             include_once 'views/error404.php';
             return;
         }
