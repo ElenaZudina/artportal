@@ -3,10 +3,6 @@ $host = explode('?', $_SERVER['REQUEST_URI'])[0];
 $num=substr_count($host, '/');
 $path = explode('/',$host)[$num];
 
-/*if ($path == '' OR $path == 'index.php' OR $path == 'login' ) {
-    // Cтраница входа
-    $response = controllerAuth::formLoginSite();
-}
 // ------- ВХОД в зависимости  от роли-----------------------
 
 /*elseif ($path == 'auth') {
@@ -15,8 +11,8 @@ $path = explode('/',$host)[$num];
 }*/
 
 
-if ($path == 'startAdmin') {
-    // Форма входа на старт Админ
+if ($path == '' || $path == 'startAdmin' || $path == 'admin' || $path == 'index.php') {
+    // Форма входа на старт Админ (aliases: /admin, /admin/ and /admin/index.php)
     $response = HomeController::startAdminPanel();
 }
 
