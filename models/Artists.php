@@ -29,6 +29,54 @@ class Artists {
         return $db->getAll($query);
     }
 
+    public static function getSearchArtistsCount($search) {
+        $search = trim((string)$search);
+        $db = new Database();
+
+        if ($search === '') {
+            $row = $db->getOne("SELECT COUNT(*) AS total FROM artists WHERE status = 'approved'");
+            return (int)($row['total'] ?? 0);
+        }
+
+        $query = "SELECT COUNT(*) AS total
+                  FROM artists
+                  WHERE status = 'approved'
+                    AND (
+                        name LIKE ?
+                        OR location LIKE ?
+                        OR bio LIKE ?
+                    )";
+
+        $like = '%' . $search . '%';
+        $row = $db->getOne($query, [$like, $like, $like]);
+        return (int)($row['total'] ?? 0);
+    }
+
+    public static function getSearchArtistsPaginated($search, $limit, $offset) {
+        $search = trim((string)$search);
+        $limit = (int)$limit;
+        $offset = (int)$offset;
+
+        if ($search === '') {
+            return self::getAllArtistsPaginated($limit, $offset);
+        }
+
+        $query = "SELECT *
+                  FROM artists
+                  WHERE status = 'approved'
+                    AND (
+                        name LIKE ?
+                        OR location LIKE ?
+                        OR bio LIKE ?
+                    )
+                  ORDER BY id DESC
+                  LIMIT " . $limit . " OFFSET " . $offset;
+
+        $db = new Database();
+        $like = '%' . $search . '%';
+        return $db->getAll($query, [$like, $like, $like]);
+    }
+
      public static function getPublicArtistByID($id) {
         $query = "SELECT * FROM artists
         WHERE artists.id = ? AND status = 'approved'";

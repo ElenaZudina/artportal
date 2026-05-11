@@ -67,6 +67,57 @@ class Paintings{
        return $db->getAll($query);
     }
 
+    public static function getSearchPaintingsCount($search) {
+        $search = trim((string)$search);
+        $db = new Database();
+
+        if ($search === '') {
+            $row = $db->getOne("SELECT COUNT(*) AS total FROM paintings JOIN artists ON paintings.artist_id = artists.id WHERE artists.status = 'approved'");
+            return (int)($row['total'] ?? 0);
+        }
+
+        $query = "SELECT COUNT(*) AS total
+                  FROM paintings
+                  JOIN artists ON paintings.artist_id = artists.id
+                  WHERE artists.status = 'approved'
+                    AND (
+                        paintings.title LIKE ?
+                        OR paintings.description LIKE ?
+                    )";
+
+        $like = '%' . $search . '%';
+        $row = $db->getOne($query, [$like, $like]);
+        return (int)($row['total'] ?? 0);
+    }
+
+    public static function getSearchPaintingsPaginated($search, $limit, $offset) {
+        $search = trim((string)$search);
+        $limit = (int)$limit;
+        $offset = (int)$offset;
+
+        if ($search === '') {
+            return self::getAllPaintingsPaginated($limit, $offset);
+        }
+
+        $query = "SELECT paintings.*,
+                         artists.name AS artist_name,
+                         categories.name AS category
+                  FROM paintings
+                  JOIN artists ON paintings.artist_id = artists.id
+                  JOIN categories ON paintings.category_id = categories.id
+                  WHERE artists.status = 'approved'
+                    AND (
+                        paintings.title LIKE ?
+                        OR paintings.description LIKE ?
+                    )
+                  ORDER BY paintings.id DESC
+                  LIMIT " . $limit . " OFFSET " . $offset;
+
+        $db = new Database();
+        $like = '%' . $search . '%';
+        return $db->getAll($query, [$like, $like]);
+    }
+
     public static function getPaintingsByCategoryID($id) {
         $query = "
             SELECT

@@ -26,19 +26,21 @@ class Controller {
     public static function AllPaintings() {
         $perPage = 6;
         $currentPage = isset($_GET['page']) ? max(1, (int)$_GET['page']) : 1;
-        $totalItems = Paintings::getAllPaintingsCount();
+        $search = trim((string)($_GET['search'] ?? ''));
+        $totalItems = Paintings::getSearchPaintingsCount($search);
         $totalPages = (int)ceil($totalItems / $perPage);
         if ($totalPages > 0 && $currentPage > $totalPages) {
             $currentPage = $totalPages;
         }
 
         $offset = ($currentPage - 1) * $perPage;
-        $arr = Paintings::getAllPaintingsPaginated($perPage, $offset);
+        $arr = Paintings::getSearchPaintingsPaginated($search, $perPage, $offset);
         $pagination = [
             'currentPage' => $currentPage,
             'totalPages' => $totalPages,
             'perPage' => $perPage,
         ];
+        $searchQuery = $search;
         include_once 'views/partials/paintings.php';
         include_once 'views/allpaintings.php';
     }
@@ -70,21 +72,23 @@ class Controller {
     }
 
      public static function AllArtists() {
-        $perPage = 6;
+        $perPage = 3;
         $currentPage = isset($_GET['page']) ? max(1, (int)$_GET['page']) : 1;
-        $totalItems = Artists::getAllArtistsCount();
+        $search = trim((string)($_GET['search'] ?? ''));
+        $totalItems = Artists::getSearchArtistsCount($search);
         $totalPages = (int)ceil($totalItems / $perPage);
         if ($totalPages > 0 && $currentPage > $totalPages) {
             $currentPage = $totalPages;
         }
 
         $offset = ($currentPage - 1) * $perPage;
-        $arr = Artists::getAllArtistsPaginated($perPage, $offset);
+        $arr = Artists::getSearchArtistsPaginated($search, $perPage, $offset);
         $pagination = [
             'currentPage' => $currentPage,
             'totalPages' => $totalPages,
             'perPage' => $perPage,
         ];
+        $searchQuery = $search;
         include_once 'views/partials/artists.php';
         include_once 'views/allartists.php';
     }

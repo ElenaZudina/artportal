@@ -653,6 +653,252 @@ footer p {
   opacity: 0.5;
 }
 
+/* Artists search */
+.artist-search-form {
+  width: 100%;
+  max-width: 520px;
+}
+
+.artist-search-group {
+  width: 100%;
+  border: 1px solid #e5e7eb;
+  border-radius: 999px;
+  overflow: visible;
+  box-shadow: none;
+  background: #f3f4f6;
+}
+
+.artist-search-group .input-group-text,
+.artist-search-group .form-control,
+.artist-search-group .btn {
+  border-color: #e5e7eb;
+}
+
+.artist-search-icon {
+  background: #f3f4f6;
+  color: #adb5bd;
+  padding-left: 12px;
+  padding-right: 8px;
+}
+
+.artist-search-input {
+  min-width: 0;
+  background-color: #f3f4f6;
+  border: none;
+  box-shadow: none;
+  font-size: 14px;
+  padding: 8px 12px !important;
+  height: 36px;
+}
+
+.artist-search-input::placeholder {
+  color: #adb5bd;
+  opacity: 1;
+}
+
+.artist-search-group .artist-search-input:focus {
+  background-color: #f3f4f6 !important;
+  border: 1px solid var(--primary) !important;
+  box-shadow: 0 0 0 3px rgba(173, 70, 255, 0.2) !important;
+  outline: none !important;
+  -webkit-box-shadow: 0 0 0 3px rgba(173, 70, 255, 0.2) !important;
+}
+
+.artist-search-btn {
+  background: rgba(173, 70, 255, 0.08);
+  color: var(--primary);
+  border: 1px solid #e5e7eb;
+  padding-left: 14px;
+  padding-right: 14px;
+  font-size: 14px;
+  height: 36px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.artist-search-btn:hover,
+.artist-search-btn:focus-visible {
+  background: rgba(173, 70, 255, 0.14);
+  color: var(--primary-dark);
+  border-color: rgba(173, 70, 255, 0.2);
+}
+
+.artist-search-clear {
+  color: #6b7280;
+  border-color: #e5e7eb;
+  background: #f3f4f6;
+  white-space: nowrap;
+}
+
+.artist-search-clear:hover,
+.artist-search-clear:focus-visible {
+  color: #4b5563;
+  background: #e5e7eb;
+  border-color: #d1d5db;
+}
+
+@media (max-width: 576px) {
+  .artist-search-form {
+    max-width: 100%;
+  }
+
+  .artist-search-group {
+    flex-wrap: wrap;
+    border-radius: 1rem;
+  }
+
+  .artist-search-group .input-group-text,
+  .artist-search-group .form-control,
+  .artist-search-group .btn {
+    border-radius: 0;
+  }
+
+  .artist-search-icon {
+    border-top-left-radius: 1rem;
+    border-bottom-left-radius: 0;
+  }
+
+  .artist-search-input {
+    flex-basis: 100%;
+    border-left: 1px solid rgba(173, 70, 255, 0.18);
+    border-right: 1px solid rgba(173, 70, 255, 0.18);
+  }
+
+  .artist-search-btn,
+  .artist-search-clear {
+    flex: 1 1 auto;
+    border-top: 1px solid rgba(173, 70, 255, 0.18);
+  }
+
+  .artist-search-clear {
+    border-left: 0;
+  }
+}
+
+/* Paintings search */
+.painting-search-form {
+  width: 100%;
+  max-width: 520px;
+}
+
+.painting-search-group {
+  width: 100%;
+  border: 1px solid #e5e7eb;
+  border-radius: 999px;
+  overflow: visible;
+  box-shadow: none;
+  background: #f3f4f6;
+}
+
+.painting-search-group .input-group-text,
+.painting-search-group .form-control,
+.painting-search-group .btn {
+  border-color: #e5e7eb;
+}
+
+.painting-search-icon {
+  background: #f3f4f6;
+  color: #adb5bd;
+  padding-left: 12px;
+  padding-right: 8px;
+}
+
+.painting-search-input {
+  min-width: 0;
+  background-color: #f3f4f6;
+  border: none;
+  box-shadow: none;
+  font-size: 14px;
+  padding: 8px 12px !important;
+  height: 36px;
+}
+
+.painting-search-input::placeholder {
+  color: #adb5bd;
+  opacity: 1;
+}
+
+.painting-search-group .painting-search-input:focus {
+  background-color: #f3f4f6 !important;
+  border: 1px solid var(--primary) !important;
+  box-shadow: 0 0 0 3px rgba(173, 70, 255, 0.2) !important;
+  outline: none !important;
+  -webkit-box-shadow: 0 0 0 3px rgba(173, 70, 255, 0.2) !important;
+}
+
+.painting-search-btn {
+  background: rgba(173, 70, 255, 0.08);
+  color: var(--primary);
+  border: 1px solid #e5e7eb;
+  padding-left: 14px;
+  padding-right: 14px;
+  font-size: 14px;
+  height: 36px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.painting-search-btn:hover,
+.painting-search-btn:focus-visible {
+  background: rgba(173, 70, 255, 0.14);
+  color: var(--primary-dark);
+  border-color: rgba(173, 70, 255, 0.2);
+}
+
+.painting-search-clear {
+  color: #6b7280;
+  border-color: #e5e7eb;
+  background: #f3f4f6;
+  white-space: nowrap;
+}
+
+.painting-search-clear:hover,
+.painting-search-clear:focus-visible {
+  color: #4b5563;
+  background: #e5e7eb;
+  border-color: #d1d5db;
+}
+
+@media (max-width: 576px) {
+  .painting-search-form {
+    max-width: 100%;
+  }
+
+  .painting-search-group {
+    flex-wrap: wrap;
+    border-radius: 1rem;
+  }
+
+  .painting-search-group .input-group-text,
+  .painting-search-group .form-control,
+  .painting-search-group .btn {
+    border-radius: 0;
+  }
+
+  .painting-search-icon {
+    border-top-left-radius: 1rem;
+    border-bottom-left-radius: 0;
+  }
+
+  .painting-search-input {
+    flex-basis: 100%;
+    border-left: 1px solid #e5e7eb;
+    border-right: 1px solid #e5e7eb;
+  }
+
+  .painting-search-btn,
+  .painting-search-clear {
+    flex: 1 1 auto;
+    border-top: 1px solid #e5e7eb;
+  }
+
+  .painting-search-clear {
+    border-left: 0;
+  }
+}
+
 /* Slider caption: left-aligned text and larger title */
 #paintingsCarousel .slider-caption {
   left: 3rem;
