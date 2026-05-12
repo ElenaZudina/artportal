@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Хост: 127.0.0.1
--- Время создания: Май 08 2026 г., 14:20
+-- Время создания: Май 12 2026 г., 21:55
 -- Версия сервера: 10.4.32-MariaDB
 -- Версия PHP: 8.2.12
 
@@ -51,7 +51,7 @@ INSERT INTO `artists` (`id`, `name`, `location`, `birth_date`, `bio`, `picture`,
 (4, 'Sofia Rodriguez', 'Estonia, Pärnu', '1978-04-18', 'Mixed media artist combining traditional painting techniques with modern materials to create textured, layered narratives.', 'sofia-rodriguez.jpg', 'approved', '2026-01-29 09:06:17', 7, '2026-04-09 10:25:14'),
 (11, 'David Park', 'Estonia, Tallinn', '2000-04-06', 'Contemporary portrait artist known for expressive brushwork and vibrant color palettes that capture emotional depth.', 'david-park.jpg', 'approved', '2026-04-23 09:14:39', 8, '2026-05-02 18:40:12'),
 (12, 'Emma Williams', 'Estonia, Tartu', '1996-05-21', 'Geometric abstraction specialist creating harmonious compositions inspired by architecture and urban landscapes.', 'emma-williams.jpg', 'approved', '2026-04-23 09:14:39', 9, '2026-05-02 18:49:04'),
-(15, 'Ivav Ivanov', 'Estonia, Viljandi', '1996-06-22', 'I\'m the best artist of the world', 'artist_69f9c29d9e5ef5.15303290.jpg', 'approved', '2026-05-05 13:12:45', 18, '2026-05-05 13:13:58'),
+(15, 'Ivav Ivanov', 'Estonia, Viljandi', '1996-06-22', 'I\'m the best artist of the world', 'artist_69f9c29d9e5ef5.15303290.jpg', 'approved', '2026-05-05 13:12:45', 18, '2026-05-11 20:03:48'),
 (16, 'Maria White', 'Estonia, Valga', '1960-02-23', 'Art is my passion and life', 'artist_69f9c50e4979f5.57596857.jpg', 'pending', '2026-05-05 13:23:10', 19, '2026-05-05 13:23:10');
 
 -- --------------------------------------------------------
@@ -94,7 +94,7 @@ INSERT INTO `categories` (`id`, `name`) VALUES
 CREATE TABLE `collections` (
   `id` int(11) NOT NULL,
   `title` varchar(255) NOT NULL,
-  `type` enum('keyword','category','latest','random','popular') NOT NULL,
+  `type` enum('keyword','category','latest','random','popular','ai') NOT NULL,
   `param` varchar(100) DEFAULT NULL COMMENT 'filter parameter'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
@@ -108,7 +108,8 @@ INSERT INTO `collections` (`id`, `title`, `type`, `param`) VALUES
 (4, 'The most new test', 'popular', ''),
 (5, 'Collection', 'popular', ''),
 (6, 'Collection made throe Exhibition', 'keyword', 'cat'),
-(7, 'test', 'popular', '');
+(7, 'Winter City Life', 'ai', 'city landscape winter blue'),
+(8, 'Orange', 'ai', 'orange mood');
 
 -- --------------------------------------------------------
 
@@ -154,8 +155,9 @@ CREATE TABLE `exhibitions` (
 --
 
 INSERT INTO `exhibitions` (`id`, `title`, `description`, `collection_id`, `start_date`, `end_date`) VALUES
-(2, 'Energy World', 'Artworks connected to Energy', 1, '2026-04-23 13:13:20', '2026-05-23 13:13:20'),
-(3, 'New test', 'test', 2, '2026-05-07 21:11:00', '2026-05-10 21:12:00');
+(2, 'Energy World', 'Artworks connected to Energy', 1, '2026-04-23 13:13:20', '2026-05-11 13:13:20'),
+(3, 'New test', 'test', 2, '2026-05-07 21:11:00', '2026-05-10 21:12:00'),
+(5, 'Winter City Life', 'Artwork connected winter and city', 7, '2026-05-12 22:12:00', '2026-05-31 22:12:00');
 
 -- --------------------------------------------------------
 
@@ -175,9 +177,8 @@ CREATE TABLE `favorites` (
 --
 
 INSERT INTO `favorites` (`id`, `user_id`, `painting_id`, `created_at`) VALUES
-(9, 1, 17, '2026-05-07 09:12:37'),
-(60, 10, 17, '2026-05-07 15:09:31'),
-(61, 10, 11, '2026-05-08 08:57:09');
+(61, 10, 11, '2026-05-08 08:57:09'),
+(62, 10, 10, '2026-05-09 20:54:13');
 
 -- --------------------------------------------------------
 
@@ -234,7 +235,29 @@ INSERT INTO `paintings` (`id`, `title`, `description`, `image`, `year_created`, 
 (12, 'Chromatic Energy', 'A vibrant explosion of color that celebrates the raw energy and emotion of abstract expressionism.', 'chromatic-energy.jpg', '2025', 1, 1, 'Acrylic on Canvas', '', 999.00, '2026-04-09 10:22:14', '2026-04-09 10:22:14'),
 (13, 'Geometric Meditation', 'Precise geometric forms create a sense of balance and harmony, inviting contemplation and visual exploration.', 'geometric-meditation.jpg', '2025', 9, 12, 'Acrylic on Panel', '40\" × 40\"', 1100.00, '2026-04-23 09:39:00', '2026-04-23 09:39:00'),
 (14, 'Layered Narratives', 'Complex layers of paint, paper, and found materials come together to tell a multifaceted story of texture and depth.', 'layered-narratives.jpg', '2025', 10, 4, 'Mixed Media', '48\" × 36\"', 555.00, '2026-04-23 09:43:58', '2026-04-23 09:43:58'),
-(17, 'test', 'test', 'painting_69fc23fa89c496.30305810.jpg', '2023', 2, 1, 'test', '123', 50.00, '2026-05-07 08:32:42', '2026-05-07 08:32:42');
+(23, 'Bridge', 'Bridge', 'painting_6a0383ddbb1bf4.09642702.jpg', '2025', 3, 15, 'test', 'te', 233.99, '2026-05-12 22:47:41', '2026-05-12 22:47:41');
+
+-- --------------------------------------------------------
+
+--
+-- Структура таблицы `painting_tags`
+--
+
+CREATE TABLE `painting_tags` (
+  `id` int(11) NOT NULL,
+  `painting_id` int(11) NOT NULL,
+  `tag_id` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Дамп данных таблицы `painting_tags`
+--
+
+INSERT INTO `painting_tags` (`id`, `painting_id`, `tag_id`) VALUES
+(24, 23, 23),
+(25, 23, 4),
+(26, 23, 24),
+(27, 23, 25);
 
 -- --------------------------------------------------------
 
@@ -256,36 +279,81 @@ CREATE TABLE `purchase_requests` (
 INSERT INTO `purchase_requests` (`id`, `user_id`, `painting_id`, `created_at`) VALUES
 (1, 10, 3, '2026-05-07 13:36:00'),
 (3, NULL, 12, '2026-05-07 13:39:16'),
-(4, 10, 17, '2026-05-07 15:08:22'),
-(5, 10, 17, '2026-05-07 15:08:24'),
-(6, 10, 17, '2026-05-07 15:08:26'),
-(7, 10, 17, '2026-05-07 15:09:38'),
-(8, 10, 17, '2026-05-07 15:09:40'),
-(9, 10, 17, '2026-05-07 15:09:42'),
-(10, 10, 17, '2026-05-07 15:09:43'),
-(11, 10, 17, '2026-05-07 15:09:44'),
-(12, 10, 17, '2026-05-07 15:09:46'),
-(13, 10, 17, '2026-05-07 15:09:47'),
-(14, 10, 17, '2026-05-07 15:09:47'),
-(15, 10, 17, '2026-05-07 15:09:52'),
-(16, 10, 17, '2026-05-07 15:09:57'),
-(17, 10, 17, '2026-05-07 15:09:57'),
-(18, 10, 17, '2026-05-07 15:09:59'),
-(19, 10, 17, '2026-05-07 15:11:32'),
-(20, 10, 17, '2026-05-07 15:11:34'),
-(21, 10, 17, '2026-05-07 15:15:40'),
-(22, 10, 17, '2026-05-07 15:15:41'),
-(23, 10, 17, '2026-05-08 08:18:18'),
-(24, 10, 17, '2026-05-08 08:18:19'),
-(25, 10, 17, '2026-05-08 08:18:20'),
-(26, 10, 17, '2026-05-08 08:18:21'),
-(27, 10, 17, '2026-05-08 08:18:21'),
+(4, 10, NULL, '2026-05-07 15:08:22'),
+(5, 10, NULL, '2026-05-07 15:08:24'),
+(6, 10, NULL, '2026-05-07 15:08:26'),
+(7, 10, NULL, '2026-05-07 15:09:38'),
+(8, 10, NULL, '2026-05-07 15:09:40'),
+(9, 10, NULL, '2026-05-07 15:09:42'),
+(10, 10, NULL, '2026-05-07 15:09:43'),
+(11, 10, NULL, '2026-05-07 15:09:44'),
+(12, 10, NULL, '2026-05-07 15:09:46'),
+(13, 10, NULL, '2026-05-07 15:09:47'),
+(14, 10, NULL, '2026-05-07 15:09:47'),
+(15, 10, NULL, '2026-05-07 15:09:52'),
+(16, 10, NULL, '2026-05-07 15:09:57'),
+(17, 10, NULL, '2026-05-07 15:09:57'),
+(18, 10, NULL, '2026-05-07 15:09:59'),
+(19, 10, NULL, '2026-05-07 15:11:32'),
+(20, 10, NULL, '2026-05-07 15:11:34'),
+(21, 10, NULL, '2026-05-07 15:15:40'),
+(22, 10, NULL, '2026-05-07 15:15:41'),
+(23, 10, NULL, '2026-05-08 08:18:18'),
+(24, 10, NULL, '2026-05-08 08:18:19'),
+(25, 10, NULL, '2026-05-08 08:18:20'),
+(26, 10, NULL, '2026-05-08 08:18:21'),
+(27, 10, NULL, '2026-05-08 08:18:21'),
 (28, 10, 14, '2026-05-08 08:31:22'),
 (29, 10, 4, '2026-05-08 08:32:45'),
 (30, 10, 11, '2026-05-08 08:57:11'),
 (31, 10, 13, '2026-05-08 09:17:19'),
 (32, 10, 9, '2026-05-08 09:26:44'),
-(33, 10, 12, '2026-05-08 09:28:13');
+(33, 10, 12, '2026-05-08 09:28:13'),
+(34, 10, 11, '2026-05-09 20:51:48'),
+(35, 10, NULL, '2026-05-09 20:53:37'),
+(36, 10, 10, '2026-05-09 20:54:25');
+
+-- --------------------------------------------------------
+
+--
+-- Структура таблицы `tags`
+--
+
+CREATE TABLE `tags` (
+  `id` int(11) NOT NULL,
+  `name` varchar(255) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Дамп данных таблицы `tags`
+--
+
+INSERT INTO `tags` (`id`, `name`) VALUES
+(10, 'acrylic paint'),
+(17, 'aegean cat'),
+(18, 'arabian mau'),
+(3, 'art'),
+(4, 'art paint'),
+(23, 'blue'),
+(14, 'carnivores'),
+(11, 'cat'),
+(12, 'felidae'),
+(13, 'felinae'),
+(8, 'modern art'),
+(21, 'ojos azules'),
+(2, 'orange'),
+(7, 'paint'),
+(5, 'painting'),
+(20, 'ragamuffin'),
+(1, 'red'),
+(24, 'spire'),
+(22, 'tabby cat'),
+(25, 'tower'),
+(19, 'turkish van'),
+(15, 'vertebrate'),
+(6, 'visual arts'),
+(9, 'watercolor painting'),
+(16, 'whiskers');
 
 -- --------------------------------------------------------
 
@@ -313,15 +381,15 @@ INSERT INTO `users` (`id`, `username`, `email`, `password`, `role`, `created_at`
 (4, 'marina', 'marina@artportal.ee', '$2y$10$3BaKKk1rcaMpEx2pBQfBnuTp8AkPG33P6EyvY6OIkctda3rSICbs6', 'artist', '2026-03-25 11:17:55'),
 (5, 'alexandre', 'alexandre@artportal.ee', '$2y$10$T4XRXaxjEK3ifIxgQzHnZe3f9cAFVTt57NBnsA8PgHguWkuj6BLGe', 'artist', '2026-03-25 13:07:23'),
 (6, 'yuki', 'yuki@artportal.ee', '$2y$10$BrSY3RMOOQYnAHAHd29CbeTui.PWY6.YVb4m8.rryrNde0hzMk4PW', 'artist', '2026-03-25 13:08:46'),
-(7, 'sofia', 'sofia@artportal', '$2y$10$HOX69EjaxPtXhIqwGbEC/OQtl0brd4WiJ8NWINc0/gnHau77Ka3.a', 'user', '2026-03-25 13:12:53'),
-(8, 'david', 'david@artportal.ee', '$2y$10$isZBs0DDwi1nNtQQ/qwpXO49auxCLTqlhkQM12g0wBNznyeNUuIeC', 'user', '2026-04-23 09:11:04'),
-(9, 'emma', 'emma@artportal.ee', '$2y$10$ZE9d5dGo7gmiTDJ/dh4OyuYmvuFr75YBa0cbowZLv9mR/yA0VEUka', 'user', '2026-04-23 09:11:04'),
+(7, 'sofia', 'sofia@artportal', '$2y$10$HOX69EjaxPtXhIqwGbEC/OQtl0brd4WiJ8NWINc0/gnHau77Ka3.a', 'artist', '2026-03-25 13:12:53'),
+(8, 'david', 'david@artportal.ee', '$2y$10$isZBs0DDwi1nNtQQ/qwpXO49auxCLTqlhkQM12g0wBNznyeNUuIeC', 'artist', '2026-04-23 09:11:04'),
+(9, 'emma', 'emma@artportal.ee', '$2y$10$ZE9d5dGo7gmiTDJ/dh4OyuYmvuFr75YBa0cbowZLv9mR/yA0VEUka', 'artist', '2026-04-23 09:11:04'),
 (10, 'test', 'test@test.ee', '$2y$10$5bOaxg0.ue40sLfgp.CONOT8hcincHJrt.DlQUS.L5JrvhtVebfoa', 'user', '2026-04-25 00:00:00'),
 (14, 'test2', 'test2@test2.ee', '$2y$10$Hy43cA5HApKjCXJYitwsBuH5z8MbVNzTb0Y/fh1/Fbsqf5mTHFlIa', 'user', '2026-04-25 00:00:00'),
 (15, 'new', 'new@test.ee', '$2y$10$Az1Vc5SggqlAtvEin3gAu.58u7zAVro7wJBVhyqfzHw9tBOY1FeBC', 'user', '2026-04-25 00:00:00'),
 (17, 'Newnew', 'myemail@mail.ee', '$2y$10$zwYuLFQMSHaaXe01dAhhH.BllpgW.LhM0FVlDM9iYjm9f7hpb629e', 'user', '2026-05-02 00:00:00'),
 (18, 'ivan', 'ivan@artportal.ee', '$2y$10$D/.GOeM/AAo9zgabK3UCJeyPm2ZR6a3Ozq7AD05vCwN5egKmAbvwa', 'artist', '2026-05-05 00:00:00'),
-(19, 'maria', 'maria@artportal.ee', '$2y$10$qLDaDXNvrGBH5KgWDak9s.m/W8arYP7o6TFuxJEYyULZr99Qszxr6', 'user', '2026-05-05 00:00:00'),
+(19, 'maria', 'maria@artportal.ee', '$2y$10$qLDaDXNvrGBH5KgWDak9s.m/W8arYP7o6TFuxJEYyULZr99Qszxr6', 'artist', '2026-05-05 00:00:00'),
 (20, 'nnn', 'nnn@artportal.ee', '$2y$10$KOXc9VF1ln5Fr9Q6B.JnSeNsLdXIM/V1Rw0VoQ0RkPLKt9JW6Vm4i', 'user', '2026-05-08 00:00:00'),
 (21, 'rrr', 'rrr@artportal.ee', '$2y$10$njW70kStMAr.rj7EVfYm5eUmgadXjm6IsRklWkO117EoMhUl.zMOm', 'user', '2026-05-08 00:00:00'),
 (22, 'qqq', 'qqq@artportal.ee', '$2y$10$oP1nodEp/ChLKJI4nNEDR.XDHpOKUm7A0Qaz7yrWUCcyGv7d2ycu2', 'user', '2026-05-08 00:00:00'),
@@ -390,12 +458,27 @@ ALTER TABLE `paintings`
   ADD KEY `category_id` (`category_id`);
 
 --
+-- Индексы таблицы `painting_tags`
+--
+ALTER TABLE `painting_tags`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `painting_tags_ibfk_1` (`painting_id`),
+  ADD KEY `painting_tags_ibfk_2` (`tag_id`);
+
+--
 -- Индексы таблицы `purchase_requests`
 --
 ALTER TABLE `purchase_requests`
   ADD PRIMARY KEY (`id`),
   ADD KEY `purchase_requests_ibfk_2` (`painting_id`),
   ADD KEY `purchase_requests_ibfk_1` (`user_id`);
+
+--
+-- Индексы таблицы `tags`
+--
+ALTER TABLE `tags`
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `name` (`name`);
 
 --
 -- Индексы таблицы `users`
@@ -425,7 +508,7 @@ ALTER TABLE `categories`
 -- AUTO_INCREMENT для таблицы `collections`
 --
 ALTER TABLE `collections`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- AUTO_INCREMENT для таблицы `comments`
@@ -437,13 +520,13 @@ ALTER TABLE `comments`
 -- AUTO_INCREMENT для таблицы `exhibitions`
 --
 ALTER TABLE `exhibitions`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT для таблицы `favorites`
 --
 ALTER TABLE `favorites`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=62;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=63;
 
 --
 -- AUTO_INCREMENT для таблицы `gallery_images`
@@ -455,13 +538,25 @@ ALTER TABLE `gallery_images`
 -- AUTO_INCREMENT для таблицы `paintings`
 --
 ALTER TABLE `paintings`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=24;
+
+--
+-- AUTO_INCREMENT для таблицы `painting_tags`
+--
+ALTER TABLE `painting_tags`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=28;
 
 --
 -- AUTO_INCREMENT для таблицы `purchase_requests`
 --
 ALTER TABLE `purchase_requests`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=34;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=37;
+
+--
+-- AUTO_INCREMENT для таблицы `tags`
+--
+ALTER TABLE `tags`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=26;
 
 --
 -- AUTO_INCREMENT для таблицы `users`
@@ -511,6 +606,13 @@ ALTER TABLE `gallery_images`
 ALTER TABLE `paintings`
   ADD CONSTRAINT `paintings_ibfk_1` FOREIGN KEY (`category_id`) REFERENCES `categories` (`id`) ON UPDATE CASCADE,
   ADD CONSTRAINT `paintings_ibfk_3` FOREIGN KEY (`artist_id`) REFERENCES `artists` (`id`) ON UPDATE CASCADE;
+
+--
+-- Ограничения внешнего ключа таблицы `painting_tags`
+--
+ALTER TABLE `painting_tags`
+  ADD CONSTRAINT `painting_tags_ibfk_1` FOREIGN KEY (`painting_id`) REFERENCES `paintings` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `painting_tags_ibfk_2` FOREIGN KEY (`tag_id`) REFERENCES `tags` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Ограничения внешнего ключа таблицы `purchase_requests`
