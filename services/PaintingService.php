@@ -1,5 +1,9 @@
 <?php
 
+require_once __DIR__ . '/../services/VisionAIService.php';
+require_once __DIR__ . '/../models/PaintingTags.php';
+require_once __DIR__ . '/../models/Tags.php';
+
 class PaintingService {
     private static function getArtistIdForUser(int $userId) {
         $artist = Artists::getArtistByUserId($userId);
@@ -146,11 +150,29 @@ class PaintingService {
             'price' => (float)$normalized['price'],
         ];
 
-        if (!Paintings::insertPainting($cleanData)) {
+        $paintingId = Paintings::insertPainting($cleanData);
+        
+        if (!$paintingId) {
             return ['success' => false, 'errors' => ['Database error while adding painting'], 'data' => $normalized];
         }
 
+        $visionService = new VisionAIService();
+
+        $response = $visionService->detectLabels(
+        __DIR__ . '/../images/paintings/' . $cleanData['image']
+        );
+
+        $tags = $visionService->buildTags($response);
+        if (empty($tags)) {
+            return ['success' => true, 'errors' => [], 'data' => $cleanData];
+        }
+        foreach ($tags as $tagName) {
+           $tagId = Tags::getOrCreateTag($tagName);
+           PaintingTags::attach($paintingId, $tagId);
+        }
+
         return ['success' => true, 'errors' => [], 'data' => $cleanData];
+
     }
 
     public static function updatePainting(int $id, array $data, array $files, int $userId) {

@@ -6,7 +6,7 @@ class CollectionService {
         $type = trim($data['type'] ?? '');
         $param = trim($data['param'] ?? '');
 
-        $allowedTypes = ['keyword', 'latest', 'random', 'popular'];
+        $allowedTypes = ['keyword', 'latest', 'random', 'popular', 'ai'];
 
         if ($title === '') {
             return ['success' => false, 'errorMessage' => 'Collection title is required'];
@@ -34,7 +34,7 @@ class CollectionService {
         $type = trim($data['type'] ?? '');
         $param = trim($data['param'] ?? '');
 
-        $allowedTypes = ['keyword', 'latest', 'random', 'popular'];
+        $allowedTypes = ['keyword', 'latest', 'random', 'popular', 'ai'];
 
         if ($title === '') {
             return ['success' => false, 'errorMessage' => 'Collection title is required'];

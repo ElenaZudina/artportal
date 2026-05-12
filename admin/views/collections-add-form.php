@@ -35,18 +35,22 @@ ob_start();
                     <tr>
                         <td>Collection type</td>
                         <td>
-                            <select name="type" class="form-select" required>
+                            <select name="type" class="form-select" id="collectionType" required>
                                 <option value="">Select type</option>
                                 <option value="keyword">keyword</option>
                                 <option value="latest">latest</option>
                                 <option value="random">random</option>
                                 <option value="popular">popular</option>
+                                <option value="ai">ai</option>
                             </select>
                         </td>
                     </tr>
                     <tr>
                         <td>Param</td>
-                        <td><input type='text' name='param' class='form-control'></td>
+                        <td>
+                            <input type='text' name='param' class='form-control' id="collectionParam" data-ai-placeholder="e.g. lazy autumn day">
+                            <div class="form-text d-none" id="aiParamHint">For AI collections, enter short keywords separated by spaces.</div>
+                        </td>
                     </tr>
 
                      <tr>
@@ -68,3 +72,26 @@ ob_start();
 </div>
 <?php $content = ob_get_clean(); ?>
 <?php include "views/templates/layout.php"; ?>
+
+<script>
+(function () {
+    var typeSelect = document.getElementById('collectionType');
+    var paramInput = document.getElementById('collectionParam');
+    var hint = document.getElementById('aiParamHint');
+
+    if (!typeSelect || !paramInput || !hint) {
+        return;
+    }
+
+    var aiPlaceholder = paramInput.getAttribute('data-ai-placeholder') || '';
+
+    function toggleHint() {
+        var isAi = typeSelect.value === 'ai';
+        hint.classList.toggle('d-none', !isAi);
+        paramInput.setAttribute('placeholder', isAi ? aiPlaceholder : '');
+    }
+
+    typeSelect.addEventListener('change', toggleHint);
+    toggleHint();
+})();
+</script>

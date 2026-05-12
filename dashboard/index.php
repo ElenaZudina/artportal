@@ -30,6 +30,8 @@ include_once("../models/Auth.php");
 include_once("../models/Paintings.php");
 include_once("../models/Favourite.php");
 include_once("../models/PurchaseRequest.php");
+include_once("../models/Tags.php");
+include_once("../models/PaintingTags.php");
 include_once("../services/CategoryService.php");
 include_once("../services/CollectionService.php");
 include_once("../services/ExhibitionService.php");

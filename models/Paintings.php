@@ -193,7 +193,8 @@ class Paintings{
         ];
 
         $db = new Database();
-        return $db->executeRun($query, $params);
+        $db->executeRun($query, $params);
+        return $db->getLastInsertId();
     }
 
     public static function updatePainting($id, array $cleanData) {
@@ -236,8 +237,7 @@ class Paintings{
         $baseQuery = "SELECT paintings.*, artists.name AS artist_name, categories.name AS category_name
         FROM paintings
         JOIN artists ON paintings.artist_id = artists.id
-        JOIN categories ON paintings.category_id = categories.id
-        WHERE artists.status = 'approved'";
+        JOIN categories ON paintings.category_id = categories.id";
 
         switch ($collection['type']) {
 
@@ -247,6 +247,7 @@ class Paintings{
                 if ($param === '') return [];
 
                 $query = $baseQuery . "
+                     WHERE artists.status = 'approved'
                      AND (paintings.title LIKE ? 
                          OR paintings.description LIKE ?)
                      ORDER BY paintings.id DESC";
@@ -255,6 +256,7 @@ class Paintings{
 
         case 'latest':
             $query = $baseQuery . "
+                WHERE artists.status = 'approved'
                 ORDER BY paintings.created_at DESC
                 LIMIT 10";
 
@@ -262,6 +264,7 @@ class Paintings{
 
         case 'random':
             $query = $baseQuery . "
+                WHERE artists.status = 'approved'
                 ORDER BY RAND()
                 LIMIT 10";
 
@@ -270,10 +273,34 @@ class Paintings{
         case 'popular':
             // предполагаем, что есть поле views
             $query = $baseQuery . "
+                WHERE artists.status = 'approved'
                 ORDER BY paintings.views DESC
                 LIMIT 10";
 
             return $db->getAll($query);
+
+        case 'ai':
+
+            $param = trim($collection['param'] ?? '');
+
+            if ($param === '') return [];
+
+            $keywords = array_values(array_filter(explode(' ', strtolower($param))));
+
+            if (empty($keywords)) return [];
+
+            $placeholders = implode(',', array_fill(0, count($keywords), '?'));
+
+            $query = $baseQuery . "
+            JOIN painting_tags pt ON paintings.id = pt.painting_id
+            JOIN tags t ON pt.tag_id = t.id
+            WHERE artists.status = 'approved'
+            AND t.name IN ($placeholders)
+            GROUP BY paintings.id
+            ORDER BY COUNT(t.id) DESC
+            LIMIT 10";
+
+            return $db->getAll($query, $keywords);
 
         default:
             return [];
