@@ -35,8 +35,9 @@ class Database {
                 );
                 $this->conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
             }
-            catch (Exception $e) {
-                die('Connection failed : ' . $e->getMessage());
+            catch (PDOException $e) {
+                error_log('Database connection error: ' . $e->getMessage());
+                throw new Exception('Database connection error');
             }
         }
         return $this->conn;
@@ -49,27 +50,46 @@ class Database {
     }
 
     function getOne($query, $params = []) {
+        try {
         $this->connect();
         $stmt = $this->conn->prepare($query);
         $stmt->execute($params);
         $stmt->setFetchMode (PDO::FETCH_ASSOC);
         $response = $stmt->fetch();
         return $response;
+        } catch (PDOException $e) {
+            error_log('Database query error: ' . $e->getMessage());
+            throw new Exception('Database operation failed');
+        }
     }
 
     function getAll($query, $params = []) {
-        $this->connect();
-        $stmt = $this->conn->prepare($query);
+        try {
+            $this->connect();
+            $stmt = $this->conn->prepare($query);
         $stmt->execute($params);
         $stmt->setFetchMode(PDO::FETCH_ASSOC);
         $response = $stmt->fetchAll();
         return $response;
+        } catch (PDOException $e) {
+            error_log('Database query error: ' . $e->getMessage());
+            throw new Exception('Database operation failed');
+        }
     }
 
     function executeRun($query, $params = []) {
-        $this->connect();
-        $stmt = $this->conn->prepare($query);
-        $stmt->execute($params);
-        return $stmt;
+        try {
+            $this->connect();
+            $stmt = $this->conn->prepare($query);
+            $stmt->execute($params);
+            return $stmt;
+    } catch (PDOException $e) {
+            error_log('Database query error: ' . $e->getMessage());
+            throw new Exception('Database operation failed');
+        }
+    }
+
+    function getLastInsertId() {
+        return $this->conn->lastInsertId();
     }
 }

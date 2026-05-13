@@ -1,0 +1,62 @@
+﻿body {
+  padding-top: 40px;
+  padding-bottom: 40px;
+  background-color: #eee;
+}
+
+/* Удалены устаревшие стили .form-signin */
+
+/* Универсальный стиль для всех input и textarea с фокусом */
+.form-control:focus, input:focus, textarea:focus {
+  outline: 2px solid var(--secondary) !important;
+  border-color: var(--primary) !important;
+  box-shadow: none !important;
+  background: var(--input-background) !important;
+}
+
+/* СТИЛИ АЛЕРТОВ */
+.my-alert-success {
+  background: var(--secondary);
+  color: var(--foreground);
+  border: 1px solid var(--primary);
+}
+.my-alert-error {
+  background: var(--muted);
+  color: var(--foreground);
+  border: 1px solid var(--destructive);
+}
+.my-alert-warning {
+  background: var(--accent);
+  color: var(--foreground);
+  border: 1px solid var(--accent-foreground);
+}
+
+.my-alert-btn {
+  display: inline-block;
+  padding: 10px 18px;
+  border-radius: var(--radius);
+  border: 1.5px solid var(--primary);
+  background: transparent;
+  color: var(--primary);
+  font-size: var(--text-base);
+  font-weight: var(--font-weight-medium);
+  cursor: pointer;
+  transition: background 0.2s, color 0.2s;
+  margin-top: 12px;
+  text-decoration: none;
+}
+.my-alert-btn:hover,
+.my-alert-btn:focus {
+  background: var(--primary);
+  color: #fff;
+}
+
+.my-alert-error .my-alert-btn {
+  border-color: var(--destructive);
+  color: var(--destructive);
+}
+.my-alert-error .my-alert-btn:hover,
+.my-alert-error .my-alert-btn:focus {
+  background: var(--destructive);
+  color: #fff;
+}

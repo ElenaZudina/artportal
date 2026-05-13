@@ -1,6 +1,9 @@
 <?php
 ob_start();
 ?>
+<div class="d-flex justify-content-between align-items-center mb-3">
+    <h2 class="mb-0"> <?php echo date('F Y'); ?> Online Exhibition</h2>
+</div>
 <?php
 ViewSlider::render($sliderPaintings);
 ?>

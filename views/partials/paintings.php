@@ -79,7 +79,26 @@ class ViewPaintings{
                 echo '<div class="col-12 col-md-6 mb-4 mb-md-0">';
                     echo '<div class="one-painting-container">';
                         echo '<div class="one-painting-image-wrapper">';
-                            echo '<span class="category-badge category-badge--accent category-badge--top-left">' . htmlspecialchars($item['category_name'] ?? 'Unknown', ENT_QUOTES, 'UTF-8') . '</span>';
+                            echo '<div class="painting-overlays">';
+                                echo '<span class="category-badge category-badge--accent">' . htmlspecialchars($item['category_name'] ?? 'Unknown', ENT_QUOTES, 'UTF-8') . '</span>';
+                                echo '<form method="POST" action="/artportal/toggle-favorite" class="painting-favorite-form">';
+                                    echo '<input type="hidden" name="painting_id" value="' . (int)($item['id'] ?? 0) . '">';
+                                    $isFavorite = false;
+                                    $favIcon = 'fa-heart-o';
+                                    $favLabel = 'Add to favorites';
+                                    if (isset($_SESSION['userId'])) {
+                                        $isFavorite = Favorite::isFavorite((int)$_SESSION['userId'], (int)($item['id'] ?? 0));
+                                        if ($isFavorite) {
+                                            $favIcon = 'fa-heart';
+                                            $favLabel = 'Remove from favorites';
+                                        }
+                                    }
+                                    $favStateClass = $isFavorite ? 'is-active' : 'is-inactive';
+                                    echo '<button type="submit" class="category-badge category-badge--favorite ' . $favStateClass . '" aria-label="' . htmlspecialchars($favLabel, ENT_QUOTES, 'UTF-8') . '">';
+                                        echo '<i class="fa ' . htmlspecialchars($favIcon, ENT_QUOTES, 'UTF-8') . '"></i>';
+                                    echo '</button>';
+                                echo '</form>';
+                            echo '</div>';
                             echo '<img src="images/paintings/' . htmlspecialchars($item['image'] ?? '', ENT_QUOTES, 'UTF-8') . '" class="img-fluid one-painting-image" alt="' . htmlspecialchars($item['title'], ENT_QUOTES, 'UTF-8') . '" onerror="this.onerror=null;this.src=\'images/test.jpg\';" />';
                         echo '</div>';
                     echo '</div>';
@@ -138,7 +157,13 @@ class ViewPaintings{
                         echo '</div>';
                     echo '</div>';
 
-                    echo '<button type="button" class="btn buy-button">Buy</button>';
+                    echo '<div class="action-buttons">';
+                        echo '<form method="POST" action="purchase-request" class="m-0">';
+                            echo '<input type="hidden" name="painting_id" value="' . htmlspecialchars((string)($item['id'] ?? ''), ENT_QUOTES, 'UTF-8') . '">';
+                            echo '<button type="submit" class="btn buy-button">Inquire About Purchase</button>';
+                        echo '</form>';
+                        echo '<button type="button" class="btn collection-button">Add to collection</button>';
+                    echo '</div>';
                 echo '</div>';
             echo '</div>';
         echo '</div>';

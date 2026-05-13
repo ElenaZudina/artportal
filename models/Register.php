@@ -61,7 +61,15 @@ class Register{
         ];
         $result = $db->executeRun($query, $params);
         if ($result) {
-            return ['success' => true];
+            $userId = (int)$db->getLastInsertId();
+            return [
+                'success' => true,
+                'user' => [
+                    'id' => $userId,
+                    'username' => $cleanData['name'],
+                    'role' => 'user'
+                ]
+            ];
         } else {
             return ['success' => false, 'errors' => ['Database error: Unable to save user']];
         }

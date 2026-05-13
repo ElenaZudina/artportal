@@ -66,6 +66,46 @@ elseif ($path == 'registerAnswer') {
     //register user
     $response = Controller::registerUser();
 }
+elseif ($path == 'artistProfileForm') {
+    $response = Controller::artistProfileForm();
+}
+elseif ($path == 'artistProfileSave') {
+    $response = Controller::artistProfileSave();
+}
+elseif ($path == 'login' ) {
+    // Cтраница входа
+    $response = controllerAuth::formLoginSite();
+}
+// ------- ВХОД в зависимости  от роли-----------------------
+
+elseif ($path == 'auth') {
+    // Форма входа
+    $response = controllerAuth::loginAction();
+}
+elseif ($path == 'logout') {
+    // Выход
+    $response = controllerAuth::logoutAction();
+}
+
+elseif ($path == 'add-to-favorite') {
+    $response = FavoriteController::addFavorite();
+}
+
+elseif ($path == 'remove-from-favorite') {
+    $response = FavoriteController::removeFavorite();
+}
+
+elseif ($path == 'toggle-favorite') {
+    $response = FavoriteController::toggleFavorite();
+}
+
+elseif ($path == 'purchase-request') {
+    if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+        PurchaseRequestController::create();
+    } else {
+        $response = Controller::error404();
+    }
+}
 
 //error page
 else{

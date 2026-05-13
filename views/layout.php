@@ -4,8 +4,9 @@ $activeRoute = defined('ACTIVE_ROUTE') ? ACTIVE_ROUTE : 'home';
 $isHome = $activeRoute === 'home';
 $isInfo = $activeRoute === 'testError';
 $isArtists = $activeRoute === 'artists' || $activeRoute === 'artist';
-$isCategories = $activeRoute === 'category' || $activeRoute === 'all';
+$isGallery = $activeRoute === 'category' || $activeRoute === 'all';
 $isRegister = $activeRoute === 'registerForm' || $activeRoute === 'registerAnswer';
+$isLogin = $activeRoute === 'login';
 ?>
 
 <!DOCTYPE html>
@@ -43,20 +44,90 @@ $isRegister = $activeRoute === 'registerForm' || $activeRoute === 'registerAnswe
                             <!--<li class="nav-item"><a class="nav-link<?php echo $isInfo ? ' active' : ''; ?>" href="testError">Info</a></li>-->
                             <li class="nav-item"><a class="nav-link<?php echo $isArtists ? ' active' : ''; ?>" href="artists">Artists</a></li>
                             <li class="nav-item dropdown">
-                                <button class="nav-link dropdown-toggle<?php echo $isCategories ? ' active' : ''; ?>" type="button" id="categoriesDropdown" data-bs-toggle="dropdown" aria-expanded="false">Categories</button>
-                                <ul class="dropdown-menu" aria-labelledby="categoriesDropdown">
+                                <button class="nav-link dropdown-toggle<?php echo $isGallery ? ' active' : ''; ?>" type="button" id="galleryDropdown" data-bs-toggle="dropdown" aria-expanded="false">Gallery</button>
+                                <ul class="dropdown-menu" aria-labelledby="galleryDropdown">
                                     <?php
                                         Controller::AllCategories();
                                     ?>
                                 </ul>
                             </li>
                             <li class="nav-item"><a class="nav-link<?php echo $isRegister ? ' active' : ''; ?>" href="registerForm">Register</a></li>
+                            <?php if (!isset($_SESSION['userId'])): ?>
+                                <li class="nav-item"><a class="nav-link<?php echo $isLogin ? ' active' : ''; ?>" href="login">Login</a></li>
+                            <?php else: ?>
+                                <li class="nav-item"><a class="nav-link" href="logout">Logout</a></li>
+                            <?php endif; ?>
                         </ul>
                     </div>
                 </div>
             </nav>
         </header>
-        <main class="container my-5 flex-grow-1">
+        
+        <?php if ($isHome): ?>
+        <section class="hero">
+            <div class="container hero-container">
+            <div class="hero-wrapper">
+                <div class="hero-content">
+                    <h1 class="hero-title"><span class="hero-title-dark">Where Art</span><br><span class="hero-title-accent">Meets Vision</span></h1>
+                    <p class="hero-text">Discover extraordinary artworks from emerging and established artists. A curated platform celebrating creativity in the digital age.</p>
+                    <div class="hero-buttons">
+                        <a href="artists" class="btn-hero btn-hero--primary">Explore Artists</a>
+                        <a href="all" class="btn-hero btn-hero--secondary">View Gallery</a>
+                    </div>
+                </div>
+                <div class="hero-grid">
+                    <?php 
+                    $heroPaintings = Paintings::getLastPaintings(3);
+                    if (!empty($heroPaintings) && count($heroPaintings) >= 1) {
+                        $largePainting = $heroPaintings[0];
+                        $smallPaintings = array_slice($heroPaintings, 1, 2);
+                        $largeImage = !empty($largePainting['image']) ? 'images/paintings/' . htmlspecialchars($largePainting['image'], ENT_QUOTES, 'UTF-8') : 'images/paintings/chromatic-energy.jpg';
+                    ?>
+                    <div class="hero-main">
+                        <img src="<?php echo $largeImage; ?>" alt="<?php echo htmlspecialchars($largePainting['title'] ?? 'Featured artwork', ENT_QUOTES, 'UTF-8'); ?>" loading="lazy">
+                        <div class="overlay"></div>
+                    </div>
+                    <?php foreach ($smallPaintings as $painting):
+                        $smallImage = !empty($painting['image']) ? 'images/paintings/' . htmlspecialchars($painting['image'], ENT_QUOTES, 'UTF-8') : 'images/paintings/digital-synthesis.jpg';
+                    ?>
+                    <div class="hero-small">
+                        <img src="<?php echo $smallImage; ?>" alt="<?php echo htmlspecialchars($painting['title'] ?? 'Artwork thumbnail', ENT_QUOTES, 'UTF-8'); ?>" loading="lazy">
+                    </div>
+                    <?php endforeach; ?>
+                    <?php } ?>
+                </div>
+            </div>
+            </div>
+        </section>
+        <?php endif; ?>
+        
+        <main class="container my-3 flex-grow-1">
+            
+            <?php
+                if (isset($_SESSION['successString'])) {
+                    echo '<div class="alert alert-success alert-dismissible fade show" role="alert">';
+                    echo $_SESSION['successString'];
+                    echo '<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>';
+                    echo '</div>';
+                    unset($_SESSION['successString']);
+                }
+                
+                if (isset($_SESSION['warningString'])) {
+                    echo '<div class="alert alert-warning alert-dismissible fade show" role="alert">';
+                    echo $_SESSION['warningString'];
+                    echo '<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>';
+                    echo '</div>';
+                    unset($_SESSION['warningString']);
+                }
+                
+                if (isset($_SESSION['errorString'])) {
+                    echo '<div class="alert alert-danger alert-dismissible fade show" role="alert">';
+                    echo $_SESSION['errorString'];
+                    echo '<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>';
+                    echo '</div>';
+                    unset($_SESSION['errorString']);
+                }
+            ?>
             
             <?php
                 if (isset($content)) {
@@ -69,9 +140,13 @@ $isRegister = $activeRoute === 'registerForm' || $activeRoute === 'registerAnswe
         </main>
         <footer>
             <div class="container text-center py-5">
-                <h2 class="h2-footer">ArtPortal</h2>
-                <p>Footer text placeholder for your future final text.</p>
-                <p>JKTV24 2026a. &copy; All Rights Reserved</p>
+                <h2 class="h2-footer">Join Our Creative Community</h2>
+                <p>Connect with artists, discover new works, and be part of the digital art revolution</p>
+                <div class="mt-5 mb-5">
+                    <a href="registerForm" class="btn-footer-primary me-2">Get Started</a>
+                    <button class="btn-footer-secondary">Learn More</button>
+                </div>
+                <p>ArtPortal © All Rights Reserved</p>
             </div>
         </footer>
         <!-- Bootstrap 5.3 JS Bundle with Popper -->

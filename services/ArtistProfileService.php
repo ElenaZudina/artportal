@@ -1,0 +1,194 @@
+<?php
+
+class ArtistProfileService {
+    private static function resolvePictureValue(array $data, array $files, ?string $existingPicture = null, array &$errors = []) {
+        $upload = $files['picture_file'] ?? null;
+
+        if (is_array($upload) && ($upload['error'] ?? UPLOAD_ERR_NO_FILE) === UPLOAD_ERR_OK) {
+            $tmpName = (string)($upload['tmp_name'] ?? '');
+            $originalName = (string)($upload['name'] ?? '');
+            $fileSize = (int)($upload['size'] ?? 0);
+
+            if ($tmpName === '' || !is_uploaded_file($tmpName)) {
+                $errors[] = 'Uploaded picture is invalid';
+                return $existingPicture;
+            }
+
+            if ($fileSize <= 0) {
+                $errors[] = 'Uploaded picture is empty';
+                return $existingPicture;
+            }
+
+            $extension = strtolower(pathinfo($originalName, PATHINFO_EXTENSION));
+            $allowedExtensions = ['jpg', 'jpeg', 'png', 'gif', 'webp'];
+            if ($extension === '' || !in_array($extension, $allowedExtensions, true)) {
+                $errors[] = 'Picture must be a JPG, PNG, GIF, or WEBP file';
+                return $existingPicture;
+            }
+
+            $directory = __DIR__ . '/../images/artists';
+            if (!is_dir($directory)) {
+                $errors[] = 'Upload directory is missing';
+                return $existingPicture;
+            }
+
+            $fileName = uniqid('artist_', true) . '.' . $extension;
+            $targetPath = $directory . '/' . $fileName;
+            if (!move_uploaded_file($tmpName, $targetPath)) {
+                $errors[] = 'Failed to save uploaded picture';
+                return $existingPicture;
+            }
+
+            return $fileName;
+        }
+
+        if ($existingPicture !== null) {
+            return $existingPicture;
+        }
+
+        $legacyPicture = trim((string)($data['picture'] ?? ''));
+        return $legacyPicture !== '' ? $legacyPicture : null;
+    }
+
+    public static function createProfile($data, $files, $userId) {
+        $errors = [];
+
+        if (!is_array($data) || empty($data)) {
+            return ['success' => false, 'errors' => ['No data provided']];
+        }
+
+        $normalized = [
+            'name' => trim((string)($data['name'] ?? '')),
+            'location' => trim((string)($data['location'] ?? '')),
+            'birth_date' => trim((string)($data['birth_date'] ?? '')),
+            'bio' => trim((string)($data['bio'] ?? '')),
+            'picture' => trim((string)($data['picture'] ?? '')),
+        ];
+
+        if ($normalized['name'] === '') {
+            $errors[] = 'Name is required';
+        } elseif (mb_strlen($normalized['name']) > 255) {
+            $errors[] = 'Name is too long';
+        }
+
+        if ($normalized['location'] === '') {
+            $errors[] = 'Location is required';
+        } elseif (mb_strlen($normalized['location']) > 100) {
+            $errors[] = 'Location is too long';
+        }
+
+        if ($normalized['birth_date'] !== '' && !preg_match('/^\d{4}-\d{2}-\d{2}$/', $normalized['birth_date'])) {
+            $errors[] = 'Birth date must be in YYYY-MM-DD format';
+        }
+
+        if ($normalized['bio'] !== '' && mb_strlen($normalized['bio']) > 65535) {
+            $errors[] = 'Bio is too long';
+        }
+
+        $existing = Artists::getArtistByUserId((int)$userId);
+        if ($existing) {
+            $errors[] = 'Artist profile already exists for this user';
+        }
+
+        if (!empty($errors)) {
+            return ['success' => false, 'errors' => $errors, 'data' => $normalized];
+        }
+
+        $picture = self::resolvePictureValue($data, $files, null, $errors);
+        if ($picture !== null && mb_strlen($picture) > 255) {
+            $errors[] = 'Picture filename is too long';
+        }
+
+        if (!empty($errors)) {
+            return ['success' => false, 'errors' => $errors, 'data' => $normalized];
+        }
+
+        $cleanData = [
+            'name' => $normalized['name'],
+            'location' => $normalized['location'],
+            'birth_date' => $normalized['birth_date'] !== '' ? $normalized['birth_date'] : null,
+            'bio' => $normalized['bio'] !== '' ? $normalized['bio'] : null,
+            'picture' => $picture,
+            'status' => 'pending',
+            'user_id' => (int)$userId,
+        ];
+
+        $saved = Artists::insertArtistProfile($cleanData);
+        if (!$saved) {
+            return ['success' => false, 'errors' => ['Database error: Unable to create artist profile'], 'data' => $normalized];
+        }
+
+        return ['success' => true, 'data' => $cleanData];
+    }
+
+    public static function updateProfile($data, $files, $userId) {
+        $errors = [];
+
+        if (!is_array($data) || empty($data)) {
+            return ['success' => false, 'errors' => ['No data provided']];
+        }
+
+        $existing = Artists::getArtistByUserId((int)$userId);
+        if (!$existing) {
+            return ['success' => false, 'errors' => ['Artist profile not found']];
+        }
+
+        $normalized = [
+            'name' => trim((string)($data['name'] ?? '')),
+            'location' => trim((string)($data['location'] ?? '')),
+            'birth_date' => trim((string)($data['birth_date'] ?? '')),
+            'bio' => trim((string)($data['bio'] ?? '')),
+            'picture' => trim((string)($data['picture'] ?? '')),
+        ];
+
+        if ($normalized['name'] === '') {
+            $errors[] = 'Name is required';
+        } elseif (mb_strlen($normalized['name']) > 255) {
+            $errors[] = 'Name is too long';
+        }
+
+        if ($normalized['location'] === '') {
+            $errors[] = 'Location is required';
+        } elseif (mb_strlen($normalized['location']) > 100) {
+            $errors[] = 'Location is too long';
+        }
+
+        if ($normalized['birth_date'] !== '' && !preg_match('/^\d{4}-\d{2}-\d{2}$/', $normalized['birth_date'])) {
+            $errors[] = 'Birth date must be in YYYY-MM-DD format';
+        }
+
+        if ($normalized['bio'] !== '' && mb_strlen($normalized['bio']) > 65535) {
+            $errors[] = 'Bio is too long';
+        }
+
+        if (!empty($errors)) {
+            return ['success' => false, 'errors' => $errors, 'data' => $normalized];
+        }
+
+        $picture = self::resolvePictureValue($data, $files, $existing['picture'] ?? null, $errors);
+        if ($picture !== null && mb_strlen($picture) > 255) {
+            $errors[] = 'Picture filename is too long';
+        }
+
+        if (!empty($errors)) {
+            return ['success' => false, 'errors' => $errors, 'data' => $normalized];
+        }
+
+        $cleanData = [
+            'name' => $normalized['name'],
+            'location' => $normalized['location'],
+            'birth_date' => $normalized['birth_date'] !== '' ? $normalized['birth_date'] : null,
+            'bio' => $normalized['bio'] !== '' ? $normalized['bio'] : null,
+            'picture' => $picture,
+            'status' => $existing['status'] ?? 'pending',
+            'user_id' => (int)$userId,
+        ];
+
+        $saved = Artists::updateArtistProfile($cleanData, (int)$userId);
+        if (!$saved) {
+            return ['success' => false, 'errors' => ['Database error: Unable to update artist profile'], 'data' => $normalized];
+        }
+
+        return ['success' => true, 'data' => $cleanData];
+    }
+}
