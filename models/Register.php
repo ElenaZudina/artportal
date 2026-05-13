@@ -37,8 +37,8 @@ class Register{
         }
         return $controll;
     }*/
-    public static function saveUser($cleanData) {
-        $db = new Database();
+    public static function saveUser($cleanData, $db = null) {
+        $db = $db ?? new Database();
 
         // Проверка уникальности email
         $user = $db->getOne("SELECT * FROM users WHERE email = ?", [$cleanData['email']]);

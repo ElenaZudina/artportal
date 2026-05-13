@@ -1,10 +1,10 @@
 <?php
 class Auth {
     // АВТОРИЗАЦИЯ 
-    public static function findUserByEmail($email) {
-        $sql='SELECT * FROM `users` WHERE `email` = ?';
-        $db = new Database();
-        return $db->getOne($sql, [$email]);
+    public static function findUserByEmail($email, $db = null) {
+        // Allow injecting a Database instance for testing; fall back to real Database in production
+        $db = $db ?? new Database();
+        return $db->getOne('SELECT * FROM `users` WHERE `email` = ?', [$email]);
     }
 
     public static function getUserByID($id) {
