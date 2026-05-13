@@ -20,8 +20,8 @@ class RegisterService {
         if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
             $errors[] = 'Invalid email address';
         }
-        if (strlen($password) < 6) {
-            $errors[] = 'Password must be at least 6 characters long';
+        if (!preg_match('/^(?=.*[A-Za-z])(?=.*\d).{8,}$/', $password)) {
+            $errors[] = 'Password must be at least 8 characters and contain at least one letter and one number';
         }
         if ($password !== $confirm) {
             $errors[] = 'Passwords do not match';
@@ -49,9 +49,7 @@ class AuthService {
         if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
             $errors[] = 'Invalid email address';
         }
-        if (strlen($password) < 6) {
-            $errors[] = 'Password must be at least 6 characters long';
-        }
+      
         if (!empty($errors)) {
             return ['success' => false, 'errors' => $errors];
         }
