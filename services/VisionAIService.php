@@ -53,36 +53,69 @@ class VisionAIService {
 
     $ignore = [
         'art',
-        'painting',
         'paint',
-        'visual arts',
-        'acrylic paint',
-        'watercolor painting',
-        'modern art'
+        // 'visual',
+        'arts',
+        'acrylic',
+        'paint',
+        'watercolor',
+        'painting',
+        'the',
+        'a',
+        'an',
+        'and',
+        'or',
+        'for',
+        'of',
+        'in',
+        'on',
+        'with',
+        'to',
+        'is',
+        'at',
     ];
 
     $tags = [];
 
     // LABELS
     foreach ($labels as $item) {
-        $tag = strtolower($item['description'] ?? '');
+        $tagString = strtolower($item['description'] ?? '');
 
-        if (!$tag) continue;
-        if (in_array($tag, $ignore)) continue;
+        if (!$tagString) continue;
         if (($item['score'] ?? 0) < 0.75) continue;
 
-        $tags[] = $tag;
+        $words = explode(' ', $tagString);
+
+        foreach ($words as $word) {
+            $word = trim($word);
+
+            if (!$word) continue;
+            if (strlen($word) < 3) continue;
+            if (in_array($word, $ignore)) continue;
+
+
+        $tags[] = $word;
+    }
     }
 
     // WEB
     foreach ($web as $item) {
-        $tag = strtolower($item['description'] ?? '');
+        $tagString = strtolower($item['description'] ?? '');
 
-        if (!$tag) continue;
-        if (in_array($tag, $ignore)) continue;
+        if (!$tagString) continue;
         if (($item['score'] ?? 0) < 0.5) continue;
 
-        $tags[] = $tag;
+         $words = explode(' ', $tagString);
+
+        foreach ($words as $word) {
+            $word = trim($word);
+
+            if (!$word) continue;
+            if (strlen($word) < 3) continue;
+            if (in_array($word, $ignore)) continue;
+
+        $tags[] = $word;
+    }
     }
 
     return array_values(array_unique($tags));
