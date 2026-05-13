@@ -212,6 +212,7 @@ CREATE TABLE `paintings` (
   `title` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
   `description` text CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
   `image` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
+  `file_hash` char(32) DEFAULT NULL COMMENT 'MD5 hash of uploaded image file',
   `year_created` year(4) NOT NULL,
   `category_id` int(11) NOT NULL,
   `artist_id` int(11) NOT NULL,

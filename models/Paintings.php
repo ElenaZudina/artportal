@@ -176,21 +176,50 @@ class Paintings{
         return $arr;
     }
 
-    public static function insertPainting(array $cleanData) {
-        $query = "INSERT INTO paintings (title, description, image, year_created, category_id, artist_id, medium, dimensions, price, created_at, updated_at)
-        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, NOW(), NOW())";
+    public static function getPaintingByFileHash($fileHash) {
+        if (empty($fileHash)) {
+            return null;
+        }
+        $query = "SELECT id, title, image FROM paintings WHERE file_hash = ? LIMIT 1";
+        $db = new Database();
+        return $db->getOne($query, [$fileHash]);
+    }
 
-        $params = [
-            $cleanData['title'],
-            $cleanData['description'],
-            $cleanData['image'],
-            $cleanData['year_created'],
-            $cleanData['category_id'],
-            $cleanData['artist_id'],
-            $cleanData['medium'],
-            $cleanData['dimensions'],
-            $cleanData['price'],
-        ];
+    public static function insertPainting(array $cleanData) {
+        $fileHash = $cleanData['file_hash'] ?? null;
+        
+        if ($fileHash) {
+            $query = "INSERT INTO paintings (title, description, image, file_hash, year_created, category_id, artist_id, medium, dimensions, price, created_at, updated_at)
+            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, NOW(), NOW())";
+
+            $params = [
+                $cleanData['title'],
+                $cleanData['description'],
+                $cleanData['image'],
+                $fileHash,
+                $cleanData['year_created'],
+                $cleanData['category_id'],
+                $cleanData['artist_id'],
+                $cleanData['medium'],
+                $cleanData['dimensions'],
+                $cleanData['price'],
+            ];
+        } else {
+            $query = "INSERT INTO paintings (title, description, image, year_created, category_id, artist_id, medium, dimensions, price, created_at, updated_at)
+            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, NOW(), NOW())";
+
+            $params = [
+                $cleanData['title'],
+                $cleanData['description'],
+                $cleanData['image'],
+                $cleanData['year_created'],
+                $cleanData['category_id'],
+                $cleanData['artist_id'],
+                $cleanData['medium'],
+                $cleanData['dimensions'],
+                $cleanData['price'],
+            ];
+        }
 
         $db = new Database();
         $db->executeRun($query, $params);
@@ -198,22 +227,44 @@ class Paintings{
     }
 
     public static function updatePainting($id, array $cleanData) {
-        $query = "UPDATE paintings
-        SET title = ?, description = ?, image = ?, year_created = ?, category_id = ?, medium = ?, dimensions = ?, price = ?, updated_at = NOW()
-        WHERE id = ? AND artist_id = ?";
+        $fileHash = $cleanData['file_hash'] ?? null;
+        
+        if ($fileHash) {
+            $query = "UPDATE paintings
+            SET title = ?, description = ?, image = ?, file_hash = ?, year_created = ?, category_id = ?, medium = ?, dimensions = ?, price = ?, updated_at = NOW()
+            WHERE id = ? AND artist_id = ?";
 
-        $params = [
-            $cleanData['title'],
-            $cleanData['description'],
-            $cleanData['image'],
-            $cleanData['year_created'],
-            $cleanData['category_id'],
-            $cleanData['medium'],
-            $cleanData['dimensions'],
-            $cleanData['price'],
-            $id,
-            $cleanData['artist_id'],
-        ];
+            $params = [
+                $cleanData['title'],
+                $cleanData['description'],
+                $cleanData['image'],
+                $fileHash,
+                $cleanData['year_created'],
+                $cleanData['category_id'],
+                $cleanData['medium'],
+                $cleanData['dimensions'],
+                $cleanData['price'],
+                $id,
+                $cleanData['artist_id'],
+            ];
+        } else {
+            $query = "UPDATE paintings
+            SET title = ?, description = ?, image = ?, year_created = ?, category_id = ?, medium = ?, dimensions = ?, price = ?, updated_at = NOW()
+            WHERE id = ? AND artist_id = ?";
+
+            $params = [
+                $cleanData['title'],
+                $cleanData['description'],
+                $cleanData['image'],
+                $cleanData['year_created'],
+                $cleanData['category_id'],
+                $cleanData['medium'],
+                $cleanData['dimensions'],
+                $cleanData['price'],
+                $id,
+                $cleanData['artist_id'],
+            ];
+        }
 
         $db = new Database();
         return $db->executeRun($query, $params);

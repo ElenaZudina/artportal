@@ -20,7 +20,7 @@ class PaintingService {
         }
     }
 
-    private static function resolveImageValue(array $data, array $files, ?string $existingImage = null, array &$errors = []) {
+    private static function resolveImageValue(array $data, array $files, ?string $existingImage = null, array &$errors = [], ?string &$fileHash = null) {
         $upload = $files['image_file'] ?? null;
 
         if (is_array($upload) && ($upload['error'] ?? UPLOAD_ERR_NO_FILE) === UPLOAD_ERR_OK) {
@@ -50,6 +50,9 @@ class PaintingService {
                 $errors[] = 'Upload directory is missing';
                 return $existingImage;
             }
+
+            // Вычисляем MD5 хеш файла перед сохранением
+            $fileHash = md5_file($tmpName);
 
             $fileName = uniqid('painting_', true) . '.' . $extension;
             $targetPath = $directory . '/' . $fileName;
@@ -118,6 +121,7 @@ class PaintingService {
     public static function createPainting(array $data, array $files, int $userId) {
         $errors = [];
         $normalized = [];
+        $fileHash = null;
 
         $artistId = PaintingService::getArtistIdForUser($userId);
         if (!$artistId) {
@@ -129,13 +133,27 @@ class PaintingService {
             return ['success' => false, 'errors' => $errors, 'data' => $normalized];
         }
 
-        $image = PaintingService::resolveImageValue($data, $files, null, $errors);
+        $image = PaintingService::resolveImageValue($data, $files, null, $errors, $fileHash);
         if ($image === null || $image === '') {
             $errors[] = 'Image is required';
         }
 
         if (!empty($errors)) {
             return ['success' => false, 'errors' => $errors, 'data' => $normalized];
+        }
+
+        // Проверяем, не загружена ли уже картина с таким же файлом
+        if ($fileHash) {
+            $existingPainting = Paintings::getPaintingByFileHash($fileHash);
+            if ($existingPainting) {
+                // Удаляем загруженный файл, так как он дубликат
+                PaintingService::deleteImageFile($image);
+                return [
+                    'success' => false, 
+                    'errors' => ['This image has already been uploaded. Please use a different image.'], 
+                    'data' => $normalized
+                ];
+            }
         }
 
         $cleanData = [
@@ -149,6 +167,10 @@ class PaintingService {
             'dimensions' => $normalized['dimensions'],
             'price' => (float)$normalized['price'],
         ];
+
+        if ($fileHash) {
+            $cleanData['file_hash'] = $fileHash;
+        }
 
         $paintingId = Paintings::insertPainting($cleanData);
         
@@ -178,6 +200,7 @@ class PaintingService {
     public static function updatePainting(int $id, array $data, array $files, int $userId) {
         $errors = [];
         $normalized = [];
+        $fileHash = null;
 
         $artistId = PaintingService::getArtistIdForUser($userId);
         if (!$artistId) {
@@ -194,9 +217,23 @@ class PaintingService {
             return ['success' => false, 'errors' => $errors, 'data' => $normalized];
         }
 
-        $image = PaintingService::resolveImageValue($data, $files, $painting['image'] ?? null, $errors);
+        $image = PaintingService::resolveImageValue($data, $files, $painting['image'] ?? null, $errors, $fileHash);
         if (!empty($errors)) {
             return ['success' => false, 'errors' => $errors, 'data' => $normalized];
+        }
+
+        // Если загруженный файл новый, проверяем на дубликат
+        if ($fileHash && $image !== $painting['image']) {
+            $existingPainting = Paintings::getPaintingByFileHash($fileHash);
+            if ($existingPainting && (int)$existingPainting['id'] !== $id) {
+                // Удаляем загруженный файл, так как он дубликат
+                PaintingService::deleteImageFile($image);
+                return [
+                    'success' => false, 
+                    'errors' => ['This image has already been uploaded. Please use a different image.'], 
+                    'data' => $normalized
+                ];
+            }
         }
 
         $cleanData = [
@@ -210,6 +247,10 @@ class PaintingService {
             'dimensions' => $normalized['dimensions'],
             'price' => (float)$normalized['price'],
         ];
+
+        if ($fileHash && $image !== $painting['image']) {
+            $cleanData['file_hash'] = $fileHash;
+        }
 
         if (!Paintings::updatePainting($id, $cleanData)) {
             return ['success' => false, 'errors' => ['Database error while updating painting'], 'data' => $normalized];
