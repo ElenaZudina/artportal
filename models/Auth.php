@@ -2,9 +2,9 @@
 class Auth {
     // АВТОРИЗАЦИЯ 
     public static function findUserByEmail($email) {
-        $sql='SELECT * FROM `users` WHERE `email` ="'.$email.'"';
+        $sql='SELECT * FROM `users` WHERE `email` = ?';
         $db = new Database();
-        return $db->getOne($sql);
+        return $db->getOne($sql, [$email]);
     }
 
     public static function getUserByID($id) {
