@@ -140,9 +140,13 @@ $isLogin = $activeRoute === 'login';
         </main>
         <footer>
             <div class="container text-center py-5">
-                <h2 class="h2-footer">ArtPortal</h2>
-                <p>Footer text placeholder for your future final text.</p>
-                <p>JKTV24 2026a. &copy; All Rights Reserved</p>
+                <h2 class="h2-footer">Join Our Creative Community</h2>
+                <p>Connect with artists, discover new works, and be part of the digital art revolution</p>
+                <div class="mt-5 mb-5">
+                    <a href="registerForm" class="btn-footer-primary me-2">Get Started</a>
+                    <button class="btn-footer-secondary">Learn More</button>
+                </div>
+                <p>ArtPortal © All Rights Reserved</p>
             </div>
         </footer>
         <!-- Bootstrap 5.3 JS Bundle with Popper -->
