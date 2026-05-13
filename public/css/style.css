@@ -360,11 +360,11 @@ textarea:focus {
   border-radius: 999px;
 }
 
-.navbar-nav:has(#categoriesDropdown.show) .nav-link.active:not(#categoriesDropdown)::before {
+.navbar-nav:has(#galleryDropdown.show) .nav-link.active:not(#galleryDropdown)::before {
   content: none;
 }
 
-.navbar-nav:has(#categoriesDropdown.show) .nav-link.active:not(#categoriesDropdown) {
+.navbar-nav:has(#galleryDropdown.show) .nav-link.active:not(#galleryDropdown) {
   color: var(--muted-foreground);
 }
 

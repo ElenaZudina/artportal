@@ -93,3 +93,8 @@ elseif ($path == 'logout') {
     header('Location: /artportal/logout');
     exit;
 }
+
+else {
+    // Страница не существует
+    $response = HomeController::error404();
+}

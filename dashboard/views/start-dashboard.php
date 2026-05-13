@@ -365,6 +365,13 @@
                         <a href="../all" class="btn btn-primary">Browse Paintings</a>
                         <a href="../artists" class="btn btn-outline-primary">Find Artists</a>
                     </div>
+                    <div class="mt-3 p-3 rounded-4 bg-light border d-flex align-items-center justify-content-between gap-3 flex-wrap">
+                        <div>
+                            <div class="fw-semibold">Want to showcase your work?</div>
+                            <div class="small text-muted">Create an artist profile when you're ready.</div>
+                        </div>
+                        <a href="/artportal/artistProfileForm" class="btn btn-sm btn-outline-primary">Become an artist</a>
+                    </div>
                 </div>
             </div>
 
