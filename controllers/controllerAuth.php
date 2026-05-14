@@ -1,8 +1,46 @@
 <?php
+require_once __DIR__ . '/../services/EmailService.php';
+
 class controllerAuth {
 
     public static function formLoginSite() {
         include_once('views/formLogin.php');
+    }
+
+    public static function forgotPasswordForm() {
+        include_once('views/forgot-password.php');
+    }
+
+    public static function forgotPasswordRequest() {
+        if (($_SERVER['REQUEST_METHOD'] ?? 'GET') !== 'POST') {
+            header('Location: /artportal/forgot-password');
+            exit;
+        }
+
+        $email = strtolower(trim((string)($_POST['email'] ?? '')));
+        if ($email === '' || !filter_var($email, FILTER_VALIDATE_EMAIL)) {
+            $_SESSION['errorString'] = 'Please enter a valid email address.';
+            header('Location: /artportal/forgot-password');
+            exit;
+        }
+
+        $user = Auth::findUserByEmail($email);
+        if (!$user) {
+            $_SESSION['successString'] = 'If the email exists, your request has been sent to the admin.';
+            header('Location: /artportal/login');
+            exit;
+        }
+
+        $sent = EmailService::sendPasswordResetRequestToAdmin($user);
+        if ($sent) {
+            $_SESSION['successString'] = 'Your request has been sent to the admin. He will contact you shortly.';
+            header('Location: /artportal/login');
+            exit;
+        }
+
+        $_SESSION['errorString'] = 'Could not send your request right now. Please try again later.';
+        header('Location: /artportal/forgot-password');
+        exit;
     }
     // Авторизация с учетом ролей
     public static function loginAction() {

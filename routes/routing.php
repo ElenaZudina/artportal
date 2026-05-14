@@ -76,11 +76,17 @@ elseif ($path == 'login' ) {
     // Cтраница входа
     $response = controllerAuth::formLoginSite();
 }
+elseif ($path == 'forgot-password') {
+    $response = controllerAuth::forgotPasswordForm();
+}
 // ------- ВХОД в зависимости  от роли-----------------------
 
 elseif ($path == 'auth') {
     // Форма входа
     $response = controllerAuth::loginAction();
+}
+elseif ($path == 'forgot-password-request') {
+    $response = controllerAuth::forgotPasswordRequest();
 }
 elseif ($path == 'logout') {
     // Выход
