@@ -51,10 +51,13 @@ $isLogin = $activeRoute === 'login';
                                     ?>
                                 </ul>
                             </li>
-                            <li class="nav-item"><a class="nav-link<?php echo $isRegister ? ' active' : ''; ?>" href="registerForm">Register</a></li>
                             <?php if (!isset($_SESSION['userId'])): ?>
+                                <li class="nav-item"><a class="nav-link<?php echo $isRegister ? ' active' : ''; ?>" href="registerForm">Register</a></li>
                                 <li class="nav-item"><a class="nav-link<?php echo $isLogin ? ' active' : ''; ?>" href="login">Login</a></li>
                             <?php else: ?>
+                                <?php if (isset($_SESSION['status']) && in_array($_SESSION['status'], ['user', 'artist'], true)): ?>
+                                    <li class="nav-item"><a class="nav-link" href="dashboard">Dashboard</a></li>
+                                <?php endif; ?>
                                 <li class="nav-item"><a class="nav-link" href="logout">Logout</a></li>
                             <?php endif; ?>
                         </ul>
