@@ -203,13 +203,11 @@
                     </a>
                 </div>
                 <div class="col-6 col-md-2">
-                    <a href="my-favorites" class="kpi-link">
-                        <div class="kpi-card text-center">
-                            <div class="kpi-icon"><i class="fa-solid fa-heart"></i></div>
-                            <div class="kpi-value"><?php echo $favoritesCount ?? '—'; ?></div>
-                            <div class="kpi-sub">Favorites</div>
-                        </div>
-                    </a>
+                    <div class="kpi-card text-center">
+                        <div class="kpi-icon"><i class="fa-solid fa-heart"></i></div>
+                        <div class="kpi-value"><?php echo $favoritesCount ?? '—'; ?></div>
+                        <div class="kpi-sub">Saved by users</div>
+                    </div>
                 </div>
                 <div class="col-6 col-md-2">
                     <div class="kpi-card text-center">
@@ -280,12 +278,12 @@
                     <h5>Statistics</h5>
                     <div class="row">
                         <div class="col-4 text-center">
-                            <div class="h3 m-0"><?php echo $viewsTotal ?? 0; ?></div>
-                            <div class="small text-muted">Views</div>
+                            <div class="h3 m-0"><?php echo $favoritesCount ?? 0; ?></div>
+                            <div class="small text-muted">Saved by users</div>
                         </div>
                         <div class="col-4 text-center">
-                            <div class="h3 m-0"><?php echo $favoritesCount ?? 0; ?></div>
-                            <div class="small text-muted">Favorites</div>
+                            <div class="h3 m-0"><?php echo $viewsTotal ?? 0; ?></div>
+                            <div class="small text-muted">Views</div>
                         </div>
                         <div class="col-4 text-center">
                             <div class="h3 m-0"><?php echo $requestsCount ?? 0; ?></div>
