@@ -6,6 +6,7 @@ class PurchaseRequestController {
     public static function create() {
         // Проверка авторизации
         if (empty($_SESSION['userId'])) {
+            $_SESSION['errorString'] = 'You must be logged in to send a purchase request.';
             header('Location: /artportal/login');
             exit;
         }
