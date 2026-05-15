@@ -334,7 +334,7 @@
 @media (min-width: 992px) {
   .paintings-grid--asymmetric {
     grid-template-columns: repeat(3, 1fr);
-    grid-auto-rows: 520px;
+    grid-auto-rows: 400px;
     grid-auto-flow: dense;
   }
 
@@ -348,6 +348,18 @@
   }
 
   /* Make the image clearly taller in tall/large cards */
+  .paintings-grid-item--tall .card-img-wrapper,
+  .paintings-grid-item--large .card-img-wrapper {
+    min-height: 560px;
+  }
+}
+
+/* Large desktop (1300px+): restore full asymmetric row heights */
+@media (min-width: 1300px) {
+  .paintings-grid--asymmetric {
+    grid-auto-rows: 520px;
+  }
+
   .paintings-grid-item--tall .card-img-wrapper,
   .paintings-grid-item--large .card-img-wrapper {
     min-height: 760px;
@@ -559,6 +571,13 @@ footer p {
 
 .carousel-control-prev.custom-carousel-control { left: 24px; }
 .carousel-control-next.custom-carousel-control { right: 24px; }
+
+/* Medium desktop (992px – 1299px): shorter slider so it doesn't overwhelm the viewport */
+@media (min-width: 992px) and (max-width: 1299px) {
+  #paintingsCarousel .carousel-item img {
+    height: 55vh;
+  }
+}
 
 @media (max-width: 768px) {
   .custom-carousel-control { width: 40px; height: 40px; }
