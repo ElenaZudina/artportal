@@ -1,12 +1,11 @@
 <html>
     <head>
         <title>Dashboard <?php echo $_SESSION["name"]; ?></title>
-        <link href="../public/css/login.css" rel="stylesheet">
+        <link href="/artportal/public/css/login.css" rel="stylesheet">
         <!-- <link rel="stylesheet" href="../public/css/font-awesome.min.css"> -->
          <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
         
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
-        <script type="text/javascript" src="../public/js/ajaxupload.3.5.js"></script>
         <!-- Google Fonts -->
         <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;700;900&family=Inter:wght@400;500;700;900&display=swap" rel="stylesheet">
     </head>
