@@ -25,7 +25,6 @@ class ViewSlider {
 
                 <img src="images/paintings/<?= htmlspecialchars($painting['image']) ?>"
                      class="d-block w-100"
-                     style="height:70vh; object-fit:cover;"
                      alt="<?= htmlspecialchars($painting['title']) ?>">
 
                 <div class="carousel-caption d-none d-md-block slider-caption">
