@@ -13,6 +13,72 @@ class Auth {
         return $db->getOne($sql, [$id]);
     }
 
+    public static function getUsers($search = '') {
+        $db = new Database();
+        $search = trim((string)$search);
+
+        if ($search !== '') {
+            $like = '%' . $search . '%';
+            return $db->getAll(
+                'SELECT id, username, email, role, status, created_at FROM users WHERE username LIKE ? OR email LIKE ? ORDER BY id DESC',
+                [$like, $like]
+            );
+        }
+
+        return $db->getAll('SELECT id, username, email, role, status, created_at FROM users ORDER BY id DESC');
+    }
+
+    public static function updateStatus($userId, $status) {
+        if (!in_array($status, ['active', 'blocked'], true)) {
+            return false;
+        }
+
+        $sql = 'UPDATE `users` SET `status` = ? WHERE `id` = ?';
+        $db = new Database();
+        return $db->executeRun($sql, [$status, (int)$userId]);
+    }
+
+    public static function syncSessionStatus() {
+        if (empty($_SESSION['userId'])) {
+            return null;
+        }
+
+        $user = self::getUserByID((int)$_SESSION['userId']);
+        if (!$user || (($user['status'] ?? 'active') !== 'active')) {
+            self::clearSession();
+            return null;
+        }
+
+        $_SESSION['status'] = $user['role'] ?? ($_SESSION['status'] ?? null);
+        $_SESSION['name'] = $user['username'] ?? ($_SESSION['name'] ?? null);
+        $_SESSION['accountStatus'] = $user['status'] ?? 'active';
+
+        return $user;
+    }
+
+    public static function requireSession($requiredRole = null) {
+        $user = self::syncSessionStatus();
+        if (!$user) {
+            header('Location: /artportal/login');
+            exit;
+        }
+
+        if ($requiredRole !== null && (($user['role'] ?? '') !== $requiredRole)) {
+            self::clearSession();
+            header('Location: /artportal/login');
+            exit;
+        }
+
+        return $user;
+    }
+
+    private static function clearSession() {
+        if (session_status() === PHP_SESSION_ACTIVE) {
+            session_unset();
+            session_destroy();
+        }
+    }
+
     public static function existsEmailExceptUser($email, $userId) {
         $sql = 'SELECT id FROM `users` WHERE `email` = ? AND `id` <> ? LIMIT 1';
         $db = new Database();

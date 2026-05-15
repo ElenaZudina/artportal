@@ -52,7 +52,7 @@ class Register{
             return ['success' => false, 'errors' => ['Username exists already']];
         }
 
-        $query = "INSERT INTO `users` (`id`, `username`, `email`, `password`, `role`, `created_at`) VALUES (NULL, ?, ?, ?, 'user', ?)";
+        $query = "INSERT INTO `users` (`id`, `username`, `email`, `password`, `role`, `status`, `created_at`) VALUES (NULL, ?, ?, ?, 'user', 'active', ?)";
         $params = [
             $cleanData['name'],
             $cleanData['email'],
@@ -67,7 +67,8 @@ class Register{
                 'user' => [
                     'id' => $userId,
                     'username' => $cleanData['name'],
-                    'role' => 'user'
+                    'role' => 'user',
+                    'status' => 'active'
                 ]
             ];
         } else {

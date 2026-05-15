@@ -93,6 +93,7 @@
         // Здесь будут ссылки на управление пользователями (добавить позже)
         echo '<ul class="nav flex-column small">';
         echo '<li class="nav-item"><a class="nav-link" style="font-size:1rem;" href="moderation-artists"><i class="fa-solid fa-shield-halved me-2"></i>Approve artist profiles</a></li>';
+        echo '<li class="nav-item"><a class="nav-link" style="font-size:1rem;" href="users"><i class="fa-solid fa-users me-2"></i>Users</a></li>';
         echo '</ul>';
         echo '</div>';
         // Content management block
@@ -137,6 +138,7 @@
                             echo ' &#187; <a href="categories">Categories</a>';
                             echo ' &#187; <a href="collections">Collections</a>';
                             echo ' &#187; <a href="exhibitions">Exhibitions</a>';
+                            echo ' &#187; <a href="users">Users</a>';
                             echo '</h4>';
                             echo '</div>';
                         }

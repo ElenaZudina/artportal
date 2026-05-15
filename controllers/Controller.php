@@ -153,6 +153,7 @@ class Controller {
             $_SESSION['userId'] = $result['user']['id'];
             $_SESSION['name'] = $result['user']['username'];
             $_SESSION['status'] = $result['user']['role'];
+            $_SESSION['accountStatus'] = $result['user']['status'] ?? 'active';
         }
 
         include_once('views/answerRegister.php');

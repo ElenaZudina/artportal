@@ -62,6 +62,10 @@ class AuthService {
         if (!password_verify($password, $user['password'])) {
             return ['success' => false, 'errors' => ['Incorrect password']];
         }
+
+        if (($user['status'] ?? 'active') !== 'active') {
+            return ['success' => false, 'blocked' => true, 'errors' => ['Your account is blocked. Please contact the administrator.']];
+        }
             
         return ['success' => true, 'user' => $user];
     }

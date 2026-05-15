@@ -47,7 +47,7 @@ class controllerAuth {
         //$login=Auth::userAuthentication();
         $login = AuthService::login($_POST);
         if(!$login['success']){
-            $_SESSION['errorString']='Incorrect username and password';
+            $_SESSION['errorString'] = $login['errors'][0] ?? 'Incorrect username and password';
             header("Location: login");
             exit;
         }
@@ -57,6 +57,7 @@ class controllerAuth {
         $_SESSION['userId'] = $user['id'];
         $_SESSION['name'] = $user['username'];
         $_SESSION['status'] = $user['role'];
+        $_SESSION['accountStatus'] = $user['status'] ?? 'active';
 
         // Проверяем, есть ли профиль художника для этого пользователя
         if ($user['role'] == 'user') {

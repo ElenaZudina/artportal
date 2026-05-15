@@ -47,11 +47,13 @@
                             </a>
                         </div>
                         <div class="col-6 col-md-2">
-                            <div class="kpi-card text-center">
-                                <div class="kpi-icon"><i class="fa-solid fa-users"></i></div>
-                                <div class="kpi-value"><?php echo isset($counts['users']) ? $counts['users'] : '—'; ?></div>
-                                <div class="kpi-sub">Users</div>
-                            </div>
+                            <a href="users" class="kpi-link">
+                                <div class="kpi-card text-center">
+                                    <div class="kpi-icon"><i class="fa-solid fa-users"></i></div>
+                                    <div class="kpi-value"><?php echo isset($counts['users']) ? $counts['users'] : '—'; ?></div>
+                                    <div class="kpi-sub">Users</div>
+                                </div>
+                            </a>
                         </div>
                         <div class="col-6 col-md-2">
                             <a href="categories" class="kpi-link">
@@ -87,6 +89,7 @@
                     <h5 class="mb-3">Quick Actions</h5>
                     <div class="d-flex flex-column gap-2">
                         <a href="moderation-artists" class="btn btn-outline-primary">Review profiles</a>
+                        <a href="users" class="btn btn-outline-dark">Moderate users</a>
                         <a href="create-category" class="btn btn-outline-secondary">Add category</a>
                         <a href="create-exhibition" class="btn btn-outline-success">Create exhibition</a>
                     </div>
