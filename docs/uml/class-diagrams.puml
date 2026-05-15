@@ -1,0 +1,213 @@
+@startuml ArtPortalClassDiagram
+skinparam classAttributeIconSize 0
+skinparam linetype ortho
+skinparam shadowing false
+
+package "Controllers" {
+  class Controller {
+    +StartSite()
+    +AllPaintings()
+    +PaintingByID(id)
+    +AllArtists()
+    +ArtistByID(id)
+    +AllExhibitions()
+    +ExhibitionByID(id)
+    +registerForm()
+    +registerUser()
+    +artistProfileForm()
+    +artistProfileSave()
+  }
+
+  class controllerAuth {
+    +formLoginSite()
+    +forgotPasswordForm()
+    +forgotPasswordRequest()
+    +loginAction()
+    +logoutAction()
+  }
+}
+
+package "Admin controllers" {
+  class UsersController {
+    +index()
+    +updateStatus()
+  }
+
+  class CollectionController {
+    +collectionsList()
+    +create()
+    +store()
+    +edit(id)
+    +update(id)
+    +delete(id)
+    +destroy(id)
+    +storeAjax()
+  }
+
+  class ExhibitionController {
+    +exhibitionsList()
+    +create()
+    +store()
+    +edit(id)
+    +update(id)
+    +delete(id)
+    +destroy(id)
+  }
+}
+
+package "Dashboard controllers" {
+  class HomeController {
+    +startDashboard()
+    +profile()
+    +account()
+    +editAccount()
+    +updateAccount()
+    +changePassword()
+    +updatePassword()
+    +editProfile()
+    +updateProfile()
+    +myPaintings()
+    +addPainting()
+    +storePainting()
+    +editPainting()
+    +updatePainting()
+    +deletePainting()
+    +destroyPainting()
+    +myFavorites()
+    +myRequests()
+    +purchaseRequests()
+  }
+
+  class PriceController {
+    +calculate()
+  }
+
+  class FavoriteController {
+    +addFavorite()
+    +removeFavorite()
+    +toggleFavorite()
+  }
+}
+
+package "Services" {
+  class AuthService {
+    +login(data)
+  }
+
+  class RegisterService {
+    +register(data)
+  }
+
+  class EmailService {
+    +sendPasswordResetRequestToAdmin(user)
+    +sendPurchaseRequestNotification(request)
+  }
+
+  class ExhibitionService {
+    +createExhibition(data)
+    +updateExhibition(id, data)
+    +deleteExhibition(id, data)
+  }
+
+  class CollectionService {
+    +createCollection(data)
+    +updateCollection(id, data)
+    +deleteCollection(id, data)
+  }
+
+  class StatsService {
+    +getCounts()
+  }
+
+  class VisionAIService {
+    +detectLabels(imagePath)
+    +buildTags(response)
+  }
+}
+
+package "Models" {
+  class Auth {
+    +findUserByEmail(email)
+    +getUserByID(id)
+    +getUsers(search)
+    +updateStatus(userId, status)
+    +syncSessionStatus()
+    +requireSession(requiredRole)
+    +updateAccount(userId, username, email)
+    +updatePassword(userId, passwordHash)
+    +count()
+    +countByRole(role)
+  }
+
+  class Register {
+    +saveUser(data)
+  }
+
+  class Exhibitions {
+    +getExhibitionByID(id)
+    +getAllExhibitions()
+    +getCurrentExhibition()
+    +getExhibitionsList()
+    +create(title, description, collectionId, startDate, endDate)
+    +updateExhibition(id, title, description, collectionId, startDate, endDate)
+    +deleteExhibition(id)
+    +count()
+  }
+
+  class Collections {
+    +getCollectionByID(id)
+  }
+
+  class Categories {
+    +getAllCategories()
+  }
+
+  class Paintings {
+    +getLastPaintings()
+    +getPublicPaintingByID(id)
+    +getPaintingsByCategoryID(id)
+    +getPaintingsByArtistID(id)
+    +getPaintingsByCollectionID(id)
+  }
+
+  class Artists {
+    +getLast10Artists()
+    +getPublicArtistByID(id)
+  }
+}
+
+controllerAuth ..> AuthService
+controllerAuth ..> Auth
+controllerAuth ..> EmailService
+Controller ..> Auth
+Controller ..> Register
+Controller ..> Paintings
+Controller ..> Artists
+Controller ..> Exhibitions
+Controller ..> Collections
+UsersController ..> Auth
+CollectionController ..> CollectionService
+CollectionController ..> Collections
+ExhibitionController ..> ExhibitionService
+ExhibitionController ..> Exhibitions
+HomeController ..> Auth
+HomeController ..> Paintings
+HomeController ..> Artists
+HomeController ..> Categories
+HomeController ..> Exhibitions
+HomeController ..> Collections
+HomeController ..> StatsService
+PriceController ..> Paintings
+FavoriteController ..> Auth
+EmailService ..> Auth
+ExhibitionService ..> Exhibitions
+CollectionService ..> Collections
+RegisterService ..> Register
+VisionAIService ..> Paintings
+StatsService ..> Auth
+StatsService ..> Exhibitions
+StatsService ..> Collections
+StatsService ..> Categories
+StatsService ..> Paintings
+
+@enduml

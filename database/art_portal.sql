@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Хост: 127.0.0.1
--- Время создания: Май 13 2026 г., 14:16
+-- Время создания: Май 15 2026 г., 14:16
 -- Версия сервера: 10.4.32-MariaDB
 -- Версия PHP: 8.2.12
 
@@ -51,7 +51,7 @@ INSERT INTO `artists` (`id`, `name`, `location`, `birth_date`, `bio`, `picture`,
 (4, 'Sofia Rodriguez', 'Estonia, Pärnu', '1978-04-18', 'Mixed media artist combining traditional painting techniques with modern materials to create textured, layered narratives.', 'sofia-rodriguez.jpg', 'approved', '2026-01-29 09:06:17', 7, '2026-04-09 10:25:14'),
 (11, 'David Park', 'Estonia, Tallinn', '2000-04-06', 'Contemporary portrait artist known for expressive brushwork and vibrant color palettes that capture emotional depth.', 'david-park.jpg', 'approved', '2026-04-23 09:14:39', 8, '2026-05-02 18:40:12'),
 (12, 'Emma Williams', 'Estonia, Tartu', '1996-05-21', 'Geometric abstraction specialist creating harmonious compositions inspired by architecture and urban landscapes.', 'emma-williams.jpg', 'approved', '2026-04-23 09:14:39', 9, '2026-05-02 18:49:04'),
-(15, 'Ivav Ivanov', 'Estonia, Viljandi', '1996-06-22', 'I\'m the best artist of the world', 'artist_69f9c29d9e5ef5.15303290.jpg', 'approved', '2026-05-05 13:12:45', 18, '2026-05-11 20:03:48'),
+(15, 'Ivav Ivanov', 'Estonia, Viljandi', '1996-06-22', 'I\'m the best artist of the world', 'artist_69f9c29d9e5ef5.15303290.jpg', 'pending', '2026-05-05 13:12:45', 18, '2026-05-11 20:03:48'),
 (16, 'Maria White', 'Estonia, Valga', '1960-02-23', 'Art is my passion and life', 'artist_69f9c50e4979f5.57596857.jpg', 'pending', '2026-05-05 13:23:10', 19, '2026-05-05 13:23:10');
 
 -- --------------------------------------------------------
@@ -115,30 +115,6 @@ INSERT INTO `collections` (`id`, `title`, `type`, `param`) VALUES
 -- --------------------------------------------------------
 
 --
--- Структура таблицы `comments`
---
-
-CREATE TABLE `comments` (
-  `id` int(11) NOT NULL,
-  `user_id` int(11) DEFAULT NULL,
-  `painting_id` int(11) NOT NULL,
-  `text` varchar(500) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
-  `date` datetime DEFAULT current_timestamp()
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_estonian_ci;
-
---
--- Дамп данных таблицы `comments`
---
-
-INSERT INTO `comments` (`id`, `user_id`, `painting_id`, `text`, `date`) VALUES
-(1, NULL, 3, 'Very nice', '2026-03-25 13:41:56'),
-(2, 1, 4, 'I like it', '2026-03-25 13:41:56'),
-(3, 3, 3, 'So cute', '2026-03-25 13:42:49'),
-(4, NULL, 10, 'Great work!', '2026-03-25 13:42:49');
-
--- --------------------------------------------------------
-
---
 -- Структура таблицы `exhibitions`
 --
 
@@ -186,27 +162,6 @@ INSERT INTO `favorites` (`id`, `user_id`, `painting_id`, `created_at`) VALUES
 -- --------------------------------------------------------
 
 --
--- Структура таблицы `gallery_images`
---
-
-CREATE TABLE `gallery_images` (
-  `id` int(11) NOT NULL,
-  `painting_id` int(11) NOT NULL,
-  `image_path` varchar(255) NOT NULL,
-  `created_at` datetime NOT NULL DEFAULT current_timestamp()
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
---
--- Дамп данных таблицы `gallery_images`
---
-
-INSERT INTO `gallery_images` (`id`, `painting_id`, `image_path`, `created_at`) VALUES
-(1, 3, 'mages/test.jpg', '2026-03-25 13:40:40'),
-(2, 3, 'mages/test.jpg', '2026-03-25 13:40:40');
-
--- --------------------------------------------------------
-
---
 -- Структура таблицы `paintings`
 --
 
@@ -240,7 +195,7 @@ INSERT INTO `paintings` (`id`, `title`, `description`, `image`, `file_hash`, `ye
 (13, 'Geometric Meditation', 'Precise geometric forms create a sense of balance and harmony, inviting contemplation and visual exploration.', 'geometric-meditation.jpg', NULL, '2025', 9, 12, 'Acrylic on Panel', '40\" × 40\"', 1100.00, '2026-04-23 09:39:00', '2026-04-23 09:39:00'),
 (14, 'Layered Narratives', 'Complex layers of paint, paper, and found materials come together to tell a multifaceted story of texture and depth.', 'layered-narratives.jpg', NULL, '2025', 10, 4, 'Mixed Media', '48\" × 36\"', 555.00, '2026-04-23 09:43:58', '2026-04-23 09:43:58'),
 (23, 'Bridge', 'Bridge', 'painting_6a0383ddbb1bf4.09642702.jpg', NULL, '2025', 3, 15, 'test', 'te', 233.99, '2026-05-12 22:47:41', '2026-05-12 22:47:41'),
-(24, 'Flower Music', 'Modern brilliant art', 'painting_6a040d823e7023.12147525.jpg', NULL, '2026', 5, 15, 'acril', '23x23', 876.00, '2026-05-13 08:34:58', '2026-05-13 08:34:58'),
+(24, 'Flower Music', 'Modern brilliant art', 'painting_6a040d823e7023.12147525.jpg', NULL, '2026', 5, 12, 'acril', '23x23', 876.00, '2026-05-13 08:34:58', '2026-05-13 08:34:58'),
 (25, 'Classic Paint', 'classi paint', 'painting_6a041ff6018df6.05765337.jpg', NULL, '2023', 3, 15, 'trew', '45', 234.00, '2026-05-13 09:53:42', '2026-05-13 09:53:42'),
 (26, 'test', 'test', 'painting_6a0427d086f181.32981292.jpg', NULL, '2020', 2, 15, 'test', 'test', 25.00, '2026-05-13 10:27:12', '2026-05-13 10:27:12'),
 (27, 'test', 'test', 'painting_6a04285bc0ed10.09391138.jpg', NULL, '2020', 2, 15, 'test', 'test', 25.00, '2026-05-13 10:29:31', '2026-05-13 10:29:31'),
@@ -489,36 +444,36 @@ CREATE TABLE `users` (
   `email` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
   `password` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
   `role` enum('admin','artist','user') CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL DEFAULT 'user',
-  `status` enum('active','blocked') CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL DEFAULT 'active',
-  `created_at` datetime NOT NULL DEFAULT current_timestamp()
+  `created_at` datetime NOT NULL DEFAULT current_timestamp(),
+  `status` enum('active','blocked') NOT NULL DEFAULT 'active'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_estonian_ci;
 
 --
 -- Дамп данных таблицы `users`
 --
 
-INSERT INTO `users` (`id`, `username`, `email`, `password`, `role`, `created_at`) VALUES
-(1, 'admin', 'admin@artportal.ee', '$2y$12$pxB2ofiiNZkxObmbBvBOyegwCjHCVFYhapjiSsdYXUaJ9Z1IH6pQW', 'admin', '2019-11-05 00:00:00'),
-(2, 'anonim', 'user@newsportal.ee', '$2y$10$dYK1sCogKL/zZBef.V/gBeynL5mdt0QxZlwvEUBkS0jkdXYRMPHRa', 'user', '2019-11-05 00:00:00'),
-(3, 'vasya', 'vasya@mail.ru', '$2y$10$EIn5N6yvbp807VbgEHgr0OUAt1T14c4fXwE0eo02E0x4KbFrCSXbK', 'user', '2020-09-19 00:00:00'),
-(4, 'marina', 'marina@artportal.ee', '$2y$10$3BaKKk1rcaMpEx2pBQfBnuTp8AkPG33P6EyvY6OIkctda3rSICbs6', 'artist', '2026-03-25 11:17:55'),
-(5, 'alexandre', 'alexandre@artportal.ee', '$2y$10$T4XRXaxjEK3ifIxgQzHnZe3f9cAFVTt57NBnsA8PgHguWkuj6BLGe', 'artist', '2026-03-25 13:07:23'),
-(6, 'yuki', 'yuki@artportal.ee', '$2y$10$BrSY3RMOOQYnAHAHd29CbeTui.PWY6.YVb4m8.rryrNde0hzMk4PW', 'artist', '2026-03-25 13:08:46'),
-(7, 'sofia', 'sofia@artportal', '$2y$10$HOX69EjaxPtXhIqwGbEC/OQtl0brd4WiJ8NWINc0/gnHau77Ka3.a', 'artist', '2026-03-25 13:12:53'),
-(8, 'david', 'david@artportal.ee', '$2y$10$isZBs0DDwi1nNtQQ/qwpXO49auxCLTqlhkQM12g0wBNznyeNUuIeC', 'artist', '2026-04-23 09:11:04'),
-(9, 'emma', 'emma@artportal.ee', '$2y$10$ZE9d5dGo7gmiTDJ/dh4OyuYmvuFr75YBa0cbowZLv9mR/yA0VEUka', 'artist', '2026-04-23 09:11:04'),
-(10, 'test', 'test@test.ee', '$2y$10$5bOaxg0.ue40sLfgp.CONOT8hcincHJrt.DlQUS.L5JrvhtVebfoa', 'user', '2026-04-25 00:00:00'),
-(14, 'test2', 'test2@test2.ee', '$2y$10$Hy43cA5HApKjCXJYitwsBuH5z8MbVNzTb0Y/fh1/Fbsqf5mTHFlIa', 'user', '2026-04-25 00:00:00'),
-(15, 'new', 'new@test.ee', '$2y$10$Az1Vc5SggqlAtvEin3gAu.58u7zAVro7wJBVhyqfzHw9tBOY1FeBC', 'user', '2026-04-25 00:00:00'),
-(17, 'Newnew', 'myemail@mail.ee', '$2y$10$zwYuLFQMSHaaXe01dAhhH.BllpgW.LhM0FVlDM9iYjm9f7hpb629e', 'user', '2026-05-02 00:00:00'),
-(18, 'ivan', 'ivan@artportal.ee', '$2y$10$D/.GOeM/AAo9zgabK3UCJeyPm2ZR6a3Ozq7AD05vCwN5egKmAbvwa', 'artist', '2026-05-05 00:00:00'),
-(19, 'maria', 'maria@artportal.ee', '$2y$10$qLDaDXNvrGBH5KgWDak9s.m/W8arYP7o6TFuxJEYyULZr99Qszxr6', 'artist', '2026-05-05 00:00:00'),
-(20, 'nnn', 'nnn@artportal.ee', '$2y$10$KOXc9VF1ln5Fr9Q6B.JnSeNsLdXIM/V1Rw0VoQ0RkPLKt9JW6Vm4i', 'user', '2026-05-08 00:00:00'),
-(21, 'rrr', 'rrr@artportal.ee', '$2y$10$njW70kStMAr.rj7EVfYm5eUmgadXjm6IsRklWkO117EoMhUl.zMOm', 'user', '2026-05-08 00:00:00'),
-(22, 'qqq', 'qqq@artportal.ee', '$2y$10$oP1nodEp/ChLKJI4nNEDR.XDHpOKUm7A0Qaz7yrWUCcyGv7d2ycu2', 'user', '2026-05-08 00:00:00'),
-(23, 'vvv', 'vvv@artportal.ee', '$2y$10$jcXnkTE3eP2IuDCAwN2u3eTZhEev2bAwvzpZYVVTVn74YcnD6wAEu', 'user', '2026-05-08 00:00:00'),
-(24, 'aaa', 'aaa@artportal.ee', '$2y$10$o3yGCdXmDJoUMyfA20bO3OHwNiThr364UOkeEqEcxl1ISGFbvFmvO', 'user', '2026-05-08 00:00:00'),
-(25, 'uuuu', 'uuu@uuu.ee', '$2y$10$tdkEEOSFd6O6KVtMmOYqeeo9JYWAHMIzlzqpVO8I8EuW3lMORqChy', 'user', '2026-05-13 00:00:00');
+INSERT INTO `users` (`id`, `username`, `email`, `password`, `role`, `created_at`, `status`) VALUES
+(1, 'admin', 'admin@artportal.ee', '$2y$12$pxB2ofiiNZkxObmbBvBOyegwCjHCVFYhapjiSsdYXUaJ9Z1IH6pQW', 'admin', '2019-11-05 00:00:00', 'active'),
+(2, 'anonim', 'user@newsportal.ee', '$2y$10$dYK1sCogKL/zZBef.V/gBeynL5mdt0QxZlwvEUBkS0jkdXYRMPHRa', 'user', '2019-11-05 00:00:00', 'active'),
+(3, 'vasya', 'vasya@mail.ru', '$2y$10$EIn5N6yvbp807VbgEHgr0OUAt1T14c4fXwE0eo02E0x4KbFrCSXbK', 'user', '2020-09-19 00:00:00', 'active'),
+(4, 'marina', 'marina@artportal.ee', '$2y$10$3BaKKk1rcaMpEx2pBQfBnuTp8AkPG33P6EyvY6OIkctda3rSICbs6', 'artist', '2026-03-25 11:17:55', 'active'),
+(5, 'alexandre', 'alexandre@artportal.ee', '$2y$10$T4XRXaxjEK3ifIxgQzHnZe3f9cAFVTt57NBnsA8PgHguWkuj6BLGe', 'artist', '2026-03-25 13:07:23', 'active'),
+(6, 'yuki', 'yuki@artportal.ee', '$2y$10$BrSY3RMOOQYnAHAHd29CbeTui.PWY6.YVb4m8.rryrNde0hzMk4PW', 'artist', '2026-03-25 13:08:46', 'active'),
+(7, 'sofia', 'sofia@artportal', '$2y$10$HOX69EjaxPtXhIqwGbEC/OQtl0brd4WiJ8NWINc0/gnHau77Ka3.a', 'artist', '2026-03-25 13:12:53', 'active'),
+(8, 'david', 'david@artportal.ee', '$2y$10$isZBs0DDwi1nNtQQ/qwpXO49auxCLTqlhkQM12g0wBNznyeNUuIeC', 'artist', '2026-04-23 09:11:04', 'active'),
+(9, 'emma', 'emma@artportal.ee', '$2y$10$ZE9d5dGo7gmiTDJ/dh4OyuYmvuFr75YBa0cbowZLv9mR/yA0VEUka', 'artist', '2026-04-23 09:11:04', 'active'),
+(10, 'test', 'test@test.ee', '$2y$10$5bOaxg0.ue40sLfgp.CONOT8hcincHJrt.DlQUS.L5JrvhtVebfoa', 'user', '2026-04-25 00:00:00', 'active'),
+(14, 'test2', 'test2@test2.ee', '$2y$10$Hy43cA5HApKjCXJYitwsBuH5z8MbVNzTb0Y/fh1/Fbsqf5mTHFlIa', 'user', '2026-04-25 00:00:00', 'blocked'),
+(15, 'new', 'new@test.ee', '$2y$10$Az1Vc5SggqlAtvEin3gAu.58u7zAVro7wJBVhyqfzHw9tBOY1FeBC', 'user', '2026-04-25 00:00:00', 'active'),
+(17, 'Newnew', 'myemail@mail.ee', '$2y$10$zwYuLFQMSHaaXe01dAhhH.BllpgW.LhM0FVlDM9iYjm9f7hpb629e', 'user', '2026-05-02 00:00:00', 'active'),
+(18, 'ivan', 'ivan@artportal.ee', '$2y$10$D/.GOeM/AAo9zgabK3UCJeyPm2ZR6a3Ozq7AD05vCwN5egKmAbvwa', 'artist', '2026-05-05 00:00:00', 'active'),
+(19, 'maria', 'maria@artportal.ee', '$2y$10$qLDaDXNvrGBH5KgWDak9s.m/W8arYP7o6TFuxJEYyULZr99Qszxr6', 'artist', '2026-05-05 00:00:00', 'active'),
+(20, 'nnn', 'nnn@artportal.ee', '$2y$10$KOXc9VF1ln5Fr9Q6B.JnSeNsLdXIM/V1Rw0VoQ0RkPLKt9JW6Vm4i', 'user', '2026-05-08 00:00:00', 'active'),
+(21, 'rrr', 'rrr@artportal.ee', '$2y$10$njW70kStMAr.rj7EVfYm5eUmgadXjm6IsRklWkO117EoMhUl.zMOm', 'user', '2026-05-08 00:00:00', 'active'),
+(22, 'qqq', 'qqq@artportal.ee', '$2y$10$oP1nodEp/ChLKJI4nNEDR.XDHpOKUm7A0Qaz7yrWUCcyGv7d2ycu2', 'user', '2026-05-08 00:00:00', 'active'),
+(23, 'vvv', 'vvv@artportal.ee', '$2y$10$jcXnkTE3eP2IuDCAwN2u3eTZhEev2bAwvzpZYVVTVn74YcnD6wAEu', 'user', '2026-05-08 00:00:00', 'active'),
+(24, 'aaa', 'aaa@artportal.ee', '$2y$10$o3yGCdXmDJoUMyfA20bO3OHwNiThr364UOkeEqEcxl1ISGFbvFmvO', 'user', '2026-05-08 00:00:00', 'active'),
+(25, 'uuuu', 'uuu@uuu.ee', '$2y$10$tdkEEOSFd6O6KVtMmOYqeeo9JYWAHMIzlzqpVO8I8EuW3lMORqChy', 'user', '2026-05-13 00:00:00', 'active');
 
 --
 -- Индексы сохранённых таблиц
@@ -544,14 +499,6 @@ ALTER TABLE `collections`
   ADD PRIMARY KEY (`id`);
 
 --
--- Индексы таблицы `comments`
---
-ALTER TABLE `comments`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `painting_id` (`painting_id`),
-  ADD KEY `user_id` (`user_id`);
-
---
 -- Индексы таблицы `exhibitions`
 --
 ALTER TABLE `exhibitions`
@@ -564,13 +511,6 @@ ALTER TABLE `exhibitions`
 ALTER TABLE `favorites`
   ADD PRIMARY KEY (`id`),
   ADD UNIQUE KEY `user_painting_unique` (`user_id`,`painting_id`),
-  ADD KEY `painting_id` (`painting_id`);
-
---
--- Индексы таблицы `gallery_images`
---
-ALTER TABLE `gallery_images`
-  ADD PRIMARY KEY (`id`),
   ADD KEY `painting_id` (`painting_id`);
 
 --
@@ -635,12 +575,6 @@ ALTER TABLE `collections`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
--- AUTO_INCREMENT для таблицы `comments`
---
-ALTER TABLE `comments`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
-
---
 -- AUTO_INCREMENT для таблицы `exhibitions`
 --
 ALTER TABLE `exhibitions`
@@ -651,12 +585,6 @@ ALTER TABLE `exhibitions`
 --
 ALTER TABLE `favorites`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=64;
-
---
--- AUTO_INCREMENT для таблицы `gallery_images`
---
-ALTER TABLE `gallery_images`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT для таблицы `paintings`
@@ -699,13 +627,6 @@ ALTER TABLE `artists`
   ADD CONSTRAINT `artists_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON UPDATE CASCADE;
 
 --
--- Ограничения внешнего ключа таблицы `comments`
---
-ALTER TABLE `comments`
-  ADD CONSTRAINT `comments_ibfk_1` FOREIGN KEY (`painting_id`) REFERENCES `paintings` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
-  ADD CONSTRAINT `comments_ibfk_2` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE SET NULL ON UPDATE CASCADE;
-
---
 -- Ограничения внешнего ключа таблицы `exhibitions`
 --
 ALTER TABLE `exhibitions`
@@ -717,12 +638,6 @@ ALTER TABLE `exhibitions`
 ALTER TABLE `favorites`
   ADD CONSTRAINT `favorites_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
   ADD CONSTRAINT `favorites_ibfk_2` FOREIGN KEY (`painting_id`) REFERENCES `paintings` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
-
---
--- Ограничения внешнего ключа таблицы `gallery_images`
---
-ALTER TABLE `gallery_images`
-  ADD CONSTRAINT `gallery_images_ibfk_1` FOREIGN KEY (`painting_id`) REFERENCES `paintings` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Ограничения внешнего ключа таблицы `paintings`
