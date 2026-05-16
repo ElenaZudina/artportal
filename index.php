@@ -32,6 +32,8 @@ require 'models/Register.php';
 
 require 'models/Auth.php';
 
+Auth::syncSessionStatus();
+
 // Убрала view из index.php - нужно добавить в контроллер
 //include_once 'views/paintings.php';
 //include_once 'views/comments.php';

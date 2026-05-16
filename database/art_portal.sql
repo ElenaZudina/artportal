@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Хост: 127.0.0.1
--- Время создания: Май 12 2026 г., 21:55
+-- Время создания: Май 15 2026 г., 14:16
 -- Версия сервера: 10.4.32-MariaDB
 -- Версия PHP: 8.2.12
 
@@ -51,7 +51,7 @@ INSERT INTO `artists` (`id`, `name`, `location`, `birth_date`, `bio`, `picture`,
 (4, 'Sofia Rodriguez', 'Estonia, Pärnu', '1978-04-18', 'Mixed media artist combining traditional painting techniques with modern materials to create textured, layered narratives.', 'sofia-rodriguez.jpg', 'approved', '2026-01-29 09:06:17', 7, '2026-04-09 10:25:14'),
 (11, 'David Park', 'Estonia, Tallinn', '2000-04-06', 'Contemporary portrait artist known for expressive brushwork and vibrant color palettes that capture emotional depth.', 'david-park.jpg', 'approved', '2026-04-23 09:14:39', 8, '2026-05-02 18:40:12'),
 (12, 'Emma Williams', 'Estonia, Tartu', '1996-05-21', 'Geometric abstraction specialist creating harmonious compositions inspired by architecture and urban landscapes.', 'emma-williams.jpg', 'approved', '2026-04-23 09:14:39', 9, '2026-05-02 18:49:04'),
-(15, 'Ivav Ivanov', 'Estonia, Viljandi', '1996-06-22', 'I\'m the best artist of the world', 'artist_69f9c29d9e5ef5.15303290.jpg', 'approved', '2026-05-05 13:12:45', 18, '2026-05-11 20:03:48'),
+(15, 'Ivav Ivanov', 'Estonia, Viljandi', '1996-06-22', 'I\'m the best artist of the world', 'artist_69f9c29d9e5ef5.15303290.jpg', 'pending', '2026-05-05 13:12:45', 18, '2026-05-11 20:03:48'),
 (16, 'Maria White', 'Estonia, Valga', '1960-02-23', 'Art is my passion and life', 'artist_69f9c50e4979f5.57596857.jpg', 'pending', '2026-05-05 13:23:10', 19, '2026-05-05 13:23:10');
 
 -- --------------------------------------------------------
@@ -109,31 +109,8 @@ INSERT INTO `collections` (`id`, `title`, `type`, `param`) VALUES
 (5, 'Collection', 'popular', ''),
 (6, 'Collection made throe Exhibition', 'keyword', 'cat'),
 (7, 'Winter City Life', 'ai', 'city landscape winter blue'),
-(8, 'Orange', 'ai', 'orange mood');
-
--- --------------------------------------------------------
-
---
--- Структура таблицы `comments`
---
-
-CREATE TABLE `comments` (
-  `id` int(11) NOT NULL,
-  `user_id` int(11) DEFAULT NULL,
-  `painting_id` int(11) NOT NULL,
-  `text` varchar(500) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
-  `date` datetime DEFAULT current_timestamp()
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_estonian_ci;
-
---
--- Дамп данных таблицы `comments`
---
-
-INSERT INTO `comments` (`id`, `user_id`, `painting_id`, `text`, `date`) VALUES
-(1, NULL, 3, 'Very nice', '2026-03-25 13:41:56'),
-(2, 1, 4, 'I like it', '2026-03-25 13:41:56'),
-(3, 3, 3, 'So cute', '2026-03-25 13:42:49'),
-(4, NULL, 10, 'Great work!', '2026-03-25 13:42:49');
+(8, 'Orange', 'ai', 'orange mood'),
+(9, 'Abstract expression', 'ai', 'creative abstract art mural');
 
 -- --------------------------------------------------------
 
@@ -157,7 +134,8 @@ CREATE TABLE `exhibitions` (
 INSERT INTO `exhibitions` (`id`, `title`, `description`, `collection_id`, `start_date`, `end_date`) VALUES
 (2, 'Energy World', 'Artworks connected to Energy', 1, '2026-04-23 13:13:20', '2026-05-11 13:13:20'),
 (3, 'New test', 'test', 2, '2026-05-07 21:11:00', '2026-05-10 21:12:00'),
-(5, 'Winter City Life', 'Artwork connected winter and city', 7, '2026-05-12 22:12:00', '2026-05-31 22:12:00');
+(5, 'Winter City Life', 'Artwork connected winter and city', 7, '2026-05-22 22:12:00', '2026-05-31 22:12:00'),
+(6, 'Abstraction mood', '', 9, '2026-05-13 08:39:00', '2026-05-31 08:39:00');
 
 -- --------------------------------------------------------
 
@@ -178,28 +156,8 @@ CREATE TABLE `favorites` (
 
 INSERT INTO `favorites` (`id`, `user_id`, `painting_id`, `created_at`) VALUES
 (61, 10, 11, '2026-05-08 08:57:09'),
-(62, 10, 10, '2026-05-09 20:54:13');
-
--- --------------------------------------------------------
-
---
--- Структура таблицы `gallery_images`
---
-
-CREATE TABLE `gallery_images` (
-  `id` int(11) NOT NULL,
-  `painting_id` int(11) NOT NULL,
-  `image_path` varchar(255) NOT NULL,
-  `created_at` datetime NOT NULL DEFAULT current_timestamp()
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
---
--- Дамп данных таблицы `gallery_images`
---
-
-INSERT INTO `gallery_images` (`id`, `painting_id`, `image_path`, `created_at`) VALUES
-(1, 3, 'mages/test.jpg', '2026-03-25 13:40:40'),
-(2, 3, 'mages/test.jpg', '2026-03-25 13:40:40');
+(62, 10, 10, '2026-05-09 20:54:13'),
+(63, 10, 24, '2026-05-13 09:20:50');
 
 -- --------------------------------------------------------
 
@@ -227,16 +185,23 @@ CREATE TABLE `paintings` (
 -- Дамп данных таблицы `paintings`
 --
 
-INSERT INTO `paintings` (`id`, `title`, `description`, `image`, `year_created`, `category_id`, `artist_id`, `medium`, `dimensions`, `price`, `created_at`, `updated_at`) VALUES
-(3, 'Ethereal Horizons', 'A sweeping abstract composition that captures the liminal space between consciousness and dreams through layered washes of color.', 'ethereal-horizons.jpg', '2026', 1, 1, 'Acrylic on Canvas', '72\" × 48\"', 450.00, '2026-04-09 10:22:14', '2026-04-09 10:22:14'),
-(4, 'Digital Synthesis', 'An exploration of the intersection between traditional painting and digital aesthetics, creating a unique visual language.', 'digital-synthesis.jpg', '2026', 10, 2, 'Mixed Media', '60\" × 40\"', 875.00, '2026-04-09 10:22:14', '2026-04-09 10:22:14'),
-(9, 'Void Studies III', 'A meditation on absence and presence through carefully calibrated tones and the strategic use of empty space.', 'void-studies.jpg', '2026', 6, 3, 'Oil on Linen', '48\" × 48\"', 350.00, '2026-04-09 10:22:14', '2026-04-09 10:22:14'),
-(10, 'Urban Light Installation', 'The Horizon’s Fiery Dance is a vibrant acrylic seascape filled with movement, energy, and bold color. Racing sailboats cut through the waves as they head toward a glowing, swirling sun on the horizon. Dynamic brushstrokes of red, orange, and deep blue create a dramatic sky, evoking wind, speed, and freedom.\r\n\r\nExpressive and powerful, this one-of-a-kind artwork captures the raw emotion of the sea and the thrill of motion. Painted in acrylic on stretched canvas, it makes a striking focal point for a modern interior and comes with a certificate of authenticity.', 'urban-light-installation.jpg', '2026', 7, 2, 'Digital Art', 'Variable', 660.00, '2026-04-09 10:22:14', '2026-04-09 10:22:14'),
-(11, 'Portrait of Tomorrow', 'A contemporary portrait that captures the essence of modern identity through expressive brushstrokes and bold color choices.', 'portrait-of-tomorrow.jpg', '2025', 8, 11, 'Oil on Canvas\'', '36\" × 28\"', 777.00, '2026-04-09 10:22:14', '2026-04-09 10:22:14'),
-(12, 'Chromatic Energy', 'A vibrant explosion of color that celebrates the raw energy and emotion of abstract expressionism.', 'chromatic-energy.jpg', '2025', 1, 1, 'Acrylic on Canvas', '', 999.00, '2026-04-09 10:22:14', '2026-04-09 10:22:14'),
-(13, 'Geometric Meditation', 'Precise geometric forms create a sense of balance and harmony, inviting contemplation and visual exploration.', 'geometric-meditation.jpg', '2025', 9, 12, 'Acrylic on Panel', '40\" × 40\"', 1100.00, '2026-04-23 09:39:00', '2026-04-23 09:39:00'),
-(14, 'Layered Narratives', 'Complex layers of paint, paper, and found materials come together to tell a multifaceted story of texture and depth.', 'layered-narratives.jpg', '2025', 10, 4, 'Mixed Media', '48\" × 36\"', 555.00, '2026-04-23 09:43:58', '2026-04-23 09:43:58'),
-(23, 'Bridge', 'Bridge', 'painting_6a0383ddbb1bf4.09642702.jpg', '2025', 3, 15, 'test', 'te', 233.99, '2026-05-12 22:47:41', '2026-05-12 22:47:41');
+INSERT INTO `paintings` (`id`, `title`, `description`, `image`, `file_hash`, `year_created`, `category_id`, `artist_id`, `medium`, `dimensions`, `price`, `created_at`, `updated_at`) VALUES
+(3, 'Ethereal Horizons', 'A sweeping abstract composition that captures the liminal space between consciousness and dreams through layered washes of color.', 'ethereal-horizons.jpg', NULL, '2026', 1, 1, 'Acrylic on Canvas', '72\" × 48\"', 450.00, '2026-04-09 10:22:14', '2026-04-09 10:22:14'),
+(4, 'Digital Synthesis', 'An exploration of the intersection between traditional painting and digital aesthetics, creating a unique visual language.', 'digital-synthesis.jpg', NULL, '2026', 10, 2, 'Mixed Media', '60\" × 40\"', 875.00, '2026-04-09 10:22:14', '2026-04-09 10:22:14'),
+(9, 'Void Studies III', 'A meditation on absence and presence through carefully calibrated tones and the strategic use of empty space.', 'void-studies.jpg', NULL, '2026', 6, 3, 'Oil on Linen', '48\" × 48\"', 350.00, '2026-04-09 10:22:14', '2026-04-09 10:22:14'),
+(10, 'Urban Light Installation', 'The Horizon’s Fiery Dance is a vibrant acrylic seascape filled with movement, energy, and bold color. Racing sailboats cut through the waves as they head toward a glowing, swirling sun on the horizon. Dynamic brushstrokes of red, orange, and deep blue create a dramatic sky, evoking wind, speed, and freedom.\r\n\r\nExpressive and powerful, this one-of-a-kind artwork captures the raw emotion of the sea and the thrill of motion. Painted in acrylic on stretched canvas, it makes a striking focal point for a modern interior and comes with a certificate of authenticity.', 'urban-light-installation.jpg', NULL, '2026', 7, 2, 'Digital Art', 'Variable', 660.00, '2026-04-09 10:22:14', '2026-04-09 10:22:14'),
+(11, 'Portrait of Tomorrow', 'A contemporary portrait that captures the essence of modern identity through expressive brushstrokes and bold color choices.', 'portrait-of-tomorrow.jpg', NULL, '2025', 8, 11, 'Oil on Canvas\'', '36\" × 28\"', 777.00, '2026-04-09 10:22:14', '2026-04-09 10:22:14'),
+(12, 'Chromatic Energy', 'A vibrant explosion of color that celebrates the raw energy and emotion of abstract expressionism.', 'chromatic-energy.jpg', NULL, '2025', 1, 1, 'Acrylic on Canvas', '', 999.00, '2026-04-09 10:22:14', '2026-04-09 10:22:14'),
+(13, 'Geometric Meditation', 'Precise geometric forms create a sense of balance and harmony, inviting contemplation and visual exploration.', 'geometric-meditation.jpg', NULL, '2025', 9, 12, 'Acrylic on Panel', '40\" × 40\"', 1100.00, '2026-04-23 09:39:00', '2026-04-23 09:39:00'),
+(14, 'Layered Narratives', 'Complex layers of paint, paper, and found materials come together to tell a multifaceted story of texture and depth.', 'layered-narratives.jpg', NULL, '2025', 10, 4, 'Mixed Media', '48\" × 36\"', 555.00, '2026-04-23 09:43:58', '2026-04-23 09:43:58'),
+(23, 'Bridge', 'Bridge', 'painting_6a0383ddbb1bf4.09642702.jpg', NULL, '2025', 3, 15, 'test', 'te', 233.99, '2026-05-12 22:47:41', '2026-05-12 22:47:41'),
+(24, 'Flower Music', 'Modern brilliant art', 'painting_6a040d823e7023.12147525.jpg', NULL, '2026', 5, 12, 'acril', '23x23', 876.00, '2026-05-13 08:34:58', '2026-05-13 08:34:58'),
+(25, 'Classic Paint', 'classi paint', 'painting_6a041ff6018df6.05765337.jpg', NULL, '2023', 3, 15, 'trew', '45', 234.00, '2026-05-13 09:53:42', '2026-05-13 09:53:42'),
+(26, 'test', 'test', 'painting_6a0427d086f181.32981292.jpg', NULL, '2020', 2, 15, 'test', 'test', 25.00, '2026-05-13 10:27:12', '2026-05-13 10:27:12'),
+(27, 'test', 'test', 'painting_6a04285bc0ed10.09391138.jpg', NULL, '2020', 2, 15, 'test', 'test', 25.00, '2026-05-13 10:29:31', '2026-05-13 10:29:31'),
+(28, 'test', 'test', 'painting_6a042903c65ea2.27828058.jpg', NULL, '2020', 2, 15, 'test', 'test', 25.00, '2026-05-13 10:32:19', '2026-05-13 10:32:19'),
+(29, 'test', 'test', 'painting_6a042d204c8e79.44321143.jpg', NULL, '2024', 2, 15, 'te', '45', 456.00, '2026-05-13 10:49:52', '2026-05-13 10:49:52'),
+(30, 'test', 'test', 'painting_6a04346b6be184.61157405.jpg', '195eb305000449badad2221f833e641a', '2025', 2, 15, 'test', 'test', 234.00, '2026-05-13 11:20:59', '2026-05-13 11:20:59');
 
 -- --------------------------------------------------------
 
@@ -258,7 +223,76 @@ INSERT INTO `painting_tags` (`id`, `painting_id`, `tag_id`) VALUES
 (24, 23, 23),
 (25, 23, 4),
 (26, 23, 24),
-(27, 23, 25);
+(27, 23, 25),
+(28, 24, 4),
+(29, 24, 26),
+(30, 24, 27),
+(31, 24, 28),
+(32, 24, 29),
+(33, 24, 30),
+(34, 24, 31),
+(35, 24, 32),
+(36, 24, 33),
+(37, 24, 34),
+(38, 24, 35),
+(39, 25, 36),
+(40, 25, 37),
+(41, 25, 4),
+(42, 25, 38),
+(43, 25, 25),
+(44, 25, 39),
+(45, 25, 40),
+(46, 25, 41),
+(47, 25, 42),
+(48, 25, 43),
+(49, 28, 44),
+(50, 28, 45),
+(51, 28, 26),
+(52, 28, 27),
+(53, 28, 28),
+(54, 28, 46),
+(55, 28, 47),
+(56, 28, 48),
+(57, 28, 49),
+(58, 28, 50),
+(59, 28, 51),
+(60, 28, 52),
+(61, 28, 53),
+(62, 28, 54),
+(63, 28, 55),
+(64, 28, 56),
+(65, 29, 44),
+(66, 29, 45),
+(67, 29, 26),
+(68, 29, 27),
+(69, 29, 28),
+(70, 29, 46),
+(71, 29, 57),
+(72, 29, 58),
+(73, 29, 59),
+(74, 29, 47),
+(75, 29, 60),
+(76, 29, 61),
+(77, 29, 34),
+(78, 30, 44),
+(79, 30, 45),
+(80, 30, 26),
+(81, 30, 27),
+(82, 30, 28),
+(83, 30, 46),
+(84, 30, 57),
+(85, 30, 58),
+(86, 30, 59),
+(87, 30, 47),
+(88, 30, 62),
+(89, 30, 63),
+(90, 30, 64),
+(91, 30, 53),
+(92, 30, 65),
+(93, 30, 66),
+(94, 30, 60),
+(95, 30, 61),
+(96, 30, 34);
 
 -- --------------------------------------------------------
 
@@ -312,7 +346,8 @@ INSERT INTO `purchase_requests` (`id`, `user_id`, `painting_id`, `created_at`) V
 (33, 10, 12, '2026-05-08 09:28:13'),
 (34, 10, 11, '2026-05-09 20:51:48'),
 (35, 10, NULL, '2026-05-09 20:53:37'),
-(36, 10, 10, '2026-05-09 20:54:25');
+(36, 10, 10, '2026-05-09 20:54:25'),
+(37, 10, 24, '2026-05-13 09:20:52');
 
 -- --------------------------------------------------------
 
@@ -330,28 +365,69 @@ CREATE TABLE `tags` (
 --
 
 INSERT INTO `tags` (`id`, `name`) VALUES
+(66, '1949-1960'),
+(47, 'abstract'),
+(31, 'abstract art'),
+(32, 'abstract expressionism'),
+(53, 'abstraction'),
 (10, 'acrylic paint'),
 (17, 'aegean cat'),
+(62, 'another'),
 (18, 'arabian mau'),
 (3, 'art'),
 (4, 'art paint'),
+(54, 'artist'),
+(49, 'artwork'),
 (23, 'blue'),
+(56, 'canvas'),
 (14, 'carnivores'),
+(51, 'case'),
+(37, 'castle'),
 (11, 'cat'),
+(39, 'château'),
+(61, 'contemporary'),
+(33, 'contemporary art'),
+(46, 'creative'),
+(29, 'creative arts'),
+(34, 'culture'),
+(26, 'drawing'),
+(60, 'expressionism'),
 (12, 'felidae'),
 (13, 'felinae'),
+(52, 'for'),
+(58, 'guggenheim'),
+(65, 'guggenheim,'),
+(36, 'history'),
+(42, 'htc dream'),
+(27, 'illustration'),
+(48, 'image'),
+(64, 'international'),
+(63, 'kind:'),
+(43, 'medieval art'),
+(40, 'middle ages'),
+(45, 'modern'),
 (8, 'modern art'),
+(28, 'mural'),
+(41, 'mural painting'),
+(59, 'museum'),
 (21, 'ojos azules'),
+(55, 'on'),
 (2, 'orange'),
 (7, 'paint'),
 (5, 'painting'),
 (20, 'ragamuffin'),
 (1, 'red'),
+(57, 'solomon'),
+(30, 'solomon r. guggenheim museum'),
 (24, 'spire'),
 (22, 'tabby cat'),
+(50, 'the'),
+(35, 'the arts'),
 (25, 'tower'),
 (19, 'turkish van'),
+(38, 'turret'),
 (15, 'vertebrate'),
+(44, 'visual'),
 (6, 'visual arts'),
 (9, 'watercolor painting'),
 (16, 'whiskers');
@@ -368,34 +444,36 @@ CREATE TABLE `users` (
   `email` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
   `password` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
   `role` enum('admin','artist','user') CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL DEFAULT 'user',
-  `created_at` datetime NOT NULL DEFAULT current_timestamp()
+  `created_at` datetime NOT NULL DEFAULT current_timestamp(),
+  `status` enum('active','blocked') NOT NULL DEFAULT 'active'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_estonian_ci;
 
 --
 -- Дамп данных таблицы `users`
 --
 
-INSERT INTO `users` (`id`, `username`, `email`, `password`, `role`, `created_at`) VALUES
-(1, 'admin', 'admin@newsportal.ee', '$2y$12$pxB2ofiiNZkxObmbBvBOyegwCjHCVFYhapjiSsdYXUaJ9Z1IH6pQW', 'admin', '2019-11-05 00:00:00'),
-(2, 'anonim', 'user@newsportal.ee', '$2y$10$dYK1sCogKL/zZBef.V/gBeynL5mdt0QxZlwvEUBkS0jkdXYRMPHRa', 'user', '2019-11-05 00:00:00'),
-(3, 'vasya', 'vasya@mail.ru', '$2y$10$EIn5N6yvbp807VbgEHgr0OUAt1T14c4fXwE0eo02E0x4KbFrCSXbK', 'user', '2020-09-19 00:00:00'),
-(4, 'marina', 'marina@artportal.ee', '$2y$10$3BaKKk1rcaMpEx2pBQfBnuTp8AkPG33P6EyvY6OIkctda3rSICbs6', 'artist', '2026-03-25 11:17:55'),
-(5, 'alexandre', 'alexandre@artportal.ee', '$2y$10$T4XRXaxjEK3ifIxgQzHnZe3f9cAFVTt57NBnsA8PgHguWkuj6BLGe', 'artist', '2026-03-25 13:07:23'),
-(6, 'yuki', 'yuki@artportal.ee', '$2y$10$BrSY3RMOOQYnAHAHd29CbeTui.PWY6.YVb4m8.rryrNde0hzMk4PW', 'artist', '2026-03-25 13:08:46'),
-(7, 'sofia', 'sofia@artportal', '$2y$10$HOX69EjaxPtXhIqwGbEC/OQtl0brd4WiJ8NWINc0/gnHau77Ka3.a', 'artist', '2026-03-25 13:12:53'),
-(8, 'david', 'david@artportal.ee', '$2y$10$isZBs0DDwi1nNtQQ/qwpXO49auxCLTqlhkQM12g0wBNznyeNUuIeC', 'artist', '2026-04-23 09:11:04'),
-(9, 'emma', 'emma@artportal.ee', '$2y$10$ZE9d5dGo7gmiTDJ/dh4OyuYmvuFr75YBa0cbowZLv9mR/yA0VEUka', 'artist', '2026-04-23 09:11:04'),
-(10, 'test', 'test@test.ee', '$2y$10$5bOaxg0.ue40sLfgp.CONOT8hcincHJrt.DlQUS.L5JrvhtVebfoa', 'user', '2026-04-25 00:00:00'),
-(14, 'test2', 'test2@test2.ee', '$2y$10$Hy43cA5HApKjCXJYitwsBuH5z8MbVNzTb0Y/fh1/Fbsqf5mTHFlIa', 'user', '2026-04-25 00:00:00'),
-(15, 'new', 'new@test.ee', '$2y$10$Az1Vc5SggqlAtvEin3gAu.58u7zAVro7wJBVhyqfzHw9tBOY1FeBC', 'user', '2026-04-25 00:00:00'),
-(17, 'Newnew', 'myemail@mail.ee', '$2y$10$zwYuLFQMSHaaXe01dAhhH.BllpgW.LhM0FVlDM9iYjm9f7hpb629e', 'user', '2026-05-02 00:00:00'),
-(18, 'ivan', 'ivan@artportal.ee', '$2y$10$D/.GOeM/AAo9zgabK3UCJeyPm2ZR6a3Ozq7AD05vCwN5egKmAbvwa', 'artist', '2026-05-05 00:00:00'),
-(19, 'maria', 'maria@artportal.ee', '$2y$10$qLDaDXNvrGBH5KgWDak9s.m/W8arYP7o6TFuxJEYyULZr99Qszxr6', 'artist', '2026-05-05 00:00:00'),
-(20, 'nnn', 'nnn@artportal.ee', '$2y$10$KOXc9VF1ln5Fr9Q6B.JnSeNsLdXIM/V1Rw0VoQ0RkPLKt9JW6Vm4i', 'user', '2026-05-08 00:00:00'),
-(21, 'rrr', 'rrr@artportal.ee', '$2y$10$njW70kStMAr.rj7EVfYm5eUmgadXjm6IsRklWkO117EoMhUl.zMOm', 'user', '2026-05-08 00:00:00'),
-(22, 'qqq', 'qqq@artportal.ee', '$2y$10$oP1nodEp/ChLKJI4nNEDR.XDHpOKUm7A0Qaz7yrWUCcyGv7d2ycu2', 'user', '2026-05-08 00:00:00'),
-(23, 'vvv', 'vvv@artportal.ee', '$2y$10$jcXnkTE3eP2IuDCAwN2u3eTZhEev2bAwvzpZYVVTVn74YcnD6wAEu', 'user', '2026-05-08 00:00:00'),
-(24, 'aaa', 'aaa@artportal.ee', '$2y$10$o3yGCdXmDJoUMyfA20bO3OHwNiThr364UOkeEqEcxl1ISGFbvFmvO', 'user', '2026-05-08 00:00:00');
+INSERT INTO `users` (`id`, `username`, `email`, `password`, `role`, `created_at`, `status`) VALUES
+(1, 'admin', 'admin@artportal.ee', '$2y$12$pxB2ofiiNZkxObmbBvBOyegwCjHCVFYhapjiSsdYXUaJ9Z1IH6pQW', 'admin', '2019-11-05 00:00:00', 'active'),
+(2, 'anonim', 'user@newsportal.ee', '$2y$10$dYK1sCogKL/zZBef.V/gBeynL5mdt0QxZlwvEUBkS0jkdXYRMPHRa', 'user', '2019-11-05 00:00:00', 'active'),
+(3, 'vasya', 'vasya@mail.ru', '$2y$10$EIn5N6yvbp807VbgEHgr0OUAt1T14c4fXwE0eo02E0x4KbFrCSXbK', 'user', '2020-09-19 00:00:00', 'active'),
+(4, 'marina', 'marina@artportal.ee', '$2y$10$3BaKKk1rcaMpEx2pBQfBnuTp8AkPG33P6EyvY6OIkctda3rSICbs6', 'artist', '2026-03-25 11:17:55', 'active'),
+(5, 'alexandre', 'alexandre@artportal.ee', '$2y$10$T4XRXaxjEK3ifIxgQzHnZe3f9cAFVTt57NBnsA8PgHguWkuj6BLGe', 'artist', '2026-03-25 13:07:23', 'active'),
+(6, 'yuki', 'yuki@artportal.ee', '$2y$10$BrSY3RMOOQYnAHAHd29CbeTui.PWY6.YVb4m8.rryrNde0hzMk4PW', 'artist', '2026-03-25 13:08:46', 'active'),
+(7, 'sofia', 'sofia@artportal', '$2y$10$HOX69EjaxPtXhIqwGbEC/OQtl0brd4WiJ8NWINc0/gnHau77Ka3.a', 'artist', '2026-03-25 13:12:53', 'active'),
+(8, 'david', 'david@artportal.ee', '$2y$10$isZBs0DDwi1nNtQQ/qwpXO49auxCLTqlhkQM12g0wBNznyeNUuIeC', 'artist', '2026-04-23 09:11:04', 'active'),
+(9, 'emma', 'emma@artportal.ee', '$2y$10$ZE9d5dGo7gmiTDJ/dh4OyuYmvuFr75YBa0cbowZLv9mR/yA0VEUka', 'artist', '2026-04-23 09:11:04', 'active'),
+(10, 'test', 'test@test.ee', '$2y$10$5bOaxg0.ue40sLfgp.CONOT8hcincHJrt.DlQUS.L5JrvhtVebfoa', 'user', '2026-04-25 00:00:00', 'active'),
+(14, 'test2', 'test2@test2.ee', '$2y$10$Hy43cA5HApKjCXJYitwsBuH5z8MbVNzTb0Y/fh1/Fbsqf5mTHFlIa', 'user', '2026-04-25 00:00:00', 'blocked'),
+(15, 'new', 'new@test.ee', '$2y$10$Az1Vc5SggqlAtvEin3gAu.58u7zAVro7wJBVhyqfzHw9tBOY1FeBC', 'user', '2026-04-25 00:00:00', 'active'),
+(17, 'Newnew', 'myemail@mail.ee', '$2y$10$zwYuLFQMSHaaXe01dAhhH.BllpgW.LhM0FVlDM9iYjm9f7hpb629e', 'user', '2026-05-02 00:00:00', 'active'),
+(18, 'ivan', 'ivan@artportal.ee', '$2y$10$D/.GOeM/AAo9zgabK3UCJeyPm2ZR6a3Ozq7AD05vCwN5egKmAbvwa', 'artist', '2026-05-05 00:00:00', 'active'),
+(19, 'maria', 'maria@artportal.ee', '$2y$10$qLDaDXNvrGBH5KgWDak9s.m/W8arYP7o6TFuxJEYyULZr99Qszxr6', 'artist', '2026-05-05 00:00:00', 'active'),
+(20, 'nnn', 'nnn@artportal.ee', '$2y$10$KOXc9VF1ln5Fr9Q6B.JnSeNsLdXIM/V1Rw0VoQ0RkPLKt9JW6Vm4i', 'user', '2026-05-08 00:00:00', 'active'),
+(21, 'rrr', 'rrr@artportal.ee', '$2y$10$njW70kStMAr.rj7EVfYm5eUmgadXjm6IsRklWkO117EoMhUl.zMOm', 'user', '2026-05-08 00:00:00', 'active'),
+(22, 'qqq', 'qqq@artportal.ee', '$2y$10$oP1nodEp/ChLKJI4nNEDR.XDHpOKUm7A0Qaz7yrWUCcyGv7d2ycu2', 'user', '2026-05-08 00:00:00', 'active'),
+(23, 'vvv', 'vvv@artportal.ee', '$2y$10$jcXnkTE3eP2IuDCAwN2u3eTZhEev2bAwvzpZYVVTVn74YcnD6wAEu', 'user', '2026-05-08 00:00:00', 'active'),
+(24, 'aaa', 'aaa@artportal.ee', '$2y$10$o3yGCdXmDJoUMyfA20bO3OHwNiThr364UOkeEqEcxl1ISGFbvFmvO', 'user', '2026-05-08 00:00:00', 'active'),
+(25, 'uuuu', 'uuu@uuu.ee', '$2y$10$tdkEEOSFd6O6KVtMmOYqeeo9JYWAHMIzlzqpVO8I8EuW3lMORqChy', 'user', '2026-05-13 00:00:00', 'active');
 
 --
 -- Индексы сохранённых таблиц
@@ -421,14 +499,6 @@ ALTER TABLE `collections`
   ADD PRIMARY KEY (`id`);
 
 --
--- Индексы таблицы `comments`
---
-ALTER TABLE `comments`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `painting_id` (`painting_id`),
-  ADD KEY `user_id` (`user_id`);
-
---
 -- Индексы таблицы `exhibitions`
 --
 ALTER TABLE `exhibitions`
@@ -441,13 +511,6 @@ ALTER TABLE `exhibitions`
 ALTER TABLE `favorites`
   ADD PRIMARY KEY (`id`),
   ADD UNIQUE KEY `user_painting_unique` (`user_id`,`painting_id`),
-  ADD KEY `painting_id` (`painting_id`);
-
---
--- Индексы таблицы `gallery_images`
---
-ALTER TABLE `gallery_images`
-  ADD PRIMARY KEY (`id`),
   ADD KEY `painting_id` (`painting_id`);
 
 --
@@ -509,61 +572,49 @@ ALTER TABLE `categories`
 -- AUTO_INCREMENT для таблицы `collections`
 --
 ALTER TABLE `collections`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
-
---
--- AUTO_INCREMENT для таблицы `comments`
---
-ALTER TABLE `comments`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
 -- AUTO_INCREMENT для таблицы `exhibitions`
 --
 ALTER TABLE `exhibitions`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT для таблицы `favorites`
 --
 ALTER TABLE `favorites`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=63;
-
---
--- AUTO_INCREMENT для таблицы `gallery_images`
---
-ALTER TABLE `gallery_images`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=64;
 
 --
 -- AUTO_INCREMENT для таблицы `paintings`
 --
 ALTER TABLE `paintings`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=24;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=31;
 
 --
 -- AUTO_INCREMENT для таблицы `painting_tags`
 --
 ALTER TABLE `painting_tags`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=28;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=97;
 
 --
 -- AUTO_INCREMENT для таблицы `purchase_requests`
 --
 ALTER TABLE `purchase_requests`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=37;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=38;
 
 --
 -- AUTO_INCREMENT для таблицы `tags`
 --
 ALTER TABLE `tags`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=26;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=67;
 
 --
 -- AUTO_INCREMENT для таблицы `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=25;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=26;
 
 --
 -- Ограничения внешнего ключа сохраненных таблиц
@@ -574,13 +625,6 @@ ALTER TABLE `users`
 --
 ALTER TABLE `artists`
   ADD CONSTRAINT `artists_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON UPDATE CASCADE;
-
---
--- Ограничения внешнего ключа таблицы `comments`
---
-ALTER TABLE `comments`
-  ADD CONSTRAINT `comments_ibfk_1` FOREIGN KEY (`painting_id`) REFERENCES `paintings` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
-  ADD CONSTRAINT `comments_ibfk_2` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE SET NULL ON UPDATE CASCADE;
 
 --
 -- Ограничения внешнего ключа таблицы `exhibitions`
@@ -594,12 +638,6 @@ ALTER TABLE `exhibitions`
 ALTER TABLE `favorites`
   ADD CONSTRAINT `favorites_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
   ADD CONSTRAINT `favorites_ibfk_2` FOREIGN KEY (`painting_id`) REFERENCES `paintings` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
-
---
--- Ограничения внешнего ключа таблицы `gallery_images`
---
-ALTER TABLE `gallery_images`
-  ADD CONSTRAINT `gallery_images_ibfk_1` FOREIGN KEY (`painting_id`) REFERENCES `paintings` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Ограничения внешнего ключа таблицы `paintings`

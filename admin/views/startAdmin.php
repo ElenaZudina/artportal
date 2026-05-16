@@ -13,13 +13,11 @@
                     </style>
                     <div class="row g-3">
                         <div class="col-6 col-md-2">
-                            <a href="moderation-artists" class="kpi-link">
-                                <div class="kpi-card text-center">
-                                    <div class="kpi-icon"><i class="fa-solid fa-palette"></i></div>
-                                    <div class="kpi-value"><?php echo isset($counts['artists']) ? $counts['artists'] : '—'; ?></div>
-                                    <div class="kpi-sub">Artists</div>
-                                </div>
-                            </a>
+                            <div class="kpi-card text-center">
+                                <div class="kpi-icon"><i class="fa-solid fa-palette"></i></div>
+                                <div class="kpi-value"><?php echo isset($counts['artists']) ? $counts['artists'] : '—'; ?></div>
+                                <div class="kpi-sub">Artists</div>
+                            </div>
                         </div>
                         <div class="col-6 col-md-2">
                             <a href="moderation-artists" class="kpi-link">
@@ -49,11 +47,13 @@
                             </a>
                         </div>
                         <div class="col-6 col-md-2">
-                            <div class="kpi-card text-center">
-                                <div class="kpi-icon"><i class="fa-solid fa-users"></i></div>
-                                <div class="kpi-value"><?php echo isset($counts['users']) ? $counts['users'] : '—'; ?></div>
-                                <div class="kpi-sub">Users</div>
-                            </div>
+                            <a href="users" class="kpi-link">
+                                <div class="kpi-card text-center">
+                                    <div class="kpi-icon"><i class="fa-solid fa-users"></i></div>
+                                    <div class="kpi-value"><?php echo isset($counts['users']) ? $counts['users'] : '—'; ?></div>
+                                    <div class="kpi-sub">Users</div>
+                                </div>
+                            </a>
                         </div>
                         <div class="col-6 col-md-2">
                             <a href="categories" class="kpi-link">
@@ -77,6 +77,9 @@
                         <div class="col-12 text-center">
                             <div class="text-muted small">Artist Profiles</div>
                             <div class="h5 mb-0"><?php echo isset($counts['pending_profiles']) ? $counts['pending_profiles'] : '—'; ?></div>
+                            <div class="mt-3">
+                                <a href="moderation-artists" class="btn btn-outline-primary btn-sm">Review profiles</a>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -86,6 +89,7 @@
                     <h5 class="mb-3">Quick Actions</h5>
                     <div class="d-flex flex-column gap-2">
                         <a href="moderation-artists" class="btn btn-outline-primary">Review profiles</a>
+                        <a href="users" class="btn btn-outline-dark">Moderate users</a>
                         <a href="create-category" class="btn btn-outline-secondary">Add category</a>
                         <a href="create-exhibition" class="btn btn-outline-success">Create exhibition</a>
                     </div>
@@ -96,8 +100,8 @@
         <div class="row">
             <div class="col-12">
                 <div class="card p-3">
-                    <h5 class="mb-3">User Growth</h5>
-                    <p class="text-muted small">Based on users.created_at (variant №1)</p>
+                    <?php $periodDays = (is_array($userGrowth) ? count($userGrowth) : 7); ?>
+                    <h5 class="mb-3">User Growth (last <?php echo $periodDays; ?> days)</h5>
                     <div style="height:220px;">
                         <canvas id="usersGrowthChart"></canvas>
                     </div>

@@ -1,0 +1,75 @@
+@startuml LoginAndDashboardSequence
+skinparam linetype ortho
+skinparam shadowing false
+actor User
+participant "controllerAuth" as CAuth
+participant "AuthService" as AService
+participant "Auth" as AuthModel
+participant "Dashboard/HomeController" as DHome
+participant "Database" as DB
+
+User -> CAuth : POST /auth(email, password)
+CAuth -> AService : login($_POST)
+AService -> AuthModel : findUserByEmail(email)
+AuthModel -> DB : SELECT user by email
+DB --> AuthModel : user row
+AuthModel --> AService : user
+AService -> AService : password_verify()
+AService --> CAuth : success + user
+CAuth -> DB : SELECT artist profile by user_id (if needed)
+CAuth -> User : redirect to /dashboard/startDashboard or /admin/startAdmin
+User -> DHome : GET /dashboard/startDashboard
+DHome -> AuthModel : requireSession()
+AuthModel -> AuthModel : syncSessionStatus()
+AuthModel -> DB : SELECT user by id
+DB --> AuthModel : user row
+AuthModel --> DHome : active session
+DHome --> User : render dashboard page
+@enduml
+
+@startuml ForgotPasswordSequence
+skinparam linetype ortho
+skinparam shadowing false
+actor User
+participant "controllerAuth" as CAuth
+participant "Auth" as AuthModel
+participant "EmailService" as MailSvc
+participant "Admin inbox / Mailtrap" as Inbox
+
+User -> CAuth : POST /forgot-password-request(email)
+CAuth -> AuthModel : findUserByEmail(email)
+AuthModel --> CAuth : user or null
+alt user exists
+  CAuth -> MailSvc : sendPasswordResetRequestToAdmin(user)
+  MailSvc -> Inbox : send email to ADMIN_EMAIL
+  Inbox --> MailSvc : accepted
+  MailSvc --> CAuth : true
+  CAuth --> User : redirect to /login with success message
+else user not found
+  CAuth --> User : redirect to /login with generic success message
+end
+@enduml
+
+@startuml AdminUserStatusSequence
+skinparam linetype ortho
+skinparam shadowing false
+actor Admin
+participant "UsersController" as UCtrl
+participant "Auth" as AuthModel
+participant "Dashboard" as Dash
+
+Admin -> UCtrl : POST /user-status(id,status)
+UCtrl -> AuthModel : getUserByID(id)
+AuthModel --> UCtrl : user data
+alt valid target user
+  UCtrl -> AuthModel : updateStatus(id, status)
+  AuthModel --> UCtrl : ok
+  UCtrl --> Admin : redirect to /users
+else invalid/protected
+  UCtrl --> Admin : redirect to /users with error
+end
+Admin -> Dash : access protected pages
+Dash -> AuthModel : requireSession()
+AuthModel -> AuthModel : syncSessionStatus()
+AuthModel --> Dash : allowed or redirect login
+@enduml

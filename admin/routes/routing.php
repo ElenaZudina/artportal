@@ -16,6 +16,14 @@ if ($path == '' || $path == 'startAdmin' || $path == 'admin' || $path == 'index.
     $response = HomeController::startAdminPanel();
 }
 
+elseif ($path == 'users') {
+    $response = UsersController::index();
+}
+
+elseif ($path == 'user-status' && ($_SERVER['REQUEST_METHOD'] ?? 'GET') === 'POST') {
+    $response = UsersController::updateStatus();
+}
+
 elseif ($path == 'logout') {
     header('Location: /artportal/logout');
     exit;

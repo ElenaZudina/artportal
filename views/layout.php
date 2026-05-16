@@ -18,7 +18,7 @@ $isLogin = $activeRoute === 'login';
             <!-- Bootstrap 5.3 CSS -->
              <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
              <!-- Font Awesome -->
-             <link rel="stylesheet" type="text/css" href="public/css/font-awesome.min.css">
+             <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
              <!-- Custom CSS -->
              <link rel="stylesheet" type="text/css" href="public/css/style.css">
              <link rel="stylesheet" type="text/css" href="public/css/custom.css">
@@ -51,10 +51,13 @@ $isLogin = $activeRoute === 'login';
                                     ?>
                                 </ul>
                             </li>
-                            <li class="nav-item"><a class="nav-link<?php echo $isRegister ? ' active' : ''; ?>" href="registerForm">Register</a></li>
                             <?php if (!isset($_SESSION['userId'])): ?>
+                                <li class="nav-item"><a class="nav-link<?php echo $isRegister ? ' active' : ''; ?>" href="registerForm">Register</a></li>
                                 <li class="nav-item"><a class="nav-link<?php echo $isLogin ? ' active' : ''; ?>" href="login">Login</a></li>
                             <?php else: ?>
+                                <?php if (isset($_SESSION['status']) && in_array($_SESSION['status'], ['user', 'artist'], true)): ?>
+                                    <li class="nav-item"><a class="nav-link" href="dashboard">Dashboard</a></li>
+                                <?php endif; ?>
                                 <li class="nav-item"><a class="nav-link" href="logout">Logout</a></li>
                             <?php endif; ?>
                         </ul>

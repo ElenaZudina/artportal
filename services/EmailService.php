@@ -56,6 +56,52 @@ class EmailService {
             return false;
         }
     }
+
+    public static function sendPasswordResetRequestToAdmin($user) {
+        if (!class_exists('PHPMailer\\PHPMailer\\PHPMailer')) {
+            error_log('PHPMailer is not installed or could not be autoloaded. Skipping password request email.');
+            return false;
+        }
+
+        $adminEmail = trim((string)($_ENV['ADMIN_EMAIL'] ?? ''));
+        if ($adminEmail === '' || !filter_var($adminEmail, FILTER_VALIDATE_EMAIL)) {
+            error_log('ADMIN_EMAIL is not configured. Skipping password request email.');
+            return false;
+        }
+
+        $mail = new PHPMailer(true);
+
+        try {
+            $mail->isSMTP();
+            $mail->Host = $_ENV['MAILTRAP_HOST'] ?? 'sandbox.smtp.mailtrap.io';
+            $mail->Port = $_ENV['MAILTRAP_PORT'] ?? 587;
+            $mail->SMTPAuth = true;
+            $mail->SMTPSecure = 'tls';
+            $mail->Username = $_ENV['MAILTRAP_USERNAME'] ?? '';
+            $mail->Password = $_ENV['MAILTRAP_PASSWORD'] ?? '';
+
+            $mail->SMTPOptions = array(
+                'ssl' => array(
+                    'verify_peer' => false,
+                    'verify_peer_name' => false,
+                    'allow_self_signed' => true
+                )
+            );
+
+            $mail->setFrom('noreply@artportal.local', 'ArtPortal');
+            $mail->addAddress($adminEmail, 'Admin');
+
+            $mail->isHTML(true);
+            $mail->Subject = 'Password recovery request from ' . htmlspecialchars($user['email'] ?? 'user');
+            $mail->Body = self::getPasswordResetRequestTemplate($user);
+            $mail->AltBody = self::getPasswordResetRequestPlainText($user);
+
+            return $mail->send();
+        } catch (\Throwable $e) {
+            error_log('PHPMailer Exception: ' . $e->getMessage());
+            return false;
+        }
+    }
     
     /**
      * HTML шаблон письма
@@ -142,6 +188,57 @@ You can review this request and contact the buyer to discuss the details.
 
 Best regards,
 ArtPortal Team
+        ";
+    }
+
+    private static function getPasswordResetRequestTemplate($user) {
+        return "
+        <html>
+            <head>
+                <meta charset='UTF-8'>
+                <style>
+                    body { font-family: Arial, sans-serif; line-height: 1.6; color: #333; }
+                    .container { max-width: 600px; margin: 0 auto; padding: 20px; }
+                    .header { background: #f5f5f5; padding: 20px; border-radius: 5px; margin-bottom: 20px; }
+                    .content { background: white; padding: 20px; border: 1px solid #ddd; border-radius: 5px; }
+                    .user-info { background: #f0f0f0; padding: 15px; border-radius: 5px; margin: 15px 0; }
+                </style>
+            </head>
+            <body>
+                <div class='container'>
+                    <div class='header'>
+                        <h1 style='margin: 0; color: #333;'>ArtPortal</h1>
+                        <p style='margin: 5px 0 0 0; color: #777;'>Password recovery request</p>
+                    </div>
+
+                    <div class='content'>
+                        <p>A user has requested password recovery and asked the admin to send the password manually.</p>
+
+                        <div class='user-info'>
+                            <p><strong>Username:</strong> " . htmlspecialchars($user['username'] ?? 'Unknown') . "</p>
+                            <p><strong>Email:</strong> " . htmlspecialchars($user['email'] ?? 'Unknown') . "</p>
+                            <p><strong>Role:</strong> " . htmlspecialchars($user['role'] ?? 'Unknown') . "</p>
+                        </div>
+
+                        <p>Please contact the user and provide the password manually.</p>
+                    </div>
+                </div>
+            </body>
+        </html>
+        ";
+    }
+
+    private static function getPasswordResetRequestPlainText($user) {
+        return "
+Password recovery request
+
+A user has requested password recovery and asked the admin to send the password manually.
+
+Username: " . ($user['username'] ?? 'Unknown') . "
+Email: " . ($user['email'] ?? 'Unknown') . "
+Role: " . ($user['role'] ?? 'Unknown') . "
+
+Please contact the user and provide the password manually.
         ";
     }
 }

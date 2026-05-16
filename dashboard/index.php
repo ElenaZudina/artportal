@@ -21,12 +21,14 @@ $_SESSION['last_activity'] = time();
 
 //session_destroy();
 require_once '../config/Database.php';
+require_once '../models/Auth.php';
+
+Auth::requireSession();
 
 include_once("../models/Categories.php");
 include_once("../models/Collections.php");
 include_once("../models/Exhibitions.php");
 include_once("../models/Artists.php");
-include_once("../models/Auth.php");
 include_once("../models/Paintings.php");
 include_once("../models/Favourite.php");
 include_once("../models/PurchaseRequest.php");

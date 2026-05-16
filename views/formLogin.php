@@ -34,6 +34,9 @@ if (isset ($_SESSION['userId']) && isset($_SESSION['status'])) {
                         <input id="password" type="password" class="form-control" name="password" required>
                     </div>
                     <button type="submit" class="btn btn-primary w-100" name="btnLogin">Login</button>
+                    <div class="text-end mt-2">
+                        <a href="forgot-password" class="section-link">Forgot password?</a>
+                    </div>
                     <?php 
                         if (isset($_SESSION['errorString'])): ?>
                         <div class="alert alert-danger mt-3" role="alert">
