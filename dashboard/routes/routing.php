@@ -1,4 +1,7 @@
 <?php
+require_once __DIR__ . '/../controllers/FavoriteController.php';
+require_once __DIR__ . '/../controllers/RequestController.php';
+
 $host = explode('?', $_SERVER['REQUEST_URI'])[0];
 $num=substr_count($host, '/');
 $path = explode('/',$host)[$num];
@@ -10,56 +13,56 @@ if ($path == '' || $path == 'index.php' || $path == 'dashboard' || $path == 'sta
 }
 
 elseif ($path == 'profile') {
-    $response = HomeController::profile();
+    $response = ProfileController::profile();
 }
 
 elseif ($path == 'account') {
-    $response = HomeController::account();
+    $response = AccountController::account();
 }
 
 elseif ($path == 'edit-account') {
-    $response = HomeController::editAccount();
+    $response = AccountController::editAccount();
 }
 
 elseif ($path == 'update-account') {
-    $response = HomeController::updateAccount();
+    $response = AccountController::updateAccount();
 }
 
 elseif ($path == 'change-password') {
-    $response = HomeController::changePassword();
+    $response = AccountController::changePassword();
 }
 
 elseif ($path == 'update-password') {
-    $response = HomeController::updatePassword();
+    $response = AccountController::updatePassword();
 }
 
 elseif ($path == 'edit-profile') {
-    $response = HomeController::editProfile();
+    $response = ProfileController::editProfile();
 }
 
 elseif ($path == 'update-profile') {
-    $response = HomeController::updateProfile();
+    $response = ProfileController::updateProfile();
 }
 elseif ($path == 'my-paintings') {
-    $response = HomeController::myPaintings();
+    $response = PaintingController::myPaintings();
 }
 elseif ($path == 'add-painting') {
-    $response = HomeController::addPainting();
+    $response = PaintingController::addPainting();
 }
 elseif ($path == 'store-painting') {
-    $response = HomeController::storePainting();
+    $response = PaintingController::storePainting();
 }
 elseif ($path == 'edit-painting' && isset($_GET['id'])) {
-    $response = HomeController::editPainting();
+    $response = PaintingController::editPainting();
 }
 elseif ($path == 'update-painting' && isset($_GET['id'])) {
-    $response = HomeController::updatePainting();
+    $response = PaintingController::updatePainting();
 }
 elseif ($path == 'delete-painting' && isset($_GET['id'])) {
-    $response = HomeController::deletePainting();
+    $response = PaintingController::deletePainting();
 }
 elseif ($path == 'destroy-painting' && isset($_GET['id'])) {
-    $response = HomeController::destroyPainting();
+    $response = PaintingController::destroyPainting();
 }
 
 elseif ($path == 'price-calculate') {
@@ -67,15 +70,15 @@ elseif ($path == 'price-calculate') {
 }
 
 elseif ($path == 'my-favorites') {
-    $response = HomeController::myFavorites();
+    $response = FavoriteController::myFavorites();
 }
 
 elseif ($path == 'my-requests') {
-    $response = HomeController::myRequests();
+    $response = call_user_func(['RequestController', 'myRequests']);
 }
 
 elseif ($path == 'purchase-requests') {
-    $response = HomeController::purchaseRequests();
+    $response = call_user_func(['RequestController', 'purchaseRequests']);
 }
 
 elseif ($path == 'logout') {

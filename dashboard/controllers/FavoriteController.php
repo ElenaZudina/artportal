@@ -3,6 +3,13 @@ require_once __DIR__ . '/../../models/Favourite.php';
 
 class FavoriteController {
 
+    public static function myFavorites() {
+        Auth::requireSession();
+
+        $favorites = Favorite::getUserFavorites((int)$_SESSION['userId']);
+        include_once('views/my-favorites.php');
+    }
+
     public static function addFavorite() {
         Auth::requireSession();
 

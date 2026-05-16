@@ -33,9 +33,15 @@ include_once("../services/CollectionService.php");
 include_once("../services/ExhibitionService.php");
 include_once("../services/ArtistProfileService.php");
 include_once("../services/PaintingService.php");
+include_once("../services/StatsService.php");
+include_once("../services/AccountService.php");
 
 include_once("controllers/HomeController.php");
 include_once("controllers/PriceController.php");
 include_once("controllers/FavoriteController.php");
+include_once("controllers/RequestController.php");
+include_once("controllers/ProfileController.php");
+include_once("controllers/PaintingController.php");
+include_once("controllers/AccountController.php");
 
 include('routes/routing.php'); 

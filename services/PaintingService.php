@@ -118,6 +118,23 @@ class PaintingService {
         }
     }
 
+    private static function rebuildTagsForPainting(int $paintingId, string $imagePath): void {
+        $visionService = new VisionAIService();
+        $response = $visionService->detectLabels($imagePath);
+        $tags = $visionService->buildTags($response);
+
+        PaintingTags::detachByPaintingId($paintingId);
+
+        if (empty($tags)) {
+            return;
+        }
+
+        foreach ($tags as $tagName) {
+            $tagId = Tags::getOrCreateTag($tagName);
+            PaintingTags::attach($paintingId, $tagId);
+        }
+    }
+
     public static function createPainting(array $data, array $files, int $userId) {
         $errors = [];
         $normalized = [];
@@ -254,6 +271,10 @@ class PaintingService {
 
         if (!Paintings::updatePainting($id, $cleanData)) {
             return ['success' => false, 'errors' => ['Database error while updating painting'], 'data' => $normalized];
+        }
+
+        if ($image !== $painting['image']) {
+            PaintingService::rebuildTagsForPainting($id, __DIR__ . '/../images/paintings/' . $cleanData['image']);
         }
 
         // Delete old image file if a new one was uploaded
