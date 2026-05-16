@@ -6,6 +6,8 @@ class HomeController {
         // Собираем статистику через общий сервис
         $counts = StatsService::getCounts();
         $userGrowth = StatsService::getUserGrowthByDay(7);
+        // Chart-ready data moved to service
+        $userGrowthChart = StatsService::getUserGrowthChartData(7);
 
         // Передаем в вид
         include_once('views/startAdmin.php');

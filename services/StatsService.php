@@ -43,6 +43,21 @@ class StatsService {
         return $result;
     }
 
+    /**
+     * Возвращает подготовленные данные для графика: метки и значения.
+     * Формат: ['labels'=>array, 'values'=>array, 'periodDays'=>int]
+     */
+    public static function getUserGrowthChartData($days = 7) {
+        $rows = self::getUserGrowthByDay($days);
+        $labels = [];
+        $values = [];
+        foreach ($rows as $r) {
+            $labels[] = date('d.m', strtotime($r['day']));
+            $values[] = (int)$r['total'];
+        }
+        return ['labels' => $labels, 'values' => $values, 'periodDays' => count($labels) ?: (int)$days];
+    }
+
 }
 
 ?>
