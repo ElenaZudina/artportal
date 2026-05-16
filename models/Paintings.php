@@ -83,10 +83,11 @@ class Paintings{
                     AND (
                         paintings.title LIKE ?
                         OR paintings.description LIKE ?
+                                                OR artists.name LIKE ?
                     )";
 
         $like = '%' . $search . '%';
-        $row = $db->getOne($query, [$like, $like]);
+                $row = $db->getOne($query, [$like, $like, $like]);
         return (int)($row['total'] ?? 0);
     }
 
@@ -109,13 +110,14 @@ class Paintings{
                     AND (
                         paintings.title LIKE ?
                         OR paintings.description LIKE ?
+                                                OR artists.name LIKE ?
                     )
                   ORDER BY paintings.id DESC
                   LIMIT " . $limit . " OFFSET " . $offset;
 
         $db = new Database();
         $like = '%' . $search . '%';
-        return $db->getAll($query, [$like, $like]);
+                return $db->getAll($query, [$like, $like, $like]);
     }
 
     public static function getPaintingsByCategoryID($id) {

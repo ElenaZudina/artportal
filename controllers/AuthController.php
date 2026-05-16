@@ -1,7 +1,7 @@
 <?php
 require_once __DIR__ . '/../services/EmailService.php';
 
-class controllerAuth {
+class AuthController {
 
     public static function formLoginSite() {
         include_once('views/formLogin.php');
@@ -42,9 +42,8 @@ class controllerAuth {
         header('Location: /artportal/forgot-password');
         exit;
     }
-    // Авторизация с учетом ролей
+
     public static function loginAction() {
-        //$login=Auth::userAuthentication();
         $login = AuthService::login($_POST);
         if(!$login['success']){
             $_SESSION['errorString'] = $login['errors'][0] ?? 'Incorrect username and password';
@@ -68,7 +67,6 @@ class controllerAuth {
             }
         }
 
-        
         if ($user["role"] == "admin") {
             header("Location: /artportal/admin/startAdmin");
             exit;
@@ -78,13 +76,29 @@ class controllerAuth {
         }
     }
 
-    // Выход из аккаунта
     public static function logoutAction() {
-       session_unset(); // удаляет все переменные сессии
+        session_unset();
         session_destroy();
         
         header("Location: login");
         exit;
     }
-}//end class
+
+    public static function registerForm() {
+        include_once('views/formRegister.php');
+    }
+
+    public static function registerUser() {
+        $result = RegisterService::register($_POST);
+
+        if (!empty($result['success']) && !empty($result['user'])) {
+            $_SESSION['userId'] = $result['user']['id'];
+            $_SESSION['name'] = $result['user']['username'];
+            $_SESSION['status'] = $result['user']['role'];
+            $_SESSION['accountStatus'] = $result['user']['status'] ?? 'active';
+        }
+
+        include_once('views/answerRegister.php');
+    }
+}
 ?>

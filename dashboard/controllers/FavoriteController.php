@@ -11,7 +11,7 @@ class FavoriteController {
     }
 
     public static function addFavorite() {
-        Auth::requireSession();
+        Auth::requireSession(null, 'Only registered users can add paintings to favorites.');
 
         if (($_SERVER['REQUEST_METHOD'] ?? 'GET') !== 'POST') {
             header('Location: /artportal/');
@@ -36,7 +36,7 @@ class FavoriteController {
     }
 
     public static function removeFavorite() {
-        Auth::requireSession();
+        Auth::requireSession(null, 'Only registered users can manage their favorites.');
 
         if (($_SERVER['REQUEST_METHOD'] ?? 'GET') !== 'POST') {
             header('Location: /artportal/');
@@ -59,7 +59,7 @@ class FavoriteController {
     }
 
     public static function toggleFavorite() {
-        Auth::requireSession();
+        Auth::requireSession(null, 'Only registered users can add paintings to favorites.');
 
         if (($_SERVER['REQUEST_METHOD'] ?? 'GET') !== 'POST') {
             header('Location: /artportal/');

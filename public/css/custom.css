@@ -729,6 +729,16 @@ footer p {
   border-color: #e5e7eb;
   background: #f3f4f6;
   white-space: nowrap;
+  height: 36px;
+  min-height: 36px;
+  padding: 0 14px;
+  font-size: 14px;
+  line-height: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
+  flex: 0 0 auto;
 }
 
 .artist-search-clear:hover,
@@ -852,6 +862,16 @@ footer p {
   border-color: #e5e7eb;
   background: #f3f4f6;
   white-space: nowrap;
+  height: 36px;
+  min-height: 36px;
+  padding: 0 14px;
+  font-size: 14px;
+  line-height: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
+  flex: 0 0 auto;
 }
 
 .painting-search-clear:hover,

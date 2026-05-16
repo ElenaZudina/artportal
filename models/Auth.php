@@ -60,9 +60,13 @@ class Auth {
         return self::syncSessionStatus();
     }
 
-    public static function requireRole($requiredRole = null) {
+    public static function requireRole($requiredRole = null, $errorMessage = null) {
         $user = self::getAuthenticatedUser();
         if (!$user) {
+            if (session_status() !== PHP_SESSION_ACTIVE) {
+                session_start();
+            }
+            $_SESSION['errorString'] = $errorMessage ?? 'You must be logged in to perform this action.';
             header('Location: /artportal/login');
             exit;
         }
@@ -82,8 +86,8 @@ class Auth {
         return $user;
     }
 
-    public static function requireSession($requiredRole = null) {
-        return self::requireRole($requiredRole);
+    public static function requireSession($requiredRole = null, $errorMessage = null) {
+        return self::requireRole($requiredRole, $errorMessage);
     }
 
     private static function clearSession() {

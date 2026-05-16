@@ -15,38 +15,38 @@ if($path == '' || $path == 'index' || $path == 'index.php') {
     $response = Controller::StartSite();
 }
 elseif($path == 'all') {
-    $response = Controller::AllPaintings();
+    $response = PaintingController::AllPaintings();
 }
 elseif($path == 'category') {
     if ($id > 0) {
-        $response = Controller::PaintingsByCategoryID($id);
+        $response = PaintingController::PaintingsByCategoryID($id);
     } else {
     $response = Controller::error404();
     }
 }
 elseif($path == 'paintings') {
     if ($id > 0) {
-        $response = Controller::PaintingByID($id); 
+        $response = PaintingController::PaintingByID($id); 
     } else {
         $response = Controller::error404();
     }
 }
 elseif($path == 'artists') {
-    $response = Controller::AllArtists();
+    $response = ArtistController::AllArtists();
 }
 elseif($path == 'artist') {
     if ($id > 0) {
-        $response = Controller::ArtistByID($id); 
+        $response = ArtistController::ArtistByID($id); 
     } else {
         $response = Controller::error404();
     }
 }
 elseif($path == 'exhibitions') {
-    $response = Controller::AllExhibitions();
+    $response = ExhibitionController::AllExhibitions();
 }
 elseif($path == 'current-exhibition') {
     if ($id > 0) {
-        $response = Controller::ExhibitionByID($id); 
+        $response = ExhibitionController::ExhibitionByID($id); 
     } else {
         $response = Controller::error404();
     }
@@ -55,37 +55,37 @@ elseif($path == 'current-exhibition') {
 //register user
 elseif ($path == 'registerForm' ) {
     //form register
-    $response = Controller::registerForm();
+    $response = AuthController::registerForm();
 }
 elseif ($path == 'registerAnswer') {
     //register user
-    $response = Controller::registerUser();
+    $response = AuthController::registerUser();
 }
 elseif ($path == 'artistProfileForm') {
-    $response = Controller::artistProfileForm();
+    $response = ProfileController::artistProfileForm();
 }
 elseif ($path == 'artistProfileSave') {
-    $response = Controller::artistProfileSave();
+    $response = ProfileController::artistProfileSave();
 }
 elseif ($path == 'login' ) {
     // Cтраница входа
-    $response = controllerAuth::formLoginSite();
+    $response = AuthController::formLoginSite();
 }
 elseif ($path == 'forgot-password') {
-    $response = controllerAuth::forgotPasswordForm();
+    $response = AuthController::forgotPasswordForm();
 }
 // ------- ВХОД в зависимости  от роли-----------------------
 
 elseif ($path == 'auth') {
     // Форма входа
-    $response = controllerAuth::loginAction();
+    $response = AuthController::loginAction();
 }
 elseif ($path == 'forgot-password-request') {
-    $response = controllerAuth::forgotPasswordRequest();
+    $response = AuthController::forgotPasswordRequest();
 }
 elseif ($path == 'logout') {
     // Выход
-    $response = controllerAuth::logoutAction();
+    $response = AuthController::logoutAction();
 }
 
 elseif ($path == 'add-to-favorite') {
@@ -102,7 +102,7 @@ elseif ($path == 'toggle-favorite') {
 
 elseif ($path == 'purchase-request') {
     if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-        PurchaseRequestController::create();
+        call_user_func(['RequestController', 'create']);
     } else {
         $response = Controller::error404();
     }

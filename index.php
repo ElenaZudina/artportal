@@ -30,12 +30,17 @@ require 'models/Auth.php';
 
 Auth::syncSessionStatus();
 
+require 'helpers/PaginationHelper.php';
 
 require 'models/PurchaseRequest.php';
 include_once 'controllers/Controller.php';
-include_once 'controllers/controllerAuth.php';
-include_once 'controllers/PurchaseRequestController.php';
+include_once 'controllers/PaintingController.php';
+include_once 'controllers/ArtistController.php';
+include_once 'controllers/ExhibitionController.php';
+include_once 'controllers/ProfileController.php';
+include_once 'controllers/AuthController.php';
 include_once 'dashboard/controllers/FavoriteController.php';
+include_once 'dashboard/controllers/RequestController.php';
 include_once 'routes/routing.php';
 
 ?>

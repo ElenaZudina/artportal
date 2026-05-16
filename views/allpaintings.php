@@ -10,7 +10,7 @@ ob_start();
 	<form class="painting-search-form" method="get" action="all">
 		<div class="input-group painting-search-group">
 			<span class="input-group-text painting-search-icon" aria-hidden="true"><i class="fa fa-search"></i></span>
-			<input type="text" name="search" class="form-control painting-search-input" placeholder="Search paintings by title or description" value="<?php echo htmlspecialchars($searchQuery ?? '', ENT_QUOTES, 'UTF-8'); ?>">
+			<input type="text" name="search" class="form-control painting-search-input" placeholder="Search paintings by title, description, or artist" value="<?php echo htmlspecialchars($searchQuery ?? '', ENT_QUOTES, 'UTF-8'); ?>">
 			<button type="submit" class="btn painting-search-btn">Search</button>
 			<?php if (!empty($searchQuery)): ?>
 				<a href="all" class="btn btn-outline-secondary painting-search-clear">Clear</a>
