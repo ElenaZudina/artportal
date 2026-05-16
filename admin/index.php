@@ -1,29 +1,6 @@
 <?php
 session_start();
 
-// STRICT: Block all non-admin access immediately
-if (!isset($_SESSION['userId'])) {
-    // Not logged in
-    header('Location: /artportal/login');
-    exit;
-}
-
-if (!isset($_SESSION['status'])) {
-    // Status not set
-    session_destroy();
-    header('Location: /artportal/login');
-    exit;
-}
-
-if ($_SESSION['status'] !== 'admin') {
-    // User is not admin - clear session and redirect
-    session_unset();
-    session_destroy();
-    header('Location: /artportal/login');
-    exit;
-}
-
-// Only admins reach this point
 $timeout = 900; // 15 минут в секундах
 
 if (isset($_SESSION['last_activity']) && (time() - $_SESSION['last_activity'] > $timeout)) {

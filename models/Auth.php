@@ -56,20 +56,34 @@ class Auth {
         return $user;
     }
 
-    public static function requireSession($requiredRole = null) {
-        $user = self::syncSessionStatus();
+    public static function getAuthenticatedUser() {
+        return self::syncSessionStatus();
+    }
+
+    public static function requireRole($requiredRole = null) {
+        $user = self::getAuthenticatedUser();
         if (!$user) {
             header('Location: /artportal/login');
             exit;
         }
 
         if ($requiredRole !== null && (($user['role'] ?? '') !== $requiredRole)) {
+            // У пользователя нет нужной роли — принудительно сбрасываем сессию
+            // и перенаправляем на страницу логина с сообщением об отказе в доступе.
             self::clearSession();
+            if (session_status() !== PHP_SESSION_ACTIVE) {
+                session_start();
+            }
+            $_SESSION['errorString'] = 'You do not have access to this section.';
             header('Location: /artportal/login');
             exit;
         }
 
         return $user;
+    }
+
+    public static function requireSession($requiredRole = null) {
+        return self::requireRole($requiredRole);
     }
 
     private static function clearSession() {

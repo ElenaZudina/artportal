@@ -3,6 +3,15 @@ $host = explode('?', $_SERVER['REQUEST_URI'])[0];
 $num=substr_count($host, '/');
 $path = explode('/',$host)[$num];
 
+// Центральная защита: убедиться, что пользователь — админ перед выполнением админских маршрутов.
+if (session_status() !== PHP_SESSION_ACTIVE) {
+    session_start();
+}
+if (!class_exists('Auth')) {
+    require_once __DIR__ . '/../../models/Auth.php';
+}
+Auth::requireSession('admin');
+
 // ------- ВХОД в зависимости  от роли-----------------------
 
 /*elseif ($path == 'auth') {

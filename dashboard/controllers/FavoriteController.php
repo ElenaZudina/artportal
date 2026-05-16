@@ -4,11 +4,7 @@ require_once __DIR__ . '/../../models/Favourite.php';
 class FavoriteController {
 
     public static function addFavorite() {
-        if (empty($_SESSION['userId'])) {
-            $_SESSION['errorString'] = 'You must be logged in to add paintings to favorites.';
-            header('Location: /artportal/login');
-            exit;
-        }
+        Auth::requireSession();
 
         if (($_SERVER['REQUEST_METHOD'] ?? 'GET') !== 'POST') {
             header('Location: /artportal/');
@@ -33,11 +29,7 @@ class FavoriteController {
     }
 
     public static function removeFavorite() {
-        if (empty($_SESSION['userId'])) {
-            $_SESSION['errorString'] = 'You must be logged in to remove paintings from favorites.';
-            header('Location: /artportal/login');
-            exit;
-        }
+        Auth::requireSession();
 
         if (($_SERVER['REQUEST_METHOD'] ?? 'GET') !== 'POST') {
             header('Location: /artportal/');
@@ -60,11 +52,7 @@ class FavoriteController {
     }
 
     public static function toggleFavorite() {
-        if (empty($_SESSION['userId'])) {
-            $_SESSION['errorString'] = 'You must be logged in to manage favorites.';
-            header('Location: /artportal/login');
-            exit;
-        }
+        Auth::requireSession();
 
         if (($_SERVER['REQUEST_METHOD'] ?? 'GET') !== 'POST') {
             header('Location: /artportal/');
