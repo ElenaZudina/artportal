@@ -4,18 +4,8 @@ require_once __DIR__ . '/../services/EmailService.php';
 class PurchaseRequestController {
     
     public static function create() {
-        // Проверка авторизации
-        if (empty($_SESSION['userId'])) {
-            $_SESSION['errorString'] = 'You must be logged in to send a purchase request.';
-            header('Location: /artportal/login');
-            exit;
-        }
-
-        // Только обычный пользователь может отправлять заявку
-        if (!isset($_SESSION['status']) || $_SESSION['status'] !== 'user') {
-            header('Location: /artportal/');
-            exit;
-        }
+        // Проверка авторизации и роли: только пользователи (не художники)
+        Auth::requireSession('user');
 
         // Проверка метода запроса
         if ($_SERVER['REQUEST_METHOD'] !== 'POST') {

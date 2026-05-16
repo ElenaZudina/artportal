@@ -1,16 +1,9 @@
 <?php
 class HomeController {
 
-    private static function requireAuth() {
-        if (empty($_SESSION['userId'])) {
-            header('Location: /artportal/login');
-            exit;
-        }
-    }
-
     // Вход в Дашборд
     public static function startDashboard() {
-        self::requireAuth();
+        Auth::requireSession();
 
         $user = Auth::getUserByID((int)$_SESSION['userId']);
         $isArtist = isset($_SESSION['status']) && $_SESSION['status'] === 'artist';
@@ -73,21 +66,21 @@ class HomeController {
 }
 
     public static function profile() {
-        self::requireAuth();
+        Auth::requireSession();
 
         $profile = Artists::getArtistByUserId((int)$_SESSION['userId']);
         include_once('views/profile.php');
     }
 
     public static function account() {
-        self::requireAuth();
+        Auth::requireSession();
 
         $user = Auth::getUserByID((int)$_SESSION['userId']);
         include_once('views/account.php');
     }
 
     public static function editAccount() {
-        self::requireAuth();
+        Auth::requireSession();
 
         $user = Auth::getUserByID((int)$_SESSION['userId']);
         $formData = [
@@ -98,7 +91,7 @@ class HomeController {
     }
 
     public static function updateAccount() {
-        self::requireAuth();
+        Auth::requireSession();
 
         if (($_SERVER['REQUEST_METHOD'] ?? 'GET') !== 'POST') {
             header('Location: /artportal/dashboard/edit-account');
@@ -149,13 +142,13 @@ class HomeController {
     }
 
     public static function changePassword() {
-        self::requireAuth();
+        Auth::requireSession();
 
         include_once('views/account-password-form.php');
     }
 
     public static function updatePassword() {
-        self::requireAuth();
+        Auth::requireSession();
 
         if (($_SERVER['REQUEST_METHOD'] ?? 'GET') !== 'POST') {
             header('Location: /artportal/dashboard/change-password');
@@ -203,7 +196,7 @@ class HomeController {
     }
 
     public static function editProfile() {
-        self::requireAuth();
+        Auth::requireSession();
 
         $user = Auth::getUserByID((int)$_SESSION['userId']);
         $profile = Artists::getArtistByUserId((int)$_SESSION['userId']);
@@ -217,7 +210,7 @@ class HomeController {
     }
 
     public static function updateProfile() {
-        self::requireAuth();
+        Auth::requireSession();
 
         if (($_SERVER['REQUEST_METHOD'] ?? 'GET') !== 'POST') {
             header('Location: /artportal/dashboard/edit-profile');
@@ -237,21 +230,21 @@ class HomeController {
     }
 
     public static function myFavorites() {
-        self::requireAuth();
+        Auth::requireSession();
 
         $favorites = Favorite::getUserFavorites((int)$_SESSION['userId']);
         include_once('views/my-favorites.php');
     }
 
     public static function myRequests() {
-        self::requireAuth();
+        Auth::requireSession();
 
         $requests = PurchaseRequest::getUserRequests((int)$_SESSION['userId'], 100, 0) ?? [];
         include_once('views/my-requests.php');
     }
 
     public static function myPaintings() {
-        self::requireAuth();
+        Auth::requireSession();
 
         $artist = Artists::getArtistByUserId((int)$_SESSION['userId']);
         if (!$artist) {
@@ -264,7 +257,7 @@ class HomeController {
     }
 
     public static function addPainting() {
-        self::requireAuth();
+        Auth::requireSession();
 
         $artist = Artists::getArtistByUserId((int)$_SESSION['userId']);
         if (!$artist) {
@@ -278,7 +271,7 @@ class HomeController {
     }
 
     public static function storePainting() {
-        self::requireAuth();
+        Auth::requireSession();
 
         if (($_SERVER['REQUEST_METHOD'] ?? 'GET') !== 'POST') {
             header('Location: add-painting');
@@ -295,7 +288,7 @@ class HomeController {
     }
 
     public static function editPainting() {
-        self::requireAuth();
+        Auth::requireSession();
 
         $artist = Artists::getArtistByUserId((int)$_SESSION['userId']);
         if (!$artist) {
@@ -316,7 +309,7 @@ class HomeController {
     }
 
     public static function updatePainting() {
-        self::requireAuth();
+        Auth::requireSession();
 
         if (($_SERVER['REQUEST_METHOD'] ?? 'GET') !== 'POST') {
             header('Location: my-paintings');
@@ -335,7 +328,7 @@ class HomeController {
     }
 
     public static function deletePainting() {
-        self::requireAuth();
+        Auth::requireSession();
 
         $artist = Artists::getArtistByUserId((int)$_SESSION['userId']);
         if (!$artist) {
@@ -354,7 +347,7 @@ class HomeController {
     }
 
     public static function destroyPainting() {
-        self::requireAuth();
+        Auth::requireSession();
 
         if (($_SERVER['REQUEST_METHOD'] ?? 'GET') !== 'POST') {
             header('Location: my-paintings');
@@ -372,9 +365,11 @@ class HomeController {
 
 
     public static function purchaseRequests() {
-        self::requireAuth();
+        // Проверка сессии - гарантирует, что статус установлен
+        Auth::requireSession();
         
-        if ($_SESSION['status'] !== 'artist') {
+        // Проверка роли - только для художников
+        if (($_SESSION['status'] ?? '') !== 'artist') {
             header('Location: /artportal/dashboard/startDashboard');
             exit;
         }

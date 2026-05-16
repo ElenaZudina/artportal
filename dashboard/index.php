@@ -1,12 +1,6 @@
 <?php
 session_start();
 
-// Check that user is logged in (any logged-in user can access dashboard)
-if (!isset($_SESSION['userId']) || !isset($_SESSION['status'])) {
-    header('Location: /artportal/login');
-    exit;
-}
-
 $timeout = 900; // 15 минут в секундах
 
 if (isset($_SESSION['last_activity']) && (time() - $_SESSION['last_activity'] > $timeout)) {

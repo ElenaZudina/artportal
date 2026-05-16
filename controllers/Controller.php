@@ -160,20 +160,14 @@ class Controller {
     }
 
     public static function artistProfileForm() {
-        if (empty($_SESSION['userId'])) {
-            header('Location: /artportal/login');
-            exit;
-        }
+        Auth::requireSession();
 
         $existingProfile = Artists::getArtistByUserId((int)$_SESSION['userId']);
         include_once('views/formArtistProfile.php');
     }
 
     public static function artistProfileSave() {
-        if (empty($_SESSION['userId'])) {
-            header('Location: /artportal/login');
-            exit;
-        }
+        Auth::requireSession();
 
         if (($_SERVER['REQUEST_METHOD'] ?? 'GET') !== 'POST') {
             header('Location: /artportal/artistProfileForm');
