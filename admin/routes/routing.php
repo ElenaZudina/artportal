@@ -12,14 +12,6 @@ if (!class_exists('Auth')) {
 }
 Auth::requireSession('admin');
 
-// ------- ВХОД в зависимости  от роли-----------------------
-
-/*elseif ($path == 'auth') {
-    // Форма входа
-    $response = controllerAdmin::loginAction();
-}*/
-
-
 if ($path == '' || $path == 'startAdmin' || $path == 'admin' || $path == 'index.php') {
     // Форма входа на старт Админ (aliases: /admin, /admin/ and /admin/index.php)
     $response = HomeController::startAdminPanel();

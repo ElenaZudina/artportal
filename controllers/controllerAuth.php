@@ -76,22 +76,7 @@ class controllerAuth {
             header("Location: /artportal/dashboard/startDashboard");
             exit;
         }
-        /*
-        if ($user["role"] == "artist") {
-            header("Location: startArtist");
-            exit;
-        }
-        if ($user["role"] == "user") {
-            header("Location: startUser");
-            exit;
-        }*/
     }
-
-    /*// Вход в админ панель
-    public static function startAdminPanel() {
-        include_once('viewsAdmin/startAdmin.php');
-}*/
-
 
     // Выход из аккаунта
     public static function logoutAction() {
@@ -101,9 +86,5 @@ class controllerAuth {
         header("Location: login");
         exit;
     }
-   /* // Страница Error
-    public static function error404() {
-        include_once('viewsAdmin/error404.php');
-    }*/
 }//end class
 ?>

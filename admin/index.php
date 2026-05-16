@@ -24,7 +24,6 @@ include_once("../models/Collections.php");
 include_once("../models/Exhibitions.php");
 include_once("../models/Artists.php");
 include_once("../models/Paintings.php");
-//include_once("modelsAdmin/modelAdminStyle.php");
 include_once("../services/CategoryService.php");
 include_once("../services/CollectionService.php");
 include_once("../services/ExhibitionService.php");
@@ -36,8 +35,5 @@ include_once("controllers/Admin/CollectionController.php");
 include_once("controllers/Admin/ExhibitionController.php");
 include_once("controllers/Admin/ModerationController.php");
 include_once("controllers/Admin/UsersController.php");
-//include_once("controllersAdmin/controllerAdminPaintings.php");
 
-include('routes/routing.php'); //!!!!
-
-//echo $response;
+include('routes/routing.php');

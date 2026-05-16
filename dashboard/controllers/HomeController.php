@@ -386,12 +386,6 @@ class HomeController {
         include_once('views/purchase-requests.php');
     }
 
-  /*  // Выход из админ панели
-    public static function logoutAction() {
-        modelAdmin::userLogout();
-        header("Location: login");
-        exit;
-    }*/
     // Страница Error
     public static function error404() {
         include_once('views/error404.php');

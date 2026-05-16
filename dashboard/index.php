@@ -38,6 +38,4 @@ include_once("controllers/HomeController.php");
 include_once("controllers/PriceController.php");
 include_once("controllers/FavoriteController.php");
 
-include('routes/routing.php'); //!!!!
-
-//echo $response;
+include('routes/routing.php'); 

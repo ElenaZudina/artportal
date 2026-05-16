@@ -14,7 +14,7 @@ class ViewArtists{
                             echo '<h3 class="card-title">' . htmlspecialchars($value['name'], ENT_QUOTES, 'UTF-8') . '</h3>';
                             echo '<p class="card-text">'. htmlspecialchars($value['location'] ?? 'Unknown', ENT_QUOTES, 'UTF-8') . '</p>';
                             echo '<p class="card-text artist-description">'. htmlspecialchars($value['bio'] ?? 'Unknown', ENT_QUOTES, 'UTF-8') . '</p>';
-                            //Controller::CommentsCount($value['id']); будет добавлено позже, когда будет реализована модель комментариев
+                            
                             if ($showProfile) {
                                 echo '<span class="section-link mt-auto align-self-end">View Profile <span class="ms-1 small">&#8599;</span></span>';
                             }
@@ -41,7 +41,7 @@ class ViewArtists{
                             echo '<div class="col-md-8">';
                                 echo '<div class="card-body d-flex flex-column pb-4">';
                                     echo '<h5 class="card-title">' . htmlspecialchars($value['name'], ENT_QUOTES, 'UTF-8') . '</h5>';
-                                    //Controller::CommentsCount($value['id']); будет добавлено позже, когда будет реализована модель комментариев
+                                    
                                     if ($showProfile) {
                                         echo '<span class="section-link mt-auto align-self-end">View Profile <span class="ms-1 small">&#8599;</span></span>';
                                     }
@@ -72,12 +72,11 @@ class ViewArtists{
                 // Правая колонка: Описание
                 echo '<div class="col-12 col-md-6 d-flex flex-column justify-content-center">';
                     echo "<h1 class='single-card-title mb-4'>" . htmlspecialchars($item['name'] ?? 'Unknown', ENT_QUOTES, 'UTF-8') . "</h1>";
-                    //Controller::CommentsCountWithAncor($item['id']); ПОЗЖЕ
+                   
                     
                     echo "<p class='card-text'><svg class='location-marker-icon' width='14' height='18' viewBox='0 0 24 24' aria-hidden='true' focusable='false'><path d='M12 22s7-7.2 7-12a7 7 0 1 0-14 0c0 4.8 7 12 7 12z' fill='none' stroke='#4A5565' stroke-width='1.8' stroke-linecap='round' stroke-linejoin='round'></path><circle cx='12' cy='10' r='2.4' fill='#4A5565'></circle></svg> " . htmlspecialchars($item['location'] ?? 'Unknown', ENT_QUOTES, 'UTF-8') . "</p>";
                     
-                    //echo "<h4 class='mb-3'>Birth Date</h4>";
-                    //echo "<p>" . htmlspecialchars($item['birth_date'] ?? 'Unknown', ENT_QUOTES, 'UTF-8') . "</p>";
+            
                     
                     echo "<p class='card-text single-artist-description'>" . htmlspecialchars($item['bio'] ?? 'Unknown', ENT_QUOTES, 'UTF-8') . "</p>";
 
@@ -86,8 +85,7 @@ class ViewArtists{
                         echo '<button type="button" class="btn contact-button">Contact</button>';
                     echo '</div>';
 
-                    //echo "<h4 class='mb-3'>Joined</h4>";
-                    //echo "<p>" . htmlspecialchars(date("Y", strtotime($item['created_at'] ?? 'now')), ENT_QUOTES, 'UTF-8') . "</p>";
+                    
                 echo '</div>';
             echo '</div>';
         echo '</div>';
@@ -121,7 +119,7 @@ class ViewArtists{
             echo '</div>';
         }
     }
-    // добавить методы вывода для других представленных новостей
+  
 
 
 }

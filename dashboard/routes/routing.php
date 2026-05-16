@@ -3,17 +3,6 @@ $host = explode('?', $_SERVER['REQUEST_URI'])[0];
 $num=substr_count($host, '/');
 $path = explode('/',$host)[$num];
 
-/*if ($path == '' OR $path == 'index.php' OR $path == 'login' ) {
-    // Cтраница входа
-    $response = controllerAuth::formLoginSite();
-}
-// ------- ВХОД в зависимости  от роли-----------------------
-
-/*elseif ($path == 'auth') {
-    // Форма входа
-    $response = controllerAdmin::loginAction();
-}*/
-
 
 if ($path == '' || $path == 'index.php' || $path == 'dashboard' || $path == 'startDashboard') {
     // Форма входа в Дашборд

@@ -60,7 +60,7 @@ class ViewPaintings{
                                 echo '<p class="card-text painting-price text-nowrap mb-0">' . htmlspecialchars($value['price'] ?? 'Unknown', ENT_QUOTES, 'UTF-8') . ' €</p>';
                             echo '</div>';
                                 echo '<p class="card-text mb-1">' . htmlspecialchars($value['artist_name'] ?? 'Unknown', ENT_QUOTES, 'UTF-8') . '</p>';
-                                //echo '<p class="card-text mb-1">' . htmlspecialchars($value['category'] ?? 'Unknown', ENT_QUOTES, 'UTF-8') . '</p>';
+                            
                             echo '</div>';
                         }
                     echo '</div>';
@@ -107,7 +107,7 @@ class ViewPaintings{
                 // Правая колонка: Описание
                 echo '<div class="col-12 col-md-6">';
                     echo "<h1 class='single-card-title mb-4'>" . htmlspecialchars($item['title'] ?? 'Unknown', ENT_QUOTES, 'UTF-8') . "</h1>";
-                    //Controller::CommentsCountWithAncor($item['id']); ПОЗЖЕ
+                    
                     
                     echo '<div class="artist-profile mb-4">';
                         $artistAvatar = $item['artist_avatar'] ?? '';
@@ -168,7 +168,6 @@ class ViewPaintings{
             echo '</div>';
         echo '</div>';
     }
-    // добавить методы вывода для других представленных новостей
 
 
 }
