@@ -1,5 +1,8 @@
-<html>
+<!DOCTYPE html>
+<html lang="en">
     <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>Dashboard <?php echo $_SESSION["name"]; ?></title>
         <link href="/artportal/public/css/login.css" rel="stylesheet">
         <!-- <link rel="stylesheet" href="../public/css/font-awesome.min.css"> -->

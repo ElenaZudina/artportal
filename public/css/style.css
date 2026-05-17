@@ -139,18 +139,18 @@ input {
   --font-size: 16px;
   
   /* Typography Scale */
-  --text-h1: 96px;
-  --text-h2: 48px;
-  --text-h3: 20px;
-  --text-h4: 18px;
-  --text-h5: 16px;
-  --text-h6: 14px;
-  --text-xl: 24px;
-  --text-lg: 20px;
-  --text-md: 18px;
-  --text-base: 16px;
-  --text-sm: 14px;
-  --text-xs: 12px;
+  --text-h1: clamp(42px, 7vw, 96px);
+  --text-h2: clamp(32px, 4vw, 48px);
+  --text-h3: clamp(20px, 2vw, 24px);
+  --text-h4: clamp(18px, 1.8vw, 20px);
+  --text-h5: clamp(16px, 1.5vw, 18px);
+  --text-h6: clamp(14px, 1.3vw, 16px);
+  --text-xl: clamp(22px, 2.2vw, 24px);
+  --text-lg: clamp(18px, 1.8vw, 20px);
+  --text-md: clamp(16px, 1.6vw, 18px);
+  --text-base: clamp(15px, 1.4vw, 16px);
+  --text-sm: clamp(13px, 1.2vw, 14px);
+  --text-xs: clamp(12px, 1vw, 12px);
   
   /* Font Weights */
   --font-weight-normal: 400;
@@ -213,34 +213,34 @@ a {
    CONTAINERS
 ========================= */
 
-.container {
+/*.container {
   max-width: 1280px;
   margin: 0 auto;
   padding: 16px;
-}
+}*/
 
 /* 
-Don't delete this comment
+Don't delete this comment*/
 .container {
   width: 100%;
   padding-left: 16px;
   padding-right: 16px;
 }
 
-ноутбуки и небольшие десктопы
+/* ноутбуки и небольшие десктопы */
 @media (min-width: 992px) {
   .container {
     max-width: 960px;
   }
 }
 
-большие ноутбуки / стандартные мониторы
+/* большие ноутбуки / стандартные мониторы */
 @media (min-width: 1200px) {
   .container {
     max-width: 1100px !important;
   }
 }
-*/
+
 
 
 /* =========================
