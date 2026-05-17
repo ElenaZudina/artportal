@@ -11,12 +11,12 @@ class FavoriteController {
     }
 
     public static function addFavorite() {
-        Auth::requireSession('user', 'Only users can add paintings to favorites.');
-
         if (($_SERVER['REQUEST_METHOD'] ?? 'GET') !== 'POST') {
             header('Location: /artportal/');
             exit;
         }
+
+        Auth::requireUserAction('Only users can add paintings to favorites.');
 
         if (!CsrfHelper::validate()) {
             $_SESSION['errorString'] = 'Invalid form token. Please try again.';
@@ -42,12 +42,12 @@ class FavoriteController {
     }
 
     public static function removeFavorite() {
-        Auth::requireSession('user', 'Only users can manage their favorites.');
-
         if (($_SERVER['REQUEST_METHOD'] ?? 'GET') !== 'POST') {
             header('Location: /artportal/');
             exit;
         }
+
+        Auth::requireUserAction('Only users can manage their favorites.');
 
         if (!CsrfHelper::validate()) {
             $_SESSION['errorString'] = 'Invalid form token. Please try again.';
@@ -71,12 +71,12 @@ class FavoriteController {
     }
 
     public static function toggleFavorite() {
-        Auth::requireSession('user', 'Only users can add paintings to favorites.');
-
         if (($_SERVER['REQUEST_METHOD'] ?? 'GET') !== 'POST') {
             header('Location: /artportal/');
             exit;
         }
+
+        Auth::requireUserAction('Only users can add paintings to favorites.');
 
         if (!CsrfHelper::validate()) {
             $_SESSION['errorString'] = 'Invalid form token. Please try again.';

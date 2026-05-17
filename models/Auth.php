@@ -90,6 +90,23 @@ class Auth {
         return self::requireRole($requiredRole, $errorMessage);
     }
 
+    public static function requireUserAction($errorMessage = 'Only users can perform this action.') {
+        $user = self::requireSession(null, 'You must be logged in to perform this action.');
+
+        if (($user['role'] ?? '') !== 'user') {
+            if (session_status() !== PHP_SESSION_ACTIVE) {
+                session_start();
+            }
+
+            $_SESSION['errorString'] = $errorMessage;
+            $redirect = $_SERVER['HTTP_REFERER'] ?? '/artportal/';
+            header('Location: ' . $redirect);
+            exit;
+        }
+
+        return $user;
+    }
+
     private static function clearSession() {
         if (session_status() === PHP_SESSION_ACTIVE) {
             session_unset();

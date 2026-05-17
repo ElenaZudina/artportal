@@ -4,12 +4,12 @@ require_once __DIR__ . '/../../services/EmailService.php';
 class RequestController {
 
     public static function create() {
-        Auth::requireSession('user', 'Only users can send purchase requests.');
-
         if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
             header('Location: /artportal/');
             exit;
         }
+
+        Auth::requireUserAction('Only users can send purchase requests.');
 
         if (!CsrfHelper::validate()) {
             $_SESSION['errorString'] = 'Invalid form token. Please try again.';
