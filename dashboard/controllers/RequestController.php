@@ -11,6 +11,12 @@ class RequestController {
             exit;
         }
 
+        if (!CsrfHelper::validate()) {
+            $_SESSION['errorString'] = 'Invalid form token. Please try again.';
+            header('Location: /artportal/');
+            exit;
+        }
+
         $paintingId = isset($_POST['painting_id']) ? (int)$_POST['painting_id'] : 0;
         $userId = (int)$_SESSION['userId'];
 

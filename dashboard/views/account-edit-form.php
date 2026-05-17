@@ -29,6 +29,7 @@ $formData = $formData ?? [
                     <?php endif; ?>
 
                     <form method="POST" action="update-account">
+                        <?php echo CsrfHelper::field(); ?>
                         <div class="mb-3">
                             <label for="account_username" class="form-label">Username *</label>
                             <input id="account_username" type="text" name="username" class="form-control" required maxlength="100" value="<?php echo htmlspecialchars($formData['username'] ?? '', ENT_QUOTES, 'UTF-8'); ?>">

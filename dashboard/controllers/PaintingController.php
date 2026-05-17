@@ -27,6 +27,12 @@ class PaintingController {
             exit;
         }
 
+        if (!CsrfHelper::validate()) {
+            $_SESSION['errorString'] = 'Invalid form token. Please try again.';
+            header('Location: add-painting');
+            exit;
+        }
+
         $resultPainting = PaintingService::createPainting($_POST, $_FILES, (int)$_SESSION['userId']);
         $test = $resultPainting['success'] ?? false;
         $errorMessage = !empty($resultPainting['errors']) && is_array($resultPainting['errors']) ? implode(' ', $resultPainting['errors']) : null;
@@ -62,6 +68,13 @@ class PaintingController {
         }
 
         $id = isset($_GET['id']) ? (int)$_GET['id'] : 0;
+
+        if (!CsrfHelper::validate()) {
+            $_SESSION['errorString'] = 'Invalid form token. Please try again.';
+            header('Location: edit-painting?id=' . $id);
+            exit;
+        }
+
         $resultPainting = PaintingService::updatePainting($id, $_POST, $_FILES, (int)$_SESSION['userId']);
         $test = $resultPainting['success'] ?? false;
         $errorMessage = !empty($resultPainting['errors']) && is_array($resultPainting['errors']) ? implode(' ', $resultPainting['errors']) : null;
@@ -96,6 +109,13 @@ class PaintingController {
         }
 
         $id = isset($_GET['id']) ? (int)$_GET['id'] : 0;
+
+        if (!CsrfHelper::validate()) {
+            $_SESSION['errorString'] = 'Invalid form token. Please try again.';
+            header('Location: delete-painting?id=' . $id);
+            exit;
+        }
+
         $resultPainting = PaintingService::deletePainting($id, (int)$_SESSION['userId']);
         $test = $resultPainting['success'] ?? false;
         $errorMessage = !empty($resultPainting['errors']) && is_array($resultPainting['errors']) ? implode(' ', $resultPainting['errors']) : null;

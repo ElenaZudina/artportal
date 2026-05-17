@@ -7,6 +7,7 @@ ob_start();
             <div class="card-body p-4">
                 <h2 class="mb-4 text-center">Register</h2>
                 <form method="POST" action="registerAnswer">
+                    <?php echo CsrfHelper::field(); ?>
                     <div class="mb-3">
                         <label for="name" class="form-label">Name</label>
                         <input id="name" type="text" class="form-control" name="name" required autofocus>

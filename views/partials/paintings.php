@@ -82,6 +82,7 @@ class ViewPaintings{
                             echo '<div class="painting-overlays">';
                                 echo '<span class="category-badge category-badge--accent">' . htmlspecialchars($item['category_name'] ?? 'Unknown', ENT_QUOTES, 'UTF-8') . '</span>';
                                 echo '<form method="POST" action="/artportal/toggle-favorite" class="painting-favorite-form">';
+                                    echo CsrfHelper::field();
                                     echo '<input type="hidden" name="painting_id" value="' . (int)($item['id'] ?? 0) . '">';
                                     
                                     $favIcon = $isFavorite ? 'fa-solid fa-heart' : 'fa-regular fa-heart';
@@ -153,6 +154,7 @@ class ViewPaintings{
 
                     echo '<div class="action-buttons">';
                         echo '<form method="POST" action="purchase-request" class="m-0 js-purchase-request-form">';
+                            echo CsrfHelper::field();
                             echo '<input type="hidden" name="painting_id" value="' . htmlspecialchars((string)($item['id'] ?? ''), ENT_QUOTES, 'UTF-8') . '">';
                             echo '<button type="submit" class="btn buy-button">';
                                 echo '<span class="spinner-border spinner-border-sm me-2 d-none js-purchase-request-spinner" aria-hidden="true"></span>';

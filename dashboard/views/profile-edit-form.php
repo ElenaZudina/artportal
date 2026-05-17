@@ -30,6 +30,7 @@ $formData = $formData ?? $profile ?? [];
 
                     <?php if (!isset($test)): ?>
                     <form method="POST" action="update-profile" enctype="multipart/form-data">
+                        <?php echo CsrfHelper::field(); ?>
                         <div class="mb-3">
                             <label for="artist_name" class="form-label">Name *</label>
                             <input id="artist_name" type="text" name="name" class="form-control" required maxlength="255" value="<?php echo htmlspecialchars($formData['name'] ?? '', ENT_QUOTES, 'UTF-8'); ?>">

@@ -27,6 +27,12 @@ class AccountController {
             exit;
         }
 
+        if (!CsrfHelper::validate()) {
+            $_SESSION['errorString'] = 'Invalid form token. Please try again.';
+            header('Location: /artportal/dashboard/edit-account');
+            exit;
+        }
+
         $userId = (int)$_SESSION['userId'];
         $result = AccountService::updateAccount($userId, $_POST);
 
@@ -57,6 +63,12 @@ class AccountController {
         Auth::requireSession();
 
         if (($_SERVER['REQUEST_METHOD'] ?? 'GET') !== 'POST') {
+            header('Location: /artportal/dashboard/change-password');
+            exit;
+        }
+
+        if (!CsrfHelper::validate()) {
+            $_SESSION['errorString'] = 'Invalid form token. Please try again.';
             header('Location: /artportal/dashboard/change-password');
             exit;
         }

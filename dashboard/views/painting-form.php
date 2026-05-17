@@ -38,6 +38,7 @@ $formData = $formData ?? $currentPainting ?? [];
 
                     <?php if (!isset($test) || $test == false): ?>
                         <form method="POST" action="<?php echo $isEdit ? 'update-painting?id=' . (int)($currentPainting['id'] ?? 0) : 'store-painting'; ?>" enctype="multipart/form-data" id="paintingSaveForm">
+                            <?php echo CsrfHelper::field(); ?>
                             <div class="mb-3">
                                 <label for="painting_title" class="form-label">Title *</label>
                                 <input id="painting_title" type="text" name="title" class="form-control" required maxlength="255" value="<?php echo htmlspecialchars($formData['title'] ?? '', ENT_QUOTES, 'UTF-8'); ?>">

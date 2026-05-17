@@ -17,6 +17,12 @@ class AuthController {
             exit;
         }
 
+        if (!CsrfHelper::validate()) {
+            $_SESSION['errorString'] = 'Invalid form token. Please try again.';
+            header('Location: /artportal/forgot-password');
+            exit;
+        }
+
         $email = strtolower(trim((string)($_POST['email'] ?? '')));
         if ($email === '' || !filter_var($email, FILTER_VALIDATE_EMAIL)) {
             $_SESSION['errorString'] = 'Please enter a valid email address.';
@@ -44,6 +50,17 @@ class AuthController {
     }
 
     public static function loginAction() {
+        if (($_SERVER['REQUEST_METHOD'] ?? 'GET') !== 'POST') {
+            header('Location: /artportal/login');
+            exit;
+        }
+
+        if (!CsrfHelper::validate()) {
+            $_SESSION['errorString'] = 'Invalid form token. Please try again.';
+            header('Location: /artportal/login');
+            exit;
+        }
+
         $login = AuthService::login($_POST);
         if(!$login['success']){
             $_SESSION['errorString'] = $login['errors'][0] ?? 'Incorrect username and password';
@@ -80,6 +97,17 @@ class AuthController {
     }
 
     public static function registerUser() {
+        if (($_SERVER['REQUEST_METHOD'] ?? 'GET') !== 'POST') {
+            header('Location: /artportal/registerForm');
+            exit;
+        }
+
+        if (!CsrfHelper::validate()) {
+            $_SESSION['errorString'] = 'Invalid form token. Please try again.';
+            header('Location: /artportal/registerForm');
+            exit;
+        }
+
         $result = RegisterService::register($_POST);
 
         if (!empty($result['success']) && !empty($result['user'])) {

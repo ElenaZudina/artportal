@@ -11,6 +11,7 @@ ob_start();
                 <p class="text-muted text-center mb-4">Enter your email and the admin will contact you with the password manually.</p>
 
                 <form method="POST" action="forgot-password-request">
+                    <?php echo CsrfHelper::field(); ?>
                     <div class="mb-3">
                         <label for="email" class="form-label">E-mail Address</label>
                         <input id="email" type="email" class="form-control" name="email" required autofocus>

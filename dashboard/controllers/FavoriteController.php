@@ -18,6 +18,12 @@ class FavoriteController {
             exit;
         }
 
+        if (!CsrfHelper::validate()) {
+            $_SESSION['errorString'] = 'Invalid form token. Please try again.';
+            header('Location: /artportal/');
+            exit;
+        }
+
         $userId = (int)$_SESSION['userId'];
         $paintingId = (int)($_POST['painting_id'] ?? 0);
 
@@ -43,6 +49,12 @@ class FavoriteController {
             exit;
         }
 
+        if (!CsrfHelper::validate()) {
+            $_SESSION['errorString'] = 'Invalid form token. Please try again.';
+            header('Location: /artportal/');
+            exit;
+        }
+
         $userId = (int)$_SESSION['userId'];
         $paintingId = (int)($_POST['painting_id'] ?? 0);
 
@@ -62,6 +74,12 @@ class FavoriteController {
         Auth::requireSession(null, 'Only registered users can add paintings to favorites.');
 
         if (($_SERVER['REQUEST_METHOD'] ?? 'GET') !== 'POST') {
+            header('Location: /artportal/');
+            exit;
+        }
+
+        if (!CsrfHelper::validate()) {
+            $_SESSION['errorString'] = 'Invalid form token. Please try again.';
             header('Location: /artportal/');
             exit;
         }

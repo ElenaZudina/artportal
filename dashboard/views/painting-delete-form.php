@@ -46,6 +46,7 @@ ob_start();
                         </div>
 
                         <form method="POST" action="destroy-painting?id=<?php echo (int)($painting['id'] ?? 0); ?>" class="mt-4">
+                            <?php echo CsrfHelper::field(); ?>
                             <div class="d-flex gap-2 flex-wrap">
                                 <button type="submit" class="btn btn-danger">Delete</button>
                                 <a href="my-paintings" class="btn btn-outline-secondary">Cancel</a>

@@ -25,6 +25,7 @@ ob_start();
                     <?php endif; ?>
 
                     <form method="POST" action="update-password">
+                        <?php echo CsrfHelper::field(); ?>
                         <div class="mb-3">
                             <label for="current_password" class="form-label">Current password *</label>
                             <input id="current_password" type="password" name="current_password" class="form-control" required>

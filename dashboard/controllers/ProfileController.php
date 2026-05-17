@@ -30,6 +30,12 @@ class ProfileController {
             exit;
         }
 
+        if (!CsrfHelper::validate()) {
+            $_SESSION['errorString'] = 'Invalid form token. Please try again.';
+            header('Location: /artportal/dashboard/edit-profile');
+            exit;
+        }
+
         $resultProfile = ArtistProfileService::updateProfile($_POST, $_FILES, (int)$_SESSION['userId']);
         $test = $resultProfile['success'] ?? false;
         $errorMessage = $resultProfile['errorMessage'] ?? null;

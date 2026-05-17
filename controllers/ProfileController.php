@@ -16,6 +16,12 @@ class ProfileController {
             exit;
         }
 
+        if (!CsrfHelper::validate()) {
+            $_SESSION['errorString'] = 'Invalid form token. Please try again.';
+            header('Location: /artportal/artistProfileForm');
+            exit;
+        }
+
         $resultArtist = ArtistProfileService::createProfile($_POST, $_FILES, (int)$_SESSION['userId']);
         if (!empty($resultArtist['success'])) {
             include_once('views/answerArtistProfile.php');

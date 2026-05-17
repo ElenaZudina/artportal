@@ -25,6 +25,7 @@ if (isset ($_SESSION['userId']) && isset($_SESSION['status'])) {
             <div class="card-body p-4">
                 <h2 class="mb-4 text-center">Login</h2>
                 <form method="POST" action="auth">
+                    <?php echo CsrfHelper::field(); ?>
                     <div class="mb-3">
                         <label for="email" class="form-label">E-mail Address</label>
                         <input id="email" type="email" class="form-control" name="email" required autofocus>
