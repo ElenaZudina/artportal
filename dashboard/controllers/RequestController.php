@@ -4,7 +4,7 @@ require_once __DIR__ . '/../../services/EmailService.php';
 class RequestController {
 
     public static function create() {
-        Auth::requireSession('user', 'Only registered users can send purchase requests.');
+        Auth::requireSession('user', 'Only users can send purchase requests.');
 
         if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
             header('Location: /artportal/');
@@ -69,7 +69,7 @@ class RequestController {
     }
 
     public static function myRequests() {
-        Auth::requireSession();
+        Auth::requireSession('user');
 
         $requests = PurchaseRequest::getUserRequests((int)$_SESSION['userId'], 100, 0) ?? [];
         include_once('views/my-requests.php');
