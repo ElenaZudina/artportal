@@ -32,11 +32,6 @@ class RequestController {
             exit;
         }
 
-        if (!empty($painting['artist_id']) && (int)$painting['artist_id'] === $userId) {
-            header('Location: /artportal/');
-            exit;
-        }
-
         $lastRequestTime = PurchaseRequest::getLastRequestTime($userId, $paintingId);
         if ($lastRequestTime !== null) {
             $currentTime = time();
