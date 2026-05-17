@@ -18,11 +18,6 @@ class Controller {
         include_once 'views/home.php';// Подключаем представление для отображения главной страницы, если нужно добавить дополнительный контент
     }
 
-    public static function AllCategories() {
-        $arr = Categories::getAllCategories();
-        include_once 'views/partials/menu_categories.php';
-    }
-
     public static function error404() {
         include_once 'views/error404.php';
     }

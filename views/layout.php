@@ -46,9 +46,10 @@ $isLogin = $activeRoute === 'login';
                             <li class="nav-item dropdown">
                                 <button class="nav-link dropdown-toggle<?php echo $isGallery ? ' active' : ''; ?>" type="button" id="galleryDropdown" data-bs-toggle="dropdown" aria-expanded="false">Gallery</button>
                                 <ul class="dropdown-menu" aria-labelledby="galleryDropdown">
-                                    <?php
-                                        Controller::AllCategories();
-                                    ?>
+                                    <li><a class="dropdown-item" href="all">All</a></li>
+                                    <?php foreach (getMenuCategories() as $category): ?>
+                                        <li><a class="dropdown-item" href="category?id=<?php echo urlencode($category['id']); ?>"><?php echo htmlspecialchars($category['name'], ENT_QUOTES, 'UTF-8'); ?></a></li>
+                                    <?php endforeach; ?>
                                 </ul>
                             </li>
                             <?php if (!isset($_SESSION['userId'])): ?>

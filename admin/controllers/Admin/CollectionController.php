@@ -63,7 +63,7 @@ class CollectionController {
 
             if ($collectionId) {
                 // Получаем полные данные коллекции по ID
-                $newCollection = Collection::getCollectionById($collectionId);
+                $newCollection = Collections::getCollectionById($collectionId);
 
                 if ($newCollection) {
                     echo json_encode([
