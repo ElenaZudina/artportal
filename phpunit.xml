@@ -8,7 +8,18 @@
             <directory>tests/Integration</directory>
         </testsuite>
     </testsuites>
+    <source>
+        <include>
+            <directory suffix=".php">config</directory>
+            <directory suffix=".php">controllers</directory>
+            <directory suffix=".php">dashboard/controllers</directory>
+            <directory suffix=".php">admin/controllers</directory>
+            <directory suffix=".php">helpers</directory>
+            <directory suffix=".php">models</directory>
+            <directory suffix=".php">services</directory>
+        </include>
+    </source>
     <logging>
-        <log type="junit" target="build/logs/junit.xml"/>
+        <junit outputFile="build/logs/junit.xml"/>
     </logging>
 </phpunit>

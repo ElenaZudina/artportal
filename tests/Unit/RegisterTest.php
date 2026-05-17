@@ -22,7 +22,7 @@ class RegisterTest extends TestCase
         $dbMock->expects($this->once())
             ->method('executeRun')
             ->with(
-                $this->equalTo("INSERT INTO `users` (`id`, `username`, `email`, `password`, `role`, `created_at`) VALUES (NULL, ?, ?, ?, 'user', ?)") ,
+                $this->equalTo("INSERT INTO `users` (`id`, `username`, `email`, `password`, `role`, `status`, `created_at`) VALUES (NULL, ?, ?, ?, 'user', 'active', ?)") ,
                 $this->callback(function (array $params) use ($cleanData) {
                     return $params[0] === $cleanData['name']
                         && $params[1] === $cleanData['email']
@@ -43,6 +43,7 @@ class RegisterTest extends TestCase
         $this->assertSame(42, $result['user']['id']);
         $this->assertSame($cleanData['name'], $result['user']['username']);
         $this->assertSame('user', $result['user']['role']);
+        $this->assertSame('active', $result['user']['status']);
     }
 
     public function testSaveUserReturnsErrorWhenEmailExists()
