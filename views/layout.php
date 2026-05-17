@@ -81,7 +81,7 @@ $isLogin = $activeRoute === 'login';
                 </div>
                 <div class="hero-grid">
                     <?php 
-                    $heroPaintings = Paintings::getLastPaintings(3);
+                    $heroPaintings = UIHelper::getHeroPaintings(3);
                     if (!empty($heroPaintings) && count($heroPaintings) >= 1) {
                         $largePainting = $heroPaintings[0];
                         $smallPaintings = array_slice($heroPaintings, 1, 2);

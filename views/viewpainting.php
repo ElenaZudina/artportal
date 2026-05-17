@@ -11,7 +11,7 @@ ob_start();
 <?php endif; ?>
 
 <?php
-ViewPaintings::OnePainting($item);
+ViewPaintings::OnePainting($item, $isFavorite ?? false);
 
 echo "<br>";
 

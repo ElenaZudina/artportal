@@ -33,6 +33,7 @@ Auth::syncSessionStatus();
 require 'helpers/PaginationHelper.php';
 require 'helpers/ArtistHelper.php';
 require 'helpers/MenuHelper.php';
+require 'helpers/UIHelper.php';
 
 require 'models/PurchaseRequest.php';
 include_once 'controllers/Controller.php';

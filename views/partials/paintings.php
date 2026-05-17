@@ -72,7 +72,7 @@ class ViewPaintings{
     }
   
 
-    public static function OnePainting($item) {
+    public static function OnePainting($item, $isFavorite = false) {
         echo '<div class="container my-4">';
             echo '<div class="row align-items-start gx-5">';
                 // Левая колонка: Изображение
@@ -83,16 +83,10 @@ class ViewPaintings{
                                 echo '<span class="category-badge category-badge--accent">' . htmlspecialchars($item['category_name'] ?? 'Unknown', ENT_QUOTES, 'UTF-8') . '</span>';
                                 echo '<form method="POST" action="/artportal/toggle-favorite" class="painting-favorite-form">';
                                     echo '<input type="hidden" name="painting_id" value="' . (int)($item['id'] ?? 0) . '">';
-                                    $isFavorite = false;
-                                    $favIcon = 'fa-heart-o';
-                                    $favLabel = 'Add to favorites';
-                                    if (isset($_SESSION['userId'])) {
-                                        $isFavorite = Favorite::isFavorite((int)$_SESSION['userId'], (int)($item['id'] ?? 0));
-                                        if ($isFavorite) {
-                                            $favIcon = 'fa-heart';
-                                            $favLabel = 'Remove from favorites';
-                                        }
-                                    }
+                                    
+                                    $favIcon = $isFavorite ? 'fa-heart' : 'fa-heart-o';
+                                    $favLabel = $isFavorite ? 'Remove from favorites' : 'Add to favorites';
+                                    
                                     $favStateClass = $isFavorite ? 'is-active' : 'is-inactive';
                                     echo '<button type="submit" class="category-badge category-badge--favorite ' . $favStateClass . '" aria-label="' . htmlspecialchars($favLabel, ENT_QUOTES, 'UTF-8') . '">';
                                         echo '<i class="fa ' . htmlspecialchars($favIcon, ENT_QUOTES, 'UTF-8') . '"></i>';

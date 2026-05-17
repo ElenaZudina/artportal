@@ -39,6 +39,12 @@ class PaintingController {
             include_once 'views/error404.php';
             return;
         }
+
+        $isFavorite = false;
+        if (isset($_SESSION['userId'])) {
+            $isFavorite = Favorite::isFavorite((int)$_SESSION['userId'], (int)$id);
+        }
+
         include_once 'views/partials/paintings.php';
         include_once 'views/viewpainting.php';
     }
