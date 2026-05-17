@@ -117,9 +117,20 @@ class Artists {
     }
 
     public static function rejectArtist($id) {
-        $query = "UPDATE artists SET status = 'rejected', updated_at = NOW() WHERE id = ?";
         $db = new Database();
-        return $db->executeRun($query, [$id]);
+
+        $artist = self::getArtistByID($id);
+        if (!$artist) {
+            return false;
+        }
+
+        $queryArtist = "UPDATE artists SET status = 'rejected', updated_at = NOW() WHERE id = ?";
+        $db->executeRun($queryArtist, [$id]);
+
+        $queryUser = "UPDATE users SET role = 'user' WHERE id = ?";
+        $db->executeRun($queryUser, [$artist['user_id']]);
+
+        return true;
     }
 
     public static function getArtistByUserId($userId) {

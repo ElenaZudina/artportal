@@ -31,6 +31,7 @@ require 'models/Auth.php';
 Auth::syncSessionStatus();
 
 require 'helpers/PaginationHelper.php';
+require 'helpers/ArtistHelper.php';
 
 require 'models/PurchaseRequest.php';
 include_once 'controllers/Controller.php';

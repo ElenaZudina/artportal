@@ -16,6 +16,7 @@ $_SESSION['last_activity'] = time();
 //session_destroy();
 require_once '../config/Database.php';
 require_once '../models/Auth.php';
+require_once '../helpers/ArtistHelper.php';
 
 Auth::requireSession();
 

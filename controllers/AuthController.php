@@ -58,16 +58,7 @@ class AuthController {
         $_SESSION['status'] = $user['role'];
         $_SESSION['accountStatus'] = $user['status'] ?? 'active';
 
-        // Проверяем, есть ли профиль художника для этого пользователя
-        if ($user['role'] == 'user') {
-            $db = new Database();
-            $artist = $db->getOne("SELECT id FROM artists WHERE user_id = ?", [$user['id']]);
-            if ($artist) {
-                $_SESSION['status'] = 'artist';
-            }
-        }
-
-        if ($user["role"] == "admin") {
+        if ($_SESSION['status'] === 'admin') {
             header("Location: /artportal/admin/startAdmin");
             exit;
         } else {

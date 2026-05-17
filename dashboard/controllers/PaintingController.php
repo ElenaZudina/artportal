@@ -3,12 +3,7 @@ class PaintingController {
 
     public static function myPaintings() {
         Auth::requireSession();
-
-        $artist = Artists::getArtistByUserId((int)$_SESSION['userId']);
-        if (!$artist) {
-            header('Location: profile');
-            exit;
-        }
+        $artist = requireArtistProfile();
 
         $paintings = Paintings::getPaintingsByArtistPortfolio((int)$artist['id']);
         include_once('views/my-paintings.php');
@@ -16,12 +11,7 @@ class PaintingController {
 
     public static function addPainting() {
         Auth::requireSession();
-
-        $artist = Artists::getArtistByUserId((int)$_SESSION['userId']);
-        if (!$artist) {
-            header('Location: profile');
-            exit;
-        }
+        $artist = requireArtistProfile();
 
         $categories = Categories::getCategoriesList();
         $formData = [];
@@ -30,6 +20,7 @@ class PaintingController {
 
     public static function storePainting() {
         Auth::requireSession();
+        requireArtistProfile();
 
         if (($_SERVER['REQUEST_METHOD'] ?? 'GET') !== 'POST') {
             header('Location: add-painting');
@@ -47,12 +38,7 @@ class PaintingController {
 
     public static function editPainting() {
         Auth::requireSession();
-
-        $artist = Artists::getArtistByUserId((int)$_SESSION['userId']);
-        if (!$artist) {
-            header('Location: profile');
-            exit;
-        }
+        $artist = requireArtistProfile();
 
         $id = isset($_GET['id']) ? (int)$_GET['id'] : 0;
         $painting = $id > 0 ? Paintings::getPaintingByID($id) : null;
@@ -68,6 +54,7 @@ class PaintingController {
 
     public static function updatePainting() {
         Auth::requireSession();
+        requireArtistProfile();
 
         if (($_SERVER['REQUEST_METHOD'] ?? 'GET') !== 'POST') {
             header('Location: my-paintings');
@@ -87,12 +74,7 @@ class PaintingController {
 
     public static function deletePainting() {
         Auth::requireSession();
-
-        $artist = Artists::getArtistByUserId((int)$_SESSION['userId']);
-        if (!$artist) {
-            header('Location: profile');
-            exit;
-        }
+        $artist = requireArtistProfile();
 
         $id = isset($_GET['id']) ? (int)$_GET['id'] : 0;
         $painting = $id > 0 ? Paintings::getPaintingByID($id) : null;
@@ -106,6 +88,7 @@ class PaintingController {
 
     public static function destroyPainting() {
         Auth::requireSession();
+        requireArtistProfile();
 
         if (($_SERVER['REQUEST_METHOD'] ?? 'GET') !== 'POST') {
             header('Location: my-paintings');
