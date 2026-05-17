@@ -51,7 +51,7 @@ ob_start();
             </div>
         <?php else: ?>
             <div class="container my-4">
-                <p>У этого художника пока нет картин.</p>
+                <p>This artist does not have any paintings yet.</p>
             </div>
         <?php endif; ?>
 

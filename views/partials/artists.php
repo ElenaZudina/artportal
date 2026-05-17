@@ -104,7 +104,7 @@ class ViewArtists{
                                 echo '<div class="card-img-wrapper">';
                                      echo '<img src="images/paintings/' . htmlspecialchars($painting['image'] ?? '', ENT_QUOTES, 'UTF-8') . '" 
                                          class="card-img-top" 
-                                         alt="' . htmlspecialchars($painting['title'] ?? 'Без названия', ENT_QUOTES, 'UTF-8') . '" 
+                                         alt="' . htmlspecialchars($painting['title'] ?? 'Untitled', ENT_QUOTES, 'UTF-8') . '" 
                                          onerror="this.onerror=null;this.src=\'images/test.jpg\';">';
                                 echo '</div>';
                             echo '</div>';
@@ -115,7 +115,7 @@ class ViewArtists{
             echo '</div>'; // закрываем контейнер для портфолио
         } else {
             echo '<div class="container my-4">'; // контейнер для сообщения об отсутствии картин
-                echo "<p>У этого художника пока нет картин.</p>";
+                echo "<p>This artist does not have any paintings yet.</p>";
             echo '</div>';
         }
     }
