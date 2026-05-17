@@ -84,12 +84,12 @@ class ViewPaintings{
                                 echo '<form method="POST" action="/artportal/toggle-favorite" class="painting-favorite-form">';
                                     echo '<input type="hidden" name="painting_id" value="' . (int)($item['id'] ?? 0) . '">';
                                     
-                                    $favIcon = $isFavorite ? 'fa-heart' : 'fa-heart-o';
+                                    $favIcon = $isFavorite ? 'fa-solid fa-heart' : 'fa-regular fa-heart';
                                     $favLabel = $isFavorite ? 'Remove from favorites' : 'Add to favorites';
                                     
                                     $favStateClass = $isFavorite ? 'is-active' : 'is-inactive';
                                     echo '<button type="submit" class="category-badge category-badge--favorite ' . $favStateClass . '" aria-label="' . htmlspecialchars($favLabel, ENT_QUOTES, 'UTF-8') . '">';
-                                        echo '<i class="fa ' . htmlspecialchars($favIcon, ENT_QUOTES, 'UTF-8') . '"></i>';
+                                        echo '<i class="' . htmlspecialchars($favIcon, ENT_QUOTES, 'UTF-8') . '"></i>';
                                     echo '</button>';
                                 echo '</form>';
                             echo '</div>';
