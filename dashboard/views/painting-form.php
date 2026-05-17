@@ -37,7 +37,7 @@ $formData = $formData ?? $currentPainting ?? [];
                     <?php endif; ?>
 
                     <?php if (!isset($test) || $test == false): ?>
-                        <form method="POST" action="<?php echo $isEdit ? 'update-painting?id=' . (int)($currentPainting['id'] ?? 0) : 'store-painting'; ?>" enctype="multipart/form-data">
+                        <form method="POST" action="<?php echo $isEdit ? 'update-painting?id=' . (int)($currentPainting['id'] ?? 0) : 'store-painting'; ?>" enctype="multipart/form-data" id="paintingSaveForm">
                             <div class="mb-3">
                                 <label for="painting_title" class="form-label">Title *</label>
                                 <input id="painting_title" type="text" name="title" class="form-control" required maxlength="255" value="<?php echo htmlspecialchars($formData['title'] ?? '', ENT_QUOTES, 'UTF-8'); ?>">
@@ -96,7 +96,10 @@ $formData = $formData ?? $currentPainting ?? [];
                             </div>
 
                             <div class="d-flex gap-2 flex-wrap">
-                                <button type="submit" class="btn btn-primary"><?php echo $isEdit ? 'Save Changes' : 'Create Painting'; ?></button>
+                                <button type="submit" class="btn btn-primary" id="paintingSaveSubmit">
+                                    <span id="paintingSaveSpinner" class="spinner-border spinner-border-sm me-2 d-none" aria-hidden="true"></span>
+                                    <span id="paintingSaveSubmitText"><?php echo $isEdit ? 'Save Changes' : 'Create Painting'; ?></span>
+                                </button>
                                 <a href="my-paintings" class="btn btn-outline-secondary">Cancel</a>
                             </div>
                         </form>
@@ -169,6 +172,7 @@ $formData = $formData ?? $currentPainting ?? [];
 
                             <script src="/artportal/public/js/price-calculator.js"></script>
                         <?php endif; ?>
+                        <script src="/artportal/public/js/painting-create-loading.js"></script>
                     <?php endif; ?>
                 </div>
             </div>
