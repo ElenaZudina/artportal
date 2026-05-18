@@ -5,6 +5,12 @@
  */
 class PurchaseRequest {
     
+    /**
+     * Create a purchase request for a painting.
+     * @param int|null $userId User ID
+     * @param int|null $paintingId Painting ID
+     * @return array Result data with success flag and message
+     */
     public static function create($userId, $paintingId) {
         if ($userId === null || $paintingId === null) {
             return [
@@ -25,7 +31,7 @@ class PurchaseRequest {
 
         $db = new Database();
         
-        // Создание новой заявки
+        // Create a new purchase request.
         $sql = 'INSERT INTO `purchase_requests` (user_id, painting_id) VALUES (?, ?)';
         $result = $db->executeRun($sql, [$userId, $paintingId]);
 
@@ -43,6 +49,12 @@ class PurchaseRequest {
         }
     }
     
+    /**
+     * Get the timestamp of the user's latest request for a painting.
+     * @param int $userId User ID
+     * @param int $paintingId Painting ID
+     * @return int|null Unix timestamp or null when no request exists
+     */
     public static function getLastRequestTime($userId, $paintingId) {
         $db = new Database();
         $sql = 'SELECT UNIX_TIMESTAMP(created_at) as created_timestamp FROM `purchase_requests` 
@@ -57,6 +69,11 @@ class PurchaseRequest {
         return null;
     }
     
+    /**
+     * Get one purchase request with user, painting, and artist contact data.
+     * @param int $requestId Purchase request ID
+     * @return array|null Request data or null if not found
+     */
     public static function getRequestById($requestId) {
         $sql = 'SELECT pr.*, 
                        u.email AS user_email, 
@@ -76,6 +93,13 @@ class PurchaseRequest {
         return $db->getOne($sql, [$requestId]);
     }
     
+    /**
+     * Get purchase requests for paintings owned by an artist.
+     * @param int $artistId Artist ID
+     * @param int $limit Number of requests to retrieve
+     * @param int $offset Starting offset for pagination
+     * @return array Array of purchase requests
+     */
     public static function getArtistRequests($artistId, $limit = 20, $offset = 0) {
         $limit = (int)$limit;
         $offset = (int)$offset;
@@ -93,6 +117,13 @@ class PurchaseRequest {
         return $db->getAll($sql, [$artistId]);
     }
 
+    /**
+     * Get purchase requests created by a user.
+     * @param int $userId User ID
+     * @param int $limit Number of requests to retrieve
+     * @param int $offset Starting offset for pagination
+     * @return array Array of purchase requests
+     */
     public static function getUserRequests($userId, $limit = 10, $offset = 0) {
         $limit = (int)$limit;
         $offset = (int)$offset;
@@ -110,6 +141,11 @@ class PurchaseRequest {
         return $db->getAll($sql, [$userId]);
     }
 
+    /**
+     * Count purchase requests created by a user.
+     * @param int $userId User ID
+     * @return int Number of purchase requests
+     */
     public static function getUserRequestsCount($userId) {
         $db = new Database();
         $sql = 'SELECT COUNT(*) AS cnt FROM `purchase_requests` WHERE user_id = ?';

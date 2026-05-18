@@ -5,6 +5,12 @@
  * Handles CRUD operations and validation for collections
  */
 class CollectionService {
+    /**
+     * Create a new painting collection.
+     * Validates title, collection type, and duplicate titles.
+     * @param array $data Collection form data
+     * @return array Success status with new ID or error message
+     */
     public static function createCollection($data) {
         $title = trim($data['title'] ?? '');
         $type = trim($data['type'] ?? '');
@@ -24,7 +30,7 @@ class CollectionService {
             return ['success' => false, 'errorMessage' => 'Collection already exists'];
         }
 
-        // Collections::create() теперь возвращает ID новой коллекции (или false при ошибке)
+        // Collections::create() returns the new collection ID, or false on failure.
         $newId = Collections::create($title, $type, $param);
         if (!$newId) {
             return ['success' => false, 'errorMessage' => 'Database error while adding collection'];
@@ -33,6 +39,13 @@ class CollectionService {
         return ['success' => true, 'errorMessage' => null, 'id' => $newId];
     }
 
+    /**
+     * Update an existing painting collection.
+     * Validates title, collection type, and duplicate titles.
+     * @param int $id Collection ID
+     * @param array $data Collection form data
+     * @return array Success status with error message if failed
+     */
     public static function updateCollection($id, $data) {
         $title = trim($data['title'] ?? '');
         $type = trim($data['type'] ?? '');
@@ -59,6 +72,12 @@ class CollectionService {
         return ['success' => true, 'errorMessage' => null];
     }
 
+    /**
+     * Delete a painting collection after confirmation.
+     * @param int $id Collection ID
+     * @param array $data Confirmation form data
+     * @return array Success status with error message if failed
+     */
     public static function deleteCollection($id, $data) {
         if (!isset($data['save'])) {
             return ['success' => false, 'errorMessage' => 'Delete action was not confirmed'];

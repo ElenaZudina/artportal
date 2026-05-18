@@ -209,6 +209,11 @@ class Artists {
         return $db->getOne($query, [$userId]);
     }
 
+    /**
+     * Create an artist profile from validated form data.
+     * @param array $cleanData Validated artist profile data
+     * @return bool Success status
+     */
     public static function insertArtistProfile($cleanData) {
         $query = "INSERT INTO artists (name, location, birth_date, bio, picture, status, user_id, created_at, updated_at)
                   VALUES (?, ?, ?, ?, ?, ?, ?, NOW(), NOW())";
@@ -227,6 +232,12 @@ class Artists {
         return $db->executeRun($query, $params);
     }
 
+    /**
+     * Update the artist profile attached to a user account.
+     * @param array $cleanData Validated artist profile data
+     * @param int $userId User ID that owns the artist profile
+     * @return bool Success status
+     */
     public static function updateArtistProfile($cleanData, $userId) {
         $query = "UPDATE artists
                   SET name = ?, location = ?, birth_date = ?, bio = ?, picture = ?, status = ?, updated_at = NOW()
@@ -246,6 +257,10 @@ class Artists {
         return $db->executeRun($query, $params);
     }
 
+    /**
+     * Count artist profiles waiting for moderation.
+     * @return int Number of pending artists
+     */
     public static function countPending() {
         $db = new Database();
         $row = $db->getOne("SELECT COUNT(*) AS cnt FROM artists WHERE status = 'pending'");

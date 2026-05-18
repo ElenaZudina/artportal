@@ -5,6 +5,12 @@
  * Handles creating, updating, and managing exhibitions
  */
 class ExhibitionService {
+    /**
+     * Create a new exhibition.
+     * Validates title, linked collection, and date range before saving.
+     * @param array $data Exhibition form data
+     * @return array Success status with error message if failed
+     */
     public static function createExhibition($data) {
         $title = trim($data['title'] ?? '');
         $description = trim($data['description'] ?? '');
@@ -50,6 +56,13 @@ class ExhibitionService {
         return ['success' => true, 'errorMessage' => null];
     }
 
+    /**
+     * Update an existing exhibition.
+     * Validates title, linked collection, date range, and duplicate title.
+     * @param int $id Exhibition ID
+     * @param array $data Exhibition form data
+     * @return array Success status with error message if failed
+     */
     public static function updateExhibition($id, $data) {
         $title = trim($data['title'] ?? '');
         $description = trim($data['description'] ?? '');
@@ -95,6 +108,12 @@ class ExhibitionService {
         return ['success' => true, 'errorMessage' => null];
     }
 
+    /**
+     * Delete an exhibition after confirmation.
+     * @param int $id Exhibition ID
+     * @param array $data Confirmation form data
+     * @return array Success status with error message if failed
+     */
     public static function deleteExhibition($id, $data) {
         if (!isset($data['save'])) {
             return ['success' => false, 'errorMessage' => 'Delete action was not confirmed'];

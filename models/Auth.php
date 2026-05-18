@@ -18,12 +18,22 @@ class Auth {
         return $db->getOne('SELECT * FROM `users` WHERE `email` = ?', [$email]);
     }
 
+    /**
+     * Get a user account by its ID.
+     * @param int $id User ID
+     * @return array|null User data or null if not found
+     */
     public static function getUserByID($id) {
         $sql = 'SELECT * FROM `users` WHERE `id` = ?';
         $db = new Database();
         return $db->getOne($sql, [$id]);
     }
 
+    /**
+     * Get users for admin listing, optionally filtered by username or email.
+     * @param string $search Optional search term
+     * @return array Array of matching users
+     */
     public static function getUsers($search = '') {
         $db = new Database();
         $search = trim((string)$search);
@@ -39,6 +49,12 @@ class Auth {
         return $db->getAll('SELECT id, username, email, role, status, created_at FROM users ORDER BY id DESC');
     }
 
+    /**
+     * Update a user's account status.
+     * @param int $userId User ID
+     * @param string $status New status, either active or blocked
+     * @return bool Success status
+     */
     public static function updateStatus($userId, $status) {
         if (!in_array($status, ['active', 'blocked'], true)) {
             return false;
@@ -49,6 +65,10 @@ class Auth {
         return $db->executeRun($sql, [$status, (int)$userId]);
     }
 
+    /**
+     * Refresh session user data from the database and clear invalid sessions.
+     * @return array|null Authenticated user data or null when the session is invalid
+     */
     public static function syncSessionStatus() {
         if (empty($_SESSION['userId'])) {
             return null;
@@ -67,10 +87,21 @@ class Auth {
         return $user;
     }
 
+    /**
+     * Get the authenticated user after validating the current session.
+     * @return array|null Authenticated user data or null
+     */
     public static function getAuthenticatedUser() {
         return self::syncSessionStatus();
     }
 
+    /**
+     * Require a logged-in user and optionally require a specific role.
+     * Redirects to login when the session is missing or unauthorized.
+     * @param string|null $requiredRole Required role name, or null for any logged-in user
+     * @param string|null $errorMessage Optional login error message
+     * @return array Authenticated user data
+     */
     public static function requireRole($requiredRole = null, $errorMessage = null) {
         $user = self::getAuthenticatedUser();
         if (!$user) {
@@ -83,8 +114,7 @@ class Auth {
         }
 
         if ($requiredRole !== null && (($user['role'] ?? '') !== $requiredRole)) {
-            // У пользователя нет нужной роли — принудительно сбрасываем сессию
-            // и перенаправляем на страницу логина с сообщением об отказе в доступе.
+            // Clear unauthorized sessions and redirect to login with an access denied message.
             self::clearSession();
             if (session_status() !== PHP_SESSION_ACTIVE) {
                 session_start();
@@ -97,10 +127,22 @@ class Auth {
         return $user;
     }
 
+    /**
+     * Require an authenticated session and optionally a specific role.
+     * @param string|null $requiredRole Required role name, or null for any logged-in user
+     * @param string|null $errorMessage Optional login error message
+     * @return array Authenticated user data
+     */
     public static function requireSession($requiredRole = null, $errorMessage = null) {
         return self::requireRole($requiredRole, $errorMessage);
     }
 
+    /**
+     * Require that the current session belongs to a regular user account.
+     * Redirects back to the previous page when the role is not allowed.
+     * @param string $errorMessage Error message shown to unauthorized users
+     * @return array Authenticated user data
+     */
     public static function requireUserAction($errorMessage = 'Only users can perform this action.') {
         $user = self::requireSession(null, 'You must be logged in to perform this action.');
 
@@ -118,6 +160,10 @@ class Auth {
         return $user;
     }
 
+    /**
+     * Clear the active PHP session.
+     * @return void
+     */
     private static function clearSession() {
         if (session_status() === PHP_SESSION_ACTIVE) {
             session_unset();
@@ -125,36 +171,70 @@ class Auth {
         }
     }
 
+    /**
+     * Check whether another user already uses the given email.
+     * @param string $email Email address to check
+     * @param int $userId User ID to exclude
+     * @return bool True when the email exists for a different user
+     */
     public static function existsEmailExceptUser($email, $userId) {
         $sql = 'SELECT id FROM `users` WHERE `email` = ? AND `id` <> ? LIMIT 1';
         $db = new Database();
         return (bool)$db->getOne($sql, [$email, (int)$userId]);
     }
 
+    /**
+     * Check whether another user already uses the given username.
+     * @param string $username Username to check
+     * @param int $userId User ID to exclude
+     * @return bool True when the username exists for a different user
+     */
     public static function existsUsernameExceptUser($username, $userId) {
         $sql = 'SELECT id FROM `users` WHERE `username` = ? AND `id` <> ? LIMIT 1';
         $db = new Database();
         return (bool)$db->getOne($sql, [$username, (int)$userId]);
     }
 
+    /**
+     * Update account profile fields for a user.
+     * @param int $userId User ID
+     * @param string $username New username
+     * @param string $email New email address
+     * @return bool Success status
+     */
     public static function updateAccount($userId, $username, $email) {
         $sql = 'UPDATE `users` SET `username` = ?, `email` = ? WHERE `id` = ?';
         $db = new Database();
         return $db->executeRun($sql, [$username, $email, (int)$userId]);
     }
 
+    /**
+     * Update a user's password hash.
+     * @param int $userId User ID
+     * @param string $passwordHash Hashed password
+     * @return bool Success status
+     */
     public static function updatePassword($userId, $passwordHash) {
         $sql = 'UPDATE `users` SET `password` = ? WHERE `id` = ?';
         $db = new Database();
         return $db->executeRun($sql, [$passwordHash, (int)$userId]);
     }
 
+    /**
+     * Count all user accounts.
+     * @return int Total number of users
+     */
     public static function count() {
         $db = new Database();
         $row = $db->getOne('SELECT COUNT(*) AS cnt FROM users');
         return intval($row['cnt'] ?? 0);
     }
 
+    /**
+     * Count user accounts by role.
+     * @param string $role Role name
+     * @return int Number of users with the role
+     */
     public static function countByRole($role) {
         $db = new Database();
         $row = $db->getOne('SELECT COUNT(*) AS cnt FROM users WHERE role = ?', [$role]);

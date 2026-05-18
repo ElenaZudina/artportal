@@ -7,10 +7,18 @@ class VisionAIService {
 
     private string $apiKey;
 
+    /**
+     * Initialize the service with the Google Vision API key from the environment.
+     */
     public function __construct() {
         $this->apiKey = $_ENV['GOOGLE_VISION_API_KEY'];
     }
 
+    /**
+     * Detect labels and web entities for an image using Google Vision API.
+     * @param string $imagePath Absolute or relative image path
+     * @return array Vision API response data for the image
+     */
     public function detectLabels(string $imagePath): array {
 
         $imageData = base64_encode(file_get_contents($imagePath));
@@ -50,6 +58,12 @@ class VisionAIService {
         return $result['responses'][0] ?? [];
     }
 
+    /**
+     * Build searchable tag names from Vision API labels and web entities.
+     * Filters low-confidence results and common stop words.
+     * @param array $response Vision API response data
+     * @return array Unique normalized tag names
+     */
     public function buildTags(array $response): array
 {
     $labels = $response['labelAnnotations'] ?? [];
@@ -81,7 +95,7 @@ class VisionAIService {
 
     $tags = [];
 
-    // LABELS
+    // Process label annotations.
     foreach ($labels as $item) {
         $tagString = strtolower($item['description'] ?? '');
 
@@ -102,7 +116,7 @@ class VisionAIService {
     }
     }
 
-    // WEB
+    // Process web entities.
     foreach ($web as $item) {
         $tagString = strtolower($item['description'] ?? '');
 

@@ -145,6 +145,14 @@ class ArtistProfileService {
         return ['success' => true, 'data' => $cleanData];
     }
 
+    /**
+     * Update an existing artist profile.
+     * Validates profile data, processes optional file uploads, and saves changes.
+     * @param array $data Profile form data
+     * @param array $files Uploaded files
+     * @param int $userId User ID for profile owner
+     * @return array Success status with updated data or validation errors
+     */
     public static function updateProfile($data, $files, $userId) {
         $errors = [];
 

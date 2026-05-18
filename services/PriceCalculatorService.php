@@ -45,12 +45,12 @@ class PriceCalculatorService
             ];
         }
 
-        // сначала убираем налог (обратный шаг)
+        // Reverse the tax step first.
         $beforeTax = $isTaxResident
             ? $targetIncome / (1 - $taxRate)
             : $targetIncome;
 
-        // потом убираем комиссию
+        // Then reverse the commission step.
         $price = $beforeTax / (1 - $commissionRate);
 
         $commissionAmount = $price * $commissionRate;
@@ -68,6 +68,15 @@ class PriceCalculatorService
         ];
     }
 
+    /**
+     * Calculate artist income and deductions from a final selling price.
+     * @param float $price Final selling price
+     * @param float $commission Commission percentage (0-100)
+     * @param float $tax Tax percentage (0-100)
+     * @param bool $isTaxResident Whether artist is tax resident
+     * @param float $expenses Business expenses to subtract from income
+     * @return array Price breakdown with net income and deduction amounts
+     */
     public static function calculateFromPrice(
         $price,
         $commission,

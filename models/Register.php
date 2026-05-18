@@ -4,16 +4,23 @@
  * Handles storing and retrieving registration information
  */
 class Register {
+    /**
+     * Save a new user account after checking unique email and username.
+     * Supports dependency injection for testing purposes.
+     * @param array $cleanData Validated registration data
+     * @param Database|null $db Optional database instance for testing
+     * @return array Registration result data
+     */
     public static function saveUser($cleanData, $db = null) {
         $db = $db ?? new Database();
 
-        // Проверка уникальности email
+        // Check email uniqueness.
         $user = $db->getOne("SELECT * FROM users WHERE email = ?", [$cleanData['email']]);
         if ($user) {
             return ['success' => false, 'errors' => ['Email exists already']];
         }
 
-        // Проверка уникальности username
+        // Check username uniqueness.
         $user = $db->getOne("SELECT * FROM users WHERE username = ?", [$cleanData['name']]);
         if ($user) {
             return ['success' => false, 'errors' => ['Username exists already']];

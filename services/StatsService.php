@@ -5,7 +5,10 @@
  */
 class StatsService {
 
-    // Возвращает набор базовых метрик для dashboard/admin/artist/user
+    /**
+     * Get base dashboard metrics for admin, artist, and user views.
+     * @return array Counts for users, artists, pending profiles, and content entities
+     */
     public static function getCounts() {
         $counts = [];
         $counts['artists'] = Auth::countByRole('artist');
@@ -17,6 +20,11 @@ class StatsService {
         return $counts;
     }
 
+    /**
+     * Get daily user registration totals for the selected period.
+     * @param int $days Number of days to include
+     * @return array Array of day and total pairs
+     */
     public static function getUserGrowthByDay($days = 7) {
         $days = max(1, (int)$days);
         $db = new Database();
@@ -48,8 +56,10 @@ class StatsService {
     }
 
     /**
-     * Возвращает подготовленные данные для графика: метки и значения.
-     * Формат: ['labels'=>array, 'values'=>array, 'periodDays'=>int]
+     * Get prepared chart data with labels and values.
+     * Format: ['labels'=>array, 'values'=>array, 'periodDays'=>int]
+     * @param int $days Number of days to include
+     * @return array Chart labels, values, and period length
      */
     public static function getUserGrowthChartData($days = 7) {
         $rows = self::getUserGrowthByDay($days);
@@ -63,13 +73,15 @@ class StatsService {
     }
 
     /**
-     * Получить статистику дашборда для художника
+     * Get dashboard statistics for an artist account.
+     * @param int $userId User ID
+     * @return array Artist dashboard data
      */
     public static function getArtistDashboardStats($userId) {
         $user = Auth::getUserByID($userId);
         $artist = Artists::getArtistByUserId($userId);
         
-        // Значения по умолчанию
+        // Default values.
         $requests = [];
         $requestsCount = 0;
         $paintings = [];
@@ -80,21 +92,21 @@ class StatsService {
         if (!empty($artist['id'])) {
             $artistId = $artist['id'];
             
-            // Последние 5 запросов на покупку
+            // Latest 5 purchase requests.
             $requests = PurchaseRequest::getArtistRequests($artistId, 5, 0) ?? [];
             
-            // Общее количество запросов
+            // Total request count.
             $allRequests = PurchaseRequest::getArtistRequests($artistId, 1000, 0) ?? [];
             $requestsCount = is_array($allRequests) ? count($allRequests) : 0;
             
-            // Список картин
+            // Painting list.
             $paintings = Paintings::getPaintingsByArtistID($artistId) ?? [];
             $paintingsCount = is_array($paintings) ? count($paintings) : 0;
             
-            // Общее количество просмотров
+            // Total view count.
             $viewsTotal = self::calculateArtistTotalViews($artistId);
             
-            // Количество избранных
+            // Favorites count.
             $favoritesCount = self::getArtistFavoritesCount($artistId);
         }
         
@@ -111,20 +123,22 @@ class StatsService {
     }
 
     /**
-     * Получить статистику дашборда для обычного пользователя
+     * Get dashboard statistics for a regular user account.
+     * @param int $userId User ID
+     * @return array User dashboard data
      */
     public static function getUserDashboardStats($userId) {
-        // Избранные картины
+        // Favorite paintings.
         $favorites = Favorite::getUserFavorites($userId) ?? [];
         $favoritesCount = is_array($favorites) ? count($favorites) : 0;
         
-        // Запросы пользователя на покупку (последние 5)
+        // User purchase requests, latest 5.
         $userRequests = PurchaseRequest::getUserRequests($userId, 5) ?? [];
         
-        // Общее количество запросов пользователя
+        // Total user purchase request count.
         $userRequestsCount = PurchaseRequest::getUserRequestsCount($userId);
         
-        // Недавние картины других художников
+        // Recent paintings from other artists.
         $recentPaintings = Paintings::getLastPaintings(6) ?? [];
         
         $user = Auth::getUserByID($userId);
@@ -140,7 +154,9 @@ class StatsService {
     }
 
     /**
-     * Вспомогательный метод: расчет общих просмотров художника
+     * Calculate total views for an artist's portfolio.
+     * @param int $artistId Artist ID
+     * @return int Total view count
      */
     private static function calculateArtistTotalViews($artistId) {
         $portfolio = Paintings::getPaintingsByArtistPortfolio($artistId) ?? [];
@@ -154,7 +170,9 @@ class StatsService {
     }
 
     /**
-     * Вспомогательный метод: количество избранных у художника
+     * Count favorites for all paintings owned by an artist.
+     * @param int $artistId Artist ID
+     * @return int Favorites count
      */
     private static function getArtistFavoritesCount($artistId) {
         $db = new Database();
