@@ -24,7 +24,7 @@
             if (isset($_SESSION["userId"]))
             {
             ?>
-            <!-- Top navbar -->
+            <!-- Top navigation bar: brand, menu, user info -->
             <nav class="navbar navbar-expand-lg navbar-light bg-white border-bottom">
                 <div class="container-fluid">
                     <a class="navbar-brand admin-brand" href="../" target="_blank" style="display: inline-flex; align-items: center; gap: 0.5rem; text-decoration: none;">
@@ -48,7 +48,7 @@
             </nav>
 
 
-            <!-- Offcanvas sidebar for small screens (move to body root) -->
+            <!-- Offcanvas sidebar: navigation for small screens -->
             <div class="offcanvas offcanvas-start" tabindex="-1" id="offcanvasSidebar" aria-labelledby="offcanvasSidebarLabel">
               <div class="offcanvas-header">
                 <h5 class="offcanvas-title" id="offcanvasSidebarLabel">Menu</h5>
@@ -122,12 +122,12 @@
             </div>
 
             <div class="row g-0">
-                <!-- Sidebar (desktop) -->
+                <!-- Sidebar (desktop): navigation for large screens -->
                 <aside class="col-lg-2 d-none d-lg-block bg-light admin-sidebar border-end">
                     <div class="p-3">
                         <?php
     if(isset($_SESSION["status"]) && $_SESSION["status"]=="artist") {
-        // Account block
+        // Account block for artist
         echo '<div class="mb-4">';
         echo '<h5 class="text-uppercase text-secondary">Account</h5>';
         echo '<ul class="nav flex-column small">';
@@ -136,7 +136,7 @@
         echo '<li class="nav-item"><a class="nav-link" style="font-size:1rem;" href="change-password"><i class="fa-solid fa-lock me-2"></i>Change Password</a></li>';
         echo '</ul>';
         echo '</div>';
-        // Profile block
+        // Profile block for artist
         echo '<div class="mb-4">';
         echo '<h5 class="text-uppercase text-secondary">Profile</h5>';
         echo '<ul class="nav flex-column small">';
@@ -144,7 +144,7 @@
         echo '<li class="nav-item"><a class="nav-link" style="font-size:1rem;" href="edit-profile"><i class="fa-solid fa-pencil me-2"></i>Edit Profile</a></li>';
         echo '</ul>';
         echo '</div>';
-        // Portfolio block
+        // Portfolio block for artist
         echo '<div class="mb-4">';
         echo '<h5 class="text-uppercase text-secondary">Portfolio</h5>';
         echo '<ul class="nav flex-column small">';
@@ -159,7 +159,7 @@
         echo '</ul>';
         echo '</div>';    }
     elseif(isset($_SESSION["status"]) && $_SESSION["status"]=="user") {
-        // User account block
+        // Account block for user
         echo '<div class="mb-4">';
         echo '<h5 class="text-uppercase text-secondary">Account</h5>';
         echo '<ul class="nav flex-column small">';
@@ -168,14 +168,14 @@
         echo '<li class="nav-item"><a class="nav-link" style="font-size:1rem;" href="change-password"><i class="fa-solid fa-lock me-2"></i>Change Password</a></li>';
         echo '</ul>';
         echo '</div>';
-        // Favorites block
+        // Favorites block for user
         echo '<div class="mb-4">';
         echo '<h5 class="text-uppercase text-secondary">Favorites</h5>';
         echo '<ul class="nav flex-column small">';
         echo '<li class="nav-item"><a class="nav-link" style="font-size:1rem;" href="my-favorites"><i class="fa-solid fa-heart me-2"></i>My Favorites</a></li>';
         echo '</ul>';
         echo '</div>';
-        // Requests block (desktop)
+        // Requests block for user (desktop)
         echo '<div class="mb-4">';
         echo '<h5 class="text-uppercase text-secondary">Requests</h5>';
         echo '<ul class="nav flex-column small">';
@@ -191,7 +191,7 @@
                     </div>
                 </aside>
 
-                <!-- Main content area -->
+                <!-- Main content area: page content and alerts -->
                 <main class="col-12 col-lg-10 p-4">
                     <div class="container">
                         <?php if (!isset($content)) { $content = ''; } ?>
@@ -221,7 +221,7 @@
                             }
                         ?>
                         <?php
-                        // Основные ссылки под Hello и Logout
+                        // Main quick links under Hello and Logout (for artist)
                         if (isset($_SESSION["userId"]) && isset($_SESSION["status"]) && $_SESSION["status"]=="artist") {
                             echo '<div class="mb-4">';
                             echo '<h4 style="font-size:1.1rem;">';
@@ -258,7 +258,7 @@
 
             <?php
             } else {
-                // Если нет сессии, выводим отказ в доступе
+                // If there is no session, show access denied
                 echo '<div class="container py-4"><h4>Access denied!</h4></div>';
             }
             ?>

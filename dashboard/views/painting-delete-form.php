@@ -1,14 +1,19 @@
 <?php
+// Painting delete confirmation view
+// Output buffering for template rendering
 ob_start();
 ?>
 
+<!-- Main container for painting delete confirmation -->
 <div class="container mt-4 mb-5">
     <div class="row justify-content-center">
         <div class="col-lg-8">
             <div class="card shadow-sm border-0">
                 <div class="card-body p-4">
+                    <!-- Page title -->
                     <h2 class="mb-3">Delete Painting</h2>
 
+                    <!-- Success or error message after delete attempt -->
                     <?php if (isset($test)): ?>
                         <?php if ($test == true): ?>
                             <div class="alert alert-info">
@@ -26,8 +31,10 @@ ob_start();
                             </div>
                         <?php endif; ?>
                     <?php else: ?>
+                        <!-- Painting details and delete form -->
                         <div class="row g-3 align-items-start">
                             <div class="col-md-5">
+                                <!-- Painting image with fallback -->
                                 <img
                                     src="/artportal/images/paintings/<?php echo htmlspecialchars($painting['image'] ?? '', ENT_QUOTES, 'UTF-8'); ?>"
                                     class="img-fluid rounded-4"
@@ -36,15 +43,22 @@ ob_start();
                                 >
                             </div>
                             <div class="col-md-7">
+                                <!-- Painting title -->
                                 <div class="mb-2"><strong>Title:</strong> <?php echo htmlspecialchars($painting['title'] ?? 'Untitled', ENT_QUOTES, 'UTF-8'); ?></div>
+                                <!-- Painting category -->
                                 <div class="mb-2"><strong>Category:</strong> <?php echo htmlspecialchars($painting['category_name'] ?? 'Unknown', ENT_QUOTES, 'UTF-8'); ?></div>
+                                <!-- Painting year -->
                                 <div class="mb-2"><strong>Year:</strong> <?php echo htmlspecialchars((string)($painting['year_created'] ?? 'Unknown'), ENT_QUOTES, 'UTF-8'); ?></div>
+                                <!-- Painting price -->
                                 <div class="mb-2"><strong>Price:</strong> <?php echo htmlspecialchars(number_format((float)($painting['price'] ?? 0), 2), ENT_QUOTES, 'UTF-8'); ?></div>
+                                <!-- Painting medium -->
                                 <div class="mb-2"><strong>Medium:</strong> <?php echo htmlspecialchars($painting['medium'] ?? 'Unknown', ENT_QUOTES, 'UTF-8'); ?></div>
+                                <!-- Painting dimensions -->
                                 <div class="mb-2"><strong>Dimensions:</strong> <?php echo htmlspecialchars($painting['dimensions'] ?? 'Unknown', ENT_QUOTES, 'UTF-8'); ?></div>
                             </div>
                         </div>
 
+                        <!-- Delete confirmation form -->
                         <form method="POST" action="destroy-painting?id=<?php echo (int)($painting['id'] ?? 0); ?>" class="mt-4">
                             <?php echo CsrfHelper::field(); ?>
                             <div class="d-flex gap-2 flex-wrap">

@@ -3,8 +3,16 @@
  * Dashboard Account Controller - manages artist account settings
  * Handles account information and settings management
  */
+
+/**
+ * Controller for managing user account settings in the dashboard.
+ * Handles viewing, editing, and updating account information and password.
+ */
 class AccountController {
 
+    /**
+     * Display the account information page for the logged-in user.
+     */
     public static function account() {
         Auth::requireSession();
 
@@ -12,6 +20,9 @@ class AccountController {
         include_once('views/account.php');
     }
 
+    /**
+     * Show the account edit form for the logged-in user.
+     */
     public static function editAccount() {
         Auth::requireSession();
 
@@ -23,6 +34,10 @@ class AccountController {
         include_once('views/account-edit-form.php');
     }
 
+    /**
+     * Handle the submission of the account edit form and update user data.
+     * Validates CSRF token and POST method, updates account, and handles errors.
+     */
     public static function updateAccount() {
         Auth::requireSession();
 
@@ -57,12 +72,19 @@ class AccountController {
         include_once('views/account-edit-form.php');
     }
 
+    /**
+     * Show the password change form for the logged-in user.
+     */
     public static function changePassword() {
         Auth::requireSession();
 
         include_once('views/account-password-form.php');
     }
 
+    /**
+     * Handle the submission of the password change form and update password.
+     * Validates CSRF token and POST method, updates password, and handles errors.
+     */
     public static function updatePassword() {
         Auth::requireSession();
 

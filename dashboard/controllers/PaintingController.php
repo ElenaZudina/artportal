@@ -3,8 +3,16 @@
  * Dashboard Painting Controller - manages artist's paintings
  * Handles painting CRUD operations for artists
  */
+
+/**
+ * Controller for managing artist's paintings in the dashboard.
+ * Handles CRUD operations for paintings (create, read, update, delete).
+ */
 class PaintingController {
 
+    /**
+     * Display the list of paintings belonging to the logged-in artist.
+     */
     public static function myPaintings() {
         Auth::requireSession();
         $artist = requireArtistProfile();
@@ -13,6 +21,9 @@ class PaintingController {
         include_once('views/my-paintings.php');
     }
 
+    /**
+     * Show the form to add a new painting for the artist.
+     */
     public static function addPainting() {
         Auth::requireSession();
         $artist = requireArtistProfile();
@@ -22,6 +33,10 @@ class PaintingController {
         include_once('views/painting-form.php');
     }
 
+    /**
+     * Handle the submission of the add painting form and create a new painting.
+     * Validates CSRF token and POST method, handles errors.
+     */
     public static function storePainting() {
         Auth::requireSession();
         requireArtistProfile();
@@ -46,6 +61,9 @@ class PaintingController {
         include_once('views/painting-form.php');
     }
 
+    /**
+     * Show the form to edit an existing painting for the artist.
+     */
     public static function editPainting() {
         Auth::requireSession();
         $artist = requireArtistProfile();
@@ -62,6 +80,10 @@ class PaintingController {
         include_once('views/painting-form.php');
     }
 
+    /**
+     * Handle the submission of the edit painting form and update painting data.
+     * Validates CSRF token and POST method, handles errors.
+     */
     public static function updatePainting() {
         Auth::requireSession();
         requireArtistProfile();
@@ -89,6 +111,10 @@ class PaintingController {
         include_once('views/painting-form.php');
     }
 
+    /**
+     * Delete a painting belonging to the logged-in artist.
+     * Validates artist ownership and painting existence.
+     */
     public static function deletePainting() {
         Auth::requireSession();
         $artist = requireArtistProfile();
