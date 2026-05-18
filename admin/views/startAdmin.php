@@ -1,4 +1,10 @@
-<?php ob_start() ?>
+<?php
+/**
+ * Admin Home View
+ * Main admin dashboard page: displays statistics and navigation to admin features
+ */
+ob_start() ?>
+<!-- Main content: Admin dashboard -->
 <article>
     <div id="main" class="container">
         <h3>Admin Panel</h3>
@@ -100,7 +106,7 @@
         <div class="row">
             <div class="col-12">
                 <div class="card p-3">
-                    <?php $periodDays = (is_array($userGrowth) ? count($userGrowth) : 7); ?>
+                    <?php $periodDays = (isset($userGrowthChart['periodDays']) ? $userGrowthChart['periodDays'] : (is_array($userGrowth) ? count($userGrowth) : 7)); ?>
                     <h5 class="mb-3">User Growth (last <?php echo $periodDays; ?> days)</h5>
                     <div style="height:220px;">
                         <canvas id="usersGrowthChart"></canvas>
@@ -109,59 +115,22 @@
             </div>
         </div>
 
+        <?php
+            // Read prepared chart data from service via controller
+            $gLabels = isset($userGrowthChart['labels']) && is_array($userGrowthChart['labels']) ? $userGrowthChart['labels'] : [];
+            $gTotals = isset($userGrowthChart['values']) && is_array($userGrowthChart['values']) ? $userGrowthChart['values'] : [];
+            if (empty($gLabels) || empty($gTotals)) {
+                // fallback sample
+                $gLabels = ['01.05','02.05','03.05'];
+                $gTotals = [3,7,2];
+            }
+        ?>
+
+        <div id="chartDataContainer" data-labels='<?php echo json_encode($gLabels, JSON_UNESCAPED_UNICODE); ?>' data-values='<?php echo json_encode($gTotals, JSON_UNESCAPED_UNICODE); ?>'></div>
+
         <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-        <script>
-            (function(){
-                // Prepare data from PHP ($userGrowth expected as array of ['day'=>'YYYY-MM-DD','total'=>int])
-                <?php
-                    $gLabels = [];
-                    $gTotals = [];
-                    if (!empty($userGrowth) && is_array($userGrowth)) {
-                        foreach ($userGrowth as $r) {
-                            $gLabels[] = date('d.m', strtotime($r['day']));
-                            $gTotals[] = (int)$r['total'];
-                        }
-                    } else {
-                        // fallback sample
-                        $sample = [
-                            ['day' => '2026-05-01', 'total' => 3],
-                            ['day' => '2026-05-02', 'total' => 7],
-                            ['day' => '2026-05-03', 'total' => 2],
-                        ];
-                        foreach ($sample as $r) { $gLabels[] = date('d.m', strtotime($r['day'])); $gTotals[] = (int)$r['total']; }
-                    }
-                ?>
-
-                const labels = <?php echo json_encode($gLabels, JSON_UNESCAPED_UNICODE); ?>;
-                const values = <?php echo json_encode($gTotals, JSON_UNESCAPED_UNICODE); ?>;
-
-                const ctx = document.getElementById('usersGrowthChart');
-                if (!ctx) return;
-
-                new Chart(ctx, {
-                    type: 'line',
-                    data: {
-                        labels: labels,
-                        datasets: [{
-                            label: 'New users',
-                            data: values,
-                            borderColor: '#9810FA',
-                            backgroundColor: 'rgba(152,16,250,0.08)',
-                            tension: 0.3,
-                            fill: true,
-                            pointRadius: 3,
-                            borderWidth: 2
-                        }]
-                    },
-                    options: {
-                        responsive: true,
-                        maintainAspectRatio: false,
-                        plugins: { legend: { display: false } },
-                        scales: { x: { grid: { display: false } }, y: { beginAtZero: true, ticks: { precision: 0 } } }
-                    }
-                });
-            })();
-        </script>
+        <script src="/artportal/public/js/user-growth-chart.js"></script>
+            <div class="row">
     </div>
 </article>
 

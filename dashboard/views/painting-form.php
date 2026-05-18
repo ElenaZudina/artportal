@@ -1,15 +1,19 @@
 <?php
+// Painting add/edit form view
+// Output buffering for template rendering
 ob_start();
 $isEdit = !empty($painting['id'] ?? null);
 $currentPainting = $painting ?? [];
 $formData = $formData ?? $currentPainting ?? [];
 ?>
 
+<!-- Main container for painting add/edit form -->
 <div class="container mt-4 mb-5">
     <div class="row justify-content-center">
         <div class="col-lg-9">
             <div class="card shadow-sm border-0">
                 <div class="card-body p-4">
+                    <!-- Header with page title and back button -->
                     <div class="d-flex justify-content-between align-items-start gap-3 flex-wrap mb-4">
                         <div>
                             <h2 class="mb-1"><?php echo $isEdit ? 'Edit Painting' : 'Add Painting'; ?></h2>
@@ -18,6 +22,7 @@ $formData = $formData ?? $currentPainting ?? [];
                         <a class="btn btn-outline-secondary" href="my-paintings">Back to list</a>
                     </div>
 
+                    <!-- Success or error message after form submission -->
                     <?php if (isset($test)): ?>
                         <?php if ($test == true): ?>
                             <div class="alert alert-success">
@@ -36,23 +41,29 @@ $formData = $formData ?? $currentPainting ?? [];
                         <?php endif; ?>
                     <?php endif; ?>
 
+                    <!-- Painting add/edit form -->
                     <?php if (!isset($test) || $test == false): ?>
-                        <form method="POST" action="<?php echo $isEdit ? 'update-painting?id=' . (int)($currentPainting['id'] ?? 0) : 'store-painting'; ?>" enctype="multipart/form-data">
+                        <form method="POST" action="<?php echo $isEdit ? 'update-painting?id=' . (int)($currentPainting['id'] ?? 0) : 'store-painting'; ?>" enctype="multipart/form-data" id="paintingSaveForm">
+                            <?php echo CsrfHelper::field(); ?>
+                            <!-- Painting title input -->
                             <div class="mb-3">
                                 <label for="painting_title" class="form-label">Title *</label>
                                 <input id="painting_title" type="text" name="title" class="form-control" required maxlength="255" value="<?php echo htmlspecialchars($formData['title'] ?? '', ENT_QUOTES, 'UTF-8'); ?>">
                             </div>
 
+                            <!-- Painting description input -->
                             <div class="mb-3">
                                 <label for="painting_description" class="form-label">Description *</label>
                                 <textarea id="painting_description" name="description" class="form-control" rows="5" required><?php echo htmlspecialchars($formData['description'] ?? '', ENT_QUOTES, 'UTF-8'); ?></textarea>
                             </div>
 
                             <div class="row g-3">
+                                <!-- Painting year input -->
                                 <div class="col-md-4 mb-3">
                                     <label for="painting_year" class="form-label">Year *</label>
                                     <input id="painting_year" type="number" name="year_created" class="form-control" required min="1000" max="9999" value="<?php echo htmlspecialchars((string)($formData['year_created'] ?? ''), ENT_QUOTES, 'UTF-8'); ?>">
                                 </div>
+                                <!-- Painting category select -->
                                 <div class="col-md-8 mb-3">
                                     <label for="painting_category" class="form-label">Category *</label>
                                     <select id="painting_category" name="category_id" class="form-select" required>
@@ -67,10 +78,12 @@ $formData = $formData ?? $currentPainting ?? [];
                             </div>
 
                             <div class="row g-3">
+                                <!-- Painting medium input -->
                                 <div class="col-md-6 mb-3">
                                     <label for="painting_medium" class="form-label">Medium *</label>
                                     <input id="painting_medium" type="text" name="medium" class="form-control" required maxlength="255" value="<?php echo htmlspecialchars($formData['medium'] ?? '', ENT_QUOTES, 'UTF-8'); ?>">
                                 </div>
+                                <!-- Painting dimensions input -->
                                 <div class="col-md-6 mb-3">
                                     <label for="painting_dimensions" class="form-label">Dimensions *</label>
                                     <input id="painting_dimensions" type="text" name="dimensions" class="form-control" required maxlength="100" value="<?php echo htmlspecialchars($formData['dimensions'] ?? '', ENT_QUOTES, 'UTF-8'); ?>">
@@ -96,7 +109,10 @@ $formData = $formData ?? $currentPainting ?? [];
                             </div>
 
                             <div class="d-flex gap-2 flex-wrap">
-                                <button type="submit" class="btn btn-primary"><?php echo $isEdit ? 'Save Changes' : 'Create Painting'; ?></button>
+                                <button type="submit" class="btn btn-primary" id="paintingSaveSubmit">
+                                    <span id="paintingSaveSpinner" class="spinner-border spinner-border-sm me-2 d-none" aria-hidden="true"></span>
+                                    <span id="paintingSaveSubmitText"><?php echo $isEdit ? 'Save Changes' : 'Create Painting'; ?></span>
+                                </button>
                                 <a href="my-paintings" class="btn btn-outline-secondary">Cancel</a>
                             </div>
                         </form>
@@ -167,117 +183,9 @@ $formData = $formData ?? $currentPainting ?? [];
                                 </div>
                             </div>
 
-                            <script>
-                            (function () {
-                                var modeEl = document.getElementById('calc_mode');
-                                var valueHintEl = document.getElementById('calc_value_hint');
-                                var valueEl = document.getElementById('calc_value');
-                                var commissionEl = document.getElementById('calc_commission');
-                                var taxEl = document.getElementById('calc_tax');
-                                var expensesEl = document.getElementById('calc_expenses');
-                                var residentEl = document.getElementById('calc_is_tax_resident');
-                                var runBtn = document.getElementById('calc_run_btn');
-                                var useBtn = document.getElementById('calc_use_price_btn');
-                                var alertEl = document.getElementById('price-calc-alert');
-                                var resultWrapEl = document.getElementById('price-calc-result');
-                                var mainLabelEl = document.getElementById('result_main_label');
-                                var mainOutputEl = document.getElementById('calc_result_main');
-                                var commissionOutEl = document.getElementById('calc_result_commission');
-                                var taxOutEl = document.getElementById('calc_result_tax');
-                                var expensesOutEl = document.getElementById('calc_result_expenses');
-                                var priceInputEl = document.getElementById('painting_price');
-                                var latestPrice = null;
-
-                                if (!modeEl || !runBtn || !useBtn || !priceInputEl) {
-                                    return;
-                                }
-
-                                function setModeHint() {
-                                    valueHintEl.textContent = modeEl.value === 'income'
-                                        ? 'Desired income amount'
-                                        : 'Current price amount';
-                                }
-
-                                function showError(message) {
-                                    alertEl.textContent = message || 'Calculation error';
-                                    alertEl.classList.remove('d-none');
-                                }
-
-                                function hideError() {
-                                    alertEl.textContent = '';
-                                    alertEl.classList.add('d-none');
-                                }
-
-                                modeEl.addEventListener('change', setModeHint);
-                                setModeHint();
-
-                                runBtn.addEventListener('click', function () {
-                                    hideError();
-                                    resultWrapEl.classList.add('d-none');
-                                    useBtn.disabled = true;
-
-                                    var payload = new URLSearchParams();
-                                    payload.append('mode', modeEl.value);
-                                    payload.append('value', valueEl.value);
-                                    payload.append('commission', commissionEl.value);
-                                    payload.append('tax', taxEl.value);
-                                    payload.append('expenses', expensesEl.value);
-                                    payload.append('isTaxResident', residentEl.checked ? '1' : '0');
-
-                                    fetch('/artportal/dashboard/price-calculate', {
-                                        method: 'POST',
-                                        headers: {
-                                            'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8'
-                                        },
-                                        body: payload.toString()
-                                    })
-                                    .then(function (response) {
-                                        return response.json();
-                                    })
-                                    .then(function (json) {
-                                        if (!json || !json.success || !json.data) {
-                                            showError(json && json.message ? json.message : 'Calculation failed');
-                                            return;
-                                        }
-
-                                        latestPrice = Number(json.data.price || 0);
-                                        var isIncomeMode = modeEl.value === 'income';
-                                        
-                                        if (isIncomeMode) {
-                                            mainLabelEl.textContent = 'Your price:';
-                                            mainOutputEl.textContent = Number(json.data.price || 0).toFixed(2);
-                                        } else {
-                                            mainLabelEl.textContent = 'Net profit:';
-                                            mainOutputEl.textContent = Number(json.data.netIncome || 0).toFixed(2);
-                                        }
-                                        
-                                        taxOutEl.textContent = Number(json.data.taxAmount || 0).toFixed(2);
-                                        commissionOutEl.textContent = Number(json.data.commissionAmount || 0).toFixed(2);
-                                        expensesOutEl.textContent = Number(json.data.expenses || 0).toFixed(2);
-                                        
-                                        resultWrapEl.classList.remove('d-none');
-                                        useBtn.disabled = false;
-                                    })
-                                    .catch(function () {
-                                        showError('Network error');
-                                    });
-                                });
-
-                                useBtn.addEventListener('click', function () {
-                                    if (latestPrice === null) {
-                                        return;
-                                    }
-
-                                    priceInputEl.value = Number(latestPrice).toFixed(2);
-                                    var modalEl = document.getElementById('priceCalculatorModal');
-                                    if (modalEl && window.bootstrap && window.bootstrap.Modal) {
-                                        var modal = window.bootstrap.Modal.getOrCreateInstance(modalEl);
-                                        modal.hide();
-                                    }
-                                });
-                            })();
-                            </script>
+                            <script src="/artportal/public/js/price-calculator.js"></script>
                         <?php endif; ?>
+                        <script src="/artportal/public/js/painting-create-loading.js"></script>
                     <?php endif; ?>
                 </div>
             </div>

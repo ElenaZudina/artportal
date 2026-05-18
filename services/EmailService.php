@@ -4,10 +4,18 @@ use PHPMailer\PHPMailer\Exception;
 
 require_once __DIR__ . '/../vendor/autoload.php';
 
+/**
+ * Email Service - handles sending emails via PHPMailer and Mailtrap
+ * Sends notifications for purchase requests, password resets, and other events
+ * Uses SMTP configuration from environment variables
+ */
 class EmailService {
     
     /**
-     * Отправляет email уведомление художнику о новом запросе на покупку
+     * Send email notification to artist about new purchase request
+     * Includes painting details and requester information
+     * @param array $request Purchase request data with artist and painting info
+     * @return bool Success status
      */
     public static function sendPurchaseRequestNotification($request) {
         if (!class_exists('PHPMailer\\PHPMailer\\PHPMailer')) {
@@ -18,7 +26,7 @@ class EmailService {
         $mail = new PHPMailer(true);
         
         try {
-            // Конфигурация Mailtrap
+            // Configure Mailtrap SMTP.
             $mail->isSMTP();
             $mail->Host = $_ENV['MAILTRAP_HOST'] ?? 'sandbox.smtp.mailtrap.io';
             $mail->Port = $_ENV['MAILTRAP_PORT'] ?? 587;
@@ -27,7 +35,7 @@ class EmailService {
             $mail->Username = $_ENV['MAILTRAP_USERNAME'] ?? '';
             $mail->Password = $_ENV['MAILTRAP_PASSWORD'] ?? '';
             
-            // Отключить проверку сертификата SSL (для локального тестирования)
+            // Disable SSL certificate verification for local testing.
             $mail->SMTPOptions = array(
                 'ssl' => array(
                     'verify_peer' => false,
@@ -36,13 +44,13 @@ class EmailService {
                 )
             );
             
-            // Отправитель (любой email для Mailtrap)
+            // Sender address for Mailtrap.
             $mail->setFrom('noreply@artportal.local', 'ArtPortal');
             
-            // Получатель (художник)
+            // Artist recipient.
             $mail->addAddress($request['artist_email'], $request['artist_name']);
             
-            // Тема и содержание
+            // Subject and message content.
             $mail->isHTML(true);
             $mail->Subject = 'New Purchase Request: ' . htmlspecialchars($request['painting_title']);
             $mail->Body = self::getEmailTemplate($request);
@@ -57,6 +65,11 @@ class EmailService {
         }
     }
 
+    /**
+     * Send password recovery request details to the configured admin email.
+     * @param array $user User data for the password recovery request
+     * @return bool Success status
+     */
     public static function sendPasswordResetRequestToAdmin($user) {
         if (!class_exists('PHPMailer\\PHPMailer\\PHPMailer')) {
             error_log('PHPMailer is not installed or could not be autoloaded. Skipping password request email.');
@@ -104,10 +117,12 @@ class EmailService {
     }
     
     /**
-     * HTML шаблон письма
+     * Build the HTML email template for a purchase request notification.
+     * @param array $request Purchase request data
+     * @return string HTML email body
      */
     private static function getEmailTemplate($request) {
-        $artistDashboardLink = 'http://localhost/artportal/dashboard'; // Измените на ваш URL
+        $artistDashboardLink = 'http://localhost/artportal/dashboard'; // Update this URL for production.
         
         return "
         <html>
@@ -168,7 +183,9 @@ class EmailService {
     }
     
     /**
-     * Простой текстовый шаблон
+     * Build the plain text email template for a purchase request notification.
+     * @param array $request Purchase request data
+     * @return string Plain text email body
      */
     private static function getPlainTextTemplate($request) {
         return "
@@ -191,6 +208,11 @@ ArtPortal Team
         ";
     }
 
+    /**
+     * Build the HTML email template for a password recovery request.
+     * @param array $user User data
+     * @return string HTML email body
+     */
     private static function getPasswordResetRequestTemplate($user) {
         return "
         <html>
@@ -228,6 +250,11 @@ ArtPortal Team
         ";
     }
 
+    /**
+     * Build the plain text email template for a password recovery request.
+     * @param array $user User data
+     * @return string Plain text email body
+     */
     private static function getPasswordResetRequestPlainText($user) {
         return "
 Password recovery request

@@ -1,7 +1,23 @@
 <?php
 
+/**
+ * Price Calculator Service - calculates painting prices based on desired income
+ * Handles commission and tax calculations to determine final selling price
+ */
 class PriceCalculatorService
 {
+    /**
+     * Calculate selling price from desired artist income
+     * Works backwards from desired income, adding commission and tax to determine final price
+     * Assumes artist is either tax resident or exempt from tax
+     * 
+     * @param float $desiredIncome Amount artist wants to earn
+     * @param float $commission Commission percentage (0-100)
+     * @param float $tax Tax percentage (0-100)
+     * @param bool $isTaxResident Whether artist is tax resident
+     * @param float $expenses Business expenses to cover
+     * @return array Price breakdown with final price and deduction amounts
+     */
     public static function calculateFromDesiredIncome(
         $desiredIncome,
         $commission,
@@ -29,12 +45,12 @@ class PriceCalculatorService
             ];
         }
 
-        // сначала убираем налог (обратный шаг)
+        // Reverse the tax step first.
         $beforeTax = $isTaxResident
             ? $targetIncome / (1 - $taxRate)
             : $targetIncome;
 
-        // потом убираем комиссию
+        // Then reverse the commission step.
         $price = $beforeTax / (1 - $commissionRate);
 
         $commissionAmount = $price * $commissionRate;
@@ -52,6 +68,15 @@ class PriceCalculatorService
         ];
     }
 
+    /**
+     * Calculate artist income and deductions from a final selling price.
+     * @param float $price Final selling price
+     * @param float $commission Commission percentage (0-100)
+     * @param float $tax Tax percentage (0-100)
+     * @param bool $isTaxResident Whether artist is tax resident
+     * @param float $expenses Business expenses to subtract from income
+     * @return array Price breakdown with net income and deduction amounts
+     */
     public static function calculateFromPrice(
         $price,
         $commission,

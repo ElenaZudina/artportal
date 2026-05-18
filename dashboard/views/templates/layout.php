@@ -1,5 +1,8 @@
-<html>
+<!DOCTYPE html>
+<html lang="en">
     <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>Dashboard <?php echo $_SESSION["name"]; ?></title>
         <link href="/artportal/public/css/login.css" rel="stylesheet">
         <!-- <link rel="stylesheet" href="../public/css/font-awesome.min.css"> -->
@@ -21,7 +24,7 @@
             if (isset($_SESSION["userId"]))
             {
             ?>
-            <!-- Top navbar -->
+            <!-- Top navigation bar: brand, menu, user info -->
             <nav class="navbar navbar-expand-lg navbar-light bg-white border-bottom">
                 <div class="container-fluid">
                     <a class="navbar-brand admin-brand" href="../" target="_blank" style="display: inline-flex; align-items: center; gap: 0.5rem; text-decoration: none;">
@@ -45,7 +48,7 @@
             </nav>
 
 
-            <!-- Offcanvas sidebar for small screens (move to body root) -->
+            <!-- Offcanvas sidebar: navigation for small screens -->
             <div class="offcanvas offcanvas-start" tabindex="-1" id="offcanvasSidebar" aria-labelledby="offcanvasSidebarLabel">
               <div class="offcanvas-header">
                 <h5 class="offcanvas-title" id="offcanvasSidebarLabel">Menu</h5>
@@ -53,27 +56,7 @@
               </div>
               <div class="offcanvas-body">
                 <?php
-        if(isset($_SESSION["status"]) && $_SESSION["status"]=="admin") {
-        // Offcanvas: show same block structure as desktop sidebar
-        echo '<div class="mb-3">';
-        echo '<h5 class="text-uppercase text-secondary">Moderation</h5>';
-        echo '<ul class="nav flex-column" style="font-size:1rem;">';
-        echo '<li class="nav-item"><a class="nav-link" style="font-size:1rem;" href="moderation-artists">Approve artist profiles</a></li>';
-        echo '</ul>';
-        echo '</div>';
-
-        echo '<div class="mb-3">';
-        echo '<h5 class="text-uppercase text-secondary">Content management</h5>';
-        echo '<ul class="nav flex-column" style="font-size:1rem;">';
-        echo '<li class="nav-item"><a class="nav-link" style="font-size:1rem;" href="categories">Categories</a></li>';
-        echo '<li class="nav-item"><a class="nav-link" style="font-size:1rem;" href="paintingsAdmin">Paintings List</a></li>';
-        echo '<li class="nav-item"><a class="nav-link" style="font-size:1rem;" href="collections">Collections</a></li>';
-        echo '<li class="nav-item"><a class="nav-link" style="font-size:1rem;" href="exhibitions">Exhibitions</a></li>';
-        echo '<li class="nav-item"><a class="nav-link" style="font-size:1rem;" href="users">Users</a></li>';
-        echo '</ul>';
-        echo '</div>';
-    }
-    elseif(isset($_SESSION["status"]) && $_SESSION["status"]=="artist") {
+        if(isset($_SESSION["status"]) && $_SESSION["status"]=="artist") {
         echo '<div class="mb-3">';
         echo '<h5 class="text-uppercase text-secondary">Account</h5>';
         echo '<ul class="nav flex-column" style="font-size:1rem;">';
@@ -139,42 +122,12 @@
             </div>
 
             <div class="row g-0">
-                <!-- Sidebar (desktop) -->
+                <!-- Sidebar (desktop): navigation for large screens -->
                 <aside class="col-lg-2 d-none d-lg-block bg-light admin-sidebar border-end">
                     <div class="p-3">
                         <?php
-    if(isset($_SESSION["status"]) && $_SESSION["status"]=="admin") {
-        // Admin sidebar blocks
-        echo '<div class="mb-4">';
-        echo '<h4><a href="../" target= _blank>ArtPortal</a></h4>';
-        echo '</div>';
-        // Moderation block
-        echo '<div class="mb-4">';
-        echo '<h5 class="text-uppercase text-secondary">Moderation</h5>';
-        // Здесь будут ссылки на управление пользователями (добавить позже)
-        echo '<ul class="nav flex-column small">';
-        echo '<li class="nav-item"><a class="nav-link" style="font-size:1rem;" href="moderation-artists">Approve artist profiles</a></li>';
-        echo '</ul>';
-        echo '</div>';
-        // Content management block
-        echo '<div class="mb-4">';
-        echo '<h5 class="text-uppercase text-secondary">Content management</h5>';
-        echo '<ul class="nav flex-column small">';
-        //echo '<li class="nav-item"><a class="nav-link" href="./startAdmin">Start '.$_SESSION["name"].'</a></li>';
-        echo '<li class="nav-item"><a class="nav-link" style="font-size:1rem;" href="categories">Categories</a></li>';
-        echo '<li class="nav-item"><a class="nav-link" style="font-size:1rem;" href="paintingsAdmin">Paintings List</a></li>';
-        echo '<li class="nav-item"><a class="nav-link" style="font-size:1rem;" href="collections">Collections List</a></li>';
-        echo '<li class="nav-item"><a class="nav-link" style="font-size:1rem;" href="exhibitions">Exhibitions</a></li>';
-        echo '</ul>';
-        echo '</div>';
-        // Статистика (будет добавлена позже)
-        echo '<div class="mb-4">';
-        echo '<h5 class="text-uppercase text-secondary">Statistics</h5>';
-        echo '<span class="text-muted">Coming soon...</span>';
-        echo '</div>';
-    }
-    elseif(isset($_SESSION["status"]) && $_SESSION["status"]=="artist") {
-        // Account block
+    if(isset($_SESSION["status"]) && $_SESSION["status"]=="artist") {
+        // Account block for artist
         echo '<div class="mb-4">';
         echo '<h5 class="text-uppercase text-secondary">Account</h5>';
         echo '<ul class="nav flex-column small">';
@@ -183,7 +136,7 @@
         echo '<li class="nav-item"><a class="nav-link" style="font-size:1rem;" href="change-password"><i class="fa-solid fa-lock me-2"></i>Change Password</a></li>';
         echo '</ul>';
         echo '</div>';
-        // Profile block
+        // Profile block for artist
         echo '<div class="mb-4">';
         echo '<h5 class="text-uppercase text-secondary">Profile</h5>';
         echo '<ul class="nav flex-column small">';
@@ -191,7 +144,7 @@
         echo '<li class="nav-item"><a class="nav-link" style="font-size:1rem;" href="edit-profile"><i class="fa-solid fa-pencil me-2"></i>Edit Profile</a></li>';
         echo '</ul>';
         echo '</div>';
-        // Portfolio block
+        // Portfolio block for artist
         echo '<div class="mb-4">';
         echo '<h5 class="text-uppercase text-secondary">Portfolio</h5>';
         echo '<ul class="nav flex-column small">';
@@ -206,7 +159,7 @@
         echo '</ul>';
         echo '</div>';    }
     elseif(isset($_SESSION["status"]) && $_SESSION["status"]=="user") {
-        // User account block
+        // Account block for user
         echo '<div class="mb-4">';
         echo '<h5 class="text-uppercase text-secondary">Account</h5>';
         echo '<ul class="nav flex-column small">';
@@ -215,14 +168,14 @@
         echo '<li class="nav-item"><a class="nav-link" style="font-size:1rem;" href="change-password"><i class="fa-solid fa-lock me-2"></i>Change Password</a></li>';
         echo '</ul>';
         echo '</div>';
-        // Favorites block
+        // Favorites block for user
         echo '<div class="mb-4">';
         echo '<h5 class="text-uppercase text-secondary">Favorites</h5>';
         echo '<ul class="nav flex-column small">';
         echo '<li class="nav-item"><a class="nav-link" style="font-size:1rem;" href="my-favorites"><i class="fa-solid fa-heart me-2"></i>My Favorites</a></li>';
         echo '</ul>';
         echo '</div>';
-        // Requests block (desktop)
+        // Requests block for user (desktop)
         echo '<div class="mb-4">';
         echo '<h5 class="text-uppercase text-secondary">Requests</h5>';
         echo '<ul class="nav flex-column small">';
@@ -238,7 +191,7 @@
                     </div>
                 </aside>
 
-                <!-- Main content area -->
+                <!-- Main content area: page content and alerts -->
                 <main class="col-12 col-lg-10 p-4">
                     <div class="container">
                         <?php if (!isset($content)) { $content = ''; } ?>
@@ -268,7 +221,7 @@
                             }
                         ?>
                         <?php
-                        // Основные ссылки под Hello и Logout
+                        // Main quick links under Hello and Logout (for artist)
                         if (isset($_SESSION["userId"]) && isset($_SESSION["status"]) && $_SESSION["status"]=="artist") {
                             echo '<div class="mb-4">';
                             echo '<h4 style="font-size:1.1rem;">';
@@ -305,7 +258,7 @@
 
             <?php
             } else {
-                // Если нет сессии, выводим отказ в доступе
+                // If there is no session, show access denied
                 echo '<div class="container py-4"><h4>Access denied!</h4></div>';
             }
             ?>
@@ -317,5 +270,6 @@
             </footer>
         </div>
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+        <script src="/artportal/public/js/purchase-request-loading.js"></script>
     </body>
 </html>

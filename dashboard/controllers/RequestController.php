@@ -1,58 +1,56 @@
 <?php
-require_once __DIR__ . '/../services/EmailService.php';
+require_once __DIR__ . '/../../services/EmailService.php';
 
-class PurchaseRequestController {
-    
+/**
+ * Dashboard Request Controller - manages purchase requests
+ * Handles viewing and managing painting purchase requests
+ */
+
+/**
+ * Controller for managing painting purchase requests in the dashboard.
+ * Handles creation of requests and viewing user's requests.
+ */
+class RequestController {
+
+    /**
+     * Create a new purchase request for a painting.
+     * Validates POST method, CSRF token, and request interval.
+     * Sends notification email to artist if successful.
+     */
     public static function create() {
-        // Проверка авторизации
-        if (empty($_SESSION['userId'])) {
-            $_SESSION['errorString'] = 'You must be logged in to send a purchase request.';
-            header('Location: /artportal/login');
-            exit;
-        }
-
-        // Только обычный пользователь может отправлять заявку
-        if (!isset($_SESSION['status']) || $_SESSION['status'] !== 'user') {
-            header('Location: /artportal/');
-            exit;
-        }
-
-        // Проверка метода запроса
         if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
             header('Location: /artportal/');
             exit;
         }
 
-        // Получение painting_id
+        Auth::requireUserAction('Only users can send purchase requests.');
+
+        if (!CsrfHelper::validate()) {
+            $_SESSION['errorString'] = 'Invalid form token. Please try again.';
+            header('Location: /artportal/');
+            exit;
+        }
+
         $paintingId = isset($_POST['painting_id']) ? (int)$_POST['painting_id'] : 0;
         $userId = (int)$_SESSION['userId'];
 
-        // Валидация painting_id
         if ($paintingId <= 0) {
             $redirect = $_SERVER['HTTP_REFERER'] ?? '/artportal/';
             header('Location: ' . $redirect);
             exit;
         }
 
-        // Проверка существования картины
         $painting = Paintings::getPublicPaintingByID($paintingId);
         if (!$painting) {
             header('Location: /artportal/');
             exit;
         }
 
-        // Нельзя отправить заявку на свою же картину
-        if (!empty($painting['artist_id']) && (int)$painting['artist_id'] === $userId) {
-            header('Location: /artportal/');
-            exit;
-        }
-
-        // Проверка временного интервала (1 час)
         $lastRequestTime = PurchaseRequest::getLastRequestTime($userId, $paintingId);
         if ($lastRequestTime !== null) {
             $currentTime = time();
             $timePassed = $currentTime - $lastRequestTime;
-            $timeInterval = 3600; // 1 час в секундах
+            $timeInterval = 3600;
             
             if ($timePassed < $timeInterval) {
                 $minutesRemaining = ceil(($timeInterval - $timePassed) / 60);
@@ -63,13 +61,11 @@ class PurchaseRequestController {
             }
         }
 
-        // Создание записи в БД
         $result = PurchaseRequest::create($userId, $paintingId);
 
         if (!empty($result['success'])) {
             $_SESSION['successString'] = $result['message'] ?? 'Request sent successfully';
             
-            // Отправка email уведомления художнику
             $request = PurchaseRequest::getRequestById($result['id']);
             if ($request) {
                 $emailSent = EmailService::sendPurchaseRequestNotification($request);
@@ -81,10 +77,43 @@ class PurchaseRequestController {
             $_SESSION['errorString'] = $result['message'] ?? 'Failed to create request';
         }
 
-        // Redirect назад
         $redirect = $_SERVER['HTTP_REFERER'] ?? '/artportal/';
         header('Location: ' . $redirect);
         exit;
+    }
+
+    /**
+     * Display the list of purchase requests made by the logged-in user.
+     */
+    public static function myRequests() {
+        Auth::requireSession('user');
+
+        $requests = PurchaseRequest::getUserRequests((int)$_SESSION['userId'], 100, 0) ?? [];
+        include_once('views/my-requests.php');
+    }
+
+    /**
+     * Display the list of purchase requests received by the logged-in artist.
+     * Only accessible to users with artist status.
+     */
+    public static function purchaseRequests() {
+        Auth::requireSession();
+
+        if (($_SESSION['status'] ?? '') !== 'artist') {
+            header('Location: /artportal/dashboard/startDashboard');
+            exit;
+        }
+
+        $artist = Artists::getArtistByUserId((int)$_SESSION['userId']);
+        $artistId = $artist['id'] ?? null;
+
+        if (empty($artistId)) {
+            $requests = [];
+        } else {
+            $requests = PurchaseRequest::getArtistRequests($artistId, 100, 0) ?? [];
+        }
+
+        include_once('views/purchase-requests.php');
     }
 }
 ?>

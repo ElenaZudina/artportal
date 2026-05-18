@@ -50,6 +50,7 @@
   color: var(--muted-foreground);
 }
 
+/* Single artist page description text */
 .single-artist-description {
   font-size: 20px;
   line-height: 32.5px;
@@ -57,16 +58,19 @@
   color: var(--muted-foreground);
 }
 
+/* Single artist page image with square aspect ratio */
 .single-artist-image {
   aspect-ratio: 1 / 1;
   object-fit: cover;
   transition: none;
 }
 
+/* Container for single artist image */
 .single-artist-image-wrapper {
   position: relative;
 }
 
+/* Card container for single artist profile */
 .single-artist-container {
   position: relative;
   border-radius: 1.5rem;
@@ -77,6 +81,7 @@
   overflow: hidden;
 }
 
+/* Single painting page description text */
 .one-painting-description {
   font-size: 18px;
   line-height: 32.5px;
@@ -84,6 +89,7 @@
   color: var(--muted-foreground);
 }
 
+/* Primary action buttons (Buy, Follow) with gradient background */
 .buy-button,
 .follow-button {
   background: var(--gradient-footer);
@@ -95,6 +101,7 @@
   font-weight: var(--font-weight-medium);
 }
 
+/* Hover/focus state for primary action buttons */
 .buy-button:hover,
 .buy-button:focus-visible,
 .follow-button:hover,
@@ -103,6 +110,7 @@
   opacity: 0.92;
 }
 
+/* Container for action buttons group with flexbox layout */
 .action-buttons {
   display: flex;
   flex-wrap: wrap;
@@ -110,6 +118,7 @@
   align-items: center;
 }
 
+/* Secondary action buttons (Collection, Contact) with outline style */
 .collection-button,
 .contact-button {
   background: transparent;
@@ -121,6 +130,7 @@
   font-weight: var(--font-weight-medium);
 }
 
+/* Hover/focus state for secondary action buttons */
 .collection-button:hover,
 .collection-button:focus-visible,
 .contact-button:hover,
@@ -130,22 +140,26 @@
   border-color: rgba(0, 0, 0, 0.2);
 }
 
+/* Price value on single painting page */
 .one-painting-price-value {
   color: var(--primary);
   font-size: var(--text-xl);
   font-weight: var(--font-weight-bold);
 }
 
+/* Price value in painting grid card */
 .painting-price-value {
   color: var(--primary);
   font-size: var(--text-xl);
   font-weight: var(--font-weight-bold);
 }
 
+/* Price label text styling */
 .painting-price-label {
   color: var(--primary);
 }
 
+/* Single painting image on detail page */
 .one-painting-image {
   display: block;
   width: 100%;
@@ -155,12 +169,14 @@
   transition: none;
 }
 
+/* Container for single painting image */
 .one-painting-image-wrapper {
   position: relative;
   width: 100%;
   overflow: hidden;
 }
 
+/* Overlay container for category badges and favorite button on painting image */
 .painting-overlays {
   position: absolute;
   inset: 10px 10px auto 10px;
@@ -172,6 +188,7 @@
   pointer-events: none;
 }
 
+/* Enable pointer events for badges and forms within overlays */
 .painting-overlays .category-badge,
 .painting-overlays .painting-favorite-form {
   position: static;
@@ -179,6 +196,7 @@
   pointer-events: auto;
 }
 
+/* Circular favorite button badge styling */
 .category-badge--favorite {
   gap: 6px;
   cursor: pointer;
@@ -196,13 +214,16 @@
   white-space: normal;
 }
 
-.category-badge--favorite .fa {
+/* Icon size for favorite button */
+.category-badge--favorite .fa,
+.category-badge--favorite .fa-solid,
+.category-badge--favorite .fa-regular {
   font-size: 16px;
   line-height: 1;
 }
 
-.category-badge--favorite.is-inactive .fa-heart-o {
-  color: var(--accent-foreground);
+.category-badge--favorite.is-inactive .fa-heart {
+  color: var(--muted-foreground);
 }
 
 .category-badge--favorite.is-active {
@@ -215,11 +236,13 @@
   color: var(--primary-foreground);
 }
 
+/* Hover/focus state for favorite button */
 .category-badge--favorite:hover,
 .category-badge--favorite:focus-visible {
   color: inherit;
 }
 
+/* Card container for single painting detail page */
 .one-painting-container {
   position: relative;
   border-radius: 1.5rem;
@@ -230,12 +253,28 @@
   width: 100%;
 }
 
+/* Responsive padding for tablet devices */
+@media (max-width: 768px) {
+  .one-painting-container {
+    padding: 16px;
+  }
+}
+
+/* Responsive padding for mobile devices */
+@media (max-width: 480px) {
+  .one-painting-container {
+    padding: 12px;
+  }
+}
+
+/* Artist profile section with avatar and info */
 .artist-profile {
   display: flex;
   align-items: center;
   gap: 16px;
 }
 
+/* Circular artist avatar image */
 .artist-avatar {
   width: 56px;
   height: 56px;
@@ -245,6 +284,7 @@
   transition: none;
 }
 
+/* Container for artist profile text content */
 .artist-profile-content {
   display: flex;
   flex-direction: column;
@@ -253,6 +293,7 @@
 
 
 
+/* Artist profile link styling */
 .artist-profile-link {
   font-size: 18px;
   font-weight: var(--font-weight-medium);
@@ -283,26 +324,31 @@
   overflow: hidden;
 }
 
+/* Image wrapper for regular paintings grid with max height */
 .paintings-grid--regular .card-img-wrapper {
   max-height: 520px;
   background: var(--background);
 }
 
+/* Image styling for regular paintings grid */
 .paintings-grid--regular .card-img-top {
   width: 100%;
   height: auto;
   object-fit: cover;
 }
 
+/* Card layout for asymmetric grid */
 .paintings-grid--asymmetric > div > a > .card {
   display: flex;
   flex-direction: column;
 }
 
+/* Card body sizing in asymmetric grid */
 .paintings-grid--asymmetric .card-body {
   flex: 0 0 auto;
 }
 
+/* Asymmetric grid layout for paintings with variable sizes */
 .paintings-grid--asymmetric {
   display: grid;
   grid-template-columns: 1fr;
@@ -319,6 +365,7 @@
   padding-left: 0 !important;
 }
 
+/* Full height for card links in asymmetric grid */
 .paintings-grid--asymmetric > div > a,
 .paintings-grid--asymmetric > div > a > .card {
   height: 100%;
@@ -331,6 +378,7 @@
   }
 }
 
+/* Desktop layout with 3-column grid and dense packing */
 @media (min-width: 992px) {
   .paintings-grid--asymmetric {
     grid-template-columns: repeat(3, 1fr);
@@ -338,22 +386,25 @@
     grid-auto-flow: dense;
   }
 
+  /* Large card spanning 2x2 grid cells in asymmetric layout */
   .paintings-grid-item--large {
     grid-column: span 2;
     grid-row: span 2;
   }
 
+  /* Tall card spanning 2 rows in asymmetric layout */
   .paintings-grid-item--tall {
     grid-row: span 2;
   }
 
-  /* Make the image clearly taller in tall/large cards */
+  /* Taller image container for tall/large cards */
   .paintings-grid-item--tall .card-img-wrapper,
   .paintings-grid-item--large .card-img-wrapper {
     min-height: 760px;
   }
 }
 
+/* Image wrapper styling in asymmetric grid */
 .paintings-grid--asymmetric .card-img-wrapper {
   flex: 1;
   min-height: 340px;
@@ -361,28 +412,33 @@
   background: var(--background);
 }
 
+/* Image styling in asymmetric grid */
 .paintings-grid--asymmetric .card-img-top {
   width: 100%;
   height: 100%;
   object-fit: cover;
 }
 
+/* Square image wrapper for artists grid */
 .artists-grid .card-img-wrapper {
   aspect-ratio: 1 / 1;
   background: var(--background);
 }
 
+/* Image styling for artists grid */
 .artists-grid .card-img-top {
   width: 100%;
   height: 100%;
   object-fit: cover;
 }
 
+/* Portrait-oriented image wrapper for artist portfolio grid */
 .artist-portfolio-grid .card-img-wrapper {
   aspect-ratio: 3 / 4;
   background: var(--background);
 }
 
+/* Image styling for artist portfolio grid */
 .artist-portfolio-grid .card-img-top {
   display: block;
   width: 100%;
@@ -390,6 +446,7 @@
   object-fit: cover;
 }
 
+/* Category badge overlay on painting image with glassmorphism effect */
 .category-badge {
   position: absolute;
   top: 10px;
@@ -413,12 +470,14 @@
   text-overflow: ellipsis;
 }
 
+/* Position variant for category badge in top-left corner */
 .category-badge--top-left {
   top: 10px;
   right: auto;
   left: 10px;
 }
 
+/* Accent colored category badge with gradient */
 .category-badge--accent {
   background: linear-gradient(135deg, #AD46FF 0%, #9810FA 100%);
   color: var(--primary-foreground);
@@ -436,7 +495,7 @@
   color: var(--primary);
 }
 
-/* Specific overrides for favorite badge to ensure circular shape and proper colors */
+/* Circular favorite badge override with specific dimensions */
 .category-badge.category-badge--favorite {
   width: 34px;
   height: 34px;
@@ -454,25 +513,32 @@
   white-space: normal;
 }
 
-.category-badge.category-badge--favorite .fa {
+/* Icon sizing for favorite badge */
+.category-badge.category-badge--favorite .fa,
+.category-badge.category-badge--favorite .fa-solid,
+.category-badge.category-badge--favorite .fa-regular {
   font-size: 16px;
   line-height: 1;
 }
 
-.category-badge.category-badge--favorite.is-inactive .fa-heart-o {
-  color: var(--accent-foreground);
+/* Inactive favorite heart color */
+.category-badge.category-badge--favorite.is-inactive .fa-heart {
+  color: var(--muted-foreground);
 }
 
+/* Active favorite badge with gradient and shadow */
 .category-badge.category-badge--favorite.is-active {
   background: linear-gradient(135deg, #AD46FF 0%, #9810FA 100%);
   color: var(--primary-foreground);
   box-shadow: 0 10px 24px rgba(152, 16, 250, 0.28);
 }
 
+/* Active favorite heart color */
 .category-badge.category-badge--favorite.is-active .fa-heart {
   color: var(--primary-foreground);
 }
 
+/* Hover/focus state for favorite badge */
 .category-badge.category-badge--favorite:hover,
 .category-badge.category-badge--favorite:focus-visible {
   color: inherit;
@@ -486,7 +552,7 @@ footer p {
   margin-bottom: 18px;
 }
 
-/* Footer heading - H2 variation */
+/* Large heading for footer section */
 .h2-footer {
   font-family: var(--font-heading);
   font-size: 55px;
@@ -495,11 +561,25 @@ footer p {
   margin-bottom: 24px;
 }
 
+/* Tablet heading size reduction */
+@media (max-width: 768px) {
+  .h2-footer {
+    font-size: 32px;
+  }
+}
+
+/* Mobile heading size reduction */
+@media (max-width: 480px) {
+  .h2-footer {
+    font-size: 24px;
+  }
+}
+
 /* =========================
    INTERACTIONS
 ========================= */
 
-/* Slider styling: rounded corners, shadow, circular arrow buttons */
+/* Carousel container with rounded corners and shadow */
 #paintingsCarousel {
   border-radius: 1rem;
   overflow: hidden;
@@ -507,24 +587,26 @@ footer p {
   margin-bottom: 3.5rem;
 }
 
+/* Carousel inner slides container */
 #paintingsCarousel .carousel-inner {
-  /* ensure slides clipped to rounded container */
   border-radius: 0;
 }
 
+/* Carousel slide image sizing */
 #paintingsCarousel .carousel-item img {
   width: 100%;
-  height: 70vh; /* keep same visual size as inline style */
+  height: 70vh;
   object-fit: cover;
   display: block;
 }
 
-/* hide default bootstrap background icons and use our arrow element */
+/* Hide default Bootstrap carousel arrow icons */
 .carousel-control-prev-icon,
 .carousel-control-next-icon {
   display: none !important;
 }
 
+/* Custom circular carousel navigation button */
 .custom-carousel-control {
   width: 64px;
   height: 64px;
@@ -542,24 +624,29 @@ footer p {
   opacity: 0.98;
 }
 
+/* Carousel control focus state */
 .custom-carousel-control:focus {
   outline: none;
   box-shadow: 0 8px 20px rgba(0,0,0,0.18), 0 0 0 4px rgba(0,0,0,0.04);
 }
 
+/* Arrow icon styling for carousel navigation */
 .custom-carousel-control .carousel-arrow {
   display: block;
   font-size: 28px;
   line-height: 1;
-  color: var(--primary); /* accent color */
+  color: var(--primary);
   font-weight: 700;
   margin: 0;
   padding: 0;
 }
 
+/* Position left carousel control button */
 .carousel-control-prev.custom-carousel-control { left: 24px; }
+/* Position right carousel control button */
 .carousel-control-next.custom-carousel-control { right: 24px; }
 
+/* Carousel control responsive sizing */
 @media (max-width: 768px) {
   .custom-carousel-control { width: 40px; height: 40px; }
   .custom-carousel-control .carousel-arrow { font-size: 18px; }
@@ -591,6 +678,7 @@ footer p {
   justify-content: center;
 }
 
+/* Base styles for pagination elements */
 .pagination-page,
 .pagination-btn {
   font-family: var(--font-body);
@@ -599,6 +687,7 @@ footer p {
   transition: all 0.2s ease;
 }
 
+/* Individual pagination page number button */
 .pagination-page {
   min-width: 40px;
   height: 40px;
@@ -611,27 +700,32 @@ footer p {
   font-size: var(--text-base);
 }
 
+/* Hover state for pagination page button */
 .pagination-page:hover {
   border-color: var(--primary);
   color: var(--primary);
   background: var(--muted);
 }
 
+/* Active pagination page styling */
 .pagination-page--active {
   background: var(--primary);
   color: var(--primary-foreground);
   border-color: var(--primary);
 }
 
+/* Hover state for active pagination page */
 .pagination-page--active:hover {
   opacity: 0.92;
 }
 
+/* Pagination dots separator (...) */
 .pagination-dots {
   color: var(--muted-foreground);
   font-size: 14px;
 }
 
+/* Previous/Next pagination navigation button */
 .pagination-btn {
   padding: 10px 18px;
   border-radius: 8px;
@@ -641,24 +735,27 @@ footer p {
   display: inline-block;
 }
 
+/* Hover state for pagination button */
 .pagination-btn:hover:not(.pagination-btn--disabled) {
   border-color: var(--primary);
   color: var(--primary);
   background: var(--muted);
 }
 
+/* Disabled pagination button styling */
 .pagination-btn--disabled {
   color: var(--muted-foreground);
   cursor: not-allowed;
   opacity: 0.5;
 }
 
-/* Artists search */
+/* Artist search form container */
 .artist-search-form {
   width: 100%;
   max-width: 520px;
 }
 
+/* Artist search input group styling */
 .artist-search-group {
   width: 100%;
   border: 1px solid #e5e7eb;
@@ -668,12 +765,14 @@ footer p {
   background: #f3f4f6;
 }
 
+/* Search group elements border color */
 .artist-search-group .input-group-text,
 .artist-search-group .form-control,
 .artist-search-group .btn {
   border-color: #e5e7eb;
 }
 
+/* Search icon styling in artist search */
 .artist-search-icon {
   background: #f3f4f6;
   color: #adb5bd;
@@ -681,6 +780,7 @@ footer p {
   padding-right: 8px;
 }
 
+/* Artist search input field */
 .artist-search-input {
   min-width: 0;
   background-color: #f3f4f6;
@@ -691,11 +791,13 @@ footer p {
   height: 36px;
 }
 
+/* Artist search input placeholder text */
 .artist-search-input::placeholder {
   color: #adb5bd;
   opacity: 1;
 }
 
+/* Artist search input focus state with primary color ring */
 .artist-search-group .artist-search-input:focus {
   background-color: #f3f4f6 !important;
   border: 1px solid var(--primary) !important;
@@ -704,6 +806,7 @@ footer p {
   -webkit-box-shadow: 0 0 0 3px rgba(173, 70, 255, 0.2) !important;
 }
 
+/* Artist search submit button */
 .artist-search-btn {
   background: rgba(173, 70, 255, 0.08);
   color: var(--primary);
@@ -717,6 +820,7 @@ footer p {
   justify-content: center;
 }
 
+/* Hover/focus state for artist search button */
 .artist-search-btn:hover,
 .artist-search-btn:focus-visible {
   background: rgba(173, 70, 255, 0.14);
@@ -724,13 +828,25 @@ footer p {
   border-color: rgba(173, 70, 255, 0.2);
 }
 
+/* Clear button in artist search form */
 .artist-search-clear {
   color: #6b7280;
   border-color: #e5e7eb;
   background: #f3f4f6;
   white-space: nowrap;
+  height: 36px;
+  min-height: 36px;
+  padding: 0 14px;
+  font-size: 14px;
+  line-height: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
+  flex: 0 0 auto;
 }
 
+/* Hover/focus state for clear button in artist search */
 .artist-search-clear:hover,
 .artist-search-clear:focus-visible {
   color: #4b5563;
@@ -738,6 +854,7 @@ footer p {
   border-color: #d1d5db;
 }
 
+/* Responsive padding for tablet in artist search */
 @media (max-width: 576px) {
   .artist-search-form {
     max-width: 100%;
@@ -776,12 +893,13 @@ footer p {
   }
 }
 
-/* Paintings search */
+/* Painting search form container */
 .painting-search-form {
   width: 100%;
   max-width: 520px;
 }
 
+/* Painting search input group styling */
 .painting-search-group {
   width: 100%;
   border: 1px solid #e5e7eb;
@@ -791,12 +909,14 @@ footer p {
   background: #f3f4f6;
 }
 
+/* Search group elements border color for painting search */
 .painting-search-group .input-group-text,
 .painting-search-group .form-control,
 .painting-search-group .btn {
   border-color: #e5e7eb;
 }
 
+/* Search icon styling in painting search */
 .painting-search-icon {
   background: #f3f4f6;
   color: #adb5bd;
@@ -804,6 +924,7 @@ footer p {
   padding-right: 8px;
 }
 
+/* Painting search input field */
 .painting-search-input {
   min-width: 0;
   background-color: #f3f4f6;
@@ -814,11 +935,13 @@ footer p {
   height: 36px;
 }
 
+/* Painting search input placeholder text */
 .painting-search-input::placeholder {
   color: #adb5bd;
   opacity: 1;
 }
 
+/* Painting search input focus state with primary color ring */
 .painting-search-group .painting-search-input:focus {
   background-color: #f3f4f6 !important;
   border: 1px solid var(--primary) !important;
@@ -827,6 +950,7 @@ footer p {
   -webkit-box-shadow: 0 0 0 3px rgba(173, 70, 255, 0.2) !important;
 }
 
+/* Painting search submit button */
 .painting-search-btn {
   background: rgba(173, 70, 255, 0.08);
   color: var(--primary);
@@ -840,6 +964,7 @@ footer p {
   justify-content: center;
 }
 
+/* Hover/focus state for painting search button */
 .painting-search-btn:hover,
 .painting-search-btn:focus-visible {
   background: rgba(173, 70, 255, 0.14);
@@ -847,13 +972,25 @@ footer p {
   border-color: rgba(173, 70, 255, 0.2);
 }
 
+/* Clear button in painting search form */
 .painting-search-clear {
   color: #6b7280;
   border-color: #e5e7eb;
   background: #f3f4f6;
   white-space: nowrap;
+  height: 36px;
+  min-height: 36px;
+  padding: 0 14px;
+  font-size: 14px;
+  line-height: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
+  flex: 0 0 auto;
 }
 
+/* Hover/focus state for clear button in painting search */
 .painting-search-clear:hover,
 .painting-search-clear:focus-visible {
   color: #4b5563;
@@ -861,6 +998,7 @@ footer p {
   border-color: #d1d5db;
 }
 
+/* Responsive layout for mobile artist search */
 @media (max-width: 576px) {
   .painting-search-form {
     max-width: 100%;
@@ -912,12 +1050,14 @@ footer p {
   padding: 40px 0;
 }
 
+/* Hero section content container */
 .hero-container {
   position: relative;
   z-index: 1;
   width: 100%;
 }
 
+/* Hero section gradient overlay background */
 .hero::before {
   content: "";
   position: absolute;
@@ -931,6 +1071,7 @@ footer p {
   pointer-events: none;
 }
 
+/* Hero section noise texture overlay */
 .hero::after {
   content: "";
   position: absolute;
@@ -940,6 +1081,7 @@ footer p {
   pointer-events: none;
 }
 
+/* Hero section two-column grid layout */
 .hero-wrapper {
   display: grid;
   grid-template-columns: 1fr 1fr;
@@ -949,10 +1091,12 @@ footer p {
   align-items: center;
 }
 
+/* Hero section text content area */
 .hero-content {
   width: 100%;
 }
 
+/* Hero section image grid layout */
 .hero-grid {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
@@ -961,6 +1105,7 @@ footer p {
   align-self: stretch;
 }
 
+/* Large featured image in hero grid spanning 2 columns */
 .hero-main {
   grid-column: span 2;
   position: relative;
@@ -971,6 +1116,7 @@ footer p {
   height: auto;
 }
 
+/* Small square image in hero grid */
 .hero-small {
   position: relative;
   overflow: hidden;
@@ -978,6 +1124,7 @@ footer p {
   aspect-ratio: 1 / 1;
 }
 
+/* Hero grid images with zoom transition */
 .hero-grid img {
   width: 100%;
   height: 100%;
@@ -986,10 +1133,12 @@ footer p {
   transition: transform 0.7s ease;
 }
 
+/* Hover zoom effect for hero grid images */
 .hero-grid div:hover img {
   transform: scale(1.1);
 }
 
+/* Dark overlay on hero main image on hover */
 .overlay {
   position: absolute;
   inset: 0;
@@ -1002,10 +1151,12 @@ footer p {
   transition: opacity 0.3s ease;
 }
 
+/* Show overlay on hero main image hover */
 .hero-main:hover .overlay {
   opacity: 1;
 }
 
+/* Hero section main title */
 .hero-title {
   font-family: var(--font-display, var(--font-heading));
   font-weight: 400;
@@ -1014,33 +1165,35 @@ footer p {
   color: var(--foreground);
 }
 
+/* Bold dark text variant in hero title */
 .hero-title-dark {
   font-weight: 700;
   color: #000000;
 }
 
+/* Accent colored text in hero title */
 .hero-title-accent {
   color: var(--primary);
   font-weight: 700;
   white-space: nowrap;
 }
 
-/* base (mobile) */
+/* Hero title base/mobile size (60px) */
 .hero h1 {
-  font-size: 3.75rem; /* 60px */
+  font-size: 3.75rem;
 }
 
-/* md */
+/* Medium heading on tablet devices (72px) */
 @media (min-width: 768px) {
   .hero h1 {
-    font-size: 4.5rem; /* 72px */
+    font-size: 4.5rem;
   }
 }
 
-/* lg */
+/* Large featured image heading in H1 on desktop (96px) */
 @media (min-width: 1024px) {
   .hero h1 {
-    font-size: 6rem; /* 96px */
+    font-size: 6rem;
   }
 }
 
@@ -1048,7 +1201,7 @@ footer p {
    FOOTER BUTTONS
 ========================= */
 
-/* Get Started - контрастная кнопка (белая) */
+/* Primary footer button with white background */
 .btn-footer-primary {
   display: inline-flex;
   align-items: center;
@@ -1065,6 +1218,7 @@ footer p {
   text-decoration: none;
 }
 
+/* Hover/focus state for primary footer button */
 .btn-footer-primary:hover,
 .btn-footer-primary:focus {
   background: rgba(255, 255, 255, 0.92);
@@ -1072,7 +1226,7 @@ footer p {
   transform: translateY(-2px);
 }
 
-/* Learn More - неконтрастная кнопка (фиолетовая обводка) */
+/* Secondary footer button with outline and transparent background */
 .btn-footer-secondary {
   display: inline-flex;
   align-items: center;
@@ -1088,6 +1242,7 @@ footer p {
   transition: all 0.3s ease;
 }
 
+/* Hover/focus state for secondary footer button */
 .btn-footer-secondary:hover,
 .btn-footer-secondary:focus {
   background: rgba(255, 255, 255, 0.08);
@@ -1095,6 +1250,7 @@ footer p {
   transform: translateY(-2px);
 }
 
+/* Hero section description text */
 .hero-text {
   font-size: 18px;
   font-weight: var(--font-weight-normal);
@@ -1103,6 +1259,7 @@ footer p {
   color: var(--muted-foreground);
 }
 
+/* Hero section buttons container */
 .hero-buttons {
   display: flex;
   gap: 16px;
@@ -1110,6 +1267,7 @@ footer p {
   flex-wrap: wrap;
 }
 
+/* Base hero section button styling */
 .btn-hero {
   display: inline-flex;
   align-items: center;
@@ -1124,11 +1282,13 @@ footer p {
   transition: all 0.3s ease;
 }
 
+/* Primary hero button with gradient background */
 .btn-hero--primary {
   background: var(--gradient-footer);
   color: var(--primary-foreground);
 }
 
+/* Hover/focus state for primary hero button */
 .btn-hero--primary:hover,
 .btn-hero--primary:focus-visible {
   color: var(--primary-foreground);
@@ -1136,6 +1296,7 @@ footer p {
   opacity: 0.92;
 }
 
+/* Secondary hero button with glass effect */
 .btn-hero--secondary {
   background: rgba(255, 255, 255, 0.8);
   color: var(--foreground);
@@ -1144,6 +1305,7 @@ footer p {
   -webkit-backdrop-filter: blur(12px);
 }
 
+/* Hover/focus state for secondary hero button */
 .btn-hero--secondary:hover,
 .btn-hero--secondary:focus-visible {
   background: rgba(255, 255, 255, 0.95);
@@ -1152,6 +1314,7 @@ footer p {
   transform: translateY(-2px);
 }
 
+/* Glassmorphism effect for elements */
 .glass {
   background: rgba(255, 255, 255, 0.8);
   backdrop-filter: blur(12px);
@@ -1159,41 +1322,49 @@ footer p {
   border: 1px solid rgba(0, 0, 0, 0.1);
 }
 
+/* Hero section tablet layout */
 @media (max-width: 991.98px) {
   .hero {
     min-height: auto;
     padding: 32px 0;
   }
 
+  /* Single column layout for tablet */
   .hero-wrapper {
     grid-template-columns: 1fr;
     gap: 32px;
   }
 
+  /* Hide image grid on tablet */
   .hero-grid {
     display: none;
   }
 }
 
+/* Hero section mobile layout */
 @media (max-width: 576px) {
   .hero {
     padding: 24px 0;
   }
 
+  /* Mobile heading size */
   .hero-title {
     font-size: 36px;
     margin-bottom: 16px;
   }
 
+  /* Mobile text size */
   .hero-text {
     font-size: 16px;
     margin-bottom: 32px;
   }
 
+  /* Mobile button spacing */
   .hero-buttons {
     gap: 12px;
   }
 
+  /* Mobile button sizing */
   .btn-hero {
     padding: 12px 24px;
     font-size: 14px;
@@ -1203,6 +1374,7 @@ footer p {
 }
 
 /* Slider caption: left-aligned text and larger title */
+/* Carousel slide caption positioning */
 #paintingsCarousel .slider-caption {
   left: 3rem;
   right: auto;
@@ -1211,6 +1383,7 @@ footer p {
   padding: 1rem 2rem;
 }
 
+/* Carousel slide painting title */
 #paintingsCarousel .slider-painting-title {
   font-size: 2.2rem;
   line-height: 1.05;
@@ -1218,20 +1391,24 @@ footer p {
   font-weight: 700;
 }
 
+/* Carousel slide artist name */
 #paintingsCarousel .slider-artist-name {
   font-size: 1.2rem;
   margin: 0;
 }
 
+/* Tablet layout adjustments for carousel */
 @media (max-width: 992px) {
   #paintingsCarousel .slider-caption { left: 1rem; right: 1rem; bottom: 10%; padding: 0.75rem 1rem; }
   #paintingsCarousel .slider-painting-title { font-size: 1.6rem; }
 }
 
+/* Card hover/focus transition effects */
 .card {
   transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
 }
 
+/* Card hover/focus effect with lift and shadow */
 a.d-block.h-100.text-reset:hover .card,
 a.d-block.h-100.text-reset:focus-visible .card {
   transform: translateY(-4px);
@@ -1239,11 +1416,13 @@ a.d-block.h-100.text-reset:focus-visible .card {
   border-color: var(--accent);
 }
 
+/* Image zoom transition on hover */
 .card-img-top,
 .img-fluid {
   transition: transform 0.35s ease;
 }
 
+/* Image zoom effect on card hover/focus */
 a.d-block.h-100.text-reset:hover .card-img-top,
 a.d-block.h-100.text-reset:focus-visible .card-img-top,
 a.d-block.h-100.text-reset:hover .img-fluid,
@@ -1251,11 +1430,13 @@ a.d-block.h-100.text-reset:focus-visible .img-fluid {
   transform: scale(1.03);
 }
 
+/* Link transition effects */
 .section-link,
 .artist-profile-link {
   transition: color 0.2s ease, opacity 0.2s ease;
 }
 
+/* Link hover/focus state with darker color */
 .section-link:hover,
 .section-link:focus-visible,
 .artist-profile-link:hover,
@@ -1264,10 +1445,95 @@ a.d-block.h-100.text-reset:focus-visible .img-fluid {
   opacity: 1;
 }
 
+/* Navigation elements color transition */
 .navbar .nav-link,
 .dropdown-menu .dropdown-item,
 .navbar-brand {
   transition: color 0.2s ease;
 }
 
+/* =========================
+   RESPONSIVE FONT SIZES
+   Media queries for hard-coded font sizes
+========================= */
+
+/* Tablet font sizes for typography */
+@media (max-width: 768px) {
+  .painting-specs-label {
+    font-size: 11px;
+  }
+
+  .painting-specs-value {
+    font-size: 16px;
+  }
+
+  .artist-description {
+    font-size: 16px;
+    line-height: 20.8px;
+  }
+
+  .single-artist-description {
+    font-size: 18px;
+    line-height: 29.25px;
+  }
+
+  .one-painting-description {
+    font-size: 16px;
+    line-height: 29.25px;
+  }
+
+  .artist-profile-link {
+    font-size: 16px;
+  }
+
+  .pagination-dots {
+    font-size: 12px;
+  }
+
+  .custom-carousel-control .carousel-arrow {
+    font-size: 18px;
+  }
+
+  .hero-text {
+    font-size: 16px;
+  }
+}
+
+/* Mobile font sizes for typography */
+@media (max-width: 480px) {
+  .painting-specs-label {
+    font-size: 10px;
+  }
+
+  .painting-specs-value {
+    font-size: 14px;
+  }
+
+  .artist-description {
+    font-size: 14px;
+    line-height: 17.64px;
+  }
+
+  .single-artist-description {
+    font-size: 16px;
+    line-height: 26px;
+  }
+
+  .one-painting-description {
+    font-size: 14px;
+    line-height: 22.75px;
+  }
+
+  .artist-profile-link {
+    font-size: 14px;
+  }
+
+  .pagination-dots {
+    font-size: 11px;
+  }
+
+  .hero-text {
+    font-size: 14px;
+  }
+}
 

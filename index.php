@@ -1,22 +1,22 @@
 <?php
-// Файл для запуска проекта
+// Main application entry point
 session_start();
 
-$timeout = 900; // 15 минут в секундах
+$timeout = 900; // 15 minutes in seconds
 
+// Clear user session data when inactivity timeout is exceeded
 if (isset($_SESSION['last_activity']) && (time() - $_SESSION['last_activity'] > $timeout)) {
-    // Время неактивности превышено — сбрасываем сессию
     unset($_SESSION['userId']);
     unset($_SESSION['status']);
     unset($_SESSION['name']);
     unset($_SESSION['last_activity']);
-    // Редирект на страницу входа
-    //header("Location: /artportal/login");
-    //exit();
 }
 $_SESSION['last_activity'] = time();
 
+// Ddatabase connection
 include_once 'config/Database.php';
+
+//Core models 
 require 'models/Categories.php';
 require 'models/Paintings.php';
 require 'models/Artists.php';
@@ -24,27 +24,34 @@ require 'models/Exhibitions.php';
 require 'models/Collections.php';
 require 'models/Favourite.php';
 
-// Добавляю этот код на следующем этапе
-//require 'models/Comments.php';
+// Authentication and profile services
 require 'services/AuthService.php';
 require 'services/ArtistProfileService.php';
 require 'models/Register.php';
-
 require 'models/Auth.php';
 
 Auth::syncSessionStatus();
 
-// Убрала view из index.php - нужно добавить в контроллер
-//include_once 'views/paintings.php';
-//include_once 'views/comments.php';
+// Helpers
+require 'helpers/PaginationHelper.php';
+require 'helpers/ArtistHelper.php';
+require 'helpers/MenuHelper.php';
+require 'helpers/UIHelper.php';
+require 'helpers/CsrfHelper.php';
 
 require 'models/PurchaseRequest.php';
+
+// Public controllers
 include_once 'controllers/Controller.php';
-include_once 'controllers/controllerAuth.php';
-include_once 'controllers/PurchaseRequestController.php';
+include_once 'controllers/PaintingController.php';
+include_once 'controllers/ArtistController.php';
+include_once 'controllers/ExhibitionController.php';
+include_once 'controllers/ProfileController.php';
+include_once 'controllers/AuthController.php';
 include_once 'dashboard/controllers/FavoriteController.php';
+include_once 'dashboard/controllers/RequestController.php';
+
+// Main public router
 include_once 'routes/routing.php';
 
-//На данной стадии реализации $response = null, так как в контроллере нет return, а только include. В дальнейшем нужно будет изменить контроллер, чтобы он возвращал строку, а не выводил ее на экран. И уже в index.php эту строку выводить на экран. Это позволит более гибко управлять выводом данных и отделить логику от представления.
-//echo $response;
 ?>

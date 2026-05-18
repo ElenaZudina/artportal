@@ -1,4 +1,8 @@
 <?php
+/**
+ * Admin Login View
+ * Displays login form for admin panel
+ */
 if (isset ($_SESSION['userId']) && isset($_SESSION['status'])) {
     switch ($_SESSION['status']) {
         case 'admin':
@@ -25,6 +29,7 @@ if (isset ($_SESSION['userId']) && isset($_SESSION['status'])) {
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous">
 </head>
 <body>
+<!-- Main content: Login form -->
 <div class="container">
   <div class="row justify-content-center">
     <div class="col-lg-6 col-md-8">

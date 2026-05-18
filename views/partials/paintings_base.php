@@ -1,10 +1,19 @@
 <?php
+/**
+ * ViewPaintings Partial (Base) - displays basic paintings grid layout
+ * Base template for rendering painting cards
+ */
 class ViewPaintings{
+    /**
+     * Render paintings as a vertical list.
+     * @param array $arr Painting records
+     * @return void
+     */
     public static function PaintingsList($arr) {
         echo '<div class="container my-4">';
         echo '<div class="row">';
         foreach($arr as $value) {
-            echo '<div class="col-12 mb-4">'; // Полная ширина для вертикального списка
+            echo '<div class="col-12 mb-4">'; // Full width column for the vertical list.
                 echo '<a href="paintings?id=' . $value['id'] . '" class="d-block h-100 text-reset">';
                     echo '<div class="card h-100">';
                         echo '<div class="row g-0">';
@@ -25,11 +34,16 @@ class ViewPaintings{
         echo '</div>';
     }
 
+    /**
+     * Render the base responsive paintings grid.
+     * @param array $arr Painting records
+     * @return void
+     */
     public static function PaintingsGrid($arr) {
         echo '<div class="container my-4">';
         echo '<div class="row g-4 paintings-grid">';
         foreach($arr as $value) {
-            echo '<div class="col-sm-6 col-md-4 col-lg-4">'; // Адаптивные колонки
+            echo '<div class="col-sm-6 col-md-4 col-lg-4">'; // Responsive card column.
                 echo '<a href="paintings?id=' . $value['id'] . '" class="d-block h-100 text-reset">';
                     echo '<div class="card h-100 rounded-5 overflow-hidden">';
                         echo '<div class="card-img-wrapper position-relative">';
@@ -42,7 +56,7 @@ class ViewPaintings{
                             echo '<p class="card-text painting-price text-nowrap mb-0">' . htmlspecialchars($value['price'] ?? 'Unknown', ENT_QUOTES, 'UTF-8') . ' €</p>';
                         echo '</div>';
                             echo '<p class="card-text mb-1">' . htmlspecialchars($value['artist_name'] ?? 'Unknown', ENT_QUOTES, 'UTF-8') . '</p>';
-                            //echo '<p class="card-text mb-1">' . htmlspecialchars($value['category'] ?? 'Unknown', ENT_QUOTES, 'UTF-8') . '</p>';
+                            // Category text is kept as a badge above the image.
                         echo '</div>';
                     echo '</div>';
                 echo '</a>';
@@ -53,10 +67,15 @@ class ViewPaintings{
     }
   
 
+    /**
+     * Render the base single painting detail layout.
+     * @param array $item Painting data with artist and category details
+     * @return void
+     */
     public static function OnePainting($item) {
         echo '<div class="container my-4">';
             echo '<div class="row align-items-start gx-5">';
-                // Левая колонка: Изображение
+                // Left column: painting image and category badge.
                 echo '<div class="col-12 col-md-6 mb-4 mb-md-0">';
                     echo '<div class="one-painting-container">';
                         echo '<div class="one-painting-image-wrapper">';
@@ -66,10 +85,10 @@ class ViewPaintings{
                     echo '</div>';
                 echo '</div>';
                 
-                // Правая колонка: Описание
+                // Right column: painting details, artist link, and purchase action.
                 echo '<div class="col-12 col-md-6">';
                     echo "<h1 class='single-card-title mb-4'>" . htmlspecialchars($item['title'] ?? 'Unknown', ENT_QUOTES, 'UTF-8') . "</h1>";
-                    //Controller::CommentsCountWithAncor($item['id']); ПОЗЖЕ
+                    // Placeholder for future comments count link.
                     
                     echo '<div class="artist-profile mb-4">';
                         $artistAvatar = $item['artist_avatar'] ?? '';
@@ -124,7 +143,7 @@ class ViewPaintings{
             echo '</div>';
         echo '</div>';
     }
-    // добавить методы вывода для других представленных новостей
+    // Add render methods for other featured content types here.
 
 
 }

@@ -1,54 +1,33 @@
 <?php
+/**
+ * Admin Home Controller - displays admin dashboard
+ * Shows statistics and analytics for administrators
+ */
 class HomeController {
 
-    /*public static function formLoginSite() {
-        include_once('viewsAdmin/formLogin.php');
-    }
-    // Форма авторизации с учетом ролей
-    public static function loginAction() {
-        $login=modelAdmin::userAuthentication();
-        if ($login==true) {
-            // $_SESSION["status"] = admin/artist/user
-            if ($_SESSION["status"] == "admin") {
-            header("Location: startAdmin");
-            exit;
-        }
-        if ($_SESSION["status"] == "artist") {
-            header("Location: startArtist");
-            exit;
-        }
-        if ($_SESSION["status"] == "user") {
-            header("Location: startUser");
-            exit;
-        }
-        }
-        else{
-            $_SESSION['errorString']='Incorrect username and password';
-            header("Location: login");
-            exit;
-        }
-    }*/
-
-    // Вход в админ панель
+    /**
+     * Display admin dashboard with statistics and analytics
+     * Retrieves application stats and user growth metrics
+     * Shows admin panel home page
+     */
     public static function startAdminPanel() {
-        // Собираем статистику через общий сервис
+        // Collect statistics using the StatsService
         $counts = StatsService::getCounts();
+        // Get daily user growth metrics for the last 7 days
         $userGrowth = StatsService::getUserGrowthByDay(7);
+        // Prepare chart-ready series data via service
+        $userGrowthChart = StatsService::getUserGrowthChartData(7);
 
-        // Передаем в вид
+        // Render the admin dashboard view
         include_once('views/startAdmin.php');
 }
 
-
-  /*  // Выход из админ панели
-    public static function logoutAction() {
-        modelAdmin::userLogout();
-        header("Location: login");
-        exit;
-    }*/
-    // Страница Error
+    /**
+     * Display 404 error page
+     * Renders a user-friendly error view for not found routes
+     */
     public static function error404() {
         include_once('views/error404.php');
     }
-}//end class
+}
 ?>

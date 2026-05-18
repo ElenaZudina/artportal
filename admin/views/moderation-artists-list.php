@@ -1,7 +1,12 @@
 <?php
+/**
+ * Moderation Artists List View
+ * Displays list of pending artist requests in admin panel
+ */
 ob_start();
 ?>
 
+<!-- Main content: Pending artist requests table -->
 <h2>Artist Requests</h2>
 
 <div class="container" style="min-height:400px;">

@@ -1,4 +1,8 @@
 <?php
+/**
+ * All Artists Page View
+ * Shows searchable and paginated list of approved artists
+ */
 ob_start();
 ?>
 <h1>Meet our artists </h1>
@@ -6,6 +10,7 @@ ob_start();
 
 <?php
 ?>
+<!-- Artist search form preserves the current query and links back to the full list when cleared. -->
 <div class="d-flex justify-content-end mb-2">
 	<form class="artist-search-form" method="get" action="artists">
 		<div class="input-group artist-search-group">
@@ -20,8 +25,10 @@ ob_start();
 </div>
 
 <?php
+// Render approved artists with profile links.
 ViewArtists::ArtistsGrid($arr, true);
 
+// Render pagination only when the result set spans multiple pages.
 if (!empty($pagination) && ($pagination['totalPages'] ?? 0) > 1) {
 	$currentPage = (int)$pagination['currentPage'];
 	$totalPages = (int)$pagination['totalPages'];
@@ -33,12 +40,14 @@ if (!empty($pagination) && ($pagination['totalPages'] ?? 0) > 1) {
 	$prevPage = $currentPage - 1;
 	$nextPage = $currentPage + 1;
 
+	// Previous page link.
 	if ($currentPage > 1) {
 		echo '<a class="pagination-btn pagination-btn--nav" href="artists?page=' . $prevPage . $querySuffix . '" aria-label="Previous page">← Prev</a>';
 	} else {
 		echo '<span class="pagination-btn pagination-btn--nav pagination-btn--disabled" aria-disabled="true">← Prev</span>';
 	}
 
+	// Visible page number window with first/last page shortcuts.
 	echo '<div class="pagination-pages">';
 	$maxVisible = 5;
 	$startPage = max(1, $currentPage - 2);
@@ -64,6 +73,7 @@ if (!empty($pagination) && ($pagination['totalPages'] ?? 0) > 1) {
 	}
 	echo '</div>';
 
+	// Next page link.
 	if ($currentPage < $totalPages) {
 		echo '<a class="pagination-btn pagination-btn--nav" href="artists?page=' . $nextPage . $querySuffix . '" aria-label="Next page">Next →</a>';
 	} else {
@@ -74,6 +84,7 @@ if (!empty($pagination) && ($pagination['totalPages'] ?? 0) > 1) {
 	echo '</nav>';
 }
 
+// Pass captured page markup into the shared layout.
 $content = ob_get_clean();
 include_once 'views/layout.php';
 

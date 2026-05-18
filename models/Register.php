@@ -1,52 +1,26 @@
 <?php
-class Register{
-    //----------register
-    /*public static function registerUser() {
-        $controll=array(0=>false, 1=>'error');
-        if(isset($_POST['save'])) {
-            $errorString="";
-            $name = $_POST['name'];
-            $email = filter_input(INPUT_POST, 'email', FILTER_VALIDATE_EMAIL);
-            if(!$email) {
-                $errorString.="Invalid email address<br />";
-            }
-            $password = $_POST['password'];
-            $confirm = $_POST['confirm'];
-            if (!$password || !$confirm || mb_strlen($password) < 6) {
-                $errorString.="Password must be at least 6 characters long<br />";
-            }
-            if($password!=$confirm) {
-                $errorString.="Passwords do not match<br />";
-            }
-            if ( mb_strlen($errorString) ==0 ) {
-                $passwordHash = password_hash($_POST['password'], PASSWORD_DEFAULT);
-                $date=Date("Y-m-d");
-                $sql="INSERT INTO `users` (`id`, `username`, `email`, `password`, `role`, `created_at`) VALUES (NULL, ?, ?, ?, 'user', ?)";
-                $db = new Database();
-                $params = array($name, $email, $passwordHash, $date);
-                $item = $db->executeRun($sql, $params);
-                if($item)
-                    $controll=array(0=>true);
-                else
-                    $controll=array(0=>false, 1=>'error'); 
-            }
-            else
-            {
-                $controll=array(0=>false, 1=>$errorString);
-            }
-        }
-        return $controll;
-    }*/
+/**
+ * Register Model - manages user registration data
+ * Handles storing and retrieving registration information
+ */
+class Register {
+    /**
+     * Save a new user account after checking unique email and username.
+     * Supports dependency injection for testing purposes.
+     * @param array $cleanData Validated registration data
+     * @param Database|null $db Optional database instance for testing
+     * @return array Registration result data
+     */
     public static function saveUser($cleanData, $db = null) {
         $db = $db ?? new Database();
 
-        // Проверка уникальности email
+        // Check email uniqueness.
         $user = $db->getOne("SELECT * FROM users WHERE email = ?", [$cleanData['email']]);
         if ($user) {
             return ['success' => false, 'errors' => ['Email exists already']];
         }
 
-        // Проверка уникальности username
+        // Check username uniqueness.
         $user = $db->getOne("SELECT * FROM users WHERE username = ?", [$cleanData['name']]);
         if ($user) {
             return ['success' => false, 'errors' => ['Username exists already']];

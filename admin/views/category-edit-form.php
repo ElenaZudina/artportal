@@ -1,9 +1,14 @@
 <?php
+/**
+ * Category Edit Form View
+ * Displays form for editing a category in admin panel
+ */
 ob_start();
 ?>
 
 <?php $category = $category ?? []; ?>
 
+<!-- Main content: Edit category form -->
 <div class="container" style="min-height:400px;">
     <div class="col-md-11">
         <h2>Category Edit</h2>

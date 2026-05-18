@@ -1,7 +1,12 @@
 <?php
+/**
+ * Users List View
+ * Displays all users in admin panel
+ */
 ob_start();
 ?>
 
+<!-- Main content: Users table -->
 <h2>Users</h2>
 
 <div class="container" style="min-height:400px;">

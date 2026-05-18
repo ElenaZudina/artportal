@@ -1,4 +1,12 @@
 <?php
+/**
+ * Main HTML Layout Template
+ * Determines active route and renders main page structure
+ * Includes header, navigation, content area, and footer
+ * Loads Bootstrap, Font Awesome, and custom CSS
+ */
+
+// Route flags control active navigation states and home-only sections.
 $activeRoute = defined('ACTIVE_ROUTE') ? ACTIVE_ROUTE : 'home';
 
 $isHome = $activeRoute === 'home';
@@ -27,6 +35,7 @@ $isLogin = $activeRoute === 'login';
             <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;700;900&family=Inter:wght@400;500;700;900&display=swap" rel="stylesheet">
     </head>
     <body class="d-flex flex-column min-vh-100">
+        <!-- Main site navigation with active state based on the current route. -->
         <header>
             <h1 class="visually-hidden">ArtPortal</h1>
             <nav class="navbar navbar-expand-lg bg-white">
@@ -46,15 +55,19 @@ $isLogin = $activeRoute === 'login';
                             <li class="nav-item dropdown">
                                 <button class="nav-link dropdown-toggle<?php echo $isGallery ? ' active' : ''; ?>" type="button" id="galleryDropdown" data-bs-toggle="dropdown" aria-expanded="false">Gallery</button>
                                 <ul class="dropdown-menu" aria-labelledby="galleryDropdown">
-                                    <?php
-                                        Controller::AllCategories();
-                                    ?>
+                                    <!-- Gallery categories are loaded dynamically for the dropdown. -->
+                                    <li><a class="dropdown-item" href="all">All</a></li>
+                                    <?php foreach (getMenuCategories() as $category): ?>
+                                        <li><a class="dropdown-item" href="category?id=<?php echo urlencode($category['id']); ?>"><?php echo htmlspecialchars($category['name'], ENT_QUOTES, 'UTF-8'); ?></a></li>
+                                    <?php endforeach; ?>
                                 </ul>
                             </li>
                             <?php if (!isset($_SESSION['userId'])): ?>
+                                <!-- Guest navigation. -->
                                 <li class="nav-item"><a class="nav-link<?php echo $isRegister ? ' active' : ''; ?>" href="registerForm">Register</a></li>
                                 <li class="nav-item"><a class="nav-link<?php echo $isLogin ? ' active' : ''; ?>" href="login">Login</a></li>
                             <?php else: ?>
+                                <!-- Authenticated navigation. -->
                                 <?php if (isset($_SESSION['status']) && in_array($_SESSION['status'], ['user', 'artist'], true)): ?>
                                     <li class="nav-item"><a class="nav-link" href="dashboard">Dashboard</a></li>
                                 <?php endif; ?>
@@ -67,6 +80,7 @@ $isLogin = $activeRoute === 'login';
         </header>
         
         <?php if ($isHome): ?>
+        <!-- Homepage hero is rendered only for the public home route. -->
         <section class="hero">
             <div class="container hero-container">
             <div class="hero-wrapper">
@@ -80,7 +94,8 @@ $isLogin = $activeRoute === 'login';
                 </div>
                 <div class="hero-grid">
                     <?php 
-                    $heroPaintings = Paintings::getLastPaintings(3);
+                    // Hero images are selected from available paintings, with static fallbacks.
+                    $heroPaintings = UIHelper::getHeroPaintings(3);
                     if (!empty($heroPaintings) && count($heroPaintings) >= 1) {
                         $largePainting = $heroPaintings[0];
                         $smallPaintings = array_slice($heroPaintings, 1, 2);
@@ -107,6 +122,7 @@ $isLogin = $activeRoute === 'login';
         <main class="container my-3 flex-grow-1">
             
             <?php
+                // One-time flash messages are shown above page content.
                 if (isset($_SESSION['successString'])) {
                     echo '<div class="alert alert-success alert-dismissible fade show" role="alert">';
                     echo $_SESSION['successString'];
@@ -133,6 +149,7 @@ $isLogin = $activeRoute === 'login';
             ?>
             
             <?php
+                // Page views write their rendered markup into $content before including this layout.
                 if (isset($content)) {
                     echo $content;
                 }
@@ -141,6 +158,7 @@ $isLogin = $activeRoute === 'login';
                 }
             ?>
         </main>
+        <!-- Shared footer with registration call to action. -->
         <footer>
             <div class="container text-center py-5">
                 <h2 class="h2-footer">Join Our Creative Community</h2>
@@ -154,6 +172,7 @@ $isLogin = $activeRoute === 'login';
         </footer>
         <!-- Bootstrap 5.3 JS Bundle with Popper -->
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
+        <script src="/artportal/public/js/purchase-request-loading.js"></script>
           
     </body>
 </html>

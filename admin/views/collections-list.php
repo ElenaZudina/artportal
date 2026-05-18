@@ -1,7 +1,12 @@
 <?php
+/**
+ * Collections List View
+ * Displays all collections in admin panel
+ */
 ob_start();
 ?>
 
+<!-- Main content: Collections table -->
 <h2>Collections List</h2>
 
 <div class="container" style="min-height:400px;">

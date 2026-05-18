@@ -1,10 +1,19 @@
 <?php
+/**
+ * ViewPaintings Partial - displays paintings grid or list
+ * Renders painting cards with image, title, artist, and price
+ */
 class ViewPaintings{
+    /**
+     * Render paintings as a vertical list.
+     * @param array $arr Painting records
+     * @return void
+     */
     public static function PaintingsList($arr) {
         echo '<div class="container my-4">';
         echo '<div class="row">';
         foreach($arr as $value) {
-            echo '<div class="col-12 mb-4">'; // Полная ширина для вертикального списка
+            echo '<div class="col-12 mb-4">'; // Full width column for the vertical list.
                 echo '<a href="paintings?id=' . $value['id'] . '" class="d-block h-100 text-reset">';
                     echo '<div class="card h-100">';
                         echo '<div class="row g-0">';
@@ -25,6 +34,14 @@ class ViewPaintings{
         echo '</div>';
     }
 
+    /**
+     * Render paintings as a responsive grid.
+     * Supports image-only cards and an asymmetric editorial layout.
+     * @param array $arr Painting records
+     * @param bool $imagesOnly Whether to hide text metadata
+     * @param bool $asymmetric Whether to use the asymmetric grid layout
+     * @return void
+     */
     public static function PaintingsGrid($arr, $imagesOnly = false, $asymmetric = true) {
         echo '<div class="container my-4">';
         $gridClass = $asymmetric ? 'row g-4 paintings-grid paintings-grid--asymmetric' : 'row g-4 paintings-grid paintings-grid--regular';
@@ -60,7 +77,7 @@ class ViewPaintings{
                                 echo '<p class="card-text painting-price text-nowrap mb-0">' . htmlspecialchars($value['price'] ?? 'Unknown', ENT_QUOTES, 'UTF-8') . ' €</p>';
                             echo '</div>';
                                 echo '<p class="card-text mb-1">' . htmlspecialchars($value['artist_name'] ?? 'Unknown', ENT_QUOTES, 'UTF-8') . '</p>';
-                                //echo '<p class="card-text mb-1">' . htmlspecialchars($value['category'] ?? 'Unknown', ENT_QUOTES, 'UTF-8') . '</p>';
+                            
                             echo '</div>';
                         }
                     echo '</div>';
@@ -72,30 +89,31 @@ class ViewPaintings{
     }
   
 
-    public static function OnePainting($item) {
+    /**
+     * Render a single painting detail page.
+     * @param array $item Painting data with artist and category details
+     * @param bool $isFavorite Whether the current user has favorited the painting
+     * @return void
+     */
+    public static function OnePainting($item, $isFavorite = false) {
         echo '<div class="container my-4">';
             echo '<div class="row align-items-start gx-5">';
-                // Левая колонка: Изображение
+                // Left column: painting image, category badge, and favorite toggle.
                 echo '<div class="col-12 col-md-6 mb-4 mb-md-0">';
                     echo '<div class="one-painting-container">';
                         echo '<div class="one-painting-image-wrapper">';
                             echo '<div class="painting-overlays">';
                                 echo '<span class="category-badge category-badge--accent">' . htmlspecialchars($item['category_name'] ?? 'Unknown', ENT_QUOTES, 'UTF-8') . '</span>';
                                 echo '<form method="POST" action="/artportal/toggle-favorite" class="painting-favorite-form">';
+                                    echo CsrfHelper::field();
                                     echo '<input type="hidden" name="painting_id" value="' . (int)($item['id'] ?? 0) . '">';
-                                    $isFavorite = false;
-                                    $favIcon = 'fa-heart-o';
-                                    $favLabel = 'Add to favorites';
-                                    if (isset($_SESSION['userId'])) {
-                                        $isFavorite = Favorite::isFavorite((int)$_SESSION['userId'], (int)($item['id'] ?? 0));
-                                        if ($isFavorite) {
-                                            $favIcon = 'fa-heart';
-                                            $favLabel = 'Remove from favorites';
-                                        }
-                                    }
+                                    
+                                    $favIcon = $isFavorite ? 'fa-solid fa-heart' : 'fa-regular fa-heart';
+                                    $favLabel = $isFavorite ? 'Remove from favorites' : 'Add to favorites';
+                                    
                                     $favStateClass = $isFavorite ? 'is-active' : 'is-inactive';
                                     echo '<button type="submit" class="category-badge category-badge--favorite ' . $favStateClass . '" aria-label="' . htmlspecialchars($favLabel, ENT_QUOTES, 'UTF-8') . '">';
-                                        echo '<i class="fa ' . htmlspecialchars($favIcon, ENT_QUOTES, 'UTF-8') . '"></i>';
+                                        echo '<i class="' . htmlspecialchars($favIcon, ENT_QUOTES, 'UTF-8') . '"></i>';
                                     echo '</button>';
                                 echo '</form>';
                             echo '</div>';
@@ -104,10 +122,10 @@ class ViewPaintings{
                     echo '</div>';
                 echo '</div>';
                 
-                // Правая колонка: Описание
+                // Right column: painting details, artist link, and actions.
                 echo '<div class="col-12 col-md-6">';
                     echo "<h1 class='single-card-title mb-4'>" . htmlspecialchars($item['title'] ?? 'Unknown', ENT_QUOTES, 'UTF-8') . "</h1>";
-                    //Controller::CommentsCountWithAncor($item['id']); ПОЗЖЕ
+                    
                     
                     echo '<div class="artist-profile mb-4">';
                         $artistAvatar = $item['artist_avatar'] ?? '';
@@ -158,9 +176,13 @@ class ViewPaintings{
                     echo '</div>';
 
                     echo '<div class="action-buttons">';
-                        echo '<form method="POST" action="purchase-request" class="m-0">';
+                        echo '<form method="POST" action="purchase-request" class="m-0 js-purchase-request-form">';
+                            echo CsrfHelper::field();
                             echo '<input type="hidden" name="painting_id" value="' . htmlspecialchars((string)($item['id'] ?? ''), ENT_QUOTES, 'UTF-8') . '">';
-                            echo '<button type="submit" class="btn buy-button">Inquire About Purchase</button>';
+                            echo '<button type="submit" class="btn buy-button">';
+                                echo '<span class="spinner-border spinner-border-sm me-2 d-none js-purchase-request-spinner" aria-hidden="true"></span>';
+                                echo '<span class="js-purchase-request-text">Inquire About Purchase</span>';
+                            echo '</button>';
                         echo '</form>';
                         echo '<button type="button" class="btn collection-button">Add to collection</button>';
                     echo '</div>';
@@ -168,7 +190,6 @@ class ViewPaintings{
             echo '</div>';
         echo '</div>';
     }
-    // добавить методы вывода для других представленных новостей
 
 
 }

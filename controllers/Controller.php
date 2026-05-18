@@ -1,6 +1,14 @@
 <?php
+/**
+ * Base Controller class for handling main website pages
+ * Manages home page and error pages
+ */
 class Controller {
 
+    /**
+     * Display home page with latest paintings, artists, and current exhibition
+     * Loads multiple partial views: paintings, artists, and carousel slider
+     */
     public static function StartSite() {
         $arr = Paintings::getLastPaintings();
         $artistArr = Artists::getLast10Artists();
@@ -18,176 +26,10 @@ class Controller {
         include_once 'views/home.php';// Подключаем представление для отображения главной страницы, если нужно добавить дополнительный контент
     }
 
-    public static function AllCategories() {
-        $arr = Categories::getAllCategories();
-        include_once 'views/partials/menu_categories.php';
-    }
-
-    public static function AllPaintings() {
-        $perPage = 6;
-        $currentPage = isset($_GET['page']) ? max(1, (int)$_GET['page']) : 1;
-        $search = trim((string)($_GET['search'] ?? ''));
-        $totalItems = Paintings::getSearchPaintingsCount($search);
-        $totalPages = (int)ceil($totalItems / $perPage);
-        if ($totalPages > 0 && $currentPage > $totalPages) {
-            $currentPage = $totalPages;
-        }
-
-        $offset = ($currentPage - 1) * $perPage;
-        $arr = Paintings::getSearchPaintingsPaginated($search, $perPage, $offset);
-        $pagination = [
-            'currentPage' => $currentPage,
-            'totalPages' => $totalPages,
-            'perPage' => $perPage,
-        ];
-        $searchQuery = $search;
-        include_once 'views/partials/paintings.php';
-        include_once 'views/allpaintings.php';
-    }
-
-     public static function PaintingsByCategoryID($id) {
-        $arr = Paintings::getPaintingsByCategoryID($id);
-        $category = Categories::getCategoryByID($id);
-        include_once 'views/partials/paintings.php';
-        include_once 'views/paintings_by_category.php';
-    }
-
-    public static function PaintingByID($id) {
-        $item = Paintings::getPublicPaintingByID($id);
-        if (!$item) {
-            $painting = Paintings::getPaintingByID($id);
-            if ($painting) {
-                $errorTitle = 'Painting is not available publicly';
-                $errorMessage = 'This painting exists, but it is not shown in the public area because the artist has not been approved yet.';
-            } else {
-                $errorTitle = 'Painting not found';
-                $errorMessage = 'There is no painting with this ID.';
-            }
-
-            include_once 'views/error404.php';
-            return;
-        }
-        include_once 'views/partials/paintings.php';
-        include_once 'views/viewpainting.php';
-    }
-
-     public static function AllArtists() {
-        $perPage = 3;
-        $currentPage = isset($_GET['page']) ? max(1, (int)$_GET['page']) : 1;
-        $search = trim((string)($_GET['search'] ?? ''));
-        $totalItems = Artists::getSearchArtistsCount($search);
-        $totalPages = (int)ceil($totalItems / $perPage);
-        if ($totalPages > 0 && $currentPage > $totalPages) {
-            $currentPage = $totalPages;
-        }
-
-        $offset = ($currentPage - 1) * $perPage;
-        $arr = Artists::getSearchArtistsPaginated($search, $perPage, $offset);
-        $pagination = [
-            'currentPage' => $currentPage,
-            'totalPages' => $totalPages,
-            'perPage' => $perPage,
-        ];
-        $searchQuery = $search;
-        include_once 'views/partials/artists.php';
-        include_once 'views/allartists.php';
-    }
-
-    public static function ArtistByID($id) {
-        $item = Artists::getPublicArtistByID($id);
-        if (!$item) {
-            include_once 'views/error404.php';
-            return;
-        }
-        $item['paintings'] = Paintings::getPaintingsByArtistID($id);
-        include_once 'views/partials/artists.php';
-        include_once 'views/viewartist.php';
-    }
-
-    public static function AllExhibitions() {
-        $arr = Exhibitions::getAllExhibitions();
-        include_once 'views/partials/exhibitions.php';
-        include_once 'views/allexhibitions.php';
-    }
-
-      public static function ExhibitionByID($id) {
-        $exhibition = Exhibitions::getExhibitionByID($id);
-        $collection = Collections::getCollectionByID($exhibition['collection_id']);
-                $paintings = Paintings::getPaintingsByCollectionID($collection['id']);
-        include_once 'views/partials/exhibitions.php';
-        include_once 'views/viewexhibition.php';
-    }
-
+    /**
+     * Display 404 error page for not found routes
+     */
     public static function error404() {
         include_once 'views/error404.php';
     }
-/*
-    public static function InsertComment($c, $id) {
-        Comments::InsertComment($c, $id);
-        //self::NewsByID($id);
-        header('Location:paintings?id='.$id.'#ctable');
-    }
-    // Список комментариев
-    public static function Comments($paintingid) {
-        $arr = Comments::getCommentByPaintingID($paintingid);
-        ViewComments::CommentsByPainting($arr);
-    }
-    // количество комментариев к картине
-    public static function CommentsCount($paintingid) {
-        $arr = Comments::getCommentsCountByPaintingID($paintingid);
-        ViewComments::CommentsCount($arr);
-    }
-    // Ссылка - переход к списку комментариев
-    public static function CommentsCountWithAncor($paintingid) {
-        $arr = Comments::getCommentsCountByPaintingID($paintingid);
-        ViewComments::CommentsCountWithAncor($arr);
-    }*/
-    // Регистрация
-    public static function registerForm() {
-        include_once('views/formRegister.php');
-    }
-    public static function registerUser() {
-        $result = RegisterService::register($_POST);
-
-        if (!empty($result['success']) && !empty($result['user'])) {
-            $_SESSION['userId'] = $result['user']['id'];
-            $_SESSION['name'] = $result['user']['username'];
-            $_SESSION['status'] = $result['user']['role'];
-            $_SESSION['accountStatus'] = $result['user']['status'] ?? 'active';
-        }
-
-        include_once('views/answerRegister.php');
-    }
-
-    public static function artistProfileForm() {
-        if (empty($_SESSION['userId'])) {
-            header('Location: /artportal/login');
-            exit;
-        }
-
-        $existingProfile = Artists::getArtistByUserId((int)$_SESSION['userId']);
-        include_once('views/formArtistProfile.php');
-    }
-
-    public static function artistProfileSave() {
-        if (empty($_SESSION['userId'])) {
-            header('Location: /artportal/login');
-            exit;
-        }
-
-        if (($_SERVER['REQUEST_METHOD'] ?? 'GET') !== 'POST') {
-            header('Location: /artportal/artistProfileForm');
-            exit;
-        }
-
-        $resultArtist = ArtistProfileService::createProfile($_POST, $_FILES, (int)$_SESSION['userId']);
-        if (!empty($resultArtist['success'])) {
-            include_once('views/answerArtistProfile.php');
-            return;
-        }
-
-        $existingProfile = Artists::getArtistByUserId((int)$_SESSION['userId']);
-        $formData = $resultArtist['data'] ?? [];
-        include_once('views/formArtistProfile.php');
-    }
-} //end class
+} 

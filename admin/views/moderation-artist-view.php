@@ -1,7 +1,12 @@
 <?php
+/**
+ * Moderation Artist Profile View
+ * Displays artist profile for moderation in admin panel
+ */
 ob_start();
 ?>
 
+<!-- Main content: Artist profile moderation -->
 <div class="container" style="min-height:400px;">
     <div class="mb-4">
         <a class="btn btn-outline-secondary" href="moderation-artists">Back to requests</a>
@@ -51,7 +56,7 @@ ob_start();
             </div>
         <?php else: ?>
             <div class="container my-4">
-                <p>У этого художника пока нет картин.</p>
+                <p>This artist does not have any paintings yet.</p>
             </div>
         <?php endif; ?>
 

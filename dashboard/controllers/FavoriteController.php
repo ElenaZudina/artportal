@@ -1,16 +1,41 @@
 ﻿<?php
 require_once __DIR__ . '/../../models/Favourite.php';
 
+/**
+ * Dashboard Favorite Controller - manages artist's favorite collections
+ * Handles favorite painting management for artists
+ */
+
+/**
+ * Controller for managing user's favorite paintings in the dashboard.
+ * Handles adding, removing, toggling, and displaying favorite paintings.
+ */
 class FavoriteController {
 
+    /**
+     * Display the list of favorite paintings for the logged-in user.
+     */
+    public static function myFavorites() {
+        Auth::requireSession('user');
+
+        $favorites = Favorite::getUserFavorites((int)$_SESSION['userId']);
+        include_once('views/my-favorites.php');
+    }
+
+    /**
+     * Add a painting to the user's favorites.
+     * Validates POST method and CSRF token.
+     */
     public static function addFavorite() {
-        if (empty($_SESSION['userId'])) {
-            $_SESSION['errorString'] = 'You must be logged in to add paintings to favorites.';
-            header('Location: /artportal/login');
+        if (($_SERVER['REQUEST_METHOD'] ?? 'GET') !== 'POST') {
+            header('Location: /artportal/');
             exit;
         }
 
-        if (($_SERVER['REQUEST_METHOD'] ?? 'GET') !== 'POST') {
+        Auth::requireUserAction('Only users can add paintings to favorites.');
+
+        if (!CsrfHelper::validate()) {
+            $_SESSION['errorString'] = 'Invalid form token. Please try again.';
             header('Location: /artportal/');
             exit;
         }
@@ -32,14 +57,20 @@ class FavoriteController {
         exit;
     }
 
+    /**
+     * Remove a painting from the user's favorites.
+     * Validates POST method and CSRF token.
+     */
     public static function removeFavorite() {
-        if (empty($_SESSION['userId'])) {
-            $_SESSION['errorString'] = 'You must be logged in to remove paintings from favorites.';
-            header('Location: /artportal/login');
+        if (($_SERVER['REQUEST_METHOD'] ?? 'GET') !== 'POST') {
+            header('Location: /artportal/');
             exit;
         }
 
-        if (($_SERVER['REQUEST_METHOD'] ?? 'GET') !== 'POST') {
+        Auth::requireUserAction('Only users can manage their favorites.');
+
+        if (!CsrfHelper::validate()) {
+            $_SESSION['errorString'] = 'Invalid form token. Please try again.';
             header('Location: /artportal/');
             exit;
         }
@@ -59,14 +90,20 @@ class FavoriteController {
         exit;
     }
 
+    /**
+     * Toggle the favorite status of a painting for the user.
+     * Validates POST method and CSRF token.
+     */
     public static function toggleFavorite() {
-        if (empty($_SESSION['userId'])) {
-            $_SESSION['errorString'] = 'You must be logged in to manage favorites.';
-            header('Location: /artportal/login');
+        if (($_SERVER['REQUEST_METHOD'] ?? 'GET') !== 'POST') {
+            header('Location: /artportal/');
             exit;
         }
 
-        if (($_SERVER['REQUEST_METHOD'] ?? 'GET') !== 'POST') {
+        Auth::requireUserAction('Only users can add paintings to favorites.');
+
+        if (!CsrfHelper::validate()) {
+            $_SESSION['errorString'] = 'Invalid form token. Please try again.';
             header('Location: /artportal/');
             exit;
         }

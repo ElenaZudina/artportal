@@ -1,5 +1,14 @@
 <?php
+/**
+ * Tags Model - handles database operations for painting tags
+ * Manages tag data for categorizing and searching paintings
+ */
 class Tags {
+    /**
+     * Get an existing tag ID or create the tag when it does not exist.
+     * @param string $name Tag name
+     * @return int Tag ID
+     */
     public static function getOrCreateTag(string $name): int {
         $db = new Database();
         $tag = $db->getOne("SELECT id FROM tags WHERE name = ?", [$name]);

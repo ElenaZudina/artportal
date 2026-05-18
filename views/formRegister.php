@@ -1,12 +1,18 @@
 <?php
+/**
+ * User Registration Form View
+ * Displays form for new user account creation
+ */
 ob_start();
 ?>
+<!-- Registration form card for creating a regular user account. -->
 <div class="row justify-content-center">
     <div class="col-lg-6 col-md-8">
         <div class="card shadow-sm border-0 mt-4 mb-5">
             <div class="card-body p-4">
                 <h2 class="mb-4 text-center">Register</h2>
                 <form method="POST" action="registerAnswer">
+                    <?php echo CsrfHelper::field(); ?>
                     <div class="mb-3">
                         <label for="name" class="form-label">Name</label>
                         <input id="name" type="text" class="form-control" name="name" required autofocus>
@@ -31,6 +37,7 @@ ob_start();
 </div>
 
 <?php
+// Pass captured page markup into the shared layout.
 $content = ob_get_clean();
 include_once 'views/layout.php';
 ?>

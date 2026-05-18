@@ -1,7 +1,12 @@
 <?php
+/**
+ * Forgot Password View - password recovery form page
+ * Displays form for users to reset their password via email
+ */
 ob_start();
 ?>
 
+<!-- Password recovery request form sent to the administrator. -->
 <div class="container">
   <div class="row justify-content-center">
     <div class="col-lg-6 col-md-8">
@@ -11,6 +16,7 @@ ob_start();
                 <p class="text-muted text-center mb-4">Enter your email and the admin will contact you with the password manually.</p>
 
                 <form method="POST" action="forgot-password-request">
+                    <?php echo CsrfHelper::field(); ?>
                     <div class="mb-3">
                         <label for="email" class="form-label">E-mail Address</label>
                         <input id="email" type="email" class="form-control" name="email" required autofocus>
@@ -29,6 +35,7 @@ ob_start();
 </div>
 
 <?php
+// Pass captured page markup into the shared layout.
 $content = ob_get_clean();
 include_once 'views/layout.php';
 ?>

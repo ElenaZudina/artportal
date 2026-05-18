@@ -1,9 +1,14 @@
 <?php
+/**
+ * Category Delete Form View
+ * Displays confirmation form for deleting a category in admin panel
+ */
 ob_start();
 ?>
 
 <?php $category = $category ?? []; ?>
 
+<!-- Main content: Delete category form -->
 <div class="container" style="min-height:400px;">
     <div class="col-md-11">
         <h2>Category Delete</h2>

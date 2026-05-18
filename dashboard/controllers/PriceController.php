@@ -2,7 +2,19 @@
 
 require_once __DIR__ . '/../../services/PriceCalculatorService.php';
 
+/**
+ * Dashboard Price Controller - manages painting pricing
+ * Calculates and manages painting prices and costs
+ */
+/**
+ * Controller for managing painting price calculations in the dashboard.
+ * Handles AJAX requests for calculating price or income based on user input.
+ */
 class PriceController {
+    /**
+     * Calculate painting price or income based on input parameters.
+     * Handles POST requests, validates input, and returns JSON response.
+     */
     public static function calculate() {
         if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
             header('Content-Type: application/json');

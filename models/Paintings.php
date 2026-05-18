@@ -1,5 +1,16 @@
 <?php
+/**
+ * Paintings Model - handles database operations for paintings
+ * Manages painting data, search, pagination, categories, and CRUD operations
+ * Only displays paintings from approved artists
+ */
 class Paintings{
+    
+    /**
+     * Get the most recently added paintings from approved artists
+     * @param int $limit Number of paintings to retrieve (default: 10)
+     * @return array Array of paintings with artist and category information
+     */
     public static function getLastPaintings($limit = 10) {
         $limit = (int)$limit;
         $query = "
@@ -19,6 +30,10 @@ class Paintings{
         return $arr;
     }
 
+    /**
+     * Get all paintings from approved artists
+     * @return array Array of all paintings with artist and category information
+     */
     public static function getAllPaintings() {
        $query = "
             SELECT
@@ -36,6 +51,10 @@ class Paintings{
         return $arr;
     }
 
+    /**
+     * Count total paintings from approved artists
+     * @return int Total count of paintings
+     */
     public static function getAllPaintingsCount() {
         $query = "
             SELECT COUNT(*) AS total
@@ -48,6 +67,12 @@ class Paintings{
         return (int)($row['total'] ?? 0);
     }
 
+    /**
+     * Get paginated list of paintings from approved artists
+     * @param int $limit Number of paintings per page
+     * @param int $offset Starting offset for pagination
+     * @return array Array of paintings for current page with artist and category data
+     */
     public static function getAllPaintingsPaginated($limit, $offset) {
        $limit = (int)$limit;
        $offset = (int)$offset;
@@ -67,6 +92,12 @@ class Paintings{
        return $db->getAll($query);
     }
 
+    /**
+     * Count paintings matching search criteria from approved artists
+     * Searches in painting name and description
+     * @param string $search Search query string
+     * @return int Count of matching paintings
+     */
     public static function getSearchPaintingsCount($search) {
         $search = trim((string)$search);
         $db = new Database();
@@ -83,13 +114,22 @@ class Paintings{
                     AND (
                         paintings.title LIKE ?
                         OR paintings.description LIKE ?
+                                                OR artists.name LIKE ?
                     )";
 
         $like = '%' . $search . '%';
-        $row = $db->getOne($query, [$like, $like]);
+                $row = $db->getOne($query, [$like, $like, $like]);
         return (int)($row['total'] ?? 0);
     }
 
+    /**
+     * Get paginated paintings matching search criteria from approved artists.
+     * Searches in painting title, description, and artist name.
+     * @param string $search Search query string
+     * @param int $limit Number of paintings per page
+     * @param int $offset Starting offset for pagination
+     * @return array Array of matching paintings with artist and category data
+     */
     public static function getSearchPaintingsPaginated($search, $limit, $offset) {
         $search = trim((string)$search);
         $limit = (int)$limit;
@@ -109,15 +149,22 @@ class Paintings{
                     AND (
                         paintings.title LIKE ?
                         OR paintings.description LIKE ?
+                                                OR artists.name LIKE ?
                     )
                   ORDER BY paintings.id DESC
                   LIMIT " . $limit . " OFFSET " . $offset;
 
         $db = new Database();
         $like = '%' . $search . '%';
-        return $db->getAll($query, [$like, $like]);
+                return $db->getAll($query, [$like, $like, $like]);
     }
 
+    /**
+     * Get public paintings by category ID.
+     * Only includes paintings from approved artists.
+     * @param int $id Category ID
+     * @return array Array of paintings in the category
+     */
     public static function getPaintingsByCategoryID($id) {
         $query = "
             SELECT
@@ -136,6 +183,11 @@ class Paintings{
         return $arr;
     }
 
+    /**
+     * Get compact painting records for an artist.
+     * @param int $id Artist ID
+     * @return array Array of painting IDs, titles, and images
+     */
     public static function getPaintingsByArtistID($id) {
         $query = "SELECT id, title, image FROM paintings where artist_id = ? ORDER BY id DESC";
         $db = new Database();
@@ -143,6 +195,11 @@ class Paintings{
         return $arr;
     }
 
+    /**
+     * Get portfolio paintings for an artist with category names.
+     * @param int $id Artist ID
+     * @return array Array of portfolio paintings
+     */
     public static function getPaintingsByArtistPortfolio($id) {
         $query = "SELECT paintings.*, categories.name AS category_name
         FROM paintings
@@ -153,6 +210,11 @@ class Paintings{
         return $db->getAll($query, [$id]);
     }
 
+    /**
+     * Get a painting by ID regardless of artist approval status.
+     * @param int $id Painting ID
+     * @return array|null Painting data or null if not found
+     */
     public static function getPaintingByID($id) {
                 $query = "SELECT paintings.*, categories.name AS category_name, artists.name AS artist_name, artists.picture AS artist_avatar
                 FROM paintings
@@ -164,6 +226,11 @@ class Paintings{
         return $arr;
     }
 
+    /**
+     * Get a public painting by ID from an approved artist.
+     * @param int $id Painting ID
+     * @return array|null Painting data or null if not found or not public
+     */
     public static function getPublicPaintingByID($id) {
         $query = "SELECT paintings.*, categories.name AS category_name, artists.name AS artist_name, artists.picture AS artist_avatar
                 FROM paintings
@@ -176,6 +243,11 @@ class Paintings{
         return $arr;
     }
 
+    /**
+     * Find a painting by uploaded file hash.
+     * @param string|null $fileHash File hash
+     * @return array|null Painting data or null if not found
+     */
     public static function getPaintingByFileHash($fileHash) {
         if (empty($fileHash)) {
             return null;
@@ -185,6 +257,11 @@ class Paintings{
         return $db->getOne($query, [$fileHash]);
     }
 
+    /**
+     * Create a painting from validated form data.
+     * @param array $cleanData Validated painting data
+     * @return int New painting ID
+     */
     public static function insertPainting(array $cleanData) {
         $fileHash = $cleanData['file_hash'] ?? null;
         
@@ -226,6 +303,12 @@ class Paintings{
         return $db->getLastInsertId();
     }
 
+    /**
+     * Update an artist-owned painting.
+     * @param int $id Painting ID
+     * @param array $cleanData Validated painting data
+     * @return bool Success status
+     */
     public static function updatePainting($id, array $cleanData) {
         $fileHash = $cleanData['file_hash'] ?? null;
         
@@ -270,21 +353,33 @@ class Paintings{
         return $db->executeRun($query, $params);
     }
 
+    /**
+     * Delete a painting owned by an artist.
+     * @param int $id Painting ID
+     * @param int $artistId Artist ID
+     * @return bool Success status
+     */
     public static function deletePainting($id, $artistId) {
         $query = "DELETE FROM paintings WHERE id = ? AND artist_id = ?";
         $db = new Database();
         return $db->executeRun($query, [$id, $artistId]);
     }
 
+    /**
+     * Get paintings generated by a collection rule.
+     * Supports keyword, latest, random, popular, and AI tag-based collections.
+     * @param int $id Collection ID
+     * @return array Array of paintings for the collection
+     */
     public static function getPaintingsByCollectionID($id) {
-        // Получаем коллекцию и её параметр
+        // Load the collection and its parameter before building the query.
         $collection = Collections::getCollectionByID($id);
         if (!$collection) {
             return [];
         }
         $db = new Database();
        
-        // Динамический фильтр по ключевому слову
+        // Build a dynamic filter based on the collection type.
         $baseQuery = "SELECT paintings.*, artists.name AS artist_name, categories.name AS category_name
         FROM paintings
         JOIN artists ON paintings.artist_id = artists.id
@@ -322,7 +417,7 @@ class Paintings{
             return $db->getAll($query);
 
         case 'popular':
-            // предполагаем, что есть поле views
+            // Assumes the paintings table has a views column.
             $query = $baseQuery . "
                 WHERE artists.status = 'approved'
                 ORDER BY paintings.views DESC

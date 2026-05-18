@@ -1,6 +1,17 @@
 <?php
 
+/**
+ * Category Service - manages painting category operations
+ * Handles creating, updating, and deleting categories with validation
+ */
 class CategoryService {
+    
+    /**
+     * Create new painting category
+     * Validates category name is not empty and not duplicate
+     * @param array $data Form data with category name
+     * @return array Success status with error message if failed
+     */
     public static function createCategory($data) {
         $name = trim($data['name'] ?? '');
 
@@ -19,6 +30,13 @@ class CategoryService {
         return ['success' => true, 'errorMessage' => null];
     }
 
+    /**
+     * Update an existing painting category.
+     * Validates category name is not empty and not duplicate.
+     * @param int $id Category ID
+     * @param array $data Form data with category name
+     * @return array Success status with error message if failed
+     */
     public static function updateCategory($id, $data) {
         $name = trim($data['name'] ?? '');
 
@@ -37,6 +55,12 @@ class CategoryService {
         return ['success' => true, 'errorMessage' => null];
     }
 
+    /**
+     * Delete a painting category after confirmation.
+     * @param int $id Category ID
+     * @param array $data Confirmation form data
+     * @return array Success status with error message if failed
+     */
     public static function deleteCategory($id, $data) {
         if (!isset($data['save'])) {
             return ['success' => false, 'errorMessage' => 'Delete action was not confirmed'];

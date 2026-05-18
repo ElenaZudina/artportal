@@ -1,7 +1,12 @@
 <?php
+/**
+ * Registration Result View
+ * Shows success or validation errors after account registration
+ */
 ob_start();
 
 if (isset($result)) {
+    // Success state offers next steps after creating the account.
     if ($result['success'] === true) {
         ?>
         <div class="my-alert-success text-center mb-4 mt-5 p-4" style="border-radius: var(--radius);">
@@ -15,6 +20,7 @@ if (isset($result)) {
         <?php
     } else {
         ?>
+        <!-- Failure state lists registration validation errors. -->
         <div class="my-alert-error text-center mb-4 mt-5 p-4" style="border-radius: var(--radius);">
             <?php
             foreach ($result['errors'] as $error) {
@@ -27,5 +33,6 @@ if (isset($result)) {
     }
 }
 
+// Pass captured page markup into the shared layout.
 $content = ob_get_clean();
 include "views/layout.php";

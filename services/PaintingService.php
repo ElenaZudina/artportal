@@ -4,12 +4,26 @@ require_once __DIR__ . '/../services/VisionAIService.php';
 require_once __DIR__ . '/../models/PaintingTags.php';
 require_once __DIR__ . '/../models/Tags.php';
 
+/**
+ * Painting Service - handles painting operations
+ * Manages painting creation, updates, deletion, and vision AI tagging
+ */
 class PaintingService {
+    /**
+     * Get the artist profile ID for a user account.
+     * @param int $userId User ID
+     * @return int|null Artist ID or null when no profile exists
+     */
     private static function getArtistIdForUser(int $userId) {
         $artist = Artists::getArtistByUserId($userId);
         return $artist['id'] ?? null;
     }
 
+    /**
+     * Delete a painting image file from disk when it exists.
+     * @param string|null $fileName Image filename
+     * @return void
+     */
     private static function deleteImageFile(?string $fileName) {
         if ($fileName === null || $fileName === '') {
             return;
@@ -20,6 +34,16 @@ class PaintingService {
         }
     }
 
+    /**
+     * Resolve the painting image value from an upload, existing image, or legacy field.
+     * Validates image upload metadata and stores the uploaded file.
+     * @param array $data Form data with legacy image field
+     * @param array $files Uploaded files from $_FILES
+     * @param string|null $existingImage Existing image filename if updating
+     * @param array $errors Error messages array passed by reference
+     * @param string|null $fileHash Uploaded file hash passed by reference
+     * @return string|null Saved filename, existing filename, or null
+     */
     private static function resolveImageValue(array $data, array $files, ?string $existingImage = null, array &$errors = [], ?string &$fileHash = null) {
         $upload = $files['image_file'] ?? null;
 
@@ -51,7 +75,7 @@ class PaintingService {
                 return $existingImage;
             }
 
-            // Вычисляем MD5 хеш файла перед сохранением
+            // Calculate the MD5 file hash before saving.
             $fileHash = md5_file($tmpName);
 
             $fileName = uniqid('painting_', true) . '.' . $extension;
@@ -72,6 +96,13 @@ class PaintingService {
         return $legacyImage !== '' ? $legacyImage : null;
     }
 
+    /**
+     * Validate common painting form fields and normalize them.
+     * @param array $data Painting form data
+     * @param array $normalized Normalized form data passed by reference
+     * @param array $errors Validation errors passed by reference
+     * @return void
+     */
     private static function validateCommonData(array $data, array &$normalized, array &$errors) {
         $normalized = [
             'title' => trim((string)($data['title'] ?? '')),
@@ -118,6 +149,36 @@ class PaintingService {
         }
     }
 
+    /**
+     * Rebuild AI-generated tag links for a painting image.
+     * @param int $paintingId Painting ID
+     * @param string $imagePath Absolute image path
+     * @return void
+     */
+    private static function rebuildTagsForPainting(int $paintingId, string $imagePath): void {
+        $visionService = new VisionAIService();
+        $response = $visionService->detectLabels($imagePath);
+        $tags = $visionService->buildTags($response);
+
+        PaintingTags::detachByPaintingId($paintingId);
+
+        if (empty($tags)) {
+            return;
+        }
+
+        foreach ($tags as $tagName) {
+            $tagId = Tags::getOrCreateTag($tagName);
+            PaintingTags::attach($paintingId, $tagId);
+        }
+    }
+
+    /**
+     * Create a painting for the current artist and generate AI tags.
+     * @param array $data Painting form data
+     * @param array $files Uploaded files
+     * @param int $userId Current user ID
+     * @return array Success status with saved data or validation errors
+     */
     public static function createPainting(array $data, array $files, int $userId) {
         $errors = [];
         $normalized = [];
@@ -142,11 +203,11 @@ class PaintingService {
             return ['success' => false, 'errors' => $errors, 'data' => $normalized];
         }
 
-        // Проверяем, не загружена ли уже картина с таким же файлом
+        // Check whether another painting already uses the same uploaded file.
         if ($fileHash) {
             $existingPainting = Paintings::getPaintingByFileHash($fileHash);
             if ($existingPainting) {
-                // Удаляем загруженный файл, так как он дубликат
+                // Delete the uploaded duplicate file.
                 PaintingService::deleteImageFile($image);
                 return [
                     'success' => false, 
@@ -197,6 +258,14 @@ class PaintingService {
 
     }
 
+    /**
+     * Update an artist-owned painting and refresh AI tags when the image changes.
+     * @param int $id Painting ID
+     * @param array $data Painting form data
+     * @param array $files Uploaded files
+     * @param int $userId Current user ID
+     * @return array Success status with saved data or validation errors
+     */
     public static function updatePainting(int $id, array $data, array $files, int $userId) {
         $errors = [];
         $normalized = [];
@@ -222,11 +291,11 @@ class PaintingService {
             return ['success' => false, 'errors' => $errors, 'data' => $normalized];
         }
 
-        // Если загруженный файл новый, проверяем на дубликат
+        // If a new file was uploaded, check for duplicates.
         if ($fileHash && $image !== $painting['image']) {
             $existingPainting = Paintings::getPaintingByFileHash($fileHash);
             if ($existingPainting && (int)$existingPainting['id'] !== $id) {
-                // Удаляем загруженный файл, так как он дубликат
+                // Delete the uploaded duplicate file.
                 PaintingService::deleteImageFile($image);
                 return [
                     'success' => false, 
@@ -256,6 +325,10 @@ class PaintingService {
             return ['success' => false, 'errors' => ['Database error while updating painting'], 'data' => $normalized];
         }
 
+        if ($image !== $painting['image']) {
+            PaintingService::rebuildTagsForPainting($id, __DIR__ . '/../images/paintings/' . $cleanData['image']);
+        }
+
         // Delete old image file if a new one was uploaded
         if ($image !== $painting['image'] && $painting['image'] !== null) {
             PaintingService::deleteImageFile($painting['image']);
@@ -264,6 +337,12 @@ class PaintingService {
         return ['success' => true, 'errors' => [], 'data' => $cleanData];
     }
 
+    /**
+     * Delete an artist-owned painting and its image file.
+     * @param int $id Painting ID
+     * @param int $userId Current user ID
+     * @return array Success status with errors if deletion fails
+     */
     public static function deletePainting(int $id, int $userId) {
         $artistId = PaintingService::getArtistIdForUser($userId);
         if (!$artistId) {

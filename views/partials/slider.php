@@ -1,10 +1,19 @@
 <?php
+/**
+ * ViewSlider Partial - displays carousel slider of paintings
+ * Renders Bootstrap carousel with hero paintings
+ */
 class ViewSlider {
+    /**
+     * Render the homepage painting carousel when slider items are available.
+     * @param array $sliderPaintings Paintings shown in the carousel
+     * @return void
+     */
     public static function render($sliderPaintings) {
         if (!empty($sliderPaintings)): ?>
         <div id="paintingsCarousel" class="carousel slide" data-bs-ride="carousel">
 
-    <!-- индикаторы -->
+    <!-- Carousel indicators generated for each painting slide -->
     <div class="carousel-indicators">
         <?php foreach ($sliderPaintings as $i => $painting): ?>
             <button type="button"
@@ -17,7 +26,7 @@ class ViewSlider {
         <?php endforeach; ?>
     </div>
 
-    <!-- слайды -->
+    <!-- Carousel slides with painting image and caption -->
     <div class="carousel-inner">
 
         <?php foreach ($sliderPaintings as $i => $painting): ?>
@@ -38,7 +47,7 @@ class ViewSlider {
 
     </div>
 
-    <!-- стрелки -->
+    <!-- Previous and next carousel controls -->
     <button class="carousel-control-prev custom-carousel-control" type="button"
             data-bs-target="#paintingsCarousel" data-bs-slide="prev" aria-label="Previous slide">
         <span class="carousel-control-prev-icon" aria-hidden="true"></span>

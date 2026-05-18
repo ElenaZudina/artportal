@@ -1,4 +1,8 @@
 <?php
+/**
+ * All Paintings Page View  
+ * Displays searchable and paginated grid of approved paintings
+ */
 ob_start();
 ?>
 <h1>All paintings </h1>
@@ -6,11 +10,12 @@ ob_start();
 
 <?php
 ?>
+<!-- Painting search form preserves the current query and links back to the full gallery when cleared. -->
 <div class="d-flex justify-content-end mb-2">
 	<form class="painting-search-form" method="get" action="all">
 		<div class="input-group painting-search-group">
 			<span class="input-group-text painting-search-icon" aria-hidden="true"><i class="fa fa-search"></i></span>
-			<input type="text" name="search" class="form-control painting-search-input" placeholder="Search paintings by title or description" value="<?php echo htmlspecialchars($searchQuery ?? '', ENT_QUOTES, 'UTF-8'); ?>">
+			<input type="text" name="search" class="form-control painting-search-input" placeholder="Search paintings by title, description, or artist" value="<?php echo htmlspecialchars($searchQuery ?? '', ENT_QUOTES, 'UTF-8'); ?>">
 			<button type="submit" class="btn painting-search-btn">Search</button>
 			<?php if (!empty($searchQuery)): ?>
 				<a href="all" class="btn btn-outline-secondary painting-search-clear">Clear</a>
@@ -20,8 +25,10 @@ ob_start();
 </div>
 
 <?php
+// Render the regular gallery grid for the current result page.
 ViewPaintings::PaintingsGrid($arr, false, false);
 
+// Render pagination only when the result set spans multiple pages.
 if (!empty($pagination) && ($pagination['totalPages'] ?? 0) > 1) {
 	$currentPage = (int)$pagination['currentPage'];
 	$totalPages = (int)$pagination['totalPages'];
@@ -77,6 +84,7 @@ if (!empty($pagination) && ($pagination['totalPages'] ?? 0) > 1) {
 	echo '</nav>';
 }
 
+// Pass captured page markup into the shared layout.
 $content = ob_get_clean();
 include_once 'views/layout.php';
 

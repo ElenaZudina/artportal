@@ -1,10 +1,15 @@
 <?php
+/**
+ * Exhibition Edit Form View
+ * Displays form for editing an exhibition in admin panel
+ */
 ob_start();
 ?>
 
 <?php $exhibition = $exhibition ?? []; ?>
 <?php $collections = $collections ?? []; ?>
 
+<!-- Main content: Edit exhibition form -->
 <div class="container" style="min-height:400px;">
     <div class="col-md-11">
         <h2>Exhibition Edit</h2>

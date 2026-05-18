@@ -1,11 +1,12 @@
 <?php ob_start() ?>
+<!-- Main article container for dashboard start page -->
 <article>
     <div id="main" class="container">
-        
         <?php if ($_SESSION['status'] === 'artist'): ?>
-        
+        <!-- Artist dashboard section -->
         <h3>Artist Dashboard</h3>
 
+        <!-- Price calculator teaser card -->
         <div class="card calculator-teaser shadow-sm mb-3">
             <div class="card-body d-flex flex-column flex-md-row align-items-md-center justify-content-between gap-3">
                 <div>
@@ -19,6 +20,7 @@
             </div>
         </div>
 
+        <!-- Price calculator modal -->
         <div class="modal fade" id="priceCalculatorModal" tabindex="-1" aria-labelledby="priceCalculatorModalLabel" aria-hidden="true">
             <div class="modal-dialog modal-lg modal-dialog-scrollable">
                 <div class="modal-content">
@@ -29,6 +31,7 @@
                     <div class="modal-body">
                         <div id="price-calc-alert" class="alert alert-danger d-none" role="alert"></div>
 
+                        <!-- Calculator input fields -->
                         <div class="row g-3">
                             <div class="col-md-6">
                                 <label for="calc_mode" class="form-label">Mode</label>
@@ -66,6 +69,7 @@
 
                         <hr>
 
+                        <!-- Calculator result section -->
                         <div id="price-calc-result" class="d-none">
                             <div class="row g-3">
                                 <div class="col-md-6"><strong id="result_main_label">Your price:</strong> <span id="calc_result_main">0.00</span></div>
@@ -83,97 +87,7 @@
             </div>
         </div>
 
-        <script>
-        (function () {
-            var modeEl = document.getElementById('calc_mode');
-            var valueHintEl = document.getElementById('calc_value_hint');
-            var valueEl = document.getElementById('calc_value');
-            var commissionEl = document.getElementById('calc_commission');
-            var taxEl = document.getElementById('calc_tax');
-            var expensesEl = document.getElementById('calc_expenses');
-            var residentEl = document.getElementById('calc_is_tax_resident');
-            var runBtn = document.getElementById('calc_run_btn');
-            var alertEl = document.getElementById('price-calc-alert');
-            var resultWrapEl = document.getElementById('price-calc-result');
-            var mainLabelEl = document.getElementById('result_main_label');
-            var mainOutputEl = document.getElementById('calc_result_main');
-            var commissionOutEl = document.getElementById('calc_result_commission');
-            var taxOutEl = document.getElementById('calc_result_tax');
-            var expensesOutEl = document.getElementById('calc_result_expenses');
-
-            if (!modeEl || !runBtn) {
-                return;
-            }
-
-            function setModeHint() {
-                valueHintEl.textContent = modeEl.value === 'income'
-                    ? 'Desired income amount'
-                    : 'Current price amount';
-            }
-
-            function showError(message) {
-                alertEl.textContent = message || 'Calculation error';
-                alertEl.classList.remove('d-none');
-            }
-
-            function hideError() {
-                alertEl.textContent = '';
-                alertEl.classList.add('d-none');
-            }
-
-            modeEl.addEventListener('change', setModeHint);
-            setModeHint();
-
-            runBtn.addEventListener('click', function () {
-                hideError();
-                resultWrapEl.classList.add('d-none');
-
-                var payload = new URLSearchParams();
-                payload.append('mode', modeEl.value);
-                payload.append('value', valueEl.value);
-                payload.append('commission', commissionEl.value);
-                payload.append('tax', taxEl.value);
-                payload.append('expenses', expensesEl.value);
-                payload.append('isTaxResident', residentEl.checked ? '1' : '0');
-
-                fetch('/artportal/dashboard/price-calculate', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8'
-                    },
-                    body: payload.toString()
-                })
-                .then(function (response) {
-                    return response.json();
-                })
-                .then(function (json) {
-                    if (!json || !json.success || !json.data) {
-                        showError(json && json.message ? json.message : 'Calculation failed');
-                        return;
-                    }
-
-                    var isIncomeMode = modeEl.value === 'income';
-
-                    if (isIncomeMode) {
-                        mainLabelEl.textContent = 'Your price:';
-                        mainOutputEl.textContent = Number(json.data.price || 0).toFixed(2);
-                    } else {
-                        mainLabelEl.textContent = 'Net profit:';
-                        mainOutputEl.textContent = Number(json.data.netIncome || 0).toFixed(2);
-                    }
-
-                    taxOutEl.textContent = Number(json.data.taxAmount || 0).toFixed(2);
-                    commissionOutEl.textContent = Number(json.data.commissionAmount || 0).toFixed(2);
-                    expensesOutEl.textContent = Number(json.data.expenses || 0).toFixed(2);
-
-                    resultWrapEl.classList.remove('d-none');
-                })
-                .catch(function () {
-                    showError('Network error');
-                });
-            });
-        })();
-        </script>
+        <script src="/artportal/public/js/price-calculator.js"></script>
 
         <!-- Top KPI summary (admin style) -->
         <div class="card p-3 dashboard-summary mb-3">
