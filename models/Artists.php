@@ -9,9 +9,9 @@ class Artists {
      * Get the 10 most recently approved artists
      * @return array Array of approved artists ordered by ID descending
      */
-    public static function getLast10Artists() {
+    public static function getLast10Artists($db = null) {
         $query = "SELECT * FROM artists WHERE status = 'approved' ORDER BY id DESC LIMIT 10";
-        $db = new Database();
+        $db = $db ?? new Database();
         $arr = $db->getAll($query);
         return $arr;
     }
@@ -20,9 +20,9 @@ class Artists {
      * Get all approved artists
      * @return array Array of all approved artists
      */
-    public static function getAllArtists() {
+    public static function getAllArtists($db = null) {
         $query = "SELECT * FROM artists WHERE status = 'approved' ORDER BY id DESC";
-        $db = new Database();
+        $db = $db ?? new Database();
         $arr = $db->getAll($query);
         return $arr;
     }
@@ -31,9 +31,9 @@ class Artists {
      * Count total approved artists in database
      * @return int Total count of approved artists
      */
-    public static function getAllArtistsCount() {
+    public static function getAllArtistsCount($db = null) {
         $query = "SELECT COUNT(*) AS total FROM artists WHERE status = 'approved'";
-        $db = new Database();
+        $db = $db ?? new Database();
         $row = $db->getOne($query);
         return (int)($row['total'] ?? 0);
     }
@@ -44,11 +44,11 @@ class Artists {
      * @param int $offset Starting offset for records
      * @return array Array of approved artists for current page
      */
-    public static function getAllArtistsPaginated($limit, $offset) {
+    public static function getAllArtistsPaginated($limit, $offset, $db = null) {
         $limit = (int)$limit;
         $offset = (int)$offset;
         $query = "SELECT * FROM artists WHERE status = 'approved' ORDER BY id DESC LIMIT " . $limit . " OFFSET " . $offset;
-        $db = new Database();
+        $db = $db ?? new Database();
         return $db->getAll($query);
     }
 
@@ -58,9 +58,9 @@ class Artists {
      * @param string $search Search query string
      * @return int Count of matching approved artists
      */
-    public static function getSearchArtistsCount($search) {
+    public static function getSearchArtistsCount($search, $db = null) {
         $search = trim((string)$search);
-        $db = new Database();
+        $db = $db ?? new Database();
 
         if ($search === '') {
             $row = $db->getOne("SELECT COUNT(*) AS total FROM artists WHERE status = 'approved'");
@@ -89,13 +89,13 @@ class Artists {
      * @param int $offset Starting offset for records
      * @return array Array of matching artists for current page
      */
-    public static function getSearchArtistsPaginated($search, $limit, $offset) {
+    public static function getSearchArtistsPaginated($search, $limit, $offset, $db = null) {
         $search = trim((string)$search);
         $limit = (int)$limit;
         $offset = (int)$offset;
 
         if ($search === '') {
-            return self::getAllArtistsPaginated($limit, $offset);
+            return self::getAllArtistsPaginated($limit, $offset, $db);
         }
 
         $query = "SELECT *
@@ -109,7 +109,7 @@ class Artists {
                   ORDER BY id DESC
                   LIMIT " . $limit . " OFFSET " . $offset;
 
-        $db = new Database();
+        $db = $db ?? new Database();
         $like = '%' . $search . '%';
         return $db->getAll($query, [$like, $like, $like]);
     }
@@ -120,10 +120,10 @@ class Artists {
      * @param int $id Artist ID
      * @return array Artist data or null if not found/not approved
      */
-    public static function getPublicArtistByID($id) {
+    public static function getPublicArtistByID($id, $db = null) {
         $query = "SELECT * FROM artists
         WHERE artists.id = ? AND status = 'approved'";
-        $db = new Database();
+        $db = $db ?? new Database();
         $arr = $db->getOne($query, [$id]);
         return $arr;
     }
@@ -134,10 +134,10 @@ class Artists {
      * @param int $id Artist ID
      * @return array Artist data or null if not found
      */
-    public static function getArtistByID($id) {
+    public static function getArtistByID($id, $db = null) {
         $query = "SELECT * FROM artists
         WHERE artists.id = ? ";
-        $db = new Database();
+        $db = $db ?? new Database();
         $arr = $db->getOne($query, [$id]);
         return $arr;
     }
@@ -146,9 +146,9 @@ class Artists {
      * Get all artists pending approval
      * @return array Array of pending artists ordered by creation date
      */
-    public static function getPendingArtists() {
+    public static function getPendingArtists($db = null) {
         $query = "SELECT * FROM artists WHERE status = 'pending' ORDER BY created_at DESC, id DESC";
-        $db = new Database();
+        $db = $db ?? new Database();
         return $db->getAll($query);
     }
 
@@ -158,10 +158,10 @@ class Artists {
      * @param int $id Artist ID
      * @return bool Success status
      */
-    public static function approveArtist($id) {
-        $db = new Database();
+    public static function approveArtist($id, $db = null) {
+        $db = $db ?? new Database();
 
-        $artist = self::getArtistByID($id);
+        $artist = self::getArtistByID($id, $db);
         if (!$artist) {
             return false;
         }
@@ -181,10 +181,10 @@ class Artists {
      * @param int $id Artist ID
      * @return bool Success status
      */
-    public static function rejectArtist($id) {
-        $db = new Database();
+    public static function rejectArtist($id, $db = null) {
+        $db = $db ?? new Database();
 
-        $artist = self::getArtistByID($id);
+        $artist = self::getArtistByID($id, $db);
         if (!$artist) {
             return false;
         }
@@ -203,9 +203,9 @@ class Artists {
      * @param int $userId User ID
      * @return array Artist data or null if not found
      */
-    public static function getArtistByUserId($userId) {
+    public static function getArtistByUserId($userId, $db = null) {
         $query = "SELECT * FROM artists WHERE user_id = ?";
-        $db = new Database();
+        $db = $db ?? new Database();
         return $db->getOne($query, [$userId]);
     }
 
@@ -214,7 +214,7 @@ class Artists {
      * @param array $cleanData Validated artist profile data
      * @return bool Success status
      */
-    public static function insertArtistProfile($cleanData) {
+    public static function insertArtistProfile($cleanData, $db = null) {
         $query = "INSERT INTO artists (name, location, birth_date, bio, picture, status, user_id, created_at, updated_at)
                   VALUES (?, ?, ?, ?, ?, ?, ?, NOW(), NOW())";
 
@@ -228,7 +228,7 @@ class Artists {
             $cleanData['user_id']
         ];
 
-        $db = new Database();
+        $db = $db ?? new Database();
         return $db->executeRun($query, $params);
     }
 
@@ -238,7 +238,7 @@ class Artists {
      * @param int $userId User ID that owns the artist profile
      * @return bool Success status
      */
-    public static function updateArtistProfile($cleanData, $userId) {
+    public static function updateArtistProfile($cleanData, $userId, $db = null) {
         $query = "UPDATE artists
                   SET name = ?, location = ?, birth_date = ?, bio = ?, picture = ?, status = ?, updated_at = NOW()
                   WHERE user_id = ?";
@@ -253,7 +253,7 @@ class Artists {
             $userId
         ];
 
-        $db = new Database();
+        $db = $db ?? new Database();
         return $db->executeRun($query, $params);
     }
 
@@ -261,8 +261,8 @@ class Artists {
      * Count artist profiles waiting for moderation.
      * @return int Number of pending artists
      */
-    public static function countPending() {
-        $db = new Database();
+    public static function countPending($db = null) {
+        $db = $db ?? new Database();
         $row = $db->getOne("SELECT COUNT(*) AS cnt FROM artists WHERE status = 'pending'");
         return intval($row['cnt'] ?? 0);
     }

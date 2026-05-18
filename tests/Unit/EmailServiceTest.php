@@ -5,8 +5,12 @@ require_once __DIR__ . '/../../services/EmailService.php';
 
 class EmailServiceTest extends TestCase
 {
+    /**
+     * Tests that the HTML purchase request template includes escaped request fields.
+     */
     public function testGetEmailTemplateContainsInterpolatedFields()
     {
+        // The private HTML purchase template should include escaped request fields.
         $request = [
             'artist_name' => 'Ivan Artist',
             'artist_email' => 'ivan@example.com',
@@ -17,6 +21,7 @@ class EmailServiceTest extends TestCase
         ];
 
         $ref = new ReflectionClass(EmailService::class);
+        // Reflection keeps the template method private in production while still testable.
         $method = $ref->getMethod('getEmailTemplate');
         $method->setAccessible(true);
 
@@ -30,8 +35,12 @@ class EmailServiceTest extends TestCase
         $this->assertStringContainsString('#' . $request['id'], $html);
     }
 
+    /**
+     * Tests that the plain text purchase request template includes request fields.
+     */
     public function testGetPlainTextTemplateContainsFields()
     {
+        // The plain text purchase template should include the main request fields.
         $request = [
             'artist_name' => 'Ivan Artist',
             'artist_email' => 'ivan@example.com',
@@ -42,6 +51,7 @@ class EmailServiceTest extends TestCase
         ];
 
         $ref = new ReflectionClass(EmailService::class);
+        // Reflection is used because the template builder is an internal helper.
         $method = $ref->getMethod('getPlainTextTemplate');
         $method->setAccessible(true);
 

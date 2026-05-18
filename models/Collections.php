@@ -8,32 +8,35 @@ class Collections {
     /**
      * Get a collection by ID.
      * @param int $id Collection ID
+     * @param Database|null $db Optional database instance for testing
      * @return array|null Collection data or null if not found
      */
-    public static function getCollectionByID($id) {
+    public static function getCollectionByID($id, $db = null) {
         $query = "SELECT * FROM collections WHERE id = ?";
-        $db = new Database();
+        $db = $db ?? new Database();
         $arr = $db->getOne($query, [$id]);
         return $arr;
     }
 
     /**
      * Get all collections ordered for admin listing.
+     * @param Database|null $db Optional database instance for testing
      * @return array Array of collections
      */
-    public static function getCollectionsList() {
+    public static function getCollectionsList($db = null) {
         $sql = "SELECT * FROM collections ORDER BY id DESC";
-        $db = new Database();
+        $db = $db ?? new Database();
         return $db->getAll($sql);
     }
 
     /**
      * Check whether a collection title already exists.
      * @param string $title Collection title
+     * @param Database|null $db Optional database instance for testing
      * @return bool True when the title already exists
      */
-    public static function existsByTitle($title) {
-        $db = new Database();
+    public static function existsByTitle($title, $db = null) {
+        $db = $db ?? new Database();
         $collection = $db->getOne(
             "SELECT id FROM collections WHERE TRIM(LOWER(title)) = TRIM(LOWER(?)) LIMIT 1",
             [$title]
@@ -46,10 +49,11 @@ class Collections {
      * @param string $title Collection title
      * @param string $type Collection type
      * @param string|null $param Collection parameter
+     * @param Database|null $db Optional database instance for testing
      * @return int|false New collection ID or false on failure
      */
-    public static function create($title, $type, $param) {
-        $db = new Database();
+    public static function create($title, $type, $param, $db = null) {
+        $db = $db ?? new Database();
         $sql = "INSERT INTO `collections` (`title`, `type`, `param`) VALUES (?, ?, ?)";
         $stmt = $db->executeRun($sql, [$title, $type, $param]);
         return $stmt ? $db->getLastInsertId() : false;
@@ -59,10 +63,11 @@ class Collections {
      * Check whether another collection already uses the same title.
      * @param string $title Collection title
      * @param int $id Collection ID to exclude
+     * @param Database|null $db Optional database instance for testing
      * @return bool True when the title exists for a different collection
      */
-    public static function existsByTitleExceptId($title, $id) {
-        $db = new Database();
+    public static function existsByTitleExceptId($title, $id, $db = null) {
+        $db = $db ?? new Database();
         $collection = $db->getOne(
             "SELECT id FROM collections WHERE TRIM(LOWER(title)) = TRIM(LOWER(?)) AND id <> ? LIMIT 1",
             [$title, $id]
@@ -76,10 +81,11 @@ class Collections {
      * @param string $title Collection title
      * @param string $type Collection type
      * @param string|null $param Collection parameter
+     * @param Database|null $db Optional database instance for testing
      * @return bool Success status
      */
-    public static function updateCollection($id, $title, $type, $param) {
-        $db = new Database();
+    public static function updateCollection($id, $title, $type, $param, $db = null) {
+        $db = $db ?? new Database();
         $sql = "UPDATE `collections` SET `title` = ?, `type` = ?, `param` = ? WHERE `id` = ?";
         $item = $db->executeRun($sql, [$title, $type, $param, $id]);
         return $item == true;
@@ -88,10 +94,11 @@ class Collections {
     /**
      * Delete a collection by ID.
      * @param int $id Collection ID
+     * @param Database|null $db Optional database instance for testing
      * @return bool Success status
      */
-    public static function deleteCollection($id) {
-        $db = new Database();
+    public static function deleteCollection($id, $db = null) {
+        $db = $db ?? new Database();
         $sql = "DELETE FROM `collections` WHERE `id` = ?";
         $item = $db->executeRun($sql, [$id]);
         return $item == true;
@@ -99,10 +106,11 @@ class Collections {
 
     /**
      * Count all collections.
+     * @param Database|null $db Optional database instance for testing
      * @return int Total number of collections
      */
-    public static function count() {
-        $db = new Database();
+    public static function count($db = null) {
+        $db = $db ?? new Database();
         $row = $db->getOne("SELECT COUNT(*) AS cnt FROM collections");
         return intval($row['cnt'] ?? 0);
     }

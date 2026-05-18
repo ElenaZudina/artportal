@@ -9,9 +9,10 @@ class PurchaseRequest {
      * Create a purchase request for a painting.
      * @param int|null $userId User ID
      * @param int|null $paintingId Painting ID
+     * @param Database|null $db Optional database instance for testing
      * @return array Result data with success flag and message
      */
-    public static function create($userId, $paintingId) {
+    public static function create($userId, $paintingId, $db = null) {
         if ($userId === null || $paintingId === null) {
             return [
                 'success' => false,
@@ -29,7 +30,7 @@ class PurchaseRequest {
             ];
         }
 
-        $db = new Database();
+        $db = $db ?? new Database();
         
         // Create a new purchase request.
         $sql = 'INSERT INTO `purchase_requests` (user_id, painting_id) VALUES (?, ?)';
@@ -53,10 +54,11 @@ class PurchaseRequest {
      * Get the timestamp of the user's latest request for a painting.
      * @param int $userId User ID
      * @param int $paintingId Painting ID
+     * @param Database|null $db Optional database instance for testing
      * @return int|null Unix timestamp or null when no request exists
      */
-    public static function getLastRequestTime($userId, $paintingId) {
-        $db = new Database();
+    public static function getLastRequestTime($userId, $paintingId, $db = null) {
+        $db = $db ?? new Database();
         $sql = 'SELECT UNIX_TIMESTAMP(created_at) as created_timestamp FROM `purchase_requests` 
                 WHERE user_id = ? AND painting_id = ? 
                 ORDER BY created_at DESC 
@@ -72,9 +74,10 @@ class PurchaseRequest {
     /**
      * Get one purchase request with user, painting, and artist contact data.
      * @param int $requestId Purchase request ID
+     * @param Database|null $db Optional database instance for testing
      * @return array|null Request data or null if not found
      */
-    public static function getRequestById($requestId) {
+    public static function getRequestById($requestId, $db = null) {
         $sql = 'SELECT pr.*, 
                        u.email AS user_email, 
                        u.username AS user_name,
@@ -89,7 +92,7 @@ class PurchaseRequest {
                 JOIN `users` au ON a.user_id = au.id
                 WHERE pr.id = ?
                 LIMIT 1';
-        $db = new Database();
+        $db = $db ?? new Database();
         return $db->getOne($sql, [$requestId]);
     }
     
@@ -98,9 +101,10 @@ class PurchaseRequest {
      * @param int $artistId Artist ID
      * @param int $limit Number of requests to retrieve
      * @param int $offset Starting offset for pagination
+     * @param Database|null $db Optional database instance for testing
      * @return array Array of purchase requests
      */
-    public static function getArtistRequests($artistId, $limit = 20, $offset = 0) {
+    public static function getArtistRequests($artistId, $limit = 20, $offset = 0, $db = null) {
         $limit = (int)$limit;
         $offset = (int)$offset;
         $sql = 'SELECT pr.*, 
@@ -113,7 +117,7 @@ class PurchaseRequest {
                 WHERE p.artist_id = ?
                 ORDER BY pr.created_at DESC
                 LIMIT ' . $limit . ' OFFSET ' . $offset;
-        $db = new Database();
+        $db = $db ?? new Database();
         return $db->getAll($sql, [$artistId]);
     }
 
@@ -122,9 +126,10 @@ class PurchaseRequest {
      * @param int $userId User ID
      * @param int $limit Number of requests to retrieve
      * @param int $offset Starting offset for pagination
+     * @param Database|null $db Optional database instance for testing
      * @return array Array of purchase requests
      */
-    public static function getUserRequests($userId, $limit = 10, $offset = 0) {
+    public static function getUserRequests($userId, $limit = 10, $offset = 0, $db = null) {
         $limit = (int)$limit;
         $offset = (int)$offset;
         $sql = 'SELECT pr.*, 
@@ -137,17 +142,18 @@ class PurchaseRequest {
                 WHERE pr.user_id = ?
                 ORDER BY pr.created_at DESC
                 LIMIT ' . $limit . ' OFFSET ' . $offset;
-        $db = new Database();
+        $db = $db ?? new Database();
         return $db->getAll($sql, [$userId]);
     }
 
     /**
      * Count purchase requests created by a user.
      * @param int $userId User ID
+     * @param Database|null $db Optional database instance for testing
      * @return int Number of purchase requests
      */
-    public static function getUserRequestsCount($userId) {
-        $db = new Database();
+    public static function getUserRequestsCount($userId, $db = null) {
+        $db = $db ?? new Database();
         $sql = 'SELECT COUNT(*) AS cnt FROM `purchase_requests` WHERE user_id = ?';
         $res = $db->getOne($sql, [$userId]);
         return (int)($res['cnt'] ?? 0);

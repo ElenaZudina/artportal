@@ -11,7 +11,7 @@ class Paintings{
      * @param int $limit Number of paintings to retrieve (default: 10)
      * @return array Array of paintings with artist and category information
      */
-    public static function getLastPaintings($limit = 10) {
+    public static function getLastPaintings($limit = 10, $db = null) {
         $limit = (int)$limit;
         $query = "
             SELECT
@@ -25,7 +25,7 @@ class Paintings{
             ORDER BY paintings.id DESC
             LIMIT " . $limit . "
         ";
-        $db = new Database();
+        $db = $db ?? new Database();
         $arr = $db->getAll($query);
         return $arr;
     }
@@ -34,7 +34,7 @@ class Paintings{
      * Get all paintings from approved artists
      * @return array Array of all paintings with artist and category information
      */
-    public static function getAllPaintings() {
+    public static function getAllPaintings($db = null) {
        $query = "
             SELECT
                 paintings.*,
@@ -46,7 +46,7 @@ class Paintings{
             WHERE artists.status = 'approved'
             ORDER BY paintings.id DESC
         ";
-        $db = new Database();
+        $db = $db ?? new Database();
         $arr = $db->getAll($query);
         return $arr;
     }
@@ -55,14 +55,14 @@ class Paintings{
      * Count total paintings from approved artists
      * @return int Total count of paintings
      */
-    public static function getAllPaintingsCount() {
+    public static function getAllPaintingsCount($db = null) {
         $query = "
             SELECT COUNT(*) AS total
             FROM paintings
             JOIN artists ON paintings.artist_id = artists.id
             WHERE artists.status = 'approved'
         ";
-        $db = new Database();
+        $db = $db ?? new Database();
         $row = $db->getOne($query);
         return (int)($row['total'] ?? 0);
     }
@@ -73,7 +73,7 @@ class Paintings{
      * @param int $offset Starting offset for pagination
      * @return array Array of paintings for current page with artist and category data
      */
-    public static function getAllPaintingsPaginated($limit, $offset) {
+    public static function getAllPaintingsPaginated($limit, $offset, $db = null) {
        $limit = (int)$limit;
        $offset = (int)$offset;
        $query = "
@@ -88,7 +88,7 @@ class Paintings{
             ORDER BY paintings.id DESC
             LIMIT " . $limit . " OFFSET " . $offset . "
        ";
-       $db = new Database();
+       $db = $db ?? new Database();
        return $db->getAll($query);
     }
 
@@ -98,9 +98,9 @@ class Paintings{
      * @param string $search Search query string
      * @return int Count of matching paintings
      */
-    public static function getSearchPaintingsCount($search) {
+    public static function getSearchPaintingsCount($search, $db = null) {
         $search = trim((string)$search);
-        $db = new Database();
+        $db = $db ?? new Database();
 
         if ($search === '') {
             $row = $db->getOne("SELECT COUNT(*) AS total FROM paintings JOIN artists ON paintings.artist_id = artists.id WHERE artists.status = 'approved'");
@@ -130,13 +130,13 @@ class Paintings{
      * @param int $offset Starting offset for pagination
      * @return array Array of matching paintings with artist and category data
      */
-    public static function getSearchPaintingsPaginated($search, $limit, $offset) {
+    public static function getSearchPaintingsPaginated($search, $limit, $offset, $db = null) {
         $search = trim((string)$search);
         $limit = (int)$limit;
         $offset = (int)$offset;
 
         if ($search === '') {
-            return self::getAllPaintingsPaginated($limit, $offset);
+            return self::getAllPaintingsPaginated($limit, $offset, $db);
         }
 
         $query = "SELECT paintings.*,
@@ -154,7 +154,7 @@ class Paintings{
                   ORDER BY paintings.id DESC
                   LIMIT " . $limit . " OFFSET " . $offset;
 
-        $db = new Database();
+        $db = $db ?? new Database();
         $like = '%' . $search . '%';
                 return $db->getAll($query, [$like, $like, $like]);
     }
@@ -165,7 +165,7 @@ class Paintings{
      * @param int $id Category ID
      * @return array Array of paintings in the category
      */
-    public static function getPaintingsByCategoryID($id) {
+    public static function getPaintingsByCategoryID($id, $db = null) {
         $query = "
             SELECT
                 paintings.*,
@@ -178,7 +178,7 @@ class Paintings{
               AND artists.status = 'approved'
             ORDER BY paintings.id DESC
         ";
-        $db = new Database();
+        $db = $db ?? new Database();
         $arr = $db->getAll($query, [$id]);
         return $arr;
     }
@@ -188,9 +188,9 @@ class Paintings{
      * @param int $id Artist ID
      * @return array Array of painting IDs, titles, and images
      */
-    public static function getPaintingsByArtistID($id) {
+    public static function getPaintingsByArtistID($id, $db = null) {
         $query = "SELECT id, title, image FROM paintings where artist_id = ? ORDER BY id DESC";
-        $db = new Database();
+        $db = $db ?? new Database();
         $arr = $db->getAll($query, [$id]);
         return $arr;
     }
@@ -200,13 +200,13 @@ class Paintings{
      * @param int $id Artist ID
      * @return array Array of portfolio paintings
      */
-    public static function getPaintingsByArtistPortfolio($id) {
+    public static function getPaintingsByArtistPortfolio($id, $db = null) {
         $query = "SELECT paintings.*, categories.name AS category_name
         FROM paintings
         JOIN categories ON paintings.category_id = categories.id
         WHERE paintings.artist_id = ?
         ORDER BY paintings.id DESC";
-        $db = new Database();
+        $db = $db ?? new Database();
         return $db->getAll($query, [$id]);
     }
 
@@ -215,13 +215,13 @@ class Paintings{
      * @param int $id Painting ID
      * @return array|null Painting data or null if not found
      */
-    public static function getPaintingByID($id) {
+    public static function getPaintingByID($id, $db = null) {
                 $query = "SELECT paintings.*, categories.name AS category_name, artists.name AS artist_name, artists.picture AS artist_avatar
                 FROM paintings
                 JOIN categories ON paintings.category_id = categories.id
                 JOIN artists ON paintings.artist_id = artists.id
                 WHERE paintings.id = ? ";
-        $db = new Database();
+        $db = $db ?? new Database();
         $arr = $db->getOne($query, [$id]);
         return $arr;
     }
@@ -231,14 +231,14 @@ class Paintings{
      * @param int $id Painting ID
      * @return array|null Painting data or null if not found or not public
      */
-    public static function getPublicPaintingByID($id) {
+    public static function getPublicPaintingByID($id, $db = null) {
         $query = "SELECT paintings.*, categories.name AS category_name, artists.name AS artist_name, artists.picture AS artist_avatar
                 FROM paintings
                 JOIN categories ON paintings.category_id = categories.id
                 JOIN artists ON paintings.artist_id = artists.id
                 WHERE paintings.id = ?
                   AND artists.status = 'approved'";
-        $db = new Database();
+        $db = $db ?? new Database();
         $arr = $db->getOne($query, [$id]);
         return $arr;
     }
@@ -248,12 +248,12 @@ class Paintings{
      * @param string|null $fileHash File hash
      * @return array|null Painting data or null if not found
      */
-    public static function getPaintingByFileHash($fileHash) {
+    public static function getPaintingByFileHash($fileHash, $db = null) {
         if (empty($fileHash)) {
             return null;
         }
         $query = "SELECT id, title, image FROM paintings WHERE file_hash = ? LIMIT 1";
-        $db = new Database();
+        $db = $db ?? new Database();
         return $db->getOne($query, [$fileHash]);
     }
 
@@ -262,7 +262,7 @@ class Paintings{
      * @param array $cleanData Validated painting data
      * @return int New painting ID
      */
-    public static function insertPainting(array $cleanData) {
+    public static function insertPainting(array $cleanData, $db = null) {
         $fileHash = $cleanData['file_hash'] ?? null;
         
         if ($fileHash) {
@@ -298,7 +298,7 @@ class Paintings{
             ];
         }
 
-        $db = new Database();
+        $db = $db ?? new Database();
         $db->executeRun($query, $params);
         return $db->getLastInsertId();
     }
@@ -309,7 +309,7 @@ class Paintings{
      * @param array $cleanData Validated painting data
      * @return bool Success status
      */
-    public static function updatePainting($id, array $cleanData) {
+    public static function updatePainting($id, array $cleanData, $db = null) {
         $fileHash = $cleanData['file_hash'] ?? null;
         
         if ($fileHash) {
@@ -349,7 +349,7 @@ class Paintings{
             ];
         }
 
-        $db = new Database();
+        $db = $db ?? new Database();
         return $db->executeRun($query, $params);
     }
 
@@ -359,9 +359,9 @@ class Paintings{
      * @param int $artistId Artist ID
      * @return bool Success status
      */
-    public static function deletePainting($id, $artistId) {
+    public static function deletePainting($id, $artistId, $db = null) {
         $query = "DELETE FROM paintings WHERE id = ? AND artist_id = ?";
-        $db = new Database();
+        $db = $db ?? new Database();
         return $db->executeRun($query, [$id, $artistId]);
     }
 
@@ -371,13 +371,13 @@ class Paintings{
      * @param int $id Collection ID
      * @return array Array of paintings for the collection
      */
-    public static function getPaintingsByCollectionID($id) {
+    public static function getPaintingsByCollectionID($id, $db = null) {
         // Load the collection and its parameter before building the query.
-        $collection = Collections::getCollectionByID($id);
+        $db = $db ?? new Database();
+        $collection = Collections::getCollectionByID($id, $db);
         if (!$collection) {
             return [];
         }
-        $db = new Database();
        
         // Build a dynamic filter based on the collection type.
         $baseQuery = "SELECT paintings.*, artists.name AS artist_name, categories.name AS category_name

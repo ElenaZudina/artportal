@@ -8,41 +8,45 @@ class Favorite {
      * Add a painting to a user's favorites.
      * @param int $userId User ID
      * @param int $paintingId Painting ID
+     * @param Database|null $db Optional database instance for testing
      * @return bool Success status
      */
-    public static function addToFavorite($userId, $paintingId) {
+    public static function addToFavorite($userId, $paintingId, $db = null) {
         $sql = 'INSERT INTO `favorites` (user_id, painting_id) VALUES (?, ?)';
-        $db = new Database();
+        $db = $db ?? new Database();
         return $db->executeRun($sql, [$userId, $paintingId]);
     }
     /**
      * Remove a painting from a user's favorites.
      * @param int $userId User ID
      * @param int $paintingId Painting ID
+     * @param Database|null $db Optional database instance for testing
      * @return bool Success status
      */
-    public static function removeFromFavorite($userId, $paintingId) {
+    public static function removeFromFavorite($userId, $paintingId, $db = null) {
         $sql = 'DELETE FROM `favorites` WHERE user_id = ? AND painting_id = ?';
-        $db = new Database();
+        $db = $db ?? new Database();
         return $db->executeRun($sql, [$userId, $paintingId]);
 }
 /**
  * Check whether a painting is in a user's favorites.
  * @param int $userId User ID
  * @param int $paintingId Painting ID
+ * @param Database|null $db Optional database instance for testing
  * @return bool True when the painting is favorited by the user
  */
-public static function isFavorite($userId, $paintingId) {
+public static function isFavorite($userId, $paintingId, $db = null) {
         $query = 'SELECT id FROM `favorites` WHERE user_id = ? AND painting_id = ? LIMIT 1';
-        $db = new Database();
+        $db = $db ?? new Database();
         return (bool)$db->getOne($query, [$userId, $paintingId]);
 }
 /**
  * Get all favorite paintings for a user.
  * @param int $userId User ID
+ * @param Database|null $db Optional database instance for testing
  * @return array Array of favorited paintings with artist data
  */
-public static function getUserFavorites($userId) {
+public static function getUserFavorites($userId, $db = null) {
         $query = 'SELECT paintings.id AS painting_id,
                          paintings.title,
                          paintings.description,
@@ -59,7 +63,7 @@ public static function getUserFavorites($userId) {
                   JOIN favorites ON paintings.id = favorites.painting_id
                   JOIN artists ON paintings.artist_id = artists.id
                   WHERE favorites.user_id = ?';
-        $db = new Database();
+        $db = $db ?? new Database();
         return $db->getAll($query, [$userId]);
 }
 }
