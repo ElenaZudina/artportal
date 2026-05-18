@@ -1,11 +1,12 @@
 <?php ob_start() ?>
+<!-- Main article container for dashboard start page -->
 <article>
     <div id="main" class="container">
-        
         <?php if ($_SESSION['status'] === 'artist'): ?>
-        
+        <!-- Artist dashboard section -->
         <h3>Artist Dashboard</h3>
 
+        <!-- Price calculator teaser card -->
         <div class="card calculator-teaser shadow-sm mb-3">
             <div class="card-body d-flex flex-column flex-md-row align-items-md-center justify-content-between gap-3">
                 <div>
@@ -19,6 +20,7 @@
             </div>
         </div>
 
+        <!-- Price calculator modal -->
         <div class="modal fade" id="priceCalculatorModal" tabindex="-1" aria-labelledby="priceCalculatorModalLabel" aria-hidden="true">
             <div class="modal-dialog modal-lg modal-dialog-scrollable">
                 <div class="modal-content">
@@ -29,6 +31,7 @@
                     <div class="modal-body">
                         <div id="price-calc-alert" class="alert alert-danger d-none" role="alert"></div>
 
+                        <!-- Calculator input fields -->
                         <div class="row g-3">
                             <div class="col-md-6">
                                 <label for="calc_mode" class="form-label">Mode</label>
@@ -66,6 +69,7 @@
 
                         <hr>
 
+                        <!-- Calculator result section -->
                         <div id="price-calc-result" class="d-none">
                             <div class="row g-3">
                                 <div class="col-md-6"><strong id="result_main_label">Your price:</strong> <span id="calc_result_main">0.00</span></div>

@@ -1,9 +1,14 @@
 <?php
+/**
+ * Exhibition Delete Form View
+ * Displays confirmation form for deleting an exhibition in admin panel
+ */
 ob_start();
 ?>
 
 <?php $exhibition = $exhibition ?? []; ?>
 
+<!-- Main content: Delete exhibition form -->
 <div class="container" style="min-height:400px;">
     <div class="col-md-11">
         <h2>Exhibition Delete</h2>

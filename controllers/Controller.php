@@ -1,6 +1,14 @@
 <?php
+/**
+ * Base Controller class for handling main website pages
+ * Manages home page and error pages
+ */
 class Controller {
 
+    /**
+     * Display home page with latest paintings, artists, and current exhibition
+     * Loads multiple partial views: paintings, artists, and carousel slider
+     */
     public static function StartSite() {
         $arr = Paintings::getLastPaintings();
         $artistArr = Artists::getLast10Artists();
@@ -18,6 +26,9 @@ class Controller {
         include_once 'views/home.php';// Подключаем представление для отображения главной страницы, если нужно добавить дополнительный контент
     }
 
+    /**
+     * Display 404 error page for not found routes
+     */
     public static function error404() {
         include_once 'views/error404.php';
     }

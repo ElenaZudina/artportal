@@ -4,6 +4,10 @@ require_once __DIR__ . '/../services/VisionAIService.php';
 require_once __DIR__ . '/../models/PaintingTags.php';
 require_once __DIR__ . '/../models/Tags.php';
 
+/**
+ * Painting Service - handles painting operations
+ * Manages painting creation, updates, deletion, and vision AI tagging
+ */
 class PaintingService {
     private static function getArtistIdForUser(int $userId) {
         $artist = Artists::getArtistByUserId($userId);

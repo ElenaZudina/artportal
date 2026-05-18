@@ -4,10 +4,18 @@ use PHPMailer\PHPMailer\Exception;
 
 require_once __DIR__ . '/../vendor/autoload.php';
 
+/**
+ * Email Service - handles sending emails via PHPMailer and Mailtrap
+ * Sends notifications for purchase requests, password resets, and other events
+ * Uses SMTP configuration from environment variables
+ */
 class EmailService {
     
     /**
-     * Отправляет email уведомление художнику о новом запросе на покупку
+     * Send email notification to artist about new purchase request
+     * Includes painting details and requester information
+     * @param array $request Purchase request data with artist and painting info
+     * @return bool Success status
      */
     public static function sendPurchaseRequestNotification($request) {
         if (!class_exists('PHPMailer\\PHPMailer\\PHPMailer')) {

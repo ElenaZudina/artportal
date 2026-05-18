@@ -1,7 +1,12 @@
 <?php
+/**
+ * Category Add Form View
+ * Displays form for adding a new category in admin panel
+ */
 ob_start();
 ?>
 
+<!-- Main content: Add category form -->
 <div class="container" style="min-height:400px;">
     <div class="col-md-11">
         <h2>Category Add</h2>

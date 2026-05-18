@@ -1,6 +1,21 @@
 <?php
 
+/**
+ * Artist Profile Service - handles artist profile creation and validation
+ * Manages profile data validation, file upload processing, and database operations
+ */
 class ArtistProfileService {
+    
+    /**
+     * Helper method to process uploaded profile picture
+     * Validates file type, size, and saves to artist images directory
+     * Uses unique filename with uniqid to prevent collisions
+     * @param array $data Form data with legacy picture field
+     * @param array $files Uploaded files from $_FILES
+     * @param string|null $existingPicture Existing picture filename if updating
+     * @param array $errors Error messages array (passed by reference)
+     * @return string|null Saved filename or null if no valid file
+     */
     private static function resolvePictureValue(array $data, array $files, ?string $existingPicture = null, array &$errors = []) {
         $upload = $files['picture_file'] ?? null;
 
@@ -50,6 +65,15 @@ class ArtistProfileService {
         return $legacyPicture !== '' ? $legacyPicture : null;
     }
 
+    /**
+     * Create or update artist profile
+     * Validates all profile data, processes file uploads, saves to database
+     * Returns success status and validation errors if any
+     * @param array $data Profile form data
+     * @param array $files Uploaded files
+     * @param int $userId User ID for profile owner
+     * @return array Success status with user message or errors
+     */
     public static function createProfile($data, $files, $userId) {
         $errors = [];
 

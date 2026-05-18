@@ -1,6 +1,17 @@
 <?php
 
+/**
+ * Category Service - manages painting category operations
+ * Handles creating, updating, and deleting categories with validation
+ */
 class CategoryService {
+    
+    /**
+     * Create new painting category
+     * Validates category name is not empty and not duplicate
+     * @param array $data Form data with category name
+     * @return array Success status with error message if failed
+     */
     public static function createCategory($data) {
         $name = trim($data['name'] ?? '');
 

@@ -1,6 +1,17 @@
 <?php
+/**
+ * Authentication Model - handles user authentication and session management
+ * Manages user lookups, status updates, and session validation
+ */
 class Auth {
-    // АВТОРИЗАЦИЯ 
+    
+    /**
+     * Find user account by email address
+     * Supports dependency injection for testing purposes
+     * @param string $email User email address
+     * @param Database $db Optional database instance for testing
+     * @return array User data or null if not found
+     */
     public static function findUserByEmail($email, $db = null) {
         // Allow injecting a Database instance for testing; fall back to real Database in production
         $db = $db ?? new Database();

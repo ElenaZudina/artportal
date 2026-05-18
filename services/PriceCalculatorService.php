@@ -1,7 +1,23 @@
 <?php
 
+/**
+ * Price Calculator Service - calculates painting prices based on desired income
+ * Handles commission and tax calculations to determine final selling price
+ */
 class PriceCalculatorService
 {
+    /**
+     * Calculate selling price from desired artist income
+     * Works backwards from desired income, adding commission and tax to determine final price
+     * Assumes artist is either tax resident or exempt from tax
+     * 
+     * @param float $desiredIncome Amount artist wants to earn
+     * @param float $commission Commission percentage (0-100)
+     * @param float $tax Tax percentage (0-100)
+     * @param bool $isTaxResident Whether artist is tax resident
+     * @param float $expenses Business expenses to cover
+     * @return array Price breakdown with final price and deduction amounts
+     */
     public static function calculateFromDesiredIncome(
         $desiredIncome,
         $commission,

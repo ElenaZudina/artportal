@@ -1,4 +1,8 @@
 <?php
+/**
+ * Home Page View
+ * Displays main landing page with hero section and featured exhibitions
+ */
 ob_start();
 ?>
 <div class="d-flex justify-content-between align-items-center mb-3">

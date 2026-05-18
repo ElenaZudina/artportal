@@ -1,4 +1,8 @@
 <?php
+/**
+ * Statistics Service - generates application statistics and analytics
+ * Aggregates data for reporting and dashboard displays
+ */
 class StatsService {
 
     // Возвращает набор базовых метрик для dashboard/admin/artist/user

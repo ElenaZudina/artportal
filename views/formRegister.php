@@ -1,4 +1,8 @@
 <?php
+/**
+ * User Registration Form View
+ * Displays form for new user account creation
+ */
 ob_start();
 ?>
 <div class="row justify-content-center">

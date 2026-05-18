@@ -1,4 +1,8 @@
 <?php
+/**
+ * Single Artist Profile Page View
+ * Displays artist information, biography, and their paintings portfolio
+ */
 ob_start();
 ?>
 

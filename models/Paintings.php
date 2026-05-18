@@ -1,5 +1,16 @@
 <?php
+/**
+ * Paintings Model - handles database operations for paintings
+ * Manages painting data, search, pagination, categories, and CRUD operations
+ * Only displays paintings from approved artists
+ */
 class Paintings{
+    
+    /**
+     * Get the most recently added paintings from approved artists
+     * @param int $limit Number of paintings to retrieve (default: 10)
+     * @return array Array of paintings with artist and category information
+     */
     public static function getLastPaintings($limit = 10) {
         $limit = (int)$limit;
         $query = "
@@ -19,6 +30,10 @@ class Paintings{
         return $arr;
     }
 
+    /**
+     * Get all paintings from approved artists
+     * @return array Array of all paintings with artist and category information
+     */
     public static function getAllPaintings() {
        $query = "
             SELECT
@@ -36,6 +51,10 @@ class Paintings{
         return $arr;
     }
 
+    /**
+     * Count total paintings from approved artists
+     * @return int Total count of paintings
+     */
     public static function getAllPaintingsCount() {
         $query = "
             SELECT COUNT(*) AS total
@@ -48,6 +67,12 @@ class Paintings{
         return (int)($row['total'] ?? 0);
     }
 
+    /**
+     * Get paginated list of paintings from approved artists
+     * @param int $limit Number of paintings per page
+     * @param int $offset Starting offset for pagination
+     * @return array Array of paintings for current page with artist and category data
+     */
     public static function getAllPaintingsPaginated($limit, $offset) {
        $limit = (int)$limit;
        $offset = (int)$offset;
@@ -67,6 +92,12 @@ class Paintings{
        return $db->getAll($query);
     }
 
+    /**
+     * Count paintings matching search criteria from approved artists
+     * Searches in painting name and description
+     * @param string $search Search query string
+     * @return int Count of matching paintings
+     */
     public static function getSearchPaintingsCount($search) {
         $search = trim((string)$search);
         $db = new Database();

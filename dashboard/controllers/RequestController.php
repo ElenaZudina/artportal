@@ -1,8 +1,22 @@
 <?php
 require_once __DIR__ . '/../../services/EmailService.php';
 
+/**
+ * Dashboard Request Controller - manages purchase requests
+ * Handles viewing and managing painting purchase requests
+ */
+
+/**
+ * Controller for managing painting purchase requests in the dashboard.
+ * Handles creation of requests and viewing user's requests.
+ */
 class RequestController {
 
+    /**
+     * Create a new purchase request for a painting.
+     * Validates POST method, CSRF token, and request interval.
+     * Sends notification email to artist if successful.
+     */
     public static function create() {
         if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
             header('Location: /artportal/');
@@ -68,6 +82,9 @@ class RequestController {
         exit;
     }
 
+    /**
+     * Display the list of purchase requests made by the logged-in user.
+     */
     public static function myRequests() {
         Auth::requireSession('user');
 
@@ -75,6 +92,10 @@ class RequestController {
         include_once('views/my-requests.php');
     }
 
+    /**
+     * Display the list of purchase requests received by the logged-in artist.
+     * Only accessible to users with artist status.
+     */
     public static function purchaseRequests() {
         Auth::requireSession();
 

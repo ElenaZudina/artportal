@@ -1,4 +1,8 @@
 <?php
+/**
+ * Error 404 Page - displays 404 not found error
+ * Shows user-friendly error message for missing pages
+ */
 ob_start();
 $errorTitle = $errorTitle ?? 'Oops! This canvas is blank… just like the page you were looking for.';
 $errorMessage = $errorMessage ?? '';

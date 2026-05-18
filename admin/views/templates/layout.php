@@ -1,8 +1,9 @@
+<!-- Admin Layout Template -->
 <html>
     <head>
         <title>Dashboard <?php echo $_SESSION["name"]; ?></title>
         <link href="/artportal/public/css/login.css" rel="stylesheet">
-        <!-- <link rel="stylesheet" href="../public/css/font-awesome.min.css"> -->
+        <!-- Font Awesome for icons -->
          <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
         
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
@@ -12,10 +13,11 @@
     <body>
         <div class="container-fluid">
             <?php
+            // Main admin layout: show content only if user is logged in
             if (isset($_SESSION["userId"]))
             {
             ?>
-            <!-- Top navbar -->
+            <!-- Top navigation bar -->
             <nav class="navbar navbar-expand-lg navbar-light bg-white border-bottom">
                 <div class="container-fluid">
                     <a class="navbar-brand admin-brand" href="../" target="_blank" style="display: inline-flex; align-items: center; gap: 0.5rem; text-decoration: none;">
@@ -39,7 +41,7 @@
             </nav>
 
 
-            <!-- Offcanvas sidebar for small screens (move to body root) -->
+            <!-- Offcanvas sidebar for small screens -->
             <div class="offcanvas offcanvas-start" tabindex="-1" id="offcanvasSidebar" aria-labelledby="offcanvasSidebarLabel">
               <div class="offcanvas-header">
                 <h5 class="offcanvas-title" id="offcanvasSidebarLabel">Menu</h5>
@@ -89,7 +91,7 @@
         // Moderation block
         echo '<div class="mb-4">';
         echo '<h5 class="text-uppercase text-secondary">Moderation</h5>';
-        // Здесь будут ссылки на управление пользователями (добавить позже)
+        // Here will be links for user management (to be added later)
         echo '<ul class="nav flex-column small">';
         echo '<li class="nav-item"><a class="nav-link" style="font-size:1rem;" href="moderation-artists"><i class="fa-solid fa-shield-halved me-2"></i>Approve artist profiles</a></li>';
         echo '<li class="nav-item"><a class="nav-link" style="font-size:1rem;" href="users"><i class="fa-solid fa-users me-2"></i>Users</a></li>';
@@ -105,7 +107,7 @@
         echo '<li class="nav-item"><a class="nav-link" style="font-size:1rem;" href="exhibitions"><i class="fa-solid fa-image me-2"></i>Exhibitions</a></li>';
         echo '</ul>';
         echo '</div>';
-        // Статистика (будет добавлена позже)
+        // Statistics (to be added later)
         echo '<div class="mb-4">';
         echo '<h5 class="text-uppercase text-secondary">Statistics</h5>';
         echo '<span class="text-muted">Coming soon...</span>';
@@ -166,18 +168,19 @@
                             echo '</div>';
                         }
                         ?>
-                        <?php echo $content ?>
+                        <?php echo $content ?> <!-- Main page content will be injected here -->
                     </div>
                 </main>
             </div>
 
             <?php
             } else {
-                // Если нет сессии, выводим отказ в доступе
+                // If no session, show access denied
                 echo '<div class="container py-4"><h4>Access denied!</h4></div>';
             }
             ?>
 
+            <!-- Footer -->
             <footer class="footer mt-5 bg-light border-top">
                 <div class="container py-3">
                     <p class="mb-0 text-center">&copy; 2026 Design Dashboard <i class="fa fa-child"></i></p>

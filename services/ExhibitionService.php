@@ -1,5 +1,9 @@
 <?php
 
+/**
+ * Exhibition Service - manages art exhibition operations
+ * Handles creating, updating, and managing exhibitions
+ */
 class ExhibitionService {
     public static function createExhibition($data) {
         $title = trim($data['title'] ?? '');

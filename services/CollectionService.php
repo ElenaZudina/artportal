@@ -1,5 +1,9 @@
 <?php
 
+/**
+ * Collection Service - manages painting collection operations
+ * Handles CRUD operations and validation for collections
+ */
 class CollectionService {
     public static function createCollection($data) {
         $title = trim($data['title'] ?? '');

@@ -1,4 +1,8 @@
 <?php
+/**
+ * Favourite Model - handles user favorite paintings operations
+ * Manages user's favorited paintings list
+ */
 class Favorite {
     public static function addToFavorite($userId, $paintingId) {
         $sql = 'INSERT INTO `favorites` (user_id, painting_id) VALUES (?, ?)';

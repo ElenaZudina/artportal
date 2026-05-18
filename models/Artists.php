@@ -1,5 +1,14 @@
 <?php
+/**
+ * Artists Model - handles all database operations for artists
+ * Manages approved artists, pending approvals, searching, and CRUD operations
+ */
 class Artists {
+    
+    /**
+     * Get the 10 most recently approved artists
+     * @return array Array of approved artists ordered by ID descending
+     */
     public static function getLast10Artists() {
         $query = "SELECT * FROM artists WHERE status = 'approved' ORDER BY id DESC LIMIT 10";
         $db = new Database();
@@ -7,6 +16,10 @@ class Artists {
         return $arr;
     }
 
+    /**
+     * Get all approved artists
+     * @return array Array of all approved artists
+     */
     public static function getAllArtists() {
         $query = "SELECT * FROM artists WHERE status = 'approved' ORDER BY id DESC";
         $db = new Database();
@@ -14,6 +27,10 @@ class Artists {
         return $arr;
     }
 
+    /**
+     * Count total approved artists in database
+     * @return int Total count of approved artists
+     */
     public static function getAllArtistsCount() {
         $query = "SELECT COUNT(*) AS total FROM artists WHERE status = 'approved'";
         $db = new Database();
@@ -21,6 +38,12 @@ class Artists {
         return (int)($row['total'] ?? 0);
     }
 
+    /**
+     * Get paginated list of approved artists
+     * @param int $limit Number of records per page
+     * @param int $offset Starting offset for records
+     * @return array Array of approved artists for current page
+     */
     public static function getAllArtistsPaginated($limit, $offset) {
         $limit = (int)$limit;
         $offset = (int)$offset;
@@ -29,6 +52,12 @@ class Artists {
         return $db->getAll($query);
     }
 
+    /**
+     * Count approved artists matching search criteria
+     * Searches in artist name, location, and biography
+     * @param string $search Search query string
+     * @return int Count of matching approved artists
+     */
     public static function getSearchArtistsCount($search) {
         $search = trim((string)$search);
         $db = new Database();
@@ -52,6 +81,14 @@ class Artists {
         return (int)($row['total'] ?? 0);
     }
 
+    /**
+     * Get paginated list of approved artists matching search criteria
+     * Searches in artist name, location, and biography
+     * @param string $search Search query string
+     * @param int $limit Number of records per page
+     * @param int $offset Starting offset for records
+     * @return array Array of matching artists for current page
+     */
     public static function getSearchArtistsPaginated($search, $limit, $offset) {
         $search = trim((string)$search);
         $limit = (int)$limit;
@@ -77,7 +114,13 @@ class Artists {
         return $db->getAll($query, [$like, $like, $like]);
     }
 
-     public static function getPublicArtistByID($id) {
+    /**
+     * Get single approved artist by ID
+     * Only returns artists with 'approved' status
+     * @param int $id Artist ID
+     * @return array Artist data or null if not found/not approved
+     */
+    public static function getPublicArtistByID($id) {
         $query = "SELECT * FROM artists
         WHERE artists.id = ? AND status = 'approved'";
         $db = new Database();
@@ -85,6 +128,12 @@ class Artists {
         return $arr;
     }
 
+    /**
+     * Get artist by ID regardless of status
+     * Used for internal operations and admin functionality
+     * @param int $id Artist ID
+     * @return array Artist data or null if not found
+     */
     public static function getArtistByID($id) {
         $query = "SELECT * FROM artists
         WHERE artists.id = ? ";
@@ -93,12 +142,22 @@ class Artists {
         return $arr;
     }
 
+    /**
+     * Get all artists pending approval
+     * @return array Array of pending artists ordered by creation date
+     */
     public static function getPendingArtists() {
         $query = "SELECT * FROM artists WHERE status = 'pending' ORDER BY created_at DESC, id DESC";
         $db = new Database();
         return $db->getAll($query);
     }
 
+    /**
+     * Approve artist profile and update user role to 'artist'
+     * Changes artist status from 'pending' to 'approved'
+     * @param int $id Artist ID
+     * @return bool Success status
+     */
     public static function approveArtist($id) {
         $db = new Database();
 
@@ -116,6 +175,12 @@ class Artists {
         return true;
     }
 
+    /**
+     * Reject artist profile and revert user role to 'user'
+     * Changes artist status to 'rejected'
+     * @param int $id Artist ID
+     * @return bool Success status
+     */
     public static function rejectArtist($id) {
         $db = new Database();
 
@@ -133,6 +198,11 @@ class Artists {
         return true;
     }
 
+    /**
+     * Get artist profile by user ID
+     * @param int $userId User ID
+     * @return array Artist data or null if not found
+     */
     public static function getArtistByUserId($userId) {
         $query = "SELECT * FROM artists WHERE user_id = ?";
         $db = new Database();
