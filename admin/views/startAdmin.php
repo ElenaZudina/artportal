@@ -1,4 +1,10 @@
-<?php ob_start() ?>
+<?php
+/**
+ * Admin Home View
+ * Main admin dashboard page: displays statistics and navigation to admin features
+ */
+ob_start() ?>
+<!-- Main content: Admin dashboard -->
 <article>
     <div id="main" class="container">
         <h3>Admin Panel</h3>

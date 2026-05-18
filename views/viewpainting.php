@@ -1,4 +1,9 @@
 <?php
+/**
+ * Single Painting Detail Page View
+ * Shows painting information, artist details, price, and action buttons
+ * Displays favorite status and purchase options
+ */
 ob_start();
 ?>
 

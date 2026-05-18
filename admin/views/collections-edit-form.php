@@ -1,9 +1,14 @@
 <?php
+/**
+ * Collection Edit Form View
+ * Displays form for editing a collection in admin panel
+ */
 ob_start();
 ?>
 
 <?php $collection = $collection ?? []; ?>
 
+<!-- Main content: Edit collection form -->
 <div class="container" style="min-height:400px;">
     <div class="col-md-11">
         <h2>Collection Edit</h2>

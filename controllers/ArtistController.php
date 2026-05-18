@@ -1,6 +1,15 @@
 <?php
+/**
+ * Artist Controller - handles all artist-related page requests
+ * Manages artist listing, searching, pagination, and artist profile pages
+ */
 class ArtistController {
 
+    /**
+     * Display all artists with pagination and search functionality
+     * Retrieves search query from GET parameters, calculates pagination
+     * and renders artists list with pagination controls
+     */
     public static function AllArtists() {
         $perPage = 3;
         $search = trim((string)($_GET['search'] ?? ''));
@@ -17,6 +26,13 @@ class ArtistController {
         include_once 'views/allartists.php';
     }
 
+    /**
+     * Display single artist profile page with their paintings
+     * Retrieves artist data by ID and related paintings
+     * Shows 404 error if artist not found
+     * 
+     * @param int $id Artist ID
+     */
     public static function ArtistByID($id) {
         $item = Artists::getPublicArtistByID($id);
         if (!$item) {

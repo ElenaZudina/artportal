@@ -1,4 +1,8 @@
 <?php
+/**
+ * User Login Form View
+ * Displays form for user authentication
+ */
 ob_start();
 if (isset ($_SESSION['userId']) && isset($_SESSION['status'])) {
     switch ($_SESSION['status']) {

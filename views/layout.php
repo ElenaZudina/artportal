@@ -1,4 +1,11 @@
 <?php
+/**
+ * Main HTML Layout Template
+ * Determines active route and renders main page structure
+ * Includes header, navigation, content area, and footer
+ * Loads Bootstrap, Font Awesome, and custom CSS
+ */
+
 $activeRoute = defined('ACTIVE_ROUTE') ? ACTIVE_ROUTE : 'home';
 
 $isHome = $activeRoute === 'home';

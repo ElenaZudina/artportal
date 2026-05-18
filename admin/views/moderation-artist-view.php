@@ -1,7 +1,12 @@
 <?php
+/**
+ * Moderation Artist Profile View
+ * Displays artist profile for moderation in admin panel
+ */
 ob_start();
 ?>
 
+<!-- Main content: Artist profile moderation -->
 <div class="container" style="min-height:400px;">
     <div class="mb-4">
         <a class="btn btn-outline-secondary" href="moderation-artists">Back to requests</a>

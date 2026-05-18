@@ -1,4 +1,8 @@
 <?php
+/**
+ * All Artists Page View
+ * Shows searchable and paginated list of approved artists
+ */
 ob_start();
 ?>
 <h1>Meet our artists </h1>

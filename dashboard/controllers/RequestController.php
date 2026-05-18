@@ -1,6 +1,10 @@
 <?php
 require_once __DIR__ . '/../../services/EmailService.php';
 
+/**
+ * Dashboard Request Controller - manages purchase requests
+ * Handles viewing and managing painting purchase requests
+ */
 class RequestController {
 
     public static function create() {

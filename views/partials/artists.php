@@ -1,4 +1,8 @@
 <?php
+/**
+ * ViewArtists Partial - displays artists grid
+ * Renders artist profile cards with image, name, and profile link
+ */
 class ViewArtists{
     public static function ArtistsGrid($arr, $showProfile = false) {
         echo '<div class="container my-4">'; //общий контейнер

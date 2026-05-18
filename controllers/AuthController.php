@@ -1,16 +1,32 @@
 <?php
 require_once __DIR__ . '/../services/EmailService.php';
 
+/**
+ * Authentication Controller - handles all auth-related requests
+ * Manages login, logout, registration, and password reset flows
+ * Validates CSRF tokens and manages user sessions
+ */
 class AuthController {
 
+    /**
+     * Display login form page
+     */
     public static function formLoginSite() {
         include_once('views/formLogin.php');
     }
 
+    /**
+     * Display forgot password form page
+     */
     public static function forgotPasswordForm() {
         include_once('views/forgot-password.php');
     }
 
+    /**
+     * Process password reset request
+     * Validates CSRF token, checks email exists in system
+     * Sends password reset request to admin for approval
+     */
     public static function forgotPasswordRequest() {
         if (($_SERVER['REQUEST_METHOD'] ?? 'GET') !== 'POST') {
             header('Location: /artportal/forgot-password');
@@ -49,6 +65,11 @@ class AuthController {
         exit;
     }
 
+    /**
+     * Process user login
+     * Validates CSRF token, authenticates user credentials
+     * Sets session variables and redirects to dashboard or admin panel
+     */
     public static function loginAction() {
         if (($_SERVER['REQUEST_METHOD'] ?? 'GET') !== 'POST') {
             header('Location: /artportal/login');
@@ -84,6 +105,10 @@ class AuthController {
         }
     }
 
+    /**
+     * Logout user and destroy session
+     * Clears all session data and redirects to login page
+     */
     public static function logoutAction() {
         session_unset();
         session_destroy();
@@ -92,10 +117,18 @@ class AuthController {
         exit;
     }
 
+    /**
+     * Display user registration form page
+     */
     public static function registerForm() {
         include_once('views/formRegister.php');
     }
 
+    /**
+     * Process new user registration
+     * Validates CSRF token and registration data through RegisterService
+     * Sets session on successful registration
+     */
     public static function registerUser() {
         if (($_SERVER['REQUEST_METHOD'] ?? 'GET') !== 'POST') {
             header('Location: /artportal/registerForm');

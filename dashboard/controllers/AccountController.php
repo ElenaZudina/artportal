@@ -1,4 +1,8 @@
 <?php
+/**
+ * Dashboard Account Controller - manages artist account settings
+ * Handles account information and settings management
+ */
 class AccountController {
 
     public static function account() {

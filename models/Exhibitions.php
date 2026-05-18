@@ -1,4 +1,8 @@
 <?php
+/**
+ * Exhibitions Model - handles database operations for art exhibitions
+ * Manages exhibition data, status, and dates
+ */
 class Exhibitions {
 
     public static function getExhibitionByID($id) {

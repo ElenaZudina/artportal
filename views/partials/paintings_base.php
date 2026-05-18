@@ -1,4 +1,8 @@
 <?php
+/**
+ * ViewPaintings Partial (Base) - displays basic paintings grid layout
+ * Base template for rendering painting cards
+ */
 class ViewPaintings{
     public static function PaintingsList($arr) {
         echo '<div class="container my-4">';

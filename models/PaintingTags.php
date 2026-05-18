@@ -1,4 +1,8 @@
 <?php
+/**
+ * Painting Tags Model - handles relationship between paintings and tags
+ * Manages painting-tag associations in database
+ */
 class PaintingTags {
     public static function attach (int $paintingId, int $tagId): void {
         $db = new Database();

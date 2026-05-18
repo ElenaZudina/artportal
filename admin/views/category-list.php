@@ -1,7 +1,12 @@
 <?php
+/**
+ * Categories List View
+ * Displays all categories in admin panel
+ */
 ob_start();
 ?>
 
+<!-- Main content: Categories table -->
 <h2>Categories List</h2>
 
 <div class="container" style="min-height:400px;">

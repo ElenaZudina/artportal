@@ -1,6 +1,15 @@
 <?php
+/**
+ * Painting Controller - handles all painting-related page requests
+ * Manages painting listings, search, pagination, categories, and painting details
+ */
 class PaintingController {
 
+    /**
+     * Display all paintings with pagination and search functionality
+     * Retrieves search query from GET parameters, calculates pagination
+     * Displays 6 paintings per page
+     */
     public static function AllPaintings() {
         $perPage = 6;
         $search = trim((string)($_GET['search'] ?? ''));
@@ -17,6 +26,12 @@ class PaintingController {
         include_once 'views/allpaintings.php';
     }
 
+    /**
+     * Display paintings filtered by category
+     * Retrieves category details and all paintings in that category
+     * 
+     * @param int $id Category ID
+     */
     public static function PaintingsByCategoryID($id) {
         $arr = Paintings::getPaintingsByCategoryID($id);
         $category = Categories::getCategoryByID($id);
@@ -24,6 +39,14 @@ class PaintingController {
         include_once 'views/paintings_by_category.php';
     }
 
+    /**
+     * Display single painting detail page
+     * Shows painting information, artist details, and favorite status
+     * Handles different error cases: unpublished paintings and non-existent paintings
+     * Checks if current user marked painting as favorite
+     * 
+     * @param int $id Painting ID
+     */
     public static function PaintingByID($id) {
         $item = Paintings::getPublicPaintingByID($id);
         if (!$item) {

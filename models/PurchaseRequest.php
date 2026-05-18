@@ -1,4 +1,8 @@
 <?php
+/**
+ * Purchase Request Model - handles database operations for painting purchase requests
+ * Manages purchase request records and status
+ */
 class PurchaseRequest {
     
     public static function create($userId, $paintingId) {

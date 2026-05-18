@@ -1,4 +1,8 @@
 <?php
+/**
+ * Dashboard Profile Controller - manages artist profile
+ * Handles artist profile editing and updates
+ */
 class ProfileController {
 
     public static function profile() {

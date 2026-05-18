@@ -1,4 +1,8 @@
 <?php
+/**
+ * All Paintings Page View  
+ * Displays searchable and paginated grid of approved paintings
+ */
 ob_start();
 ?>
 <h1>All paintings </h1>

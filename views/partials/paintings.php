@@ -1,4 +1,8 @@
 <?php
+/**
+ * ViewPaintings Partial - displays paintings grid or list
+ * Renders painting cards with image, title, artist, and price
+ */
 class ViewPaintings{
     public static function PaintingsList($arr) {
         echo '<div class="container my-4">';

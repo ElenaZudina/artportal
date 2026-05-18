@@ -1,6 +1,16 @@
 <?php
+/**
+ * Profile Controller - manages user artist profile operations
+ * Handles profile form display and saving artist profile data
+ * Requires authenticated user session
+ */
 class ProfileController {
 
+    /**
+     * Display artist profile edit form
+     * Retrieves existing profile data if artist already has one
+     * Requires user to be logged in
+     */
     public static function artistProfileForm() {
         Auth::requireSession();
 
@@ -8,6 +18,12 @@ class ProfileController {
         include_once('views/formArtistProfile.php');
     }
 
+    /**
+     * Process and save artist profile data
+     * Validates CSRF token, handles file uploads for profile image
+     * Creates or updates artist profile information
+     * Requires user to be logged in
+     */
     public static function artistProfileSave() {
         Auth::requireSession();
 

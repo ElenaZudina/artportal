@@ -1,5 +1,17 @@
 <?php
+/**
+ * Register Service - handles user registration validation and creation
+ * Validates registration data and creates new user accounts
+ */
 class RegisterService {
+    
+    /**
+     * Register new user account
+     * Validates username, email, password requirements and password confirmation
+     * Returns errors if validation fails
+     * @param array $data Registration form data (name, email, password, confirm)
+     * @return array Success status with user data or errors
+     */
     public static function register($data) {
         $errors = [];
 
@@ -38,7 +50,19 @@ class RegisterService {
         return Register::saveUser($cleanData);
     }
 }
+/**
+ * Authentication Service - handles user login validation
+ * Validates credentials and returns authenticated user data
+ */
 class AuthService {
+    
+    /**
+     * Authenticate user login credentials
+     * Validates email format, checks user exists, verifies password
+     * Checks user account is active before returning success
+     * @param array $data Login form data (email, password)
+     * @return array Success status with user data or error messages
+     */
     public static function login($data) {
         $errors = [];
         if (!is_array($data) || empty($data)) {

@@ -1,4 +1,8 @@
 <?php
+/**
+ * Collections Model - handles database operations for painting collections
+ * Manages collection data and related queries
+ */
 class Collections {
 
     public static function getCollectionByID($id) {

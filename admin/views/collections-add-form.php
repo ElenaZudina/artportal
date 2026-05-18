@@ -1,7 +1,12 @@
 <?php
+/**
+ * Collection Add Form View
+ * Displays form for adding a new collection in admin panel
+ */
 ob_start();
 ?>
 
+<!-- Main content: Add collection form -->
 <div class="container" style="min-height:400px;">
     <div class="col-md-11">
         <h2>Collection Add</h2>

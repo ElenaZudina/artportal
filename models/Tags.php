@@ -1,4 +1,8 @@
 <?php
+/**
+ * Tags Model - handles database operations for painting tags
+ * Manages tag data for categorizing and searching paintings
+ */
 class Tags {
     public static function getOrCreateTag(string $name): int {
         $db = new Database();

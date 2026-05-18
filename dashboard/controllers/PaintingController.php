@@ -1,4 +1,8 @@
 <?php
+/**
+ * Dashboard Painting Controller - manages artist's paintings
+ * Handles painting CRUD operations for artists
+ */
 class PaintingController {
 
     public static function myPaintings() {

@@ -1,4 +1,8 @@
 <?php
+/**
+ * ViewSlider Partial - displays carousel slider of paintings
+ * Renders Bootstrap carousel with hero paintings
+ */
 class ViewSlider {
     public static function render($sliderPaintings) {
         if (!empty($sliderPaintings)): ?>

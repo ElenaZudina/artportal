@@ -1,9 +1,14 @@
 <?php
+/**
+ * Collection Delete Form View
+ * Displays confirmation form for deleting a collection in admin panel
+ */
 ob_start();
 ?>
 
 <?php $collection = $collection ?? []; ?>
 
+<!-- Main content: Delete collection form -->
 <div class="container" style="min-height:400px;">
     <div class="col-md-11">
         <h2>Collection Delete</h2>

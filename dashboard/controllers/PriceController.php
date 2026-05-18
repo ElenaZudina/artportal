@@ -2,6 +2,10 @@
 
 require_once __DIR__ . '/../../services/PriceCalculatorService.php';
 
+/**
+ * Dashboard Price Controller - manages painting pricing
+ * Calculates and manages painting prices and costs
+ */
 class PriceController {
     public static function calculate() {
         if ($_SERVER['REQUEST_METHOD'] !== 'POST') {

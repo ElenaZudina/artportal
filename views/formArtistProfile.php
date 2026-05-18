@@ -1,4 +1,8 @@
 <?php
+/**
+ * Artist Profile Form View
+ * Displays form for creating/editing artist profile information
+ */
 ob_start();
 
 $profile = $existingProfile ?? null;

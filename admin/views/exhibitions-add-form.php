@@ -1,9 +1,14 @@
 <?php
+/**
+ * Exhibition Add Form View
+ * Displays form for adding a new exhibition in admin panel
+ */
 ob_start();
 ?>
 
 <?php $collections = $collections ?? []; ?>
 
+<!-- Main content: Add exhibition form -->
 <div class="container" style="min-height:400px;">
     <div class="col-md-11">
         <h2>Exhibition Add</h2>

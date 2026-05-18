@@ -1,6 +1,10 @@
 ﻿<?php
 require_once __DIR__ . '/../../models/Favourite.php';
 
+/**
+ * Dashboard Favorite Controller - manages artist's favorite collections
+ * Handles favorite painting management for artists
+ */
 class FavoriteController {
 
     public static function myFavorites() {

@@ -1,12 +1,25 @@
 <?php
 
+/**
+ * Admin Users Controller - manages user accounts
+ * Handles user list, status changes, and user account operations
+ */
 class UsersController {
+    /**
+     * Display users list
+     * Optionally filters users by search query and renders users-list view
+     */
     public static function index() {
         $searchQuery = trim((string)($_GET['q'] ?? ''));
         $arr = Auth::getUsers($searchQuery);
         include_once 'views/users-list.php';
     }
 
+    /**
+     * Update a user's status
+     * Validates request and updates user status ('active'|'blocked')
+     * Protects admin accounts and prevents self-status changes
+     */
     public static function updateStatus() {
         $searchQuery = trim((string)($_POST['q'] ?? ''));
         $userId = (int)($_POST['id'] ?? 0);

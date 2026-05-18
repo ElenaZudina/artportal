@@ -1,4 +1,8 @@
 <?php
+/**
+ * Forgot Password View - password recovery form page
+ * Displays form for users to reset their password via email
+ */
 ob_start();
 ?>
 

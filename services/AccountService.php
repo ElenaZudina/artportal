@@ -1,5 +1,9 @@
 <?php
 
+/**
+ * Account Service - manages user account operations
+ * Handles account deletion and account management
+ */
 class AccountService {
     
     /**

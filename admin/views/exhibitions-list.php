@@ -1,7 +1,12 @@
 <?php
+/**
+ * Exhibitions List View
+ * Displays all exhibitions in admin panel
+ */
 ob_start();
 ?>
 
+<!-- Main content: Exhibitions table -->
 <h2>Exhibitions List</h2>
 
 <div class="container" style="min-height:400px;">

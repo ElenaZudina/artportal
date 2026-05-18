@@ -1,4 +1,8 @@
 <?php
+/**
+ * Vision AI Service - integrates with Google Vision API
+ * Analyzes images and detects content using machine learning
+ */
 class VisionAIService {
 
     private string $apiKey;

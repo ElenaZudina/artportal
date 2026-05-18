@@ -1,6 +1,14 @@
 <?php
+/**
+ * Categories Model - handles database operations for painting categories
+ * Manages CRUD operations and queries for category data
+ */
 class Categories {
 
+    /**
+     * Get all painting categories
+     * @return array Array of all categories
+     */
     public static function getAllCategories() {
         $query = "SELECT * FROM categories" ;
         $db = new Database();

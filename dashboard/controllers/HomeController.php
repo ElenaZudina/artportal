@@ -1,4 +1,8 @@
 <?php
+/**
+ * Dashboard Home Controller - artist dashboard home page
+ * Displays artist dashboard with their statistics and activities
+ */
 class HomeController {
 
     // Вход в Дашборд
