@@ -232,6 +232,18 @@
   width: 100%;
 }
 
+@media (max-width: 768px) {
+  .one-painting-container {
+    padding: 16px;
+  }
+}
+
+@media (max-width: 480px) {
+  .one-painting-container {
+    padding: 12px;
+  }
+}
+
 .artist-profile {
   display: flex;
   align-items: center;
@@ -497,6 +509,18 @@ footer p {
   font-weight: var(--font-weight-bold);
   line-height: 1;
   margin-bottom: 24px;
+}
+
+@media (max-width: 768px) {
+  .h2-footer {
+    font-size: 32px;
+  }
+}
+
+@media (max-width: 480px) {
+  .h2-footer {
+    font-size: 24px;
+  }
 }
 
 /* =========================
@@ -1294,4 +1318,88 @@ a.d-block.h-100.text-reset:focus-visible .img-fluid {
   transition: color 0.2s ease;
 }
 
+/* =========================
+   RESPONSIVE FONT SIZES
+   Media queries for hard-coded font sizes
+========================= */
+
+/* Tablet (768px and below) */
+@media (max-width: 768px) {
+  .painting-specs-label {
+    font-size: 11px;
+  }
+
+  .painting-specs-value {
+    font-size: 16px;
+  }
+
+  .artist-description {
+    font-size: 16px;
+    line-height: 20.8px;
+  }
+
+  .single-artist-description {
+    font-size: 18px;
+    line-height: 29.25px;
+  }
+
+  .one-painting-description {
+    font-size: 16px;
+    line-height: 29.25px;
+  }
+
+  .artist-profile-link {
+    font-size: 16px;
+  }
+
+  .pagination-dots {
+    font-size: 12px;
+  }
+
+  .custom-carousel-control .carousel-arrow {
+    font-size: 18px;
+  }
+
+  .hero-text {
+    font-size: 16px;
+  }
+}
+
+/* Mobile (480px and below) */
+@media (max-width: 480px) {
+  .painting-specs-label {
+    font-size: 10px;
+  }
+
+  .painting-specs-value {
+    font-size: 14px;
+  }
+
+  .artist-description {
+    font-size: 14px;
+    line-height: 17.64px;
+  }
+
+  .single-artist-description {
+    font-size: 16px;
+    line-height: 26px;
+  }
+
+  .one-painting-description {
+    font-size: 14px;
+    line-height: 22.75px;
+  }
+
+  .artist-profile-link {
+    font-size: 14px;
+  }
+
+  .pagination-dots {
+    font-size: 11px;
+  }
+
+  .hero-text {
+    font-size: 14px;
+  }
+}
 

@@ -64,8 +64,8 @@ h6 {
 }
 
 h1.single-card-title {
-  font-size: 60px;
-  line-height: 60px;
+  font-size: clamp(24px, 5vw, 60px);
+  line-height: clamp(24px, 5vw, 60px);
   font-family: var(--font-heading);
   font-weight: var(--font-weight-bold);
 }
