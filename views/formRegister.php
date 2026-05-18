@@ -5,6 +5,7 @@
  */
 ob_start();
 ?>
+<!-- Registration form card for creating a regular user account. -->
 <div class="row justify-content-center">
     <div class="col-lg-6 col-md-8">
         <div class="card shadow-sm border-0 mt-4 mb-5">
@@ -36,6 +37,7 @@ ob_start();
 </div>
 
 <?php
+// Pass captured page markup into the shared layout.
 $content = ob_get_clean();
 include_once 'views/layout.php';
 ?>

@@ -5,10 +5,12 @@
  */
 ob_start();
 
+// Preserve existing profile and submitted values for validation feedback.
 $profile = $existingProfile ?? null;
 $formData = $formData ?? [];
 ?>
 
+<!-- Artist profile form is shown only when the user has no existing artist profile. -->
 <div class="container mt-4 mb-5">
     <div class="row justify-content-center">
         <div class="col-lg-8">
@@ -17,12 +19,14 @@ $formData = $formData ?? [];
                     <h2 class="mb-3 text-center">Artist Profile Form</h2>
 
                     <?php if (!empty($profile)): ?>
+                        <!-- Existing profile status prevents duplicate artist profile submissions. -->
                         <div class="alert alert-info">
                             You already have an artist profile with status:
                             <strong><?php echo htmlspecialchars($profile['status'] ?? 'pending', ENT_QUOTES, 'UTF-8'); ?></strong>
                         </div>
                     <?php else: ?>
                         <?php if (!empty($resultArtist['errors']) && is_array($resultArtist['errors'])): ?>
+                            <!-- Validation errors from profile creation are listed above the form. -->
                             <div class="alert alert-danger">
                                 <?php foreach ($resultArtist['errors'] as $error): ?>
                                     <div><?php echo htmlspecialchars($error, ENT_QUOTES, 'UTF-8'); ?></div>
@@ -36,6 +40,7 @@ $formData = $formData ?? [];
                         </p>
 
                         <form method="POST" action="artistProfileSave" enctype="multipart/form-data">
+                            <!-- Artist profile fields map directly to the artists table. -->
                             <?php echo CsrfHelper::field(); ?>
                             <div class="mb-3">
                                 <label for="artist_name" class="form-label">Name *</label>
@@ -72,6 +77,7 @@ $formData = $formData ?? [];
 </div>
 
 <?php
+// Pass captured page markup into the shared layout.
 $content = ob_get_clean();
 include 'views/layout.php';
 ?>

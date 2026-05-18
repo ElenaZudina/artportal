@@ -4,11 +4,16 @@
  * Renders painting cards with image, title, artist, and price
  */
 class ViewPaintings{
+    /**
+     * Render paintings as a vertical list.
+     * @param array $arr Painting records
+     * @return void
+     */
     public static function PaintingsList($arr) {
         echo '<div class="container my-4">';
         echo '<div class="row">';
         foreach($arr as $value) {
-            echo '<div class="col-12 mb-4">'; // Полная ширина для вертикального списка
+            echo '<div class="col-12 mb-4">'; // Full width column for the vertical list.
                 echo '<a href="paintings?id=' . $value['id'] . '" class="d-block h-100 text-reset">';
                     echo '<div class="card h-100">';
                         echo '<div class="row g-0">';
@@ -29,6 +34,14 @@ class ViewPaintings{
         echo '</div>';
     }
 
+    /**
+     * Render paintings as a responsive grid.
+     * Supports image-only cards and an asymmetric editorial layout.
+     * @param array $arr Painting records
+     * @param bool $imagesOnly Whether to hide text metadata
+     * @param bool $asymmetric Whether to use the asymmetric grid layout
+     * @return void
+     */
     public static function PaintingsGrid($arr, $imagesOnly = false, $asymmetric = true) {
         echo '<div class="container my-4">';
         $gridClass = $asymmetric ? 'row g-4 paintings-grid paintings-grid--asymmetric' : 'row g-4 paintings-grid paintings-grid--regular';
@@ -76,10 +89,16 @@ class ViewPaintings{
     }
   
 
+    /**
+     * Render a single painting detail page.
+     * @param array $item Painting data with artist and category details
+     * @param bool $isFavorite Whether the current user has favorited the painting
+     * @return void
+     */
     public static function OnePainting($item, $isFavorite = false) {
         echo '<div class="container my-4">';
             echo '<div class="row align-items-start gx-5">';
-                // Левая колонка: Изображение
+                // Left column: painting image, category badge, and favorite toggle.
                 echo '<div class="col-12 col-md-6 mb-4 mb-md-0">';
                     echo '<div class="one-painting-container">';
                         echo '<div class="one-painting-image-wrapper">';
@@ -103,7 +122,7 @@ class ViewPaintings{
                     echo '</div>';
                 echo '</div>';
                 
-                // Правая колонка: Описание
+                // Right column: painting details, artist link, and actions.
                 echo '<div class="col-12 col-md-6">';
                     echo "<h1 class='single-card-title mb-4'>" . htmlspecialchars($item['title'] ?? 'Unknown', ENT_QUOTES, 'UTF-8') . "</h1>";
                     

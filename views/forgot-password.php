@@ -6,6 +6,7 @@
 ob_start();
 ?>
 
+<!-- Password recovery request form sent to the administrator. -->
 <div class="container">
   <div class="row justify-content-center">
     <div class="col-lg-6 col-md-8">
@@ -34,6 +35,7 @@ ob_start();
 </div>
 
 <?php
+// Pass captured page markup into the shared layout.
 $content = ob_get_clean();
 include_once 'views/layout.php';
 ?>

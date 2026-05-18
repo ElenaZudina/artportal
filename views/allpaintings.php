@@ -10,6 +10,7 @@ ob_start();
 
 <?php
 ?>
+<!-- Painting search form preserves the current query and links back to the full gallery when cleared. -->
 <div class="d-flex justify-content-end mb-2">
 	<form class="painting-search-form" method="get" action="all">
 		<div class="input-group painting-search-group">
@@ -24,8 +25,10 @@ ob_start();
 </div>
 
 <?php
+// Render the regular gallery grid for the current result page.
 ViewPaintings::PaintingsGrid($arr, false, false);
 
+// Render pagination only when the result set spans multiple pages.
 if (!empty($pagination) && ($pagination['totalPages'] ?? 0) > 1) {
 	$currentPage = (int)$pagination['currentPage'];
 	$totalPages = (int)$pagination['totalPages'];
@@ -81,6 +84,7 @@ if (!empty($pagination) && ($pagination['totalPages'] ?? 0) > 1) {
 	echo '</nav>';
 }
 
+// Pass captured page markup into the shared layout.
 $content = ob_get_clean();
 include_once 'views/layout.php';
 

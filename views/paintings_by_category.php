@@ -9,7 +9,10 @@ ob_start();
 <br>
 
 <?php
+// Render paintings already filtered by the selected category.
 ViewPaintings::PaintingsGrid($arr, false, false);
+
+// Pass captured page markup into the shared layout.
 $content = ob_get_clean();
 include_once 'views/layout.php';
 

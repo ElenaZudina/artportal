@@ -4,6 +4,7 @@
  * Displays form for user authentication
  */
 ob_start();
+// Redirect already authenticated users to the correct private area.
 if (isset ($_SESSION['userId']) && isset($_SESSION['status'])) {
     switch ($_SESSION['status']) {
         case 'admin':
@@ -22,6 +23,7 @@ if (isset ($_SESSION['userId']) && isset($_SESSION['status'])) {
 }
 ?>
 
+<!-- Login form card with CSRF protection and session error display. -->
 <div class="container">
   <div class="row justify-content-center">
     <div class="col-lg-6 col-md-8">
@@ -43,6 +45,7 @@ if (isset ($_SESSION['userId']) && isset($_SESSION['status'])) {
                         <a href="forgot-password" class="section-link">Forgot password?</a>
                     </div>
                     <?php 
+                        // Show one-time login errors set by the authentication flow.
                         if (isset($_SESSION['errorString'])): ?>
                         <div class="alert alert-danger mt-3" role="alert">
                             <?php echo $_SESSION['errorString']; unset($_SESSION['errorString']); ?>
@@ -59,6 +62,7 @@ if (isset ($_SESSION['userId']) && isset($_SESSION['status'])) {
   </div>
 </div>
 <?php
+// Pass captured page markup into the shared layout.
 $content = ob_get_clean();
 include_once 'views/layout.php';
 ?>
