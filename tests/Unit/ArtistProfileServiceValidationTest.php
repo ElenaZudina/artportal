@@ -2,6 +2,8 @@
 use PHPUnit\Framework\TestCase;
 
 require_once __DIR__ . '/../../services/ArtistProfileService.php';
+require_once __DIR__ . '/../../models/Artists.php';
+require_once __DIR__ . '/../../config/Database.php';
 
 class ArtistProfileServiceValidationTest extends TestCase
 {
@@ -40,6 +42,149 @@ class ArtistProfileServiceValidationTest extends TestCase
 
         $this->assertFalse($result['success']);
         $this->assertSame(['No data provided'], $result['errors']);
+    }
+
+    /**
+     * Tests that profile creation returns validation errors for invalid fields.
+     */
+    public function testCreateProfileReturnsValidationErrorsForInvalidFields()
+    {
+        // Invalid form values should stop before inserting an artist profile.
+        $dbMock = $this->createMock(Database::class);
+        $dbMock->expects($this->once())
+            ->method('getOne')
+            ->willReturn(null);
+        $dbMock->expects($this->never())
+            ->method('executeRun');
+
+        $result = ArtistProfileService::createProfile([
+            'name' => '',
+            'location' => '',
+            'birth_date' => '10-05-1990',
+            'bio' => str_repeat('a', 65536),
+            'picture' => '',
+        ], [], 10, $dbMock);
+
+        $this->assertFalse($result['success']);
+        $this->assertContains('Name is required', $result['errors']);
+        $this->assertContains('Location is required', $result['errors']);
+        $this->assertContains('Birth date must be in YYYY-MM-DD format', $result['errors']);
+        $this->assertContains('Bio is too long', $result['errors']);
+    }
+
+    /**
+     * Tests that profile creation rejects values longer than database limits.
+     */
+    public function testCreateProfileReturnsValidationErrorsForTooLongNameAndLocation()
+    {
+        // Length validation should report field-specific errors before insert.
+        $dbMock = $this->createMock(Database::class);
+        $dbMock->expects($this->once())
+            ->method('getOne')
+            ->willReturn(null);
+        $dbMock->expects($this->never())
+            ->method('executeRun');
+
+        $result = ArtistProfileService::createProfile([
+            'name' => str_repeat('a', 256),
+            'location' => str_repeat('b', 101),
+            'birth_date' => '',
+            'bio' => '',
+            'picture' => '',
+        ], [], 10, $dbMock);
+
+        $this->assertFalse($result['success']);
+        $this->assertContains('Name is too long', $result['errors']);
+        $this->assertContains('Location is too long', $result['errors']);
+    }
+
+    /**
+     * Tests that profile creation rejects too long legacy picture filenames.
+     */
+    public function testCreateProfileReturnsValidationErrorForTooLongPictureFilename()
+    {
+        // Legacy picture names are still bounded before saving to the database.
+        $dbMock = $this->createMock(Database::class);
+        $dbMock->expects($this->once())
+            ->method('getOne')
+            ->willReturn(null);
+        $dbMock->expects($this->never())
+            ->method('executeRun');
+
+        $result = ArtistProfileService::createProfile([
+            'name' => 'Marina Chen',
+            'location' => 'Berlin',
+            'birth_date' => '',
+            'bio' => '',
+            'picture' => str_repeat('p', 256),
+        ], [], 10, $dbMock);
+
+        $this->assertFalse($result['success']);
+        $this->assertSame(['Picture filename is too long'], $result['errors']);
+    }
+
+    /**
+     * Tests that profile updates return validation errors for invalid fields.
+     */
+    public function testUpdateProfileReturnsValidationErrorsForInvalidFields()
+    {
+        // Existing profile is loaded first, then invalid input prevents update.
+        $dbMock = $this->createMock(Database::class);
+        $dbMock->expects($this->once())
+            ->method('getOne')
+            ->willReturn([
+                'id' => 3,
+                'user_id' => 10,
+                'picture' => 'existing.jpg',
+                'status' => 'approved',
+            ]);
+        $dbMock->expects($this->never())
+            ->method('executeRun');
+
+        $result = ArtistProfileService::updateProfile([
+            'name' => '',
+            'location' => '',
+            'birth_date' => '1990/05/10',
+            'bio' => str_repeat('a', 65536),
+            'picture' => '',
+        ], [], 10, $dbMock);
+
+        $this->assertFalse($result['success']);
+        $this->assertContains('Name is required', $result['errors']);
+        $this->assertContains('Location is required', $result['errors']);
+        $this->assertContains('Birth date must be in YYYY-MM-DD format', $result['errors']);
+        $this->assertContains('Bio is too long', $result['errors']);
+    }
+
+    /**
+     * Tests that profile updates report database failures.
+     */
+    public function testUpdateProfileReturnsErrorWhenUpdateFails()
+    {
+        // Valid update data should surface a failed database update operation.
+        $dbMock = $this->createMock(Database::class);
+        $dbMock->expects($this->once())
+            ->method('getOne')
+            ->willReturn([
+                'id' => 3,
+                'user_id' => 10,
+                'picture' => 'existing.jpg',
+                'status' => 'approved',
+            ]);
+        $dbMock->expects($this->once())
+            ->method('executeRun')
+            ->willReturn(false);
+
+        $result = ArtistProfileService::updateProfile([
+            'name' => 'Marina Chen',
+            'location' => 'Berlin',
+            'birth_date' => '1990-05-10',
+            'bio' => 'Painter bio',
+            'picture' => '',
+        ], [], 10, $dbMock);
+
+        $this->assertFalse($result['success']);
+        $this->assertSame(['Database error: Unable to update artist profile'], $result['errors']);
     }
 
     /**

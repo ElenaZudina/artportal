@@ -107,4 +107,33 @@ class RegisterTest extends TestCase
         $this->assertFalse($result['success']);
         $this->assertSame(['Username exists already'], $result['errors']);
     }
+
+    /**
+     * Tests that Register reports an error when the database insert fails.
+     */
+    public function testSaveUserReturnsErrorWhenInsertFails()
+    {
+        // A failed insert should be returned as a database error.
+        $cleanData = [
+            'name' => 'newuser',
+            'email' => 'new@example.com',
+            'password' => 'secret123',
+        ];
+
+        $dbMock = $this->createMock(Database::class);
+        $dbMock->expects($this->exactly(2))
+            ->method('getOne')
+            ->willReturnOnConsecutiveCalls(null, null);
+
+        $dbMock->expects($this->once())
+            ->method('executeRun')
+            ->willReturn(false);
+
+        $dbMock->expects($this->never())->method('getLastInsertId');
+
+        $result = Register::saveUser($cleanData, $dbMock);
+
+        $this->assertFalse($result['success']);
+        $this->assertSame(['Database error: Unable to save user'], $result['errors']);
+    }
 }
