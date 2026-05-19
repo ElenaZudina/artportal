@@ -12,7 +12,7 @@ class AccountService {
      * @param array $data Account form data
      * @return array Result data with success flag and validation errors
      */
-    public static function updateAccount($userId, $data) {
+    public static function updateAccount($userId, $data, $db = null) {
         $errors = [];
 
         if (!is_array($data) || empty($data)) {
@@ -35,12 +35,12 @@ class AccountService {
         }
 
         // Check username uniqueness.
-        if (Auth::existsUsernameExceptUser($username, $userId)) {
+        if (Auth::existsUsernameExceptUser($username, $userId, $db)) {
             $errors[] = 'Username exists already';
         }
 
         // Check email uniqueness.
-        if (Auth::existsEmailExceptUser($email, $userId)) {
+        if (Auth::existsEmailExceptUser($email, $userId, $db)) {
             $errors[] = 'Email exists already';
         }
 
@@ -49,7 +49,7 @@ class AccountService {
         }
 
         // Save account changes to the database.
-        $saved = Auth::updateAccount($userId, $username, $email);
+        $saved = Auth::updateAccount($userId, $username, $email, $db);
         if (!$saved) {
             return ['success' => false, 'errors' => ['Database error while updating account']];
         }
@@ -67,7 +67,7 @@ class AccountService {
      * @param array $data Password change form data
      * @return array Result data with success flag and validation errors
      */
-    public static function updatePassword($userId, $data) {
+    public static function updatePassword($userId, $data, $db = null) {
         $errors = [];
 
         if (!is_array($data) || empty($data)) {
@@ -79,7 +79,7 @@ class AccountService {
         $confirmPassword = (string)($data['confirm_password'] ?? '');
 
         // Load the user before validating the current password.
-        $user = Auth::getUserByID($userId);
+        $user = Auth::getUserByID($userId, $db);
         if (!$user) {
             return ['success' => false, 'errors' => ['User not found']];
         }
@@ -108,7 +108,7 @@ class AccountService {
 
         // Save the new password hash.
         $hashedPassword = password_hash($newPassword, PASSWORD_DEFAULT);
-        $saved = Auth::updatePassword($userId, $hashedPassword);
+        $saved = Auth::updatePassword($userId, $hashedPassword, $db);
         if (!$saved) {
             return ['success' => false, 'errors' => ['Database error while changing password']];
         }

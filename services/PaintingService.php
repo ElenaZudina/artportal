@@ -14,8 +14,8 @@ class PaintingService {
      * @param int $userId User ID
      * @return int|null Artist ID or null when no profile exists
      */
-    private static function getArtistIdForUser(int $userId) {
-        $artist = Artists::getArtistByUserId($userId);
+    private static function getArtistIdForUser(int $userId, $db = null) {
+        $artist = Artists::getArtistByUserId($userId, $db);
         return $artist['id'] ?? null;
     }
 
@@ -103,7 +103,7 @@ class PaintingService {
      * @param array $errors Validation errors passed by reference
      * @return void
      */
-    private static function validateCommonData(array $data, array &$normalized, array &$errors) {
+    private static function validateCommonData(array $data, array &$normalized, array &$errors, $db = null) {
         $normalized = [
             'title' => trim((string)($data['title'] ?? '')),
             'description' => trim((string)($data['description'] ?? '')),
@@ -128,7 +128,7 @@ class PaintingService {
             $errors[] = 'Year must be a 4-digit value';
         }
 
-        if ($normalized['category_id'] <= 0 || !Categories::getCategoryByID($normalized['category_id'])) {
+        if ($normalized['category_id'] <= 0 || !Categories::getCategoryByID($normalized['category_id'], $db)) {
             $errors[] = 'Category is required';
         }
 
@@ -155,20 +155,20 @@ class PaintingService {
      * @param string $imagePath Absolute image path
      * @return void
      */
-    private static function rebuildTagsForPainting(int $paintingId, string $imagePath): void {
-        $visionService = new VisionAIService();
+    private static function rebuildTagsForPainting(int $paintingId, string $imagePath, $visionService = null, $db = null): void {
+        $visionService = $visionService ?? new VisionAIService();
         $response = $visionService->detectLabels($imagePath);
         $tags = $visionService->buildTags($response);
 
-        PaintingTags::detachByPaintingId($paintingId);
+        PaintingTags::detachByPaintingId($paintingId, $db);
 
         if (empty($tags)) {
             return;
         }
 
         foreach ($tags as $tagName) {
-            $tagId = Tags::getOrCreateTag($tagName);
-            PaintingTags::attach($paintingId, $tagId);
+            $tagId = Tags::getOrCreateTag($tagName, $db);
+            PaintingTags::attach($paintingId, $tagId, $db);
         }
     }
 
@@ -179,17 +179,17 @@ class PaintingService {
      * @param int $userId Current user ID
      * @return array Success status with saved data or validation errors
      */
-    public static function createPainting(array $data, array $files, int $userId) {
+    public static function createPainting(array $data, array $files, int $userId, $db = null, $visionService = null) {
         $errors = [];
         $normalized = [];
         $fileHash = null;
 
-        $artistId = PaintingService::getArtistIdForUser($userId);
+        $artistId = PaintingService::getArtistIdForUser($userId, $db);
         if (!$artistId) {
             return ['success' => false, 'errors' => ['Artist profile not found'], 'data' => []];
         }
 
-        PaintingService::validateCommonData($data, $normalized, $errors);
+        PaintingService::validateCommonData($data, $normalized, $errors, $db);
         if (!empty($errors)) {
             return ['success' => false, 'errors' => $errors, 'data' => $normalized];
         }
@@ -205,7 +205,7 @@ class PaintingService {
 
         // Check whether another painting already uses the same uploaded file.
         if ($fileHash) {
-            $existingPainting = Paintings::getPaintingByFileHash($fileHash);
+            $existingPainting = Paintings::getPaintingByFileHash($fileHash, $db);
             if ($existingPainting) {
                 // Delete the uploaded duplicate file.
                 PaintingService::deleteImageFile($image);
@@ -233,13 +233,13 @@ class PaintingService {
             $cleanData['file_hash'] = $fileHash;
         }
 
-        $paintingId = Paintings::insertPainting($cleanData);
+        $paintingId = Paintings::insertPainting($cleanData, $db);
         
         if (!$paintingId) {
             return ['success' => false, 'errors' => ['Database error while adding painting'], 'data' => $normalized];
         }
 
-        $visionService = new VisionAIService();
+        $visionService = $visionService ?? new VisionAIService();
 
         $response = $visionService->detectLabels(
         __DIR__ . '/../images/paintings/' . $cleanData['image']
@@ -250,8 +250,8 @@ class PaintingService {
             return ['success' => true, 'errors' => [], 'data' => $cleanData];
         }
         foreach ($tags as $tagName) {
-           $tagId = Tags::getOrCreateTag($tagName);
-           PaintingTags::attach($paintingId, $tagId);
+           $tagId = Tags::getOrCreateTag($tagName, $db);
+           PaintingTags::attach($paintingId, $tagId, $db);
         }
 
         return ['success' => true, 'errors' => [], 'data' => $cleanData];
@@ -266,22 +266,22 @@ class PaintingService {
      * @param int $userId Current user ID
      * @return array Success status with saved data or validation errors
      */
-    public static function updatePainting(int $id, array $data, array $files, int $userId) {
+    public static function updatePainting(int $id, array $data, array $files, int $userId, $db = null, $visionService = null) {
         $errors = [];
         $normalized = [];
         $fileHash = null;
 
-        $artistId = PaintingService::getArtistIdForUser($userId);
+        $artistId = PaintingService::getArtistIdForUser($userId, $db);
         if (!$artistId) {
             return ['success' => false, 'errors' => ['Artist profile not found'], 'data' => []];
         }
 
-        $painting = Paintings::getPaintingByID($id);
+        $painting = Paintings::getPaintingByID($id, $db);
         if (!$painting || (int)($painting['artist_id'] ?? 0) !== (int)$artistId) {
             return ['success' => false, 'errors' => ['Painting not found'], 'data' => []];
         }
 
-        PaintingService::validateCommonData($data, $normalized, $errors);
+        PaintingService::validateCommonData($data, $normalized, $errors, $db);
         if (!empty($errors)) {
             return ['success' => false, 'errors' => $errors, 'data' => $normalized];
         }
@@ -293,7 +293,7 @@ class PaintingService {
 
         // If a new file was uploaded, check for duplicates.
         if ($fileHash && $image !== $painting['image']) {
-            $existingPainting = Paintings::getPaintingByFileHash($fileHash);
+            $existingPainting = Paintings::getPaintingByFileHash($fileHash, $db);
             if ($existingPainting && (int)$existingPainting['id'] !== $id) {
                 // Delete the uploaded duplicate file.
                 PaintingService::deleteImageFile($image);
@@ -321,12 +321,12 @@ class PaintingService {
             $cleanData['file_hash'] = $fileHash;
         }
 
-        if (!Paintings::updatePainting($id, $cleanData)) {
+        if (!Paintings::updatePainting($id, $cleanData, $db)) {
             return ['success' => false, 'errors' => ['Database error while updating painting'], 'data' => $normalized];
         }
 
         if ($image !== $painting['image']) {
-            PaintingService::rebuildTagsForPainting($id, __DIR__ . '/../images/paintings/' . $cleanData['image']);
+            PaintingService::rebuildTagsForPainting($id, __DIR__ . '/../images/paintings/' . $cleanData['image'], $visionService, $db);
         }
 
         // Delete old image file if a new one was uploaded
@@ -343,18 +343,18 @@ class PaintingService {
      * @param int $userId Current user ID
      * @return array Success status with errors if deletion fails
      */
-    public static function deletePainting(int $id, int $userId) {
-        $artistId = PaintingService::getArtistIdForUser($userId);
+    public static function deletePainting(int $id, int $userId, $db = null) {
+        $artistId = PaintingService::getArtistIdForUser($userId, $db);
         if (!$artistId) {
             return ['success' => false, 'errors' => ['Artist profile not found']];
         }
 
-        $painting = Paintings::getPaintingByID($id);
+        $painting = Paintings::getPaintingByID($id, $db);
         if (!$painting || (int)($painting['artist_id'] ?? 0) !== (int)$artistId) {
             return ['success' => false, 'errors' => ['Painting not found']];
         }
 
-        if (!Paintings::deletePainting($id, $artistId)) {
+        if (!Paintings::deletePainting($id, $artistId, $db)) {
             return ['success' => false, 'errors' => ['Database error while deleting painting']];
         }
 

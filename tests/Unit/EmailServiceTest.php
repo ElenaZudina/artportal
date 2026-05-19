@@ -62,4 +62,75 @@ class EmailServiceTest extends TestCase
         $this->assertStringContainsString($request['user_email'], $text);
         $this->assertStringContainsString('#' . $request['id'], $text);
     }
+
+    /**
+     * Tests that the HTML password reset request template includes escaped user fields.
+     */
+    public function testGetPasswordResetRequestTemplateContainsEscapedUserFields()
+    {
+        // The private HTML password reset template should escape user-provided fields.
+        $user = [
+            'username' => '<Admin User>',
+            'email' => 'user@example.com',
+            'role' => 'user',
+        ];
+
+        $ref = new ReflectionClass(EmailService::class);
+        $method = $ref->getMethod('getPasswordResetRequestTemplate');
+        $method->setAccessible(true);
+
+        $html = $method->invoke(null, $user);
+
+        $this->assertStringContainsString('<html', $html);
+        $this->assertStringContainsString('Password recovery request', $html);
+        $this->assertStringContainsString(htmlspecialchars($user['username']), $html);
+        $this->assertStringContainsString(htmlspecialchars($user['email']), $html);
+        $this->assertStringContainsString(htmlspecialchars($user['role']), $html);
+        $this->assertStringNotContainsString($user['username'], $html);
+    }
+
+    /**
+     * Tests that the plain text password reset request template includes user fields.
+     */
+    public function testGetPasswordResetRequestPlainTextContainsFields()
+    {
+        // The plain text password reset template should include the main account fields.
+        $user = [
+            'username' => 'viewer',
+            'email' => 'viewer@example.com',
+            'role' => 'user',
+        ];
+
+        $ref = new ReflectionClass(EmailService::class);
+        $method = $ref->getMethod('getPasswordResetRequestPlainText');
+        $method->setAccessible(true);
+
+        $text = $method->invoke(null, $user);
+
+        $this->assertStringContainsString('Password recovery request', $text);
+        $this->assertStringContainsString('Username: ' . $user['username'], $text);
+        $this->assertStringContainsString('Email: ' . $user['email'], $text);
+        $this->assertStringContainsString('Role: ' . $user['role'], $text);
+    }
+
+    /**
+     * Tests that password reset templates use Unknown for missing user fields.
+     */
+    public function testPasswordResetTemplatesUseUnknownForMissingFields()
+    {
+        // Missing user fields should be represented as Unknown in both templates.
+        $ref = new ReflectionClass(EmailService::class);
+        $htmlMethod = $ref->getMethod('getPasswordResetRequestTemplate');
+        $htmlMethod->setAccessible(true);
+        $textMethod = $ref->getMethod('getPasswordResetRequestPlainText');
+        $textMethod->setAccessible(true);
+
+        $html = $htmlMethod->invoke(null, []);
+        $text = $textMethod->invoke(null, []);
+
+        $this->assertSame(3, substr_count($html, 'Unknown'));
+        $this->assertStringContainsString('Username: Unknown', $text);
+        $this->assertStringContainsString('Email: Unknown', $text);
+        $this->assertStringContainsString('Role: Unknown', $text);
+    }
 }

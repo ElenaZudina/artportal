@@ -12,7 +12,7 @@ class RegisterService {
      * @param array $data Registration form data (name, email, password, confirm)
      * @return array Success status with user data or errors
      */
-    public static function register($data) {
+    public static function register($data, $db = null) {
         $errors = [];
 
         if (!is_array($data) || empty($data)) {
@@ -47,7 +47,7 @@ class RegisterService {
             'email' => $email,
             'password' => $password];
             
-        return Register::saveUser($cleanData);
+        return Register::saveUser($cleanData, $db);
     }
 }
 /**
@@ -63,7 +63,7 @@ class AuthService {
      * @param array $data Login form data (email, password)
      * @return array Success status with user data or error messages
      */
-    public static function login($data) {
+    public static function login($data, $db = null) {
         $errors = [];
         if (!is_array($data) || empty($data)) {
             return ['success' => false, 'errors' => ['No data provided']];
@@ -78,7 +78,7 @@ class AuthService {
             return ['success' => false, 'errors' => $errors];
         }
 
-        $user=Auth::findUserByEmail($email);
+        $user=Auth::findUserByEmail($email, $db);
 
         if(!$user) {
             return ['success' => false, 'errors' => ['User not found']];
