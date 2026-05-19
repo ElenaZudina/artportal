@@ -5,6 +5,63 @@ require_once __DIR__ . '/../../services/EmailService.php';
 
 class EmailServiceTest extends TestCase
 {
+    private ?string $originalAdminEmail = null;
+
+    /**
+     * Stores mutable mail-related environment values before each test.
+     */
+    protected function setUp(): void
+    {
+        $this->originalAdminEmail = $_ENV['ADMIN_EMAIL'] ?? null;
+    }
+
+    /**
+     * Restores mutable mail-related environment values after each test.
+     */
+    protected function tearDown(): void
+    {
+        if ($this->originalAdminEmail === null) {
+            unset($_ENV['ADMIN_EMAIL']);
+        } else {
+            $_ENV['ADMIN_EMAIL'] = $this->originalAdminEmail;
+        }
+    }
+
+    /**
+     * Tests that password reset email sending stops when admin email is invalid.
+     */
+    public function testSendPasswordResetRequestToAdminReturnsFalseWhenAdminEmailInvalid()
+    {
+        // Invalid admin email should stop before PHPMailer is configured or sends anything.
+        $_ENV['ADMIN_EMAIL'] = 'not-an-email';
+
+        $result = EmailService::sendPasswordResetRequestToAdmin([
+            'username' => 'viewer',
+            'email' => 'viewer@example.com',
+            'role' => 'user',
+        ]);
+
+        $this->assertFalse($result);
+    }
+
+    /**
+     * Tests that purchase request email sending returns false for invalid artist email.
+     */
+    public function testSendPurchaseRequestNotificationReturnsFalseForInvalidArtistEmail()
+    {
+        // PHPMailer throws before SMTP send when the recipient email is invalid.
+        $result = EmailService::sendPurchaseRequestNotification([
+            'artist_name' => 'Ivan Artist',
+            'artist_email' => '',
+            'painting_title' => 'Sunrise',
+            'user_name' => 'Buyer',
+            'user_email' => 'buyer@example.com',
+            'id' => 77,
+        ]);
+
+        $this->assertFalse($result);
+    }
+
     /**
      * Tests that the HTML purchase request template includes escaped request fields.
      */

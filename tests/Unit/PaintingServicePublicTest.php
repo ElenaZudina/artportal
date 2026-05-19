@@ -69,6 +69,40 @@ class PaintingServicePublicTest extends TestCase
     }
 
     /**
+     * Tests that painting creation returns validation errors for invalid form data.
+     */
+    public function testCreatePaintingReturnsValidationErrorsForInvalidFields()
+    {
+        // Invalid form data should stop before image resolution or painting insert.
+        $dbMock = $this->createMock(Database::class);
+        $dbMock->expects($this->exactly(1))
+            ->method('getOne')
+            ->willReturn(['id' => 4]);
+        $dbMock->expects($this->never())
+            ->method('executeRun');
+
+        $result = PaintingService::createPainting([
+            'title' => '',
+            'description' => '',
+            'image' => 'legacy.jpg',
+            'year_created' => '20xx',
+            'category_id' => 0,
+            'medium' => '',
+            'dimensions' => '',
+            'price' => '-1',
+        ], [], 10, $dbMock);
+
+        $this->assertFalse($result['success']);
+        $this->assertContains('Title is required', $result['errors']);
+        $this->assertContains('Description is required', $result['errors']);
+        $this->assertContains('Year must be a 4-digit value', $result['errors']);
+        $this->assertContains('Category is required', $result['errors']);
+        $this->assertContains('Medium is required', $result['errors']);
+        $this->assertContains('Dimensions are required', $result['errors']);
+        $this->assertContains('Price must be a valid positive number', $result['errors']);
+    }
+
+    /**
      * Tests that painting creation reports insert failures.
      */
     public function testCreatePaintingReturnsErrorWhenInsertFails()
@@ -159,6 +193,25 @@ class PaintingServicePublicTest extends TestCase
     }
 
     /**
+     * Tests that painting updates require an artist profile.
+     */
+    public function testUpdatePaintingReturnsErrorWhenArtistProfileMissing()
+    {
+        // Missing artist profile stops update before loading the painting.
+        $dbMock = $this->createMock(Database::class);
+        $dbMock->expects($this->once())
+            ->method('getOne')
+            ->willReturn(null);
+        $dbMock->expects($this->never())
+            ->method('executeRun');
+
+        $result = PaintingService::updatePainting(8, $this->validPaintingData(), [], 10, $dbMock);
+
+        $this->assertFalse($result['success']);
+        $this->assertSame(['Artist profile not found'], $result['errors']);
+    }
+
+    /**
      * Tests that painting updates reject paintings owned by another artist.
      */
     public function testUpdatePaintingRejectsPaintingFromAnotherArtist()
@@ -221,6 +274,53 @@ class PaintingServicePublicTest extends TestCase
     }
 
     /**
+     * Tests that painting updates report database failures.
+     */
+    public function testUpdatePaintingReturnsErrorWhenUpdateFails()
+    {
+        // A failed model update should be reported without rebuilding tags.
+        $dbMock = $this->createMock(Database::class);
+        $dbMock->expects($this->exactly(3))
+            ->method('getOne')
+            ->willReturnOnConsecutiveCalls(
+                ['id' => 4],
+                ['id' => 8, 'artist_id' => 4, 'image' => 'legacy.jpg'],
+                ['id' => 2]
+            );
+        $dbMock->expects($this->once())
+            ->method('executeRun')
+            ->willReturn(false);
+
+        $visionMock = $this->createMock(VisionAIService::class);
+        $visionMock->expects($this->never())
+            ->method('detectLabels');
+
+        $result = PaintingService::updatePainting(8, $this->validPaintingData(), [], 10, $dbMock, $visionMock);
+
+        $this->assertFalse($result['success']);
+        $this->assertSame(['Database error while updating painting'], $result['errors']);
+    }
+
+    /**
+     * Tests that painting deletion requires an artist profile.
+     */
+    public function testDeletePaintingReturnsErrorWhenArtistProfileMissing()
+    {
+        // Missing artist profile stops deletion before loading the painting.
+        $dbMock = $this->createMock(Database::class);
+        $dbMock->expects($this->once())
+            ->method('getOne')
+            ->willReturn(null);
+        $dbMock->expects($this->never())
+            ->method('executeRun');
+
+        $result = PaintingService::deletePainting(8, 10, $dbMock);
+
+        $this->assertFalse($result['success']);
+        $this->assertSame(['Artist profile not found'], $result['errors']);
+    }
+
+    /**
      * Tests that painting deletion reports missing paintings.
      */
     public function testDeletePaintingReturnsErrorWhenPaintingMissing()
@@ -237,6 +337,45 @@ class PaintingServicePublicTest extends TestCase
 
         $this->assertFalse($result['success']);
         $this->assertSame(['Painting not found'], $result['errors']);
+    }
+
+    /**
+     * Tests that painting deletion rejects paintings owned by another artist.
+     */
+    public function testDeletePaintingRejectsPaintingFromAnotherArtist()
+    {
+        // The service must not delete paintings owned by a different artist.
+        $dbMock = $this->createMock(Database::class);
+        $dbMock->expects($this->exactly(2))
+            ->method('getOne')
+            ->willReturnOnConsecutiveCalls(['id' => 4], ['id' => 8, 'artist_id' => 99]);
+        $dbMock->expects($this->never())
+            ->method('executeRun');
+
+        $result = PaintingService::deletePainting(8, 10, $dbMock);
+
+        $this->assertFalse($result['success']);
+        $this->assertSame(['Painting not found'], $result['errors']);
+    }
+
+    /**
+     * Tests that painting deletion reports database failures.
+     */
+    public function testDeletePaintingReturnsErrorWhenDeleteFails()
+    {
+        // A failed delete should return a database error.
+        $dbMock = $this->createMock(Database::class);
+        $dbMock->expects($this->exactly(2))
+            ->method('getOne')
+            ->willReturnOnConsecutiveCalls(['id' => 4], ['id' => 8, 'artist_id' => 4, 'image' => 'legacy.jpg']);
+        $dbMock->expects($this->once())
+            ->method('executeRun')
+            ->willReturn(false);
+
+        $result = PaintingService::deletePainting(8, 10, $dbMock);
+
+        $this->assertFalse($result['success']);
+        $this->assertSame(['Database error while deleting painting'], $result['errors']);
     }
 
     /**
