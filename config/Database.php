@@ -4,10 +4,25 @@ require_once __DIR__ . '/../vendor/autoload.php';
 use Dotenv\Dotenv;
 
 /**
+ * Choose env file
+ */
+$envFile = '.env';
+
+if (
+    isset($_SERVER['APP_ENV']) &&
+    $_SERVER['APP_ENV'] === 'test'
+) {
+    $envFile = '.env.test';
+}
+
+/**
  * Load environment variables from .env file
  * Stores database credentials: DB_HOST, DB_USER, DB_PASSWORD, DB_NAME
  */
-$dotenv = Dotenv::createImmutable(__DIR__ . '/../');
+$dotenv = Dotenv::createImmutable(
+    __DIR__ . '/../',
+    $envFile
+);
 $dotenv->load();
 
 /**
