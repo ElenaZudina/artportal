@@ -7,10 +7,13 @@ use Dotenv\Dotenv;
  * Choose env file
  */
 $envFile = '.env';
+$isLocalRequest = in_array($_SERVER['REMOTE_ADDR'] ?? '', ['127.0.0.1', '::1'], true)
+    || in_array($_SERVER['SERVER_NAME'] ?? '', ['localhost', '127.0.0.1'], true);
 
 if (
-    isset($_SERVER['APP_ENV']) &&
-    $_SERVER['APP_ENV'] === 'test'
+    (($_SERVER['APP_ENV'] ?? '') === 'test')
+    || (getenv('APP_ENV') === 'test')
+    || ($isLocalRequest && (($_SERVER['HTTP_X_APP_ENV'] ?? '') === 'test'))
 ) {
     $envFile = '.env.test';
 }

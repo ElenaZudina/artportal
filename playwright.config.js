@@ -1,12 +1,11 @@
-// Playwright config for artportal e2e tests
-// Docs: https://playwright.dev/docs/test-configuration
+// Root Playwright config used by `npx playwright test` from the project root.
 
 /** @type {import('@playwright/test').PlaywrightTestConfig} */
 const config = {
-  testDir: './tests',
-  outputDir: './test-results',
-  globalSetup: './global-setup.js',
-  reporter: [['html', { outputFolder: './playwright-report', open: 'never' }], ['list']],
+  testDir: './e2e/tests',
+  outputDir: './e2e/test-results',
+  globalSetup: './e2e/global-setup.js',
+  reporter: [['html', { outputFolder: './e2e/playwright-report', open: 'never' }], ['list']],
   timeout: 30000,
   retries: 0,
   use: {
