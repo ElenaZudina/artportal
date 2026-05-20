@@ -36,6 +36,7 @@
                                 <ul class="dropdown-menu" aria-labelledby="galleryDropdown">
                                     <!-- Gallery categories are loaded dynamically for the dropdown. -->
                                     <li><a class="dropdown-item" href="all">All</a></li>
+                                                                            <li><a class="dropdown-item" href="category?id=214">E2E Category</a></li>
                                                                     </ul>
                             </li>
                                                             <!-- Guest navigation. -->
@@ -60,7 +61,14 @@
                     </div>
                 </div>
                 <div class="hero-grid">
-                                    </div>
+                                        <div class="hero-main">
+                        <img src="images/paintings/test.jpg" alt="E2E Inquiry Painting" loading="lazy">
+                        <div class="overlay"></div>
+                    </div>
+                                        <div class="hero-small">
+                        <img src="images/paintings/test.jpg" alt="E2E Seed Painting" loading="lazy">
+                    </div>
+                                                        </div>
             </div>
             </div>
         </section>
@@ -80,9 +88,9 @@
 </div>
 
 
-<div class="container my-4"><div class="row g-4 artists-grid"></div></div>
+<div class="container my-4"><div class="row g-4 artists-grid"><div class="col-sm-6 col-md-4 col-lg-4"><a href="artist?id=359" class="d-block h-100 text-reset"><div class="card h-100 rounded-5 overflow-hidden"><div class="card-img-wrapper"><img src="images/test.jpg" class="card-img-top" alt="E2E Seed Artist" onerror="this.onerror=null;this.src='images/test.jpg';"></div><div class="card-body d-flex flex-column pb-4"><h3 class="card-title">E2E Seed Artist</h3><p class="card-text">Estonia, Tallinn</p><p class="card-text artist-description">E2E seeded artist profile</p></div></div></a></div></div></div>
 <h2 class="mb-3">Gallery Collection</h2>
-<div class="container my-4"><div class="row g-4 paintings-grid paintings-grid--asymmetric"></div></div>
+<div class="container my-4"><div class="row g-4 paintings-grid paintings-grid--asymmetric"><div class="paintings-grid-item paintings-grid-item--large paintings-grid-item--tall"><a href="paintings?id=130" class="d-block h-100 text-reset"><div class="card rounded-5 overflow-hidden"><div class="card-img-wrapper position-relative"><img src="images/test.jpg" class="card-img-top" alt="E2E Inquiry Painting" onerror="this.onerror=null;this.src='images/test.jpg';"><span class="category-badge">E2E Category</span></div><div class="card-body"><div class="painting-meta d-flex justify-content-between align-items-start gap-2 mb-2"><h3 class="card-title painting-title mb-0">E2E Inquiry Painting</h3><p class="card-text painting-price text-nowrap mb-0">123.45 €</p></div><p class="card-text mb-1">E2E Seed Artist</p></div></div></a></div><div class="paintings-grid-item"><a href="paintings?id=129" class="d-block h-100 text-reset"><div class="card rounded-5 overflow-hidden"><div class="card-img-wrapper position-relative"><img src="images/test.jpg" class="card-img-top" alt="E2E Seed Painting" onerror="this.onerror=null;this.src='images/test.jpg';"><span class="category-badge">E2E Category</span></div><div class="card-body"><div class="painting-meta d-flex justify-content-between align-items-start gap-2 mb-2"><h3 class="card-title painting-title mb-0">E2E Seed Painting</h3><p class="card-text painting-price text-nowrap mb-0">123.45 €</p></div><p class="card-text mb-1">E2E Seed Artist</p></div></div></a></div></div></div>
 
         </main>
         <!-- Shared footer with registration call to action. -->

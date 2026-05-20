@@ -1,39 +1,40 @@
 const { test, expect } = require('@playwright/test');
 
-const randomEmail = () => `dashboard_${Date.now()}_${Math.random().toString(16).slice(2)}@example.com`;
-const testPassword = 'Test12345!';
+const USER_EMAIL = 'e2e-user@artportal.test';
+const PASSWORD = '123456';
+const appUrl = (path) => new URL(path, 'http://localhost/artportal/').toString();
 
-async function registerAndLogin(page) {
-  await page.goto('./registerForm');
-  await page.fill('input[name="name"]', `dashboard_${Date.now()}`);
-  await page.fill('input[name="email"]', randomEmail());
-  await page.fill('input[name="password"]', testPassword);
-  await page.fill('input[name="confirm"]', testPassword);
-  await page.click('button[type="submit"]');
-  await expect(page.locator('body')).toContainText(/User has been added|success|успешно/i);
+async function loginAsUser(page) {
+  await page.goto(appUrl('login'));
+  await page.fill('input[name="email"]', USER_EMAIL);
+  await page.fill('input[name="password"]', PASSWORD);
+  await Promise.all([
+    page.waitForURL(/\/artportal\/dashboard\//),
+    page.click('button[type="submit"]'),
+  ]);
+  await page.waitForLoadState('networkidle');
+  await expect(page.locator('body')).toContainText(/dashboard|logout/i);
 }
 
 test.describe('Личный кабинет', () => {
   test.beforeEach(async ({ page }) => {
-    await registerAndLogin(page);
-    await page.goto('./dashboard/startDashboard');
-    await expect(page.locator('body')).toContainText(/dashboard|кабинет|выход|logout/i);
+    await loginAsUser(page);
   });
 
   test('Переход в профиль', async ({ page }) => {
-    await page.goto('./dashboard/profile');
-    await expect(page.locator('h1, h2').filter({ hasText: /профиль|profile/i }).first()).toBeVisible();
+    await page.goto(appUrl('dashboard/profile'));
+    await expect(page.locator('h1, h2').filter({ hasText: /profile/i }).first()).toBeVisible();
+    await expect(page.getByRole('heading', { name: /artist profile/i })).toBeVisible();
   });
 
   test('Мои картины', async ({ page }) => {
-    await page.goto('./dashboard/my-paintings');
-    await expect(
-      page.locator('h1, h2, a').filter({ hasText: /картины|paintings|artist profile|become an artist/i }).first()
-    ).toBeVisible();
+    await page.goto(appUrl('dashboard/my-paintings'));
+    await expect(page.locator('h1, h2, a').filter({ hasText: /artist profile|become an artist/i }).first()).toBeVisible();
   });
 
   test('Избранное', async ({ page }) => {
-    await page.goto('./dashboard/my-favorites');
-    await expect(page.locator('h1, h2').filter({ hasText: /избран|favor/i }).first()).toBeVisible();
+    await page.goto(appUrl('dashboard/my-favorites'));
+    await expect(page.locator('h1, h2').filter({ hasText: /favorites/i }).first()).toBeVisible();
+    await expect(page.getByText('E2E Seed Painting')).toBeVisible();
   });
 });

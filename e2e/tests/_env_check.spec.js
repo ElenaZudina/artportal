@@ -2,6 +2,6 @@
 const { test, expect } = require('@playwright/test');
 
 test('Сайт artportal доступен', async ({ page }) => {
-  await page.goto('./');
-  await expect(page).toHaveTitle(/Art|Арт|Портал/i);
+  await page.goto('./', { waitUntil: 'domcontentloaded' });
+  await expect(page.getByRole('heading', { name: 'ArtPortal' })).toBeVisible();
 });
