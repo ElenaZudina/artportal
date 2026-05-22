@@ -1,6 +1,7 @@
 <?php
 require __DIR__ . '/../services/PriceCalculatorService.php';
 
+// Manual smoke check: calculate deductions from a fixed final price.
 $resultfromPrice = PriceCalculatorService::calculateFromPrice(
     100,
     15,
@@ -9,6 +10,7 @@ $resultfromPrice = PriceCalculatorService::calculateFromPrice(
     0
 );
 
+// Manual smoke check: calculate final price from desired artist income.
 $resultfromDesiredIncome = PriceCalculatorService::calculateFromDesiredIncome(
     100,
     15,
@@ -17,6 +19,7 @@ $resultfromDesiredIncome = PriceCalculatorService::calculateFromDesiredIncome(
     0
 );
 
+// Print both calculation results for quick browser/CLI inspection.
 print_r($resultfromPrice);
 print_r($resultfromDesiredIncome);
 ?>

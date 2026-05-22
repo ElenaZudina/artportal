@@ -1,5 +1,10 @@
 .env
+.env.test
 .vscode/
 /vendor/
 /build/
+/node_modules/
+/test-results/
+/e2e/test-results/
+/e2e/tmp-test-results/
 typo.txt

@@ -5,8 +5,12 @@ require_once __DIR__ . '/../../services/PriceCalculatorService.php';
 
 class PriceCalculatorTest extends TestCase
 {
+    /**
+     * Tests a basic price calculation through the integration test suite.
+     */
     public function testCalculateFromPriceBasic()
     {
+        // Calculates deductions from a fixed selling price and verifies the full breakdown.
         $res = PriceCalculatorService::calculateFromPrice(100, 15, 20, true, 0);
         $this->assertIsArray($res);
         $this->assertArrayHasKey('price', $res);
@@ -18,8 +22,12 @@ class PriceCalculatorTest extends TestCase
         $this->assertEquals(68.00, $res['netIncome']);
     }
 
+    /**
+     * Tests desired-income calculation through the integration test suite.
+     */
     public function testCalculateFromDesiredIncomeBasic()
     {
+        // Works backwards from desired income and checks that the final price is higher than income.
         $res = PriceCalculatorService::calculateFromDesiredIncome(100, 15, 20, true, 0);
         $this->assertIsArray($res);
         $this->assertArrayHasKey('price', $res);

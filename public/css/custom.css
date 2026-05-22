@@ -549,7 +549,7 @@ footer p {
   font-size: var(--text-md);
   font-weight: var(--font-weight-normal);
   line-height: 1.6;
-  margin-bottom: 18px;
+  margin-bottom: auto;
 }
 
 /* Large heading for footer section */

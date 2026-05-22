@@ -4,10 +4,36 @@ require_once __DIR__ . '/../vendor/autoload.php';
 use Dotenv\Dotenv;
 
 /**
+ * Choose env file
+ */
+$envFile = '.env';
+$isLocalRequest = in_array($_SERVER['REMOTE_ADDR'] ?? '', ['127.0.0.1', '::1'], true)
+    || in_array($_SERVER['SERVER_NAME'] ?? '', ['localhost', '127.0.0.1'], true);
+$isTestRequest = (($_SERVER['APP_ENV'] ?? '') === 'test')
+    || (getenv('APP_ENV') === 'test')
+    || ($isLocalRequest && (($_SERVER['HTTP_X_APP_ENV'] ?? '') === 'test'))
+    || (($isLocalRequest && (($_SESSION['APP_ENV'] ?? '') === 'test')));
+
+if (
+    $isTestRequest
+    && session_status() === PHP_SESSION_ACTIVE
+    && $isLocalRequest
+) {
+    $_SESSION['APP_ENV'] = 'test';
+}
+
+if ($isTestRequest) {
+    $envFile = '.env.test';
+}
+
+/**
  * Load environment variables from .env file
  * Stores database credentials: DB_HOST, DB_USER, DB_PASSWORD, DB_NAME
  */
-$dotenv = Dotenv::createImmutable(__DIR__ . '/../');
+$dotenv = Dotenv::createImmutable(
+    __DIR__ . '/../',
+    $envFile
+);
 $dotenv->load();
 
 /**
@@ -30,7 +56,10 @@ class Database {
         $this->host = $_ENV['DB_HOST'] ?? 'localhost';
         $this->user = $_ENV['DB_USER'] ?? 'root';
         $this->password = $_ENV['DB_PASSWORD'] ?? '';
-        $this->baseName = $_ENV['DB_NAME'] ?? 'art_portal';
+        $this->baseName = trim($_ENV['DB_NAME'] ?? '');
+        if ($this->baseName === '') {
+            throw new Exception('Database name is not configured');
+        }
         //$this->connect(); убрала автоматическое подключение 
         //при создании объекта, чтобы не было лишних подключений при каждом новом объекте
     }

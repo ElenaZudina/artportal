@@ -74,7 +74,7 @@ class ArtistProfileService {
      * @param int $userId User ID for profile owner
      * @return array Success status with user message or errors
      */
-    public static function createProfile($data, $files, $userId) {
+    public static function createProfile($data, $files, $userId, $db = null) {
         $errors = [];
 
         if (!is_array($data) || empty($data)) {
@@ -109,7 +109,7 @@ class ArtistProfileService {
             $errors[] = 'Bio is too long';
         }
 
-        $existing = Artists::getArtistByUserId((int)$userId);
+        $existing = Artists::getArtistByUserId((int)$userId, $db);
         if ($existing) {
             $errors[] = 'Artist profile already exists for this user';
         }
@@ -137,7 +137,7 @@ class ArtistProfileService {
             'user_id' => (int)$userId,
         ];
 
-        $saved = Artists::insertArtistProfile($cleanData);
+        $saved = Artists::insertArtistProfile($cleanData, $db);
         if (!$saved) {
             return ['success' => false, 'errors' => ['Database error: Unable to create artist profile'], 'data' => $normalized];
         }
@@ -153,14 +153,14 @@ class ArtistProfileService {
      * @param int $userId User ID for profile owner
      * @return array Success status with updated data or validation errors
      */
-    public static function updateProfile($data, $files, $userId) {
+    public static function updateProfile($data, $files, $userId, $db = null) {
         $errors = [];
 
         if (!is_array($data) || empty($data)) {
             return ['success' => false, 'errors' => ['No data provided']];
         }
 
-        $existing = Artists::getArtistByUserId((int)$userId);
+        $existing = Artists::getArtistByUserId((int)$userId, $db);
         if (!$existing) {
             return ['success' => false, 'errors' => ['Artist profile not found']];
         }
@@ -216,7 +216,7 @@ class ArtistProfileService {
             'user_id' => (int)$userId,
         ];
 
-        $saved = Artists::updateArtistProfile($cleanData, (int)$userId);
+        $saved = Artists::updateArtistProfile($cleanData, (int)$userId, $db);
         if (!$saved) {
             return ['success' => false, 'errors' => ['Database error: Unable to update artist profile'], 'data' => $normalized];
         }

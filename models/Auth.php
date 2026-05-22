@@ -9,7 +9,7 @@ class Auth {
      * Find user account by email address
      * Supports dependency injection for testing purposes
      * @param string $email User email address
-     * @param Database $db Optional database instance for testing
+     * @param Database|null $db Optional database instance for testing
      * @return array User data or null if not found
      */
     public static function findUserByEmail($email, $db = null) {
@@ -21,21 +21,23 @@ class Auth {
     /**
      * Get a user account by its ID.
      * @param int $id User ID
+     * @param Database|null $db Optional database instance for testing
      * @return array|null User data or null if not found
      */
-    public static function getUserByID($id) {
+    public static function getUserByID($id, $db = null) {
         $sql = 'SELECT * FROM `users` WHERE `id` = ?';
-        $db = new Database();
+        $db = $db ?? new Database();
         return $db->getOne($sql, [$id]);
     }
 
     /**
      * Get users for admin listing, optionally filtered by username or email.
      * @param string $search Optional search term
+     * @param Database|null $db Optional database instance for testing
      * @return array Array of matching users
      */
-    public static function getUsers($search = '') {
-        $db = new Database();
+    public static function getUsers($search = '', $db = null) {
+        $db = $db ?? new Database();
         $search = trim((string)$search);
 
         if ($search !== '') {
@@ -53,28 +55,30 @@ class Auth {
      * Update a user's account status.
      * @param int $userId User ID
      * @param string $status New status, either active or blocked
+     * @param Database|null $db Optional database instance for testing
      * @return bool Success status
      */
-    public static function updateStatus($userId, $status) {
+    public static function updateStatus($userId, $status, $db = null) {
         if (!in_array($status, ['active', 'blocked'], true)) {
             return false;
         }
 
         $sql = 'UPDATE `users` SET `status` = ? WHERE `id` = ?';
-        $db = new Database();
+        $db = $db ?? new Database();
         return $db->executeRun($sql, [$status, (int)$userId]);
     }
 
     /**
      * Refresh session user data from the database and clear invalid sessions.
+     * @param Database|null $db Optional database instance for testing
      * @return array|null Authenticated user data or null when the session is invalid
      */
-    public static function syncSessionStatus() {
+    public static function syncSessionStatus($db = null) {
         if (empty($_SESSION['userId'])) {
             return null;
         }
 
-        $user = self::getUserByID((int)$_SESSION['userId']);
+        $user = self::getUserByID((int)$_SESSION['userId'], $db);
         if (!$user || (($user['status'] ?? 'active') !== 'active')) {
             self::clearSession();
             return null;
@@ -175,11 +179,12 @@ class Auth {
      * Check whether another user already uses the given email.
      * @param string $email Email address to check
      * @param int $userId User ID to exclude
+     * @param Database|null $db Optional database instance for testing
      * @return bool True when the email exists for a different user
      */
-    public static function existsEmailExceptUser($email, $userId) {
+    public static function existsEmailExceptUser($email, $userId, $db = null) {
         $sql = 'SELECT id FROM `users` WHERE `email` = ? AND `id` <> ? LIMIT 1';
-        $db = new Database();
+        $db = $db ?? new Database();
         return (bool)$db->getOne($sql, [$email, (int)$userId]);
     }
 
@@ -187,11 +192,12 @@ class Auth {
      * Check whether another user already uses the given username.
      * @param string $username Username to check
      * @param int $userId User ID to exclude
+     * @param Database|null $db Optional database instance for testing
      * @return bool True when the username exists for a different user
      */
-    public static function existsUsernameExceptUser($username, $userId) {
+    public static function existsUsernameExceptUser($username, $userId, $db = null) {
         $sql = 'SELECT id FROM `users` WHERE `username` = ? AND `id` <> ? LIMIT 1';
-        $db = new Database();
+        $db = $db ?? new Database();
         return (bool)$db->getOne($sql, [$username, (int)$userId]);
     }
 
@@ -200,11 +206,12 @@ class Auth {
      * @param int $userId User ID
      * @param string $username New username
      * @param string $email New email address
+     * @param Database|null $db Optional database instance for testing
      * @return bool Success status
      */
-    public static function updateAccount($userId, $username, $email) {
+    public static function updateAccount($userId, $username, $email, $db = null) {
         $sql = 'UPDATE `users` SET `username` = ?, `email` = ? WHERE `id` = ?';
-        $db = new Database();
+        $db = $db ?? new Database();
         return $db->executeRun($sql, [$username, $email, (int)$userId]);
     }
 
@@ -212,20 +219,22 @@ class Auth {
      * Update a user's password hash.
      * @param int $userId User ID
      * @param string $passwordHash Hashed password
+     * @param Database|null $db Optional database instance for testing
      * @return bool Success status
      */
-    public static function updatePassword($userId, $passwordHash) {
+    public static function updatePassword($userId, $passwordHash, $db = null) {
         $sql = 'UPDATE `users` SET `password` = ? WHERE `id` = ?';
-        $db = new Database();
+        $db = $db ?? new Database();
         return $db->executeRun($sql, [$passwordHash, (int)$userId]);
     }
 
     /**
      * Count all user accounts.
+     * @param Database|null $db Optional database instance for testing
      * @return int Total number of users
      */
-    public static function count() {
-        $db = new Database();
+    public static function count($db = null) {
+        $db = $db ?? new Database();
         $row = $db->getOne('SELECT COUNT(*) AS cnt FROM users');
         return intval($row['cnt'] ?? 0);
     }
@@ -233,10 +242,11 @@ class Auth {
     /**
      * Count user accounts by role.
      * @param string $role Role name
+     * @param Database|null $db Optional database instance for testing
      * @return int Number of users with the role
      */
-    public static function countByRole($role) {
-        $db = new Database();
+    public static function countByRole($role, $db = null) {
+        $db = $db ?? new Database();
         $row = $db->getOne('SELECT COUNT(*) AS cnt FROM users WHERE role = ?', [$role]);
         return intval($row['cnt'] ?? 0);
     }

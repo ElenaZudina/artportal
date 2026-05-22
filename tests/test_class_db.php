@@ -3,7 +3,7 @@ require_once '../config/Database.php';
 echo "<h2>Тестирование класса Database</h2>";
 $db = new Database();
 
-//1. Тестирование соединения с БД
+// 1. Manual test: verify that the Database class can open a connection.
 echo "<h3>Подключение к базе данных</h3>";
 try {
     $conn = $db->connect();
@@ -16,7 +16,7 @@ try {
     echo "Connection failed: " . $e->getMessage();
 }
 
-//2. Тест создания таблицы и вставки данных
+// 2. Manual test: create a temporary table before inserting test data.
 echo "<h3>Создание тестовой таблицы</h3>";
 try {
     $sql_create_test_table = "CREATE TABLE IF NOT EXISTS test_table (
@@ -30,6 +30,7 @@ try {
 }
 echo "<h3>Вставка данных в тестовую таблицу</h3>";
 try {
+    // Insert one row so the read test has predictable data to fetch.
     $sql_insert_test_data = "INSERT INTO test_table (name) VALUES ('Test Name')";
     $db->executeRun($sql_insert_test_data);
     echo "Data inserted successfully into 'test_table'.</br>";
@@ -37,7 +38,7 @@ try {
     echo "Error inserting data: " . $e->getMessage();
 }
 
-//3. Тест получения данных
+// 3. Manual test: fetch rows from the temporary table.
 echo "<h3>Получение данных из тестовой таблицы</h3>";
 try {
 
@@ -56,7 +57,7 @@ try {
     echo "Error retrieving data: " . $e->getMessage();
 }
 
-//4. Тест удаления тестовой таблицы
+// 4. Manual test: remove the temporary table after the smoke checks.
 echo "<h3>Удаление тестовой таблицы</h3>";
 try {
     $sql_drop_table = "DROP TABLE IF EXISTS test_table";

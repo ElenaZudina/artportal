@@ -11,7 +11,7 @@ class ExhibitionService {
      * @param array $data Exhibition form data
      * @return array Success status with error message if failed
      */
-    public static function createExhibition($data) {
+    public static function createExhibition($data, $db = null) {
         $title = trim($data['title'] ?? '');
         $description = trim($data['description'] ?? '');
         $collectionId = (int)($data['collection_id'] ?? 0);
@@ -26,7 +26,7 @@ class ExhibitionService {
             return ['success' => false, 'errorMessage' => 'Please select a collection'];
         }
 
-        if (!Collections::getCollectionByID($collectionId)) {
+        if (!Collections::getCollectionByID($collectionId, $db)) {
             return ['success' => false, 'errorMessage' => 'Selected collection does not exist'];
         }
 
@@ -45,11 +45,11 @@ class ExhibitionService {
         $startDate = date('Y-m-d H:i:s', strtotime($startDate));
         $endDate = date('Y-m-d H:i:s', strtotime($endDate));
 
-        if (Exhibitions::existsByTitle($title)) {
+        if (Exhibitions::existsByTitle($title, $db)) {
             return ['success' => false, 'errorMessage' => 'Exhibition already exists'];
         }
 
-        if (!Exhibitions::create($title, $description, $collectionId, $startDate, $endDate)) {
+        if (!Exhibitions::create($title, $description, $collectionId, $startDate, $endDate, $db)) {
             return ['success' => false, 'errorMessage' => 'Database error while adding exhibition'];
         }
 
@@ -63,7 +63,7 @@ class ExhibitionService {
      * @param array $data Exhibition form data
      * @return array Success status with error message if failed
      */
-    public static function updateExhibition($id, $data) {
+    public static function updateExhibition($id, $data, $db = null) {
         $title = trim($data['title'] ?? '');
         $description = trim($data['description'] ?? '');
         $collectionId = (int)($data['collection_id'] ?? 0);
@@ -78,7 +78,7 @@ class ExhibitionService {
             return ['success' => false, 'errorMessage' => 'Please select a collection'];
         }
 
-        if (!Collections::getCollectionByID($collectionId)) {
+        if (!Collections::getCollectionByID($collectionId, $db)) {
             return ['success' => false, 'errorMessage' => 'Selected collection does not exist'];
         }
 
@@ -94,14 +94,14 @@ class ExhibitionService {
             return ['success' => false, 'errorMessage' => 'Start date cannot be later than end date'];
         }
 
-        if (Exhibitions::existsByTitleExceptId($title, $id)) {
+        if (Exhibitions::existsByTitleExceptId($title, $id, $db)) {
             return ['success' => false, 'errorMessage' => 'Exhibition already exists'];
         }
 
         $startDate = date('Y-m-d H:i:s', strtotime($startDate));
         $endDate = date('Y-m-d H:i:s', strtotime($endDate));
 
-        if (!Exhibitions::updateExhibition($id, $title, $description, $collectionId, $startDate, $endDate)) {
+        if (!Exhibitions::updateExhibition($id, $title, $description, $collectionId, $startDate, $endDate, $db)) {
             return ['success' => false, 'errorMessage' => 'Database error while updating exhibition'];
         }
 
@@ -114,12 +114,12 @@ class ExhibitionService {
      * @param array $data Confirmation form data
      * @return array Success status with error message if failed
      */
-    public static function deleteExhibition($id, $data) {
+    public static function deleteExhibition($id, $data, $db = null) {
         if (!isset($data['save'])) {
             return ['success' => false, 'errorMessage' => 'Delete action was not confirmed'];
         }
 
-        if (!Exhibitions::deleteExhibition($id)) {
+        if (!Exhibitions::deleteExhibition($id, $db)) {
             return ['success' => false, 'errorMessage' => 'Database error while deleting exhibition'];
         }
 
