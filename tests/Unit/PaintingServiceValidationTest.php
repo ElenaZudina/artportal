@@ -2,6 +2,7 @@
 use PHPUnit\Framework\TestCase;
 
 require_once __DIR__ . '/../../services/PaintingService.php';
+require_once __DIR__ . '/../../models/Categories.php';
 require_once __DIR__ . '/../../config/Database.php';
 
 class PaintingServiceValidationTest extends TestCase
@@ -158,6 +159,35 @@ class PaintingServiceValidationTest extends TestCase
 
         $this->assertSame('existing.jpg', $image);
         $this->assertSame(['Uploaded image is invalid'], $errors);
+        $this->assertNull($fileHash);
+    }
+
+    /**
+     * Tests that oversized painting image uploads are rejected.
+     */
+    public function testResolveImageValueRejectsOversizedUpload()
+    {
+        // Size validation runs before HTTP-upload validation, making the branch deterministic in unit tests.
+        $errors = [];
+        $fileHash = null;
+
+        $image = $this->resolveImageValue->invokeArgs(null, [
+            [],
+            [
+                'image_file' => [
+                    'error' => UPLOAD_ERR_OK,
+                    'tmp_name' => __FILE__,
+                    'name' => 'painting.jpg',
+                    'size' => 5242881,
+                ],
+            ],
+            'existing.jpg',
+            &$errors,
+            &$fileHash,
+        ]);
+
+        $this->assertSame('existing.jpg', $image);
+        $this->assertSame(['Uploaded image must not exceed 5 MB'], $errors);
         $this->assertNull($fileHash);
     }
 

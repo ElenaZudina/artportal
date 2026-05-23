@@ -5,6 +5,7 @@
  * Manages profile data validation, file upload processing, and database operations
  */
 class ArtistProfileService {
+    private const MAX_PICTURE_SIZE = 5242880;
     
     /**
      * Helper method to process uploaded profile picture
@@ -24,13 +25,18 @@ class ArtistProfileService {
             $originalName = (string)($upload['name'] ?? '');
             $fileSize = (int)($upload['size'] ?? 0);
 
-            if ($tmpName === '' || !is_uploaded_file($tmpName)) {
-                $errors[] = 'Uploaded picture is invalid';
+            if ($fileSize <= 0) {
+                $errors[] = 'Uploaded picture is empty';
                 return $existingPicture;
             }
 
-            if ($fileSize <= 0) {
-                $errors[] = 'Uploaded picture is empty';
+            if ($fileSize > self::MAX_PICTURE_SIZE) {
+                $errors[] = 'Uploaded picture must not exceed 5 MB';
+                return $existingPicture;
+            }
+
+            if ($tmpName === '' || !is_uploaded_file($tmpName)) {
+                $errors[] = 'Uploaded picture is invalid';
                 return $existingPicture;
             }
 

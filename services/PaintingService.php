@@ -9,6 +9,8 @@ require_once __DIR__ . '/../models/Tags.php';
  * Manages painting creation, updates, deletion, and vision AI tagging
  */
 class PaintingService {
+    private const MAX_IMAGE_SIZE = 5242880;
+
     /**
      * Get the artist profile ID for a user account.
      * @param int $userId User ID
@@ -52,13 +54,18 @@ class PaintingService {
             $originalName = (string)($upload['name'] ?? '');
             $fileSize = (int)($upload['size'] ?? 0);
 
-            if ($tmpName === '' || !is_uploaded_file($tmpName)) {
-                $errors[] = 'Uploaded image is invalid';
+            if ($fileSize <= 0) {
+                $errors[] = 'Uploaded image is empty';
                 return $existingImage;
             }
 
-            if ($fileSize <= 0) {
-                $errors[] = 'Uploaded image is empty';
+            if ($fileSize > self::MAX_IMAGE_SIZE) {
+                $errors[] = 'Uploaded image must not exceed 5 MB';
+                return $existingImage;
+            }
+
+            if ($tmpName === '' || !is_uploaded_file($tmpName)) {
+                $errors[] = 'Uploaded image is invalid';
                 return $existingImage;
             }
 

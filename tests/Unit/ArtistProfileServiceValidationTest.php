@@ -224,4 +224,30 @@ class ArtistProfileServiceValidationTest extends TestCase
         $this->assertSame('legacy-artist.jpg', $picture);
         $this->assertSame([], $errors);
     }
+
+    /**
+     * Tests that oversized profile picture uploads are rejected.
+     */
+    public function testResolvePictureValueRejectsOversizedUpload()
+    {
+        // Size validation runs before HTTP-upload validation, making the branch deterministic in unit tests.
+        $errors = [];
+
+        $picture = $this->resolvePictureValue->invokeArgs(null, [
+            [],
+            [
+                'picture_file' => [
+                    'error' => UPLOAD_ERR_OK,
+                    'tmp_name' => __FILE__,
+                    'name' => 'artist.jpg',
+                    'size' => 5242881,
+                ],
+            ],
+            'existing.jpg',
+            &$errors,
+        ]);
+
+        $this->assertSame('existing.jpg', $picture);
+        $this->assertSame(['Uploaded picture must not exceed 5 MB'], $errors);
+    }
 }
