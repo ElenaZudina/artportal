@@ -1,131 +1,112 @@
-# Тест-план проекта ArtPortal
+# ArtPortal Test Documentation
 
-## 1. Цель тестирования
+## 1. Testing Objective
 
-Цель тестирования - подтвердить, что веб-портал ArtPortal корректно выполняет основные пользовательские сценарии, обрабатывает ошибочные данные и обеспечивает работу ключевых модулей: регистрации, авторизации, личного кабинета, публикации картин, избранного, заявок на покупку и административной панели.
+The objective of testing is to confirm that the ArtPortal web application correctly supports the main user workflows, handles invalid input, protects restricted areas, and provides stable behavior for the core modules: registration, authentication, personal dashboards, artist profiles, painting publication, favorites, purchase requests, and the administrative panel.
 
-Тестирование проводится на трех уровнях:
+Testing is performed at three levels:
 
-- модульное тестирование - проверка отдельных сервисов, моделей и вспомогательных классов;
-- интеграционное тестирование - проверка взаимодействия контроллеров, сервисов и базы данных;
-- e2e-тестирование - проверка пользовательских сценариев через интерфейс браузера.
+- unit testing: verification of individual services, models, helper classes, and isolated business logic;
+- integration testing: verification of interactions between controllers, services, routes, sessions, and the database;
+- end-to-end testing: verification of user scenarios through the browser interface.
 
-Так как проект является учебной работой, тест-план сгруппирован по функциональным областям, а не перечисляет каждый тестовый метод отдельно.
+Because the project is an educational web application, the test plan is grouped by functional areas instead of listing every test method separately.
 
-## 2. Объект тестирования
+## 2. Test Object
 
-Тестируется веб-приложение ArtPortal, включающее:
+The object under test is the ArtPortal web application, including:
 
-- публичную часть сайта;
-- регистрацию и авторизацию пользователей;
-- личный кабинет пользователя;
-- кабинет художника;
-- административную панель;
-- работу с картинами, художниками, категориями, коллекциями и выставками;
-- избранное и заявки на покупку;
-- валидацию данных и обработку ошибок.
+- the public part of the website;
+- user registration and authentication;
+- the user dashboard;
+- the artist dashboard;
+- the administrative panel;
+- operations with paintings, artists, categories, collections, and exhibitions;
+- favorites and purchase requests;
+- data validation and error handling.
 
-## 3. Виды тестирования
+## 3. Types of Testing
 
-| Вид тестирования | Назначение | Инструмент |
+| Testing Type | Purpose | Tool |
 |---|---|---|
-| Модульное | Проверка отдельных классов и функций без запуска браузера | PHPUnit |
-| Интеграционное | Проверка совместной работы модулей и базы данных | PHPUnit |
-| E2E | Проверка сценариев пользователя через веб-интерфейс | Playwright |
+| Unit testing | Checks individual classes and functions without launching a browser | PHPUnit |
+| Integration testing | Checks cooperation between application modules and the database | PHPUnit |
+| E2E testing | Checks user scenarios through the web interface | Playwright |
 
-## 4. Модульное тестирование
+## 4. Unit Testing
 
-| Тест | Входные данные | Ожидаемый результат | Фактический результат |
+| Test | Input Data | Expected Result | Actual Result |
 |---|---|---|---|
-| Регистрация пользователя | Пустые данные, неверный email, слабый пароль, несовпадение паролей, дублирование email/username | Некорректные данные отклоняются, корректный пользователь создается | Пройдено |
-| Авторизация пользователя | Неверный email, неверный пароль, несуществующий пользователь, заблокированный аккаунт, активный аккаунт | Вход разрешен только активному пользователю с корректными данными | Пройдено |
-| Изменение аккаунта пользователя | Новые username/email, дублирующиеся данные, текущий и новый пароль | Данные обновляются только после успешной валидации | Пройдено |
-| Создание и обновление профиля художника | Данные профиля, повторное создание, обязательные поля, изображение | Профиль сохраняется с корректными данными, ошибки валидации отображаются | Пройдено |
-| Управление картинами | Данные картины, изображение, невалидные поля, ID чужой картины | Разрешены только корректные действия владельца картины | Пройдено |
-| Работа с избранным | ID пользователя и ID картины | Связь пользователя и картины создается и удаляется корректно | Пройдено |
-| Заявки на покупку | ID пользователя, ID картины, отсутствующие или некорректные значения | Заявка создается только при корректных данных | Пройдено |
-| Управление категориями | Название категории, пустое название, дублирование названия | CRUD-операции выполняются с учетом валидации | Пройдено |
-| Управление коллекциями | Название коллекции, тип коллекции, пустые или дублирующиеся данные | Коллекции сохраняются только с корректными данными | Пройдено |
-| Управление выставками | Название, даты, ID коллекции, неверные даты, дублирование названия | Выставки создаются только при корректной связи с коллекцией и датами | Пройдено |
-| Пагинация | Номер страницы отсутствует, меньше 1 или больше общего количества страниц | Номер страницы и смещение рассчитываются корректно | Пройдено |
-| CSRF-защита | Корректный, отсутствующий и некорректный CSRF-токен | Запросы с неверным токеном отклоняются | Пройдено |
-| Расчет цены | Цена, желаемый доход, комиссия, налог, отрицательные значения | Итоговые суммы рассчитываются корректно | Пройдено |
-| Email-сервис | Email пользователя/художника, невалидные адреса, данные для шаблона письма | Письма формируются корректно, невалидные адреса отклоняются | Пройдено |
-| Теги и Vision AI | Распознанные метки, web-entities и повторяющиеся значения | Список тегов формируется без дублей и лишних значений | Пройдено |
+| User registration | Empty fields, invalid email, weak password, password mismatch, duplicate email or username | Invalid data is rejected, and a valid user is created | Passed |
+| User authentication | Invalid email, invalid password, non-existing user, blocked account, active account | Login is allowed only for an active user with valid credentials | Passed |
+| User account update | New username or email, duplicate data, current and new password | Account data is updated only after successful validation | Passed |
+| Artist profile creation and update | Profile data, repeated profile creation, required fields, image | The profile is saved with valid data, and validation errors are displayed | Passed |
+| Painting management | Painting data, image, invalid fields, ID of a painting owned by another artist | Only valid actions by the painting owner are allowed | Passed |
+| Favorites management | User ID and painting ID | The relation between the user and the painting is created and removed correctly | Passed |
+| Purchase requests | User ID, painting ID, missing or invalid values | A purchase request is created only when the data is valid | Passed |
+| Category management | Category name, empty name, duplicate name | CRUD operations are performed with validation | Passed |
+| Collection management | Collection name, collection type, empty or duplicate data | Collections are saved only with valid data | Passed |
+| Exhibition management | Name, dates, collection ID, invalid dates, duplicate name | Exhibitions are created only with valid collection links and valid dates | Passed |
+| Pagination | Missing page number, page number less than 1, page number greater than the total number of pages | The page number and offset are calculated correctly | Passed |
+| CSRF protection | Valid, missing, and invalid CSRF token | Requests with an invalid token are rejected | Passed |
+| Price calculation | Price, desired income, commission, tax, negative values | Final amounts are calculated correctly | Passed |
+| Email service | User or artist email, invalid addresses, email template data | Emails are built correctly, and invalid addresses are rejected | Passed |
+| Tags and Vision AI | Recognized labels, web entities, duplicate values | The tag list is generated without duplicates or unnecessary values | Passed |
 
-## 5. Интеграционное тестирование
+## 5. Integration Testing
 
-| Тест | Входные данные | Ожидаемый результат | Фактический результат |
+| Test | Input Data | Expected Result | Actual Result |
 |---|---|---|---|
-| Подключение к тестовой базе данных | Конфигурация тестовой БД, SQL-запросы чтения и записи | Приложение использует тестовую базу, запросы выполняются корректно | Пройдено |
-| Регистрация и вход | Регистрационные данные, email и пароль активного/заблокированного пользователя | Пользователь записывается в БД, авторизация учитывает статус аккаунта | Пройдено |
-| Отображение страниц авторизации | Запросы страниц входа, регистрации и восстановления пароля | Контроллеры возвращают нужные страницы | Пройдено |
-| Публичный каталог картин | Поисковый запрос и данные опубликованной картины одобренного художника | Картина отображается в каталоге и доступна пользователю | Пройдено |
-| Публичный список художников | Поисковый запрос и данные одобренного художника | В списке отображаются только публично доступные профили | Пройдено |
-| Профиль художника | Данные нового профиля, данные обновления, пользователь с уже созданным профилем | Профиль сохраняется в БД и сохраняет статус модерации | Пройдено |
-| Связи картины | ID пользователя, ID картины, заявка на покупку, избранное | Связи пользователь-картина-заявка создаются корректно | Пройдено |
-| CRUD контента | Данные категории, коллекции и выставки для создания, редактирования и удаления | Данные изменяются в БД и корректно связаны между собой | Пройдено |
-| Административная панель | Авторизованная сессия администратора | Панель загружается, показатели формируются на основе данных БД | Пройдено |
-| Пользователи в админке | Поисковый запрос и тестовые пользователи | Администратор видит список пользователей и результаты поиска | Пройдено |
-| Модерация художников | Профили художников со статусом ожидания | Администратор видит ожидающие модерации профили | Пройдено |
-| Категории, коллекции, выставки в админке | Тестовые записи справочников | Административные списки загружаются с тестовыми данными | Пройдено |
-| Статистика кабинетов | Данные пользователя и художника: избранное, заявки, портфолио | Личные кабинеты получают корректные агрегированные данные | Пройдено |
-| Обработка ошибки 404 | Запрос несуществующей страницы | Отображается пользовательская страница ошибки | Пройдено |
-| Расчет стоимости | Цена, желаемый доход, комиссия и налоговые параметры | Интеграционный расчет возвращает ожидаемые значения | Пройдено |
+| Test database connection | Test database configuration, SQL read and write queries | The application uses the test database, and queries are executed correctly | Passed |
+| Registration and login | Registration data, email and password of active or blocked users | The user is saved in the database, and authentication respects the account status | Passed |
+| Authentication page rendering | Requests to login, registration, and password recovery pages | Controllers return the required pages | Passed |
+| Public painting catalog | Search query and published painting data from an approved artist | The painting is displayed in the catalog and is available to the user | Passed |
+| Public artist list | Search query and approved artist data | Only publicly available artist profiles are displayed | Passed |
+| Artist profile | New profile data, update data, user with an existing profile | The profile is saved in the database and keeps the correct moderation status | Passed |
+| Painting relations | User ID, painting ID, purchase request, favorites | User-painting-request relations are created correctly | Passed |
+| Content CRUD | Category, collection, and exhibition data for creation, update, and deletion | Data is changed in the database and remains correctly related | Passed |
+| Administrative panel | Authorized administrator session | The panel loads, and dashboard indicators are built from database data | Passed |
+| Users in admin panel | Search query and test users | The administrator sees the user list and search results | Passed |
+| Artist moderation | Artist profiles with pending status | The administrator sees profiles waiting for moderation | Passed |
+| Categories, collections, and exhibitions in admin panel | Test reference records | Administrative lists load with test data | Passed |
+| Dashboard statistics | User and artist data: favorites, requests, portfolio | Dashboards receive correct aggregated data | Passed |
+| 404 error handling | Request for a non-existing page | A user-friendly error page is displayed | Passed |
+| Cost calculation | Price, desired income, commission, and tax parameters | Integration-level calculation returns expected values | Passed |
 
-## 6. E2E-тестирование
+## 6. E2E Testing
 
-| Тест | Входные данные | Ожидаемый результат | Фактический результат |
+| Test | Input Data | Expected Result | Actual Result |
 |---|---|---|---|
-| Открытие главной страницы гостем | Переход на главную страницу сайта | Главная страница загружается, отображается заголовок сайта | Пройдено |
-| Просмотр каталога картин гостем | Переход в раздел всех картин | Каталог открывается, отображается список картин | Пройдено |
-| Просмотр списка художников гостем | Переход в раздел художников | Страница художников открывается и содержит список профилей | Пройдено |
-| Открытие страницы входа гостем | Переход на страницу авторизации | Форма авторизации отображается | Пройдено |
-| Просмотр карточки картины гостем | Клик по картине в каталоге | Открывается страница картины с данными о работе и художнике | Пройдено |
-| Попытка отправить заявку без входа | Клик по кнопке заявки на покупку без авторизации | Система перенаправляет пользователя на страницу входа | Пройдено |
-| Регистрация нового пользователя | Заполненная форма регистрации | После отправки формы отображается сообщение об успешной регистрации | Пройдено |
-| Вход и выход пользователя | Валидные email и пароль, переход к выходу из системы | Пользователь попадает в личный кабинет и может выйти из аккаунта | Пройдено |
-| Просмотр личного кабинета пользователя | Авторизованная сессия пользователя | Доступны профиль, избранное и пользовательские заявки | Пройдено |
-| Просмотр избранного пользователем | Переход в раздел `My Favorites` | Отображаются сохраненные картины | Пройдено |
-| Отправка заявки на покупку пользователем | Авторизованный пользователь и выбранная картина | Заявка отправляется и появляется в разделе `My Requests` | Пройдено |
-| Просмотр картин художником | Авторизованная сессия художника, переход в `My Paintings` | Отображается портфолио художника | Пройдено |
-| Просмотр входящих заявок художником | Авторизованная сессия художника, переход в `Purchase Requests` | Отображаются заявки покупателей | Пройдено |
-| Вход администратора в административную панель | Валидные данные администратора | После входа открывается панель администратора | Пройдено |
-| Просмотр пользователей администратором | Переход в раздел `Users` | Отображается список пользователей | Пройдено |
-| Просмотр категорий администратором | Переход в раздел `Categories` | Отображается список категорий | Пройдено |
-| Просмотр заявок на модерацию художников | Переход в раздел модерации художников | Администратор видит ожидающие профили художников | Пройдено |
-| Проверка доступности тестового окружения | Переход по базовому адресу тестового сайта | Тестовый сайт доступен по базовому адресу | Пройдено |
+| Open the home page as a guest | Navigation to the website home page | The home page loads and displays the site heading | Passed |
+| View the painting catalog as a guest | Navigation to the all paintings section | The catalog opens and displays a list of paintings | Passed |
+| View the artist list as a guest | Navigation to the artists section | The artist page opens and contains a list of profiles | Passed |
+| Open the login page as a guest | Navigation to the authentication page | The login form is displayed | Passed |
+| View a painting details page as a guest | Click a painting in the catalog | The painting page opens with information about the artwork and artist | Passed |
+| Try to send a purchase request without login | Click the purchase request button without authentication | The system redirects the user to the login page | Passed |
+| Register a new user | Completed registration form | A successful registration message is displayed after form submission | Passed |
+| User login and logout | Valid email and password, logout action | The user enters the dashboard and can log out of the account | Passed |
+| View the user dashboard | Authorized user session | Profile, favorites, and user requests are available | Passed |
+| View user favorites | Navigation to `My Favorites` | Saved paintings are displayed | Passed |
+| Send a purchase request as a user | Authorized user and selected painting | The request is submitted and appears in `My Requests` | Passed |
+| View paintings as an artist | Authorized artist session, navigation to `My Paintings` | The artist portfolio is displayed | Passed |
+| View incoming purchase requests as an artist | Authorized artist session, navigation to `Purchase Requests` | Buyer requests are displayed | Passed |
+| Administrator login to the admin panel | Valid administrator credentials | The administrator panel opens after login | Passed |
+| View users as an administrator | Navigation to `Users` | The user list is displayed | Passed |
+| View categories as an administrator | Navigation to `Categories` | The category list is displayed | Passed |
+| View artist moderation requests | Navigation to artist moderation section | The administrator sees artist profiles awaiting moderation | Passed |
+| Check test environment availability | Navigation to the base address of the test site | The test site is available at the base address | Passed |
 
-## 7. Критерии успешного прохождения
+## 7. Success Criteria
 
-Тестирование считается успешным, если:
+Testing is considered successful when:
 
-- все модульные тесты завершаются без ошибок;
-- все интеграционные тесты проходят на тестовой базе данных;
-- основные e2e-сценарии выполняются в браузере без критических ошибок;
-- пользовательские формы корректно обрабатывают валидные и невалидные данные;
-- защищенные разделы недоступны пользователям без соответствующих прав;
-- данные после операций создания, изменения и удаления корректно сохраняются в базе данных.
+- all unit tests finish without errors;
+- all integration tests pass against the test database;
+- the main E2E scenarios run in the browser without critical errors;
+- user forms correctly process valid and invalid data;
+- protected sections are unavailable to users without the required permissions;
+- data is correctly stored in the database after create, update, and delete operations.
 
-## 8. Представление результатов в выпускной работе
+## 8. Conclusion
 
-Для выпускной работы рекомендуется привести:
-
-- краткое описание трех уровней тестирования;
-- сводную таблицу с количеством тестов;
-- несколько примеров тестовых сценариев из каждой группы;
-- скриншот успешного запуска PHPUnit;
-- скриншот успешного запуска Playwright;
-- при необходимости - фрагмент отчета покрытия или HTML-отчета Playwright.
-
-Сводка по текущему набору автотестов:
-
-| Вид тестирования | Количество тестов | Инструмент |
-|---|---:|---|
-| Модульные тесты | 240 | PHPUnit |
-| Интеграционные тесты | 30 | PHPUnit |
-| E2E-тесты | 18 | Playwright |
-
-## 9. Вывод
-
-Проведенное тестирование покрывает основные функции портала на разных уровнях. Модульные тесты проверяют внутреннюю бизнес-логику, интеграционные тесты подтверждают корректную работу модулей с базой данных, а e2e-тесты демонстрируют выполнение ключевых пользовательских сценариев через интерфейс. Такое сочетание позволяет обнаруживать ошибки как в отдельных функциях, так и в полном пользовательском процессе.
+The completed testing covers the main portal functions at different levels. Unit tests verify internal business logic, integration tests confirm correct cooperation between modules and the database, and E2E tests demonstrate key user workflows through the interface. This combination helps detect defects both in isolated functions and in complete user processes.
