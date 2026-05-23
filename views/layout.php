@@ -119,7 +119,7 @@ $isLogin = $activeRoute === 'login';
         </section>
         <?php endif; ?>
         
-        <main class="container my-3 flex-grow-1">
+        <main class="container my-3 flex-grow-1<?php echo !empty($isErrorPage) ? ' error-page-main' : ''; ?>">
             
             <?php
                 // One-time flash messages are shown above page content.

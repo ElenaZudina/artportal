@@ -119,6 +119,60 @@
   color: #fff;
 }
 
+.error-page-shell {
+  min-height: calc(100vh - 18rem);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 3rem 1rem;
+  text-align: center;
+}
+
+.error-page-main {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.error-page-main .error-page-shell {
+  min-height: auto;
+}
+
+.error-page-panel {
+  width: min(100%, 760px);
+  padding: 2.5rem;
+  border: 1px solid rgba(152, 16, 250, 0.14);
+  border-radius: var(--radius);
+  background: rgba(255, 255, 255, 0.86);
+  box-shadow: 0 18px 45px rgba(16, 24, 40, 0.08);
+}
+
+.error-page-code {
+  margin-bottom: 0.75rem;
+  color: var(--primary);
+  font-family: var(--font-heading);
+  font-size: clamp(3rem, 8vw, 5.5rem);
+  font-weight: var(--font-weight-bold);
+  line-height: 1;
+}
+
+.error-page-panel h2 {
+  margin: 0;
+  color: var(--foreground);
+}
+
+@media (max-width: 575.98px) {
+  .error-page-shell {
+    min-height: calc(100vh - 14rem);
+    padding: 2rem 0.5rem;
+  }
+
+  .error-page-panel {
+    padding: 1.5rem;
+  }
+}
+
 .admin-start-page {
   background:
     radial-gradient(circle at top left, rgba(152, 16, 250, 0.06), transparent 30%),
