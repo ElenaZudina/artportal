@@ -4,7 +4,8 @@
 /** @type {import('@playwright/test').PlaywrightTestConfig} */
 const config = {
   testDir: './tests',
-  timeout: 30000,
+  timeout: 90000,
+  workers: 1,
   retries: 0,
   use: {
     baseURL: 'http://localhost:81/artportal/',

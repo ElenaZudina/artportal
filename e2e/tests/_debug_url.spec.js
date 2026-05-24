@@ -1,10 +1,10 @@
-// Проверка: реально ли Playwright может открыть главную страницу
 const { test, expect } = require('@playwright/test');
+test('DEBUG: baseURL and HTML are available', async ({ page }) => {
+  const response = await page.goto('./', { waitUntil: 'domcontentloaded' });
 
-const fs = require('fs');
-test.skip('DEBUG: Проверка baseURL и HTML', async ({ page }) => {
-  await page.goto('./');
-  await page.screenshot({ path: 'e2e/tests/__debug_main.png' });
+  expect(response && response.ok()).toBeTruthy();
+  await expect(page.getByRole('heading', { name: 'ArtPortal' })).toBeVisible();
+
   const html = await page.content();
-  fs.writeFileSync('e2e/tests/__debug_main.html', html);
+  expect(html).toContain('ArtPortal');
 });

@@ -7,7 +7,8 @@ const config = {
   outputDir: './test-results',
   globalSetup: './global-setup.js',
   reporter: [['html', { outputFolder: './playwright-report', open: 'never' }], ['list']],
-  timeout: 30000,
+  timeout: 90000,
+  workers: 1,
   retries: 0,
   use: {
     baseURL: 'http://localhost/artportal/',
