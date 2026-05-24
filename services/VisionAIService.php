@@ -5,6 +5,10 @@
  */
 class VisionAIService {
 
+    private const LABEL_SCORE_THRESHOLD = 0.6;
+    private const WEB_ENTITY_SCORE_THRESHOLD = 0.4;
+    private const OBJECT_SCORE_THRESHOLD = 0.4;
+
     private string $apiKey;
 
     /**
@@ -34,7 +38,8 @@ class VisionAIService {
                     "type" => "LABEL_DETECTION",
                     "maxResults" => 10
                 ],
-                ["type" => "WEB_DETECTION", "maxResults" => 10]]
+                ["type" => "WEB_DETECTION", "maxResults" => 10],
+                ["type" => "OBJECT_LOCALIZATION", "maxResults" => 10]]
             ]]
         ];
 
@@ -68,16 +73,24 @@ class VisionAIService {
 {
     $labels = $response['labelAnnotations'] ?? [];
     $web = $response['webDetection']['webEntities'] ?? [];
+    $objects = $response['localizedObjectAnnotations'] ?? [];
 
     $ignore = [
         'art',
         'paint',
-        // 'visual',
         'arts',
         'acrylic',
-        'paint',
         'watercolor',
         'painting',
+        'artwork',
+        'image',
+        'visual',
+        'technique',
+        'illustration',
+        'drawing',
+        'modern',
+        'institute',
+        'chicago',
         'the',
         'a',
         'an',
@@ -100,8 +113,7 @@ class VisionAIService {
         $tagString = strtolower($item['description'] ?? '');
 
         if (!$tagString) continue;
-        if (($item['score'] ?? 0) < 0.75) continue;
-
+        if (($item['score'] ?? 0) < self::LABEL_SCORE_THRESHOLD) continue;
         $words = explode(' ', $tagString);
 
         foreach ($words as $word) {
@@ -121,9 +133,27 @@ class VisionAIService {
         $tagString = strtolower($item['description'] ?? '');
 
         if (!$tagString) continue;
-        if (($item['score'] ?? 0) < 0.5) continue;
-
+        if (($item['score'] ?? 0) < self::WEB_ENTITY_SCORE_THRESHOLD) continue;
          $words = explode(' ', $tagString);
+
+        foreach ($words as $word) {
+            $word = trim($word);
+
+            if (!$word) continue;
+            if (strlen($word) < 3) continue;
+            if (in_array($word, $ignore)) continue;
+
+        $tags[] = $word;
+    }
+    }
+
+    // Process localized objects.
+    foreach ($objects as $item) {
+        $tagString = strtolower($item['name'] ?? '');
+
+        if (!$tagString) continue;
+        if (($item['score'] ?? 0) < self::OBJECT_SCORE_THRESHOLD) continue;
+        $words = explode(' ', $tagString);
 
         foreach ($words as $word) {
             $word = trim($word);

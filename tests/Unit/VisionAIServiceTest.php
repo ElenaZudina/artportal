@@ -18,6 +18,7 @@ class VisionAIServiceTest extends TestCase
                 ['description' => 'ok', 'score' => 0.9],
                 ['description' => 'Acrylic Painting', 'score' => 0.76],
                 ['description' => 'blur', 'score' => 0.7],
+                ['description' => 'Artwork Image Technique', 'score' => 0.95],
             ],
             'webDetection' => []
         ];
@@ -28,12 +29,17 @@ class VisionAIServiceTest extends TestCase
 
         $tags = $svc->buildTags($response);
 
-        // Expected: 'red', 'apple', 'acrylic', 'painting' (lowercased, >=3 chars), 'blur' may be < threshold if score < 0.75
+        // Expected words are lowercased, split, and filtered by score and ignore list.
         $this->assertContains('red', $tags);
         $this->assertContains('apple', $tags);
-        // 'the' and 'art' are in ignore list -> not present
+        $this->assertContains('blur', $tags);
         $this->assertNotContains('the', $tags);
         $this->assertNotContains('art', $tags);
+        $this->assertNotContains('acrylic', $tags);
+        $this->assertNotContains('painting', $tags);
+        $this->assertNotContains('artwork', $tags);
+        $this->assertNotContains('image', $tags);
+        $this->assertNotContains('technique', $tags);
         // 'ok' is too short -> not present
         $this->assertNotContains('ok', $tags);
     }
@@ -54,6 +60,11 @@ class VisionAIServiceTest extends TestCase
                     ['description' => 'Landscape', 'score' => 0.7],
                     ['description' => 'art', 'score' => 0.9]
                 ]
+            ],
+            'localizedObjectAnnotations' => [
+                ['name' => 'Person', 'score' => 0.82],
+                ['name' => 'Castle Tower', 'score' => 0.74],
+                ['name' => 'Low Confidence Object', 'score' => 0.3],
             ]
         ];
 
@@ -63,7 +74,7 @@ class VisionAIServiceTest extends TestCase
 
         $tags = $svc->buildTags($response);
 
-        // Expect unique tags: sunset, beach, landscape (art ignored)
-        $this->assertEqualsCanonicalizing(['sunset', 'beach', 'landscape'], $tags);
+        // Expect unique tags from labels, web entities, and localized objects.
+        $this->assertEqualsCanonicalizing(['sunset', 'beach', 'landscape', 'person', 'castle', 'tower'], $tags);
     }
 }
