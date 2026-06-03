@@ -1,0 +1,433 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ArtPortal Brand Style Guide</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;900&family=Playfair+Display:wght@400;500;700;900&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #f6f7fb;
+      --surface: rgba(255, 255, 255, 0.88);
+      --surface-strong: #ffffff;
+      --border: rgba(15, 23, 42, 0.08);
+      --text: #101828;
+      --muted: #667085;
+      --shadow: 0 18px 45px rgba(16, 24, 40, 0.08);
+      --radius: 18px;
+      --radius-sm: 14px;
+      --font-body: "Inter", sans-serif;
+      --font-heading: "Playfair Display", serif;
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      font-family: var(--font-body);
+      color: var(--text);
+      background:
+        radial-gradient(circle at top left, rgba(152, 16, 250, 0.12), transparent 30%),
+        radial-gradient(circle at top right, rgba(173, 70, 255, 0.08), transparent 26%),
+        linear-gradient(180deg, #fbfbfd 0%, var(--bg) 100%);
+      min-height: 100vh;
+    }
+
+    .wrap {
+      width: min(1180px, calc(100% - 32px));
+      margin: 0 auto;
+      padding: 40px 0 56px;
+    }
+
+    .hero {
+      position: relative;
+      overflow: hidden;
+      padding: 32px;
+      border-radius: 28px;
+      background: linear-gradient(135deg, #ffffff 0%, rgba(255, 255, 255, 0.84) 54%, rgba(243, 232, 255, 0.38) 100%);
+      border: 1px solid rgba(152, 16, 250, 0.12);
+      box-shadow: var(--shadow);
+      margin-bottom: 24px;
+    }
+
+    .hero::after {
+      content: "";
+      position: absolute;
+      inset: auto -60px -60px auto;
+      width: 220px;
+      height: 220px;
+      border-radius: 999px;
+      background: radial-gradient(circle, rgba(152, 16, 250, 0.16), transparent 68%);
+      pointer-events: none;
+    }
+
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 7px 12px;
+      border-radius: 999px;
+      border: 1px solid rgba(152, 16, 250, 0.14);
+      background: rgba(255, 255, 255, 0.9);
+      color: #7e22ce;
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+    }
+
+    h1, h2, h3, .font-heading {
+      font-family: var(--font-heading);
+    }
+
+    h1 {
+      margin: 14px 0 10px;
+      font-size: clamp(2.4rem, 5vw, 4.8rem);
+      line-height: 0.95;
+      letter-spacing: -0.04em;
+    }
+
+    .hero p {
+      max-width: 760px;
+      margin: 0;
+      font-size: 1rem;
+      line-height: 1.7;
+      color: var(--muted);
+    }
+
+    .grid {
+      display: grid;
+      gap: 20px;
+    }
+
+    .grid.cols-2 {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .grid.cols-3 {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+
+    .panel {
+      padding: 24px;
+      border-radius: var(--radius);
+      background: var(--surface);
+      border: 1px solid var(--border);
+      box-shadow: var(--shadow);
+      backdrop-filter: blur(10px);
+    }
+
+    .panel h2 {
+      margin: 0 0 6px;
+      font-size: clamp(1.5rem, 2.4vw, 2rem);
+      line-height: 1.1;
+    }
+
+    .panel .desc {
+      margin: 0 0 18px;
+      color: var(--muted);
+      line-height: 1.6;
+    }
+
+    .swatch {
+      border-radius: var(--radius-sm);
+      overflow: hidden;
+      border: 1px solid rgba(15, 23, 42, 0.08);
+      background: var(--surface-strong);
+      min-height: 164px;
+    }
+
+    .swatch .preview {
+      height: 96px;
+      border-bottom: 1px solid rgba(15, 23, 42, 0.08);
+    }
+
+    .swatch .meta {
+      padding: 14px;
+      display: grid;
+      gap: 6px;
+    }
+
+    .name {
+      font-weight: 700;
+      font-size: 0.98rem;
+    }
+
+    .value {
+      font-size: 0.88rem;
+      color: var(--muted);
+      word-break: break-word;
+      line-height: 1.5;
+    }
+
+    .specimen {
+      display: grid;
+      gap: 12px;
+      align-content: start;
+    }
+
+    .sample-card {
+      padding: 18px;
+      border-radius: 16px;
+      border: 1px solid rgba(15, 23, 42, 0.08);
+      background: rgba(255, 255, 255, 0.8);
+    }
+
+    .sample-card strong {
+      display: block;
+      margin-bottom: 6px;
+      font-size: 0.85rem;
+      color: #6941c6;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+    }
+
+    .sample-card .sample {
+      margin: 0;
+    }
+
+    .sample-h1 { font-size: clamp(42px, 7vw, 96px); line-height: 1; }
+    .sample-h2 { font-size: clamp(32px, 4vw, 48px); line-height: 1.05; }
+    .sample-h3 { font-size: clamp(20px, 2vw, 24px); line-height: 1.15; }
+    .sample-base { font-size: 16px; line-height: 1.6; }
+    .sample-sm { font-size: 13px; line-height: 1.5; color: var(--muted); }
+
+    .token-list {
+      display: grid;
+      gap: 12px;
+    }
+
+    .token-row {
+      display: grid;
+      grid-template-columns: 1.3fr 1fr;
+      gap: 12px;
+      align-items: center;
+      padding: 14px 16px;
+      border-radius: 14px;
+      background: rgba(255, 255, 255, 0.78);
+      border: 1px solid rgba(15, 23, 42, 0.06);
+    }
+
+    .token-row .key {
+      font-weight: 700;
+    }
+
+    .token-row .val {
+      color: var(--muted);
+      text-align: right;
+      word-break: break-word;
+    }
+
+    .palette-surface {
+      display: flex;
+      align-items: flex-end;
+      justify-content: space-between;
+      padding: 16px;
+      color: #fff;
+      background: linear-gradient(135deg, #9810FA 0%, #7E22CE 100%);
+    }
+
+    .palette-surface.dark {
+      color: #101828;
+      background: linear-gradient(135deg, #f9fafb 0%, #ffffff 100%);
+    }
+
+    .palette-surface span {
+      font-size: 0.82rem;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    .footer-note {
+      margin-top: 20px;
+      color: var(--muted);
+      font-size: 0.92rem;
+      line-height: 1.6;
+    }
+
+    @media (max-width: 960px) {
+      .grid.cols-2,
+      .grid.cols-3 {
+        grid-template-columns: 1fr;
+      }
+
+      .token-row {
+        grid-template-columns: 1fr;
+      }
+
+      .token-row .val {
+        text-align: left;
+      }
+    }
+
+    @media (max-width: 640px) {
+      .wrap {
+        width: min(100% - 20px, 1180px);
+        padding: 18px 0 34px;
+      }
+
+      .hero,
+      .panel {
+        padding: 18px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <main class="wrap">
+    <section class="hero">
+      <div class="eyebrow">ArtPortal system extract</div>
+      <h1>Color palette and typography</h1>
+      <p>
+        Эта страница собрана из реальных токенов проекта: <a href="../views/layout.php">views/layout.php</a>, <a href="../public/css/style.css">public/css/style.css</a> и <a href="../public/css/login.css">public/css/login.css</a>. Здесь показаны базовые цвета, градиенты и типографика, которые уже используются в интерфейсе.
+      </p>
+    </section>
+
+    <section class="grid cols-2">
+      <div class="panel">
+        <h2>Core palette</h2>
+        <p class="desc">Основные семантические цвета, извлеченные из CSS-токенов проекта.</p>
+        <div class="grid cols-3">
+          <article class="swatch">
+            <div class="preview" style="background:#ffffff"></div>
+            <div class="meta"><div class="name">Background</div><div class="value">#ffffff</div></div>
+          </article>
+          <article class="swatch">
+            <div class="preview" style="background:#101828"></div>
+            <div class="meta"><div class="name">Foreground</div><div class="value">#101828</div></div>
+          </article>
+          <article class="swatch">
+            <div class="preview" style="background:#9810FA"></div>
+            <div class="meta"><div class="name">Primary</div><div class="value">#9810FA</div></div>
+          </article>
+          <article class="swatch">
+            <div class="preview" style="background:#7E22CE"></div>
+            <div class="meta"><div class="name">Primary dark</div><div class="value">#7E22CE</div></div>
+          </article>
+          <article class="swatch">
+            <div class="preview" style="background:#ececf0"></div>
+            <div class="meta"><div class="name">Secondary</div><div class="value">#ececf0</div></div>
+          </article>
+          <article class="swatch">
+            <div class="preview" style="background:#f3f3f5"></div>
+            <div class="meta"><div class="name">Muted / input</div><div class="value">#f3f3f5</div></div>
+          </article>
+          <article class="swatch">
+            <div class="preview" style="background:#e9ebef"></div>
+            <div class="meta"><div class="name">Accent</div><div class="value">#e9ebef</div></div>
+          </article>
+          <article class="swatch">
+            <div class="preview" style="background:#d4183d"></div>
+            <div class="meta"><div class="name">Destructive</div><div class="value">#d4183d</div></div>
+          </article>
+          <article class="swatch">
+            <div class="preview" style="background:rgba(0,0,0,0.1)"></div>
+            <div class="meta"><div class="name">Border</div><div class="value">rgba(0, 0, 0, 0.1)</div></div>
+          </article>
+        </div>
+      </div>
+
+      <div class="panel">
+        <h2>Gradients and accents</h2>
+        <p class="desc">Брендовые и вспомогательные градиенты из public/css/style.css и public/css/login.css.</p>
+        <div class="grid cols-2">
+          <article class="swatch">
+            <div class="preview" style="background:linear-gradient(45deg, #AD46FF, #9810FA)"></div>
+            <div class="meta"><div class="name">Logo gradient</div><div class="value">linear-gradient(45deg, #AD46FF, #9810FA)</div></div>
+          </article>
+          <article class="swatch">
+            <div class="preview" style="background:linear-gradient(7deg, #9810FA, #8E51FF)"></div>
+            <div class="meta"><div class="name">Footer gradient</div><div class="value">linear-gradient(7deg, #9810FA, #8E51FF)</div></div>
+          </article>
+          <article class="swatch">
+            <div class="preview" style="background:linear-gradient(135deg, #f9fafb 0%, #ffffff 50%, rgba(243,232,255,0.3) 100%)"></div>
+            <div class="meta"><div class="name">Body gradient</div><div class="value">linear-gradient(to bottom right, #f9fafb, #ffffff, rgba(243, 232, 255, 0.3))</div></div>
+          </article>
+          <article class="swatch">
+            <div class="preview" style="background:linear-gradient(135deg, #9810FA 0%, #7E22CE 100%)"></div>
+            <div class="meta"><div class="name">Admin hero</div><div class="value">linear-gradient(135deg, #9810FA 0%, #7E22CE 100%)</div></div>
+          </article>
+          <article class="swatch">
+            <div class="preview" style="background:linear-gradient(135deg, #ff8a00 0%, #ff4d6d 55%, #7b2cbf 100%)"></div>
+            <div class="meta"><div class="name">Login accent</div><div class="value">linear-gradient(135deg, #ff8a00 0%, #ff4d6d 55%, #7b2cbf 100%)</div></div>
+          </article>
+          <article class="swatch">
+            <div class="preview" style="background:linear-gradient(135deg, #6f42c1 0%, #9810FA 100%)"></div>
+            <div class="meta"><div class="name">Review accent</div><div class="value">linear-gradient(135deg, #6f42c1 0%, #9810FA 100%)</div></div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="grid cols-2" style="margin-top:20px;">
+      <div class="panel">
+        <h2>Typography</h2>
+        <p class="desc">Шрифтовая пара проекта: Inter для основного текста и Playfair Display для заголовков.</p>
+        <div class="specimen">
+          <div class="sample-card">
+            <strong>Heading family</strong>
+            <h3 class="sample sample-h1">Playfair Display</h3>
+            <p class="sample-sm">Used in: h1-h6, brand title, hero headings, key UI labels.</p>
+          </div>
+          <div class="sample-card">
+            <strong>Body family</strong>
+            <p class="sample sample-base">Inter is the default body font for paragraphs, buttons, inputs and general interface text. It keeps the UI clean and readable.</p>
+          </div>
+          <div class="grid cols-2">
+            <div class="sample-card"><strong>H2 sample</strong><p class="sample sample-h2">Curated headings</p></div>
+            <div class="sample-card"><strong>H3 sample</strong><p class="sample sample-h3">Section titles</p></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="panel">
+        <h2>Typography scale</h2>
+        <p class="desc">Размеры, которые заданы в public/css/style.css через CSS-переменные.</p>
+        <div class="token-list">
+          <div class="token-row"><div class="key">Base font size</div><div class="val">16px</div></div>
+          <div class="token-row"><div class="key">Font body</div><div class="val">&quot;Inter&quot;, sans-serif</div></div>
+          <div class="token-row"><div class="key">Font heading</div><div class="val">&quot;Playfair Display&quot;, serif</div></div>
+          <div class="token-row"><div class="key">H1</div><div class="val">clamp(42px, 7vw, 96px)</div></div>
+          <div class="token-row"><div class="key">H2</div><div class="val">clamp(32px, 4vw, 48px)</div></div>
+          <div class="token-row"><div class="key">H3</div><div class="val">clamp(20px, 2vw, 24px)</div></div>
+          <div class="token-row"><div class="key">H4</div><div class="val">clamp(18px, 1.8vw, 20px)</div></div>
+          <div class="token-row"><div class="key">H5</div><div class="val">clamp(16px, 1.5vw, 18px)</div></div>
+          <div class="token-row"><div class="key">H6</div><div class="val">clamp(14px, 1.3vw, 16px)</div></div>
+          <div class="token-row"><div class="key">Text xl</div><div class="val">clamp(22px, 2.2vw, 24px)</div></div>
+          <div class="token-row"><div class="key">Text lg</div><div class="val">clamp(18px, 1.8vw, 20px)</div></div>
+          <div class="token-row"><div class="key">Text md</div><div class="val">clamp(16px, 1.6vw, 18px)</div></div>
+          <div class="token-row"><div class="key">Text base</div><div class="val">clamp(15px, 1.4vw, 16px)</div></div>
+          <div class="token-row"><div class="key">Text sm</div><div class="val">clamp(13px, 1.2vw, 14px)</div></div>
+          <div class="token-row"><div class="key">Text xs</div><div class="val">clamp(12px, 1vw, 12px)</div></div>
+          <div class="token-row"><div class="key">Weights</div><div class="val">400 / 500 / 700</div></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="panel" style="margin-top:20px;">
+      <h2>Key tokens</h2>
+      <p class="desc">Сводка полезных переменных проекта для дальнейшего дизайн-системного использования.</p>
+      <div class="grid cols-2">
+        <div class="token-list">
+          <div class="token-row"><div class="key">--primary-foreground</div><div class="val">#ffffff</div></div>
+          <div class="token-row"><div class="key">--secondary-foreground</div><div class="val">#1a1a1a</div></div>
+          <div class="token-row"><div class="key">--muted-foreground</div><div class="val">#717182</div></div>
+          <div class="token-row"><div class="key">--accent-foreground</div><div class="val">#101828</div></div>
+        </div>
+        <div class="token-list">
+          <div class="token-row"><div class="key">--input-background</div><div class="val">#f3f3f5</div></div>
+          <div class="token-row"><div class="key">--switch-background</div><div class="val">#cbced4</div></div>
+          <div class="token-row"><div class="key">--ring</div><div class="val">#9810FA</div></div>
+          <div class="token-row"><div class="key">--radius</div><div class="val">0.625rem</div></div>
+        </div>
+      </div>
+      <div class="footer-note">
+        Если нужно, следующим шагом могу превратить это в отдельную страницу внутри приложения или сделать PNG/PDF-экспорт этой же схемы.
+      </div>
+    </section>
+  </main>
+</body>
+</html>
